@@ -12,4 +12,6 @@ df[, `Source URL` := url]
 df[, `Source label` := "Ministry of Health, Labour and Welfare"]
 df[, Notes := NA_character_]
 
+df <- df[!is.na(`Daily change in cumulative total`)]
+
 fwrite(df, "automated_sheets/Japan.csv")

@@ -8,9 +8,6 @@ __pycache__/
 tmp/
 ~$*.xls*
 *.log
-testing_dataset_config.json
-scripts/scripts/testing/testing_data_config.json
-scripts/scripts/vaccinations/vax_dataset_config.json
 .Rhistory
 .RData
 
@@ -33,7 +30,9 @@ scripts/scripts/vaccinations/antall-personer-vaksiner.csv
 
 # Testing
 testing_data_config.json
+testing_dataset_config.json
 
 # Dev
 .tox
 reports
+vax_dataset_config.json

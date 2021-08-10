@@ -785,9 +785,12 @@ def create_internal(df):
     for filename in country_vax_data_partly:
         if not os.path.isfile(filename):
             raise ValueError(f"Invalid file path! {filename}")
-        x = pd.read_csv(
-            filename, usecols=["location", "date", "people_partly_vaccinated"]
-        )
+        try:
+            x = pd.read_csv(
+                filename, usecols=["location", "date", "people_partly_vaccinated"]
+            )
+        except ValueError as e:
+            raise ValueError(f"{filename}: {e}")
         df_a = df_a.merge(x, on=["location", "date"], how="outer")
     df_b = df[~df.location.isin(COUNTRIES_WITH_PARTLY_VAX_METRIC)]
     df_b.loc[:, "people_partly_vaccinated"] = (

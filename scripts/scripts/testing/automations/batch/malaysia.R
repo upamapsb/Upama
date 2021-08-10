@@ -10,5 +10,6 @@ df[, Country := "Malaysia"]
 df[, `Source URL` := "https://github.com/MoH-Malaysia/covid19-public"]
 df[, `Source label` := "Malaysia Ministry of Health"]
 df[, Notes := "Made available by the Malaysia Ministry of Health on GitHub"]
+df[, Units := "people tested"]
 
 fwrite(df, "automated_sheets/Malaysia.csv")

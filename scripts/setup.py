@@ -9,7 +9,7 @@ this_directory = os.path.abspath(os.path.dirname(__file__))
 # with open(os.path.join(this_directory, "README.md")) as f:
 #    long_description = f.read()
 
-with open(os.path.join(this_directory, "requirements-new.txt")) as f:
+with open(os.path.join(this_directory, "requirements.txt")) as f:
     requirements = f.readlines()
 
 
@@ -50,7 +50,9 @@ setup(
     python_requires=">=3.7",
     entry_points={
         "console_scripts": [
-            "cowidev-grapher-db=cowidev.grapher.db.__main__:main" ,
+            "cowidev-grapher-db=cowidev.grapher.db.__main__:main",
+            "cowid-vax=cowidev.vax.cmd.__main__:main",
+            "cowid-vax-track=cowidev.vax.tracking.__main__:main",
         ]
-    }
+    },
 )
