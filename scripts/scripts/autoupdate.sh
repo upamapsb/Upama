@@ -28,14 +28,8 @@ run_python() {
 }
 
 # Make sure we have the latest commit.
-# Stash uncommitted changes.
-git add .
-git stash
-git checkout $BRANCH
+git reset --hard origin/master
 git pull
-# Avoiding the more destructive `git reset --hard origin/$BRANCH`
-# for now, which would be more robust, but can easily lead to some
-# accidental code loss while testing locally.
 
 # =====================================================================
 # ECDC

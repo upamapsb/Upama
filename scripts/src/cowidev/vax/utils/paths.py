@@ -30,19 +30,15 @@ class Paths:
 
     @property
     def in_us_states(self):
-        return os.path.join(self.tmp_vax, "us_states", "input")
-
-    @property
-    def tmp_tmp(self):
-        return os.path.join(self.tmp, "scripts")
-
-    @property
-    def tmp_vax(self):
-        return os.path.join(self.tmp_tmp, "vaccinations")
+        return os.path.join(self.tmp_inp, "cdc", "vaccinations")
 
     @property
     def tmp(self):
         return os.path.join(self.project_dir, "scripts")
+
+    @property
+    def tmp_tmp(self):
+        return os.path.join(self.tmp, "scripts")
 
     @property
     def tmp_inp(self):

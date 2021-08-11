@@ -8,6 +8,7 @@ import re
 
 from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.utils import get_soup
+from cowidev.vax.utils.dates import localdate
 
 
 def read(dose1_source: str, dose2_source: str) -> pd.Series:
@@ -41,7 +42,7 @@ def parse_tableau(soup: BeautifulSoup) -> int:
 
 
 def enrich_date(ds: pd.Series) -> pd.Series:
-    return enrich_data(ds, "date", datetime.now().strftime("%Y-%m-%d"))
+    return enrich_data(ds, "date", localdate("Asia/Jakarta", force_today=True))
 
 
 def enrich_location(ds: pd.Series) -> pd.Series:

@@ -1,3 +1,4 @@
+import re
 import time
 
 import pandas as pd
@@ -5,14 +6,14 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.dates import clean_date
+from cowidev.vax.utils.dates import localdate
 
 
-def read(source: str, source_old: str) -> pd.Series:
-    return connect_parse_data(source, source_old)
+def read(source: str) -> pd.Series:
+    return connect_parse_data(source)
 
 
-def connect_parse_data(source: str, source_old: str) -> pd.Series:
+def connect_parse_data(source: str) -> pd.Series:
     op = Options()
     op.add_argument("--headless")
 
@@ -20,27 +21,31 @@ def connect_parse_data(source: str, source_old: str) -> pd.Series:
         driver.get(source)
         time.sleep(5)
 
-        total_vaccinations = driver.find_element_by_id("counter1").text
-        # people_vaccinated = driver.find_element_by_id("counter2").text
-        # people_fully_vaccinated = driver.find_element_by_id("counter3").text
+        total_vaccinations = clean_count(driver.find_element_by_id("counter1").text)
+        people_vaccinated_share = driver.find_element_by_id("counter4").text
+        assert "One dose" in people_vaccinated_share
+        people_fully_vaccinated_share = driver.find_element_by_id("counter4a").text
+        assert "Two doses" in people_fully_vaccinated_share
 
-        driver.get(source_old)
-        time.sleep(5)
+    # This logic is only valid as long as Qatar *exclusively* uses 2-dose vaccines
+    people_vaccinated_share = float(
+        re.search(r"[\d.]+", people_vaccinated_share).group(0)
+    )
+    people_fully_vaccinated_share = float(
+        re.search(r"[\d.]+", people_fully_vaccinated_share).group(0)
+    )
+    vaccinated_proportion = people_vaccinated_share / (
+        people_vaccinated_share + people_fully_vaccinated_share
+    )
+    people_vaccinated = round(total_vaccinations * vaccinated_proportion)
+    people_fully_vaccinated = total_vaccinations - people_vaccinated
 
-        # Sanity check
-        total_vaccinations_old = driver.find_element_by_id("counter1").text
-        if total_vaccinations != total_vaccinations_old:
-            raise ValueError(
-                "Both dashboards may not be synced and hence may refer to different timestamps. Consider"
-                "Introducing the timestamp manually."
-            )
-        date = driver.find_element_by_id("pupdateddate").text.replace("Updated ", "")
-        date = str(pd.to_datetime(date, dayfirst=True).date())
+    date = localdate("Asia/Qatar")
 
     data = {
-        "total_vaccinations": clean_count(total_vaccinations),
-        # "people_vaccinated": clean_count(people_vaccinated),
-        # "people_fully_vaccinated": clean_count(people_fully_vaccinated),
+        "total_vaccinations": total_vaccinations,
+        "people_vaccinated": people_vaccinated,
+        "people_fully_vaccinated": people_fully_vaccinated,
         "date": date,
     }
     return pd.Series(data=data)
@@ -64,14 +69,13 @@ def pipeline(ds: pd.Series, source: str) -> pd.Series:
 
 def main(paths):
     source = "https://covid19.moph.gov.qa/EN/Pages/Vaccination-Program-Data.aspx"
-    source_old = "https://covid19.moph.gov.qa/EN/Pages/default.aspx"
-    data = read(source, source_old).pipe(pipeline, source)
+    data = read(source).pipe(pipeline, source)
     increment(
         paths=paths,
         location=data["location"],
         total_vaccinations=data["total_vaccinations"],
-        # people_vaccinated=data["people_vaccinated"],
-        # people_fully_vaccinated=data["people_fully_vaccinated"],
+        people_vaccinated=data["people_vaccinated"],
+        people_fully_vaccinated=data["people_fully_vaccinated"],
         date=data["date"],
         source_url=data["source_url"],
         vaccine=data["vaccine"],

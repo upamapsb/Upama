@@ -85,7 +85,7 @@ class Norway:
         )
 
     def pipe_date(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(date=clean_date_series(df.date, "%Y-%m-%d"))
+        return df.assign(date=clean_date_series(df.date))
 
     def pipe_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
         def _enrich_vaccine(date: str):

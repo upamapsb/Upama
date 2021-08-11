@@ -39,7 +39,7 @@ class Gibraltar(TwitterCollectorBase):
                 if dist < dist_th:
                     # print("Found:", hist[0])
                     # print(tweet.full_text)
-                    dt = tweet.created_at.strftime("%Y-%m-%d")
+                    dt = clean_date(tweet.created_at)
                     if self.stop_search(dt):
                         break
                     records.append(

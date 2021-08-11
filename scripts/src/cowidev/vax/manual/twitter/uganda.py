@@ -3,6 +3,7 @@ import re
 
 from cowidev.vax.manual.twitter.base import TwitterCollectorBase
 from cowidev.vax.utils.utils import clean_count
+from cowidev.vax.utils.dates import clean_date
 
 
 class Uganda(TwitterCollectorBase):
@@ -20,7 +21,7 @@ class Uganda(TwitterCollectorBase):
         regex_2 = r"against COVID-19: ([\d,]+)"
         data = []
         for tweet in self.tweets:
-            dt = tweet.created_at.strftime("%Y-%m-%d")
+            dt = clean_date(tweet.created_at)
             if self.stop_search(dt):
                 break
             if re.search(regex_1, tweet.full_text):

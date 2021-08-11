@@ -5,8 +5,7 @@ from urllib.error import HTTPError
 
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment
-
+from cowidev.vax.utils.dates import clean_date
 
 vaccine_mapping = {
     "Pfizer": "Pfizer/BioNTech",
@@ -23,7 +22,7 @@ def read(last_update: str) -> pd.Series:
 def parse_data(last_update: str, max_iter: int = 10):
     records = []
     for days in range(10):
-        date_it = (datetime.now() - timedelta(days=days)).strftime("%Y-%m-%d")
+        date_it = clean_date(datetime.now() - timedelta(days=days))
         # print(date_it)
         # print(f"{date_it} > {last_update}?")
         if date_it > last_update:
@@ -60,13 +59,14 @@ def _parse_ds_data(df: pd.DataFrame, source: str) -> pd.Series:
             "people_fully_vaccinated": df.loc[
                 "Totales", "Nº Personas vacunadas(pauta completada)"
             ].item(),
-            "date": df.loc[
-                ~df.index.isin(["Sanidad Exterior"]),
-                "Fecha de la última vacuna registrada (2)",
-            ]
-            .dropna()
-            .max()
-            .strftime("%Y-%m-%d"),
+            "date": clean_date(
+                df.loc[
+                    ~df.index.isin(["Sanidad Exterior"]),
+                    "Fecha de la última vacuna registrada (2)",
+                ]
+                .dropna()
+                .max()
+            ),
             "source_url": source,
             "vaccine": ", ".join(_get_vaccine_names(df, translate=True)),
         }

@@ -7,58 +7,66 @@ from cowidev.vax.utils.utils import get_soup
 from cowidev.vax.utils.dates import clean_date
 
 
-def read(source: str) -> pd.Series:
-    soup = get_soup(source)
+class Pakistan:
 
-    counters = soup.find_all(class_="counter")
-    people_vaccinated = clean_count(counters[0].text)
-    total_vaccinations = clean_count(counters[2].text)
+    def __init__(self) -> None:
+        self.location = "Pakistan"
+        self.source_url = "https://ncoc.gov.pk/covid-vaccination-en.php"
 
-    date = soup.find("span", id="last-update").text
-    date = re.search(r"\d+.*202\d", date).group(0)
-    date = str((pd.to_datetime(date) - pd.Timedelta(days=1)).date())
+    def read(self):
+        soup = get_soup(self.source_url)
+        return pd.Series(data=self._parse_data(soup))
 
-    data = {
-        "total_vaccinations": total_vaccinations,
-        "people_vaccinated": people_vaccinated,
-        "people_fully_vaccinated": None,
-        "date": date,
-        "source_url": source,
-    }
+    def _parse_data(self, soup):
+        counters = soup.find_all(class_="counter")
+        people_vaccinated = clean_count(counters[0].text)
+        people_fully_vaccinated = clean_count(counters[1].text)
+        total_vaccinations = clean_count(counters[2].text)
 
-    return pd.Series(data=data)
+        date = soup.find("span", id="last-update").text
+        date = re.search(r"\d+.*202\d", date).group(0)
+        date = str((pd.to_datetime(date) - pd.Timedelta(days=1)).date())
 
+        data = {
+            "total_vaccinations": total_vaccinations,
+            "people_vaccinated": people_vaccinated,
+            "people_fully_vaccinated": people_fully_vaccinated,
+            "date": date,
+            "source_url": self.source_url,
+        }
 
-def enrich_location(ds: pd.Series) -> pd.Series:
-    return enrich_data(ds, "location", "Pakistan")
+        return data
 
+    def pipe_location(self, ds: pd.Series) -> pd.Series:
+        return enrich_data(ds, "location", "Pakistan")
 
-def enrich_vaccine(ds: pd.Series) -> pd.Series:
-    return enrich_data(
-        ds,
-        "vaccine",
-        "CanSino, Oxford/AstraZeneca, Sinovac, Sinopharm/Beijing, Sputnik V",
-    )
+    def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
+        return enrich_data(
+            ds,
+            "vaccine",
+            "CanSino, Oxford/AstraZeneca, Sinovac, Sinopharm/Beijing, Sputnik V",
+        )
 
+    def pipeline(self, ds: pd.Series) -> pd.Series:
+        return (
+            ds
+            .pipe(self.pipe_location)
+            .pipe(self.pipe_vaccine)
+        )
 
-def pipeline(ds: pd.Series) -> pd.Series:
-    return ds.pipe(enrich_location).pipe(enrich_vaccine)
+    def export(self, paths):
+        data = self.read().pipe(self.pipeline)
+        increment(
+            paths=paths,
+            location=data["location"],
+            total_vaccinations=data["total_vaccinations"],
+            people_vaccinated=data["people_vaccinated"],
+            people_fully_vaccinated=data["people_fully_vaccinated"],
+            date=data["date"],
+            source_url=data["source_url"],
+            vaccine=data["vaccine"],
+        )
 
 
 def main(paths):
-    source = "https://ncoc.gov.pk/covid-vaccination-en.php"
-    data = read(source).pipe(pipeline)
-    increment(
-        paths=paths,
-        location=data["location"],
-        total_vaccinations=data["total_vaccinations"],
-        people_vaccinated=data["people_vaccinated"],
-        people_fully_vaccinated=data["people_fully_vaccinated"],
-        date=data["date"],
-        source_url=data["source_url"],
-        vaccine=data["vaccine"],
-    )
-
-
-if __name__ == "__main__":
-    main()
+    Pakistan().export(paths)

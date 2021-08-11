@@ -77,13 +77,17 @@ class Latvia:
         return df
 
     def pipe_aggregate(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.groupby("date", as_index=False).agg(
-            {
-                "total_vaccinations": "sum",
-                "people_vaccinated": "sum",
-                "people_fully_vaccinated": "sum",
-                "vaccine": lambda x: ", ".join(sorted(x)),
-            }
+        return (
+            df[df.date >= "2020-12-01"]
+            .groupby("date", as_index=False)
+            .agg(
+                {
+                    "total_vaccinations": "sum",
+                    "people_vaccinated": "sum",
+                    "people_fully_vaccinated": "sum",
+                    "vaccine": lambda x: ", ".join(sorted(x)),
+                }
+            )
         )
 
     def pipe_cumsum(self, df: pd.DataFrame) -> pd.DataFrame:

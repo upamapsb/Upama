@@ -12,10 +12,10 @@ cowid-vax export
 
 ​
 # Git push
-git add output/*
-git add source_table.html
-git add automation_state.csv
-git add ../../grapher/*
-git add ../../../public/data/*
+git add output/vaccinations/*
+git add output/vaccinations/source_table.html
+git add output/vaccinations/automation_state.csv
+git add grapher/*
+git add ../public/data/*
 git commit -m 'data(vax): update'
 git push origin master

@@ -101,7 +101,9 @@ def extract_clean_date(
     return date_str
 
 
-def _replace_date_fields(date_raw: str, replace_fields: dict = {}, date_format: str = DATE_FORMAT):
+def _replace_date_fields(
+    date_raw: str, replace_fields: dict = {}, date_format: str = DATE_FORMAT
+):
     """Replace date field.
 
     Args:
@@ -117,26 +119,28 @@ def _replace_date_fields(date_raw: str, replace_fields: dict = {}, date_format: 
     dt = dt.replace(**replace_fields)
     return dt.strftime(DATE_FORMAT)
 
+
 def localdatenow(tz=None):
     if tz is None:
         tz = "utc"
     return localdate(tz, 0)
 
 
-def localdate(tz, hour_limit=None, date_format=None):
+def localdate(tz="utc", force_today=False, hour_limit=None, date_format=None):
     """Get local date.
 
     By default, gets date prior to execution.
 
     Args:
-        tz (str, optional): Timezone name.
+        tz (str, optional): Timezone name. Defaults to UTC.
+        force_today (bool, optional): If True, return today's date regardles of `hour_limit` value.
         hour_limit (int, optional): If local time hour is lower than this, returned date is previous day.
                                     Defaults to None.
         date_format (str, optional): Format of output datetime. Uses default YYYY-mm-dd.
     """
     tz = pytz.timezone(tz)
     local_time = datetime.now(tz=tz)
-    if (hour_limit is None) or (local_time.hour < hour_limit):
+    if not force_today and ((hour_limit is None) or (local_time.hour < hour_limit)):
         local_time = local_time - timedelta(days=1)
     if date_format is None:
         date_format = DATE_FORMAT
@@ -144,7 +148,7 @@ def localdate(tz, hour_limit=None, date_format=None):
 
 
 def clean_date_series(
-    ds: pd.Series, format_input: str = None, format_output: str = "%Y-%m-%d"
+    ds: pd.Series, format_input: str = None, format_output: str = DATE_FORMAT
 ) -> pd.Series:
     if format_output is None:
         format_output = DATE_FORMAT

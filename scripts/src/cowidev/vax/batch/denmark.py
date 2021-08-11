@@ -146,7 +146,7 @@ class Denmark:
         )
 
     def pipe_format_date(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(date=clean_date_series(df.date, "%Y-%m-%d"))
+        return df.assign(date=clean_date_series(df.date))
 
     def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.assign(

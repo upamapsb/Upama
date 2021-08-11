@@ -16,10 +16,6 @@ def clean_count(count):
     return count
 
 
-def clean_date(date, fmt):
-    return datetime.datetime.strptime(date, fmt).strftime("%Y-%m-%d")
-
-
 def enrich_data(ds: pd.Series, row, value) -> pd.Series:
     return ds.append(pd.Series({row: value}))
 

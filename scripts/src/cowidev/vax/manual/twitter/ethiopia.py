@@ -20,7 +20,7 @@ class Ethiopia(TwitterCollectorBase):
         data = []
         for tweet in self.tweets:
             if re.search(regex, tweet.full_text):
-                dt = tweet.created_at.strftime("%Y-%m-%d")
+                dt = clean_date(tweet.created_at)
                 if self.stop_search(dt):
                     break
                 data.append(

@@ -58,7 +58,7 @@ class Colombia:
 
     def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
         return enrich_data(
-            ds, "vaccine", "Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac"
+            ds, "vaccine", "Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac"
         )
 
     def pipe_source(self, ds: pd.Series) -> pd.Series:

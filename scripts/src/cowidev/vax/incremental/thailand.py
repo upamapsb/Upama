@@ -8,8 +8,6 @@ import pandas as pd
 from pdfreader import SimplePDFViewer
 
 from cowidev.vax.utils.incremental import (
-    enrich_data,
-    increment,
     clean_count,
     merge_with_current_data,
 )
@@ -22,7 +20,15 @@ class Thailand:
         self.location = "Thailand"
         self.source_url = "https://ddc.moph.go.th/dcd/pagecontent.php?page=643&dept=dcd"
         self.regex_date = r"\s?ข้อมูล ณ วันที่ (\d{1,2}) (.*) (\d{4})"
-        self.regex_vax = r"เข็มที่ 1 \(รำย\) เข็มที่ 2 \(รำย\) เข็มที่ 3 \(รำย\) รวม \(โดส\) ([\d,]+) ([\d,]+) ([\d,]+) ([\d,]+)"
+
+    @property
+    def regex_vax(self):
+        regex_aux = r"\((?:รา|รำ)ย\)"
+        regex_vax = (
+            r" ".join([f"เข็มที่ {i} {regex_aux}" for i in range(1, 4)])
+            + r" รวม \(โดส\) ([\d,]+) ([\d,]+) ([\d,]+) ([\d,]+)"
+        )
+        return regex_vax
 
     def read(self, last_update: str) -> pd.DataFrame:
         yearly_report_page = get_soup(self.source_url)
@@ -75,19 +81,19 @@ class Thailand:
     def _substitute_special_chars(self, raw_text: str):
         """Correct Thai Special Character Error."""
         special_char_replace = {
-            "\uf701": u"\u0e34",
-            "\uf702": u"\u0e35",
-            "\uf703": u"\u0e36",
-            "\uf704": u"\u0e37",
-            "\uf705": u"\u0e48",
-            "\uf706": u"\u0e49",
-            "\uf70a": u"\u0e48",
-            "\uf70b": u"\u0e49",
-            "\uf70e": u"\u0e4c",
-            "\uf710": u"\u0e31",
-            "\uf712": u"\u0e47",
-            "\uf713": u"\u0e48",
-            "\uf714": u"\u0e49",
+            "\uf701": "\u0e34",
+            "\uf702": "\u0e35",
+            "\uf703": "\u0e36",
+            "\uf704": "\u0e37",
+            "\uf705": "\u0e48",
+            "\uf706": "\u0e49",
+            "\uf70a": "\u0e48",
+            "\uf70b": "\u0e49",
+            "\uf70e": "\u0e4c",
+            "\uf710": "\u0e31",
+            "\uf712": "\u0e47",
+            "\uf713": "\u0e48",
+            "\uf714": "\u0e49",
         }
         special_char_replace = dict(
             (re.escape(k), v) for k, v in special_char_replace.items()

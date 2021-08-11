@@ -4,7 +4,8 @@ import pandas as pd
 import tabula
 
 from cowidev.vax.utils.utils import get_soup
-from cowidev.vax.utils.incremental import clean_count, enrich_data, increment, clean_date
+from cowidev.vax.utils.incremental import clean_count, enrich_data, increment
+from cowidev.vax.utils.dates import clean_date
 
 
 # New vaccine "Medigen" soon:
@@ -90,7 +91,7 @@ class Taiwan:
         date_raw = soup.find(class_="download").text
         regex = r"(\d{4})\sCOVID-19疫苗"
         date_str = re.search(regex, date_raw).group(1)
-        date_str = clean_date("2021" + date_str, "%Y%m%d")
+        date_str = clean_date(f"2021{date_str}", fmt="%Y%m%d")
         return date_str
 
     def pipe_metrics(self, ds: pd.Series) -> pd.Series:

@@ -27,7 +27,7 @@ TIMESTAMP_DIR = os.path.abspath(os.path.join(DATA_DIR, "internal", "timestamp"))
 ANNOTATIONS_PATH = os.path.abspath(
     os.path.join(CURRENT_DIR, "annotations_internal.yaml")
 )
-COUNTRIES_WITH_PARTLY_VAX_METRIC = ["Pakistan"]
+COUNTRIES_WITH_PARTLY_VAX_METRIC = []
 country_vax_data_partly = [
     os.path.join(DATA_VAX_COUNTRIES_DIR, f"{country}.csv")
     for country in COUNTRIES_WITH_PARTLY_VAX_METRIC

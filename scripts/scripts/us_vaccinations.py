@@ -14,7 +14,7 @@ sys.path.append(CURRENT_DIR)
 from utils.db_imports import import_dataset
 
 DATASET_NAME = "COVID-19 - United States vaccinations"
-INPUT_PATH = os.path.join(CURRENT_DIR, "vaccinations/us_states/input/")
+INPUT_PATH = os.path.join(CURRENT_DIR, "../input/cdc/vaccinations/")
 GRAPHER_PATH = os.path.join(CURRENT_DIR, "../grapher/")
 OUTPUT_PATH = os.path.join(CURRENT_DIR, "../../public/data/vaccinations/")
 ZERO_DAY = "2021-01-01"

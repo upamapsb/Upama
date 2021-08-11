@@ -3,7 +3,7 @@ import re
 import pandas as pd
 
 from cowidev.vax.manual.twitter.base import TwitterCollectorBase
-from cowidev.vax.utils.dates import from_tz_to_tz
+from cowidev.vax.utils.dates import from_tz_to_tz, clean_date
 
 
 class Panama(TwitterCollectorBase):
@@ -22,9 +22,7 @@ class Panama(TwitterCollectorBase):
         for tweet in self.tweets:
             match = re.search(regex, tweet.full_text)
             if match:
-                dt = from_tz_to_tz(tweet.created_at, to_tz="America/Panama").strftime(
-                    "%Y-%m-%d"
-                )
+                dt = clean_date(from_tz_to_tz(tweet.created_at, to_tz="America/Panama"))
                 if self.stop_search(dt):
                     break
                 data.append(

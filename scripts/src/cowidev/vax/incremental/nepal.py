@@ -9,7 +9,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 from cowidev.vax.utils.incremental import clean_count, enrich_data, increment
-
+from cowidev.vax.utils.dates import clean_date
 
 class Nepal:
     def __init__(self):
@@ -57,7 +57,7 @@ class Nepal:
         day = clean_count(re.search(regex, pdf_text).group(1))
         month = self._get_month(re.search(regex, pdf_text).group(2))
         year = clean_count(re.search(regex, pdf_text).group(3))
-        return datetime(year, month, day).strftime("%Y-%m-%d")
+        return clean_date(datetime(year, month, day))
 
     def _parse_metrics(self, pdf_text: str):
         regex = r"1st Dose\s+\|\s+Fully Vaccinated (\d+) (\d+)"

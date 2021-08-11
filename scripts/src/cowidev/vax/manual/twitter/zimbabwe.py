@@ -24,7 +24,7 @@ class Zimbabwe(TwitterCollectorBase):
             if match:
                 dt = clean_date(match.group(1), "%d %B %Y")
                 total_vaccinations = clean_count(match.group(2))
-                dt = tweet.created_at.strftime("%Y-%m-%d")
+                dt = clean_date(tweet.created_at)
                 if self.stop_search(dt):
                     break
                 data.append(

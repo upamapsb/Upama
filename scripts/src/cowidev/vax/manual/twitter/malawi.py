@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 
 from cowidev.vax.manual.twitter.base import TwitterCollectorBase
+from cowidev.vax.utils.dates import clean_date
 
 
 class Malawi(TwitterCollectorBase):
@@ -32,7 +33,7 @@ class Malawi(TwitterCollectorBase):
                 h = pd.value_counts(pixel_values, normalize=True).index[0]
                 dist = np.linalg.norm(np.array(h) - np.array(col_dominant))
                 if dist < dist_th:
-                    dt = tweet.created_at.strftime("%Y-%m-%d")
+                    dt = clean_date(tweet.created_at)
                     if self.stop_search(dt):
                         break
                     records.append(

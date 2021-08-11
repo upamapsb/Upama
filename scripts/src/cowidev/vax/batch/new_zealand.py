@@ -5,6 +5,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 import cowidev.vax.utils.utils as utils
+from cowidev.vax.utils.dates import clean_date_series
 
 
 class NewZealand:
@@ -81,7 +82,7 @@ class NewZealand:
 
     def pipe_date(self, df: pd.DataFrame) -> pd.DataFrame:
         """Generalized."""
-        return df.assign(date=df.date.dt.strftime("%Y-%m-%d"))
+        return df.assign(date=clean_date_series(df.date))
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         """Could be generalized."""
