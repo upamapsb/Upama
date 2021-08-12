@@ -8,7 +8,7 @@ import pandas as pd
 from gsheets import Sheets
 
 from cowidev.vax.utils.checks import country_df_sanity_checks
-from cowidev.vax.utils.dates import clean_date_series
+from cowidev.vax.utils.dates import DATE_FORMAT
 
 
 class GSheetApi:
@@ -191,7 +191,7 @@ def read_csv_and_check(filepath):
     location = df.loc[:, "location"].unique()
     # Date check
     try:
-        df = df.assign(date=clean_date_series(df["date"]))
+        df = df.assign(date=pd.to_datetime(df["date"], format=DATE_FORMAT))
     except Exception:
         raise ValueError(
             f"{location} -- Invalid date format! Should be %Y-%m-%d. Check {df.date}."

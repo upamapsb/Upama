@@ -2,6 +2,7 @@ from datetime import datetime
 import pandas as pd
 
 from cowidev.vax.utils.checks import country_df_sanity_checks
+from cowidev.vax.utils.dates import clean_date
 from cowidev.vax.process.urls import clean_urls
 
 
@@ -19,8 +20,17 @@ def process_location(
     if "people_fully_vaccinated" not in df:
         df = df.assign(people_fully_vaccinated=pd.NA)
         df.people_fully_vaccinated = df.people_fully_vaccinated.astype("Int64")
+    if "total_boosters" not in df:
+        df = df.assign(total_boosters=pd.NA)
+        df.total_boosters = df.total_boosters.astype("Int64")
     # Avoid decimals
-    cols = ["total_vaccinations", "people_vaccinated", "people_partly_vaccinated", "people_fully_vaccinated"]
+    cols = [
+        "total_vaccinations",
+        "people_vaccinated",
+        "people_partly_vaccinated",
+        "people_fully_vaccinated",
+        "total_boosters",
+    ]
     cols = df.columns.intersection(cols).tolist()
     df[cols] = df[cols].astype(float).astype("Int64").fillna(pd.NA)
     # Order columns and rows
@@ -29,15 +39,8 @@ def process_location(
         "date",
         "vaccine",
         "source_url",
-        "total_vaccinations",
-        "people_vaccinated",
-        "people_fully_vaccinated",
-    ]
-    usecols_opt = [
-        "people_partly_vaccinated"
-    ]
-    usecols_opt = df.columns.intersection(usecols_opt).tolist()
-    usecols = usecols + usecols_opt
+    ] + cols
+    usecols = df.columns.intersection(usecols).tolist()
     df = df[usecols]
     df = df.sort_values(by="date")
     # Sanity checks
@@ -49,7 +52,7 @@ def process_location(
     # Strip
     df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
     # Date format
-    df = df.assign(date=df.date.dt.strftime("%Y-%m-%d"))
+    df = df.assign(date=df.date.apply(clean_date))
     # Clean URLs
     df = clean_urls(df)
     return df

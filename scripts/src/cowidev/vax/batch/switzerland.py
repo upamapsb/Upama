@@ -1,52 +1,41 @@
-import os
-import tempfile
-from zipfile import ZipFile
+import requests
 
 import pandas as pd
 
-from cowidev.vax.utils.utils import get_driver, download_file_from_url
 from cowidev.vax.utils.files import export_metadata
 
 
 class Switzerland:
     def __init__(self):
-        self.location = "Switzerland"
-        self.source_url = "https://www.covid19.admin.ch/en/epidemiologic/vacc-doses"
+        self.source_url = "https://opendata.swiss/en/dataset/covid-19-schweiz"
 
     def read(self):
-        zip_url = self._parse_file_url()
-        df, df_manufacturer = self._parse_data(zip_url)
+        doses_url, people_url, manufacturer_url = self._get_file_url()
+        df, df_manufacturer = self._parse_data(doses_url, people_url, manufacturer_url)
         return df, df_manufacturer
 
-    def _parse_file_url(self) -> str:
-        with get_driver() as driver:
-            driver.get(self.source_url)
-            elems = driver.find_elements_by_class_name("footer__nav__link")
-            for elem in elems:
-                if "Data as .csv file" == elem.text:
-                    return elem.get_attribute("href")
-        raise Exception("No CSV link found in footer.")
+    def _get_file_url(self) -> str:
+        response = requests.get("https://www.covid19.admin.ch/api/data/context").json()
+        context = response["sources"]["individual"]["csv"]
+        doses_url = context["vaccDosesAdministered"]
+        people_url = context["vaccPersonsV2"]
+        manufacturer_url = context["weeklyVacc"]["byVaccine"]["vaccDosesAdministered"]
+        return doses_url, people_url, manufacturer_url
 
-    def _parse_data(self, url):
-        with tempfile.TemporaryDirectory(dir=".") as temp_dir:
-            zip_path = os.path.join(temp_dir, "file.zip")
-            download_file_from_url(url, zip_path)
-            with ZipFile(zip_path, "r") as zipObj:
-                # Extract all the contents of zip file in current directory
-                zipObj.extractall(temp_dir)
-            doses = pd.read_csv(
-                os.path.join(temp_dir, "data/COVID19VaccDosesAdministered.csv"),
-                usecols=["geoRegion", "date", "sumTotal", "type"],
-            )
-            people = pd.read_csv(
-                os.path.join(temp_dir, "data/COVID19VaccPersons_v2.csv"),
-                usecols=["geoRegion", "date", "sumTotal", "type"],
-            )
-            manufacturer = pd.read_csv(
-                os.path.join(temp_dir, "data/COVID19AdministeredDoses_vaccine.csv"),
-                usecols=["date", "geoRegion", "vaccine", "sumTotal"],
-            )
-            return pd.concat([doses, people], ignore_index=True), manufacturer
+    def _parse_data(self, doses_url, people_url, manufacturer_url):
+        doses = pd.read_csv(
+            doses_url,
+            usecols=["geoRegion", "date", "sumTotal", "type"],
+        )
+        people = pd.read_csv(
+            people_url,
+            usecols=["geoRegion", "date", "sumTotal", "type"],
+        )
+        manufacturer = pd.read_csv(
+            manufacturer_url,
+            usecols=["date", "geoRegion", "vaccine", "sumTotal"],
+        )
+        return pd.concat([doses, people], ignore_index=True), manufacturer
 
     def pipe_filter_country(self, df: pd.DataFrame, country_code: str) -> pd.DataFrame:
         return df[df.geoRegion == country_code]

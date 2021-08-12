@@ -13,6 +13,7 @@ from pandas.api.types import is_numeric_dtype
 
 from cowidev.vax.cmd.utils import get_logger
 from cowidev.vax.utils.checks import VACCINES_ACCEPTED
+from cowidev.vax.utils.dates import clean_date
 
 
 logger = get_logger()
@@ -41,6 +42,7 @@ class DatasetGenerator:
             "total_vaccinations",
             "people_vaccinated",
             "people_fully_vaccinated",
+            "total_boosters",
             "daily_vaccinations_raw",
             "daily_vaccinations",
             "daily_vaccinations_per_million",
@@ -166,7 +168,12 @@ class DatasetGenerator:
         )
 
         # NaN: Forward filling + Zero-filling if all metric is NaN
-        cols = ["total_vaccinations", "people_vaccinated", "people_fully_vaccinated"]
+        cols = [
+            "total_vaccinations",
+            "people_vaccinated",
+            "people_fully_vaccinated",
+            "total_boosters",
+        ]
         grouper = agg.groupby("location")
         for col in cols:
             agg[col] = grouper[col].apply(
@@ -181,7 +188,7 @@ class DatasetGenerator:
     def pipe_aggregates(self, df: pd.DataFrame) -> pd.DataFrame:
         logger.info(f"Building aggregate regions {list(self.aggregates.keys())}")
         aggs = []
-        for agg_name, value in self.aggregates.items():
+        for agg_name, _ in self.aggregates.items():
             aggs.append(
                 self._get_aggregate(
                     df=df,
@@ -280,6 +287,9 @@ class DatasetGenerator:
             people_fully_vaccinated_per_hundred=(
                 df.people_fully_vaccinated * 100 / df.population
             ).round(2),
+            total_boosters_per_hundred=(df.total_boosters * 100 / df.population).round(
+                2
+            ),
             new_vaccinations_smoothed_per_million=(
                 df.new_vaccinations_smoothed * 1000000 / df.population
             ).round(),
@@ -290,6 +300,8 @@ class DatasetGenerator:
         df.loc[
             df.people_fully_vaccinated.isnull(), "people_fully_vaccinated_per_hundred"
         ] = pd.NA
+        df.loc[:, "total_boosters"] = df.total_boosters.replace({0: pd.NA})
+        df.loc[df.total_boosters.isnull(), "total_boosters_per_hundred"] = pd.NA
         return df.drop(columns=["population"])
 
     def pipe_vax_checks(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -331,6 +343,7 @@ class DatasetGenerator:
                     "total_vaccinations",
                     "people_vaccinated",
                     "people_fully_vaccinated",
+                    "total_boosters",
                 ]
             ]
             .pipe(self.pipe_aggregates)
@@ -359,11 +372,13 @@ class DatasetGenerator:
                 "total_vaccinations",
                 "people_vaccinated",
                 "people_fully_vaccinated",
+                "total_boosters",
                 "daily_vaccinations_raw",
                 "daily_vaccinations",
                 "total_vaccinations_per_hundred",
                 "people_vaccinated_per_hundred",
                 "people_fully_vaccinated_per_hundred",
+                "total_boosters_per_hundred",
                 "daily_vaccinations_per_million",
             ]
         ]
@@ -375,7 +390,7 @@ class DatasetGenerator:
         metrics = [
             column for column in df.columns if column not in {"location", "iso_code"}
         ]
-        df = df.assign(date=df.date.apply(lambda x: x.strftime("%Y-%m-%d")))
+        df = df.assign(date=df.date.apply(clean_date))
         return [
             {
                 "country": location,
@@ -503,7 +518,11 @@ class DatasetGenerator:
         return df
 
     def pipe_manufacturer_pivot(self, df: pd.DataFrame) -> pd.DataFrame:
-        x = df.groupby(["location", "date", "vaccine"]).count().sort_values("total_vaccinations")
+        x = (
+            df.groupby(["location", "date", "vaccine"])
+            .count()
+            .sort_values("total_vaccinations")
+        )
         mask = x.total_vaccinations != 1
         if mask.sum() != 0:
             raise ValueError(f"Check entries {x[mask]}")
