@@ -13,6 +13,7 @@ from cowidev.vax.utils.utils import get_soup
 
 vaccines_mapping = {
     "Covishield Vaccine": "Oxford/AstraZeneca",
+    "AstraZeneca Vaccine": "Oxford/AstraZeneca",
     "Sinopharm Vaccine": "Sinopharm/Beijing",
     "Sputnik V": "Sputnik V",
     "Pfizer": "Pfizer/BioNTech",
@@ -21,6 +22,7 @@ vaccines_mapping = {
 
 regex_mapping = {
     "Covishield Vaccine": r"(Covishield Vaccine) 1st Dose (\d+) 2nd Dose (\d+)",
+    "AstraZeneca Vaccine": r"(AstraZeneca Vaccine) 1st Dose (\d+) 2nd Dose (\d+)",
     "Sinopharm Vaccine": r"(Sinopharm Vaccine) 1st Dose (\d+) 2nd Dose (\d+)",
     "Sputnik V": r"(Sputnik V) 1st Dose (\d+) 2nd Dose (\d+)",
     "Pfizer": r"(Pfizer) 1st Dose (\d+) 2nd Dose (\d+)",
@@ -35,7 +37,9 @@ class SriLanka:
 
     def read(self):
         soup = get_soup(self.source_url)
-        return self.parse_data(soup)
+        data = self.parse_data(soup)
+        print(data)
+        return pd.Series(data=data)
 
     def parse_data(self, soup: BeautifulSoup) -> pd.Series:
         # Get path to newest pdf
@@ -53,17 +57,15 @@ class SriLanka:
         date = re.search(regex, text).group(1)
         date = clean_date(date, "%d.%m.%Y")
         # Build data series
-        return pd.Series(
-            data={
-                "total_vaccinations": total_vaccinations,
-                "people_vaccinated": people_vaccinated,
-                "people_fully_vaccinated": people_fully_vaccinated,
-                "date": date,
-                "source_url": pdf_path,
-                "vaccine": vaccine,
-                "location": self.location,
-            }
-        )
+        return {
+            "total_vaccinations": total_vaccinations,
+            "people_vaccinated": people_vaccinated,
+            "people_fully_vaccinated": people_fully_vaccinated,
+            "date": date,
+            "source_url": pdf_path,
+            "vaccine": vaccine,
+            "location": self.location,
+        }
 
     def _parse_last_pdf_link(self, soup):
         links = soup.find(class_="rt-article").find_all("a")

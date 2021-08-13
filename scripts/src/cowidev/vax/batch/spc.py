@@ -41,6 +41,9 @@ vaccines_startdates = {
     "French Polynesia": [
         ["Johnson&Johnson, Pfizer/BioNTech", None],
     ],
+    "Tokelau": [
+        ["Pfizer/BioNTech", None],
+    ],
     "default": [
         ["Oxford/AstraZeneca", None],
     ],
@@ -129,6 +132,11 @@ class SPC:
             df = df.pipe(self.pipe_merge_legacy, country)
         # Drop duplicates
         df = df.pipe(self.pipe_drop_duplicates)
+        # Enforce data consistency
+        df.loc[
+            df.people_vaccinated < df.people_fully_vaccinated,
+            ["people_vaccinated", "people_fully_vaccinated"],
+        ] = pd.NA
         # Make monotonic
         df = df.pipe(make_monotonic)
         # Add vaccine info

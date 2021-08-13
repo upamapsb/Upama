@@ -1,6 +1,6 @@
-location,date,vaccine,source_url,total_vaccinations,people_vaccinated,people_fully_vaccinated
-Tonga,2021-04-20,Oxford/AstraZeneca,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,2287,2287,
-Tonga,2021-06-21,Oxford/AstraZeneca,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,28667,28667,0
-Tonga,2021-07-20,Oxford/AstraZeneca,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,35635,28729,6906
-Tonga,2021-07-27,Oxford/AstraZeneca,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,39511,28753,10758
-Tonga,2021-08-02,Oxford/AstraZeneca,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,47553,28841,18712
+date,people_vaccinated,people_fully_vaccinated,total_vaccinations,location,source_url,vaccine,total_boosters
+2021-04-20,2287,,2287,Tonga,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Oxford/AstraZeneca,
+2021-06-21,28667,0,28667,Tonga,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Oxford/AstraZeneca,
+2021-07-20,28729,6906,35635,Tonga,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Oxford/AstraZeneca,
+2021-07-27,28753,10758,39511,Tonga,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Oxford/AstraZeneca,
+2021-08-02,28841,18712,47553,Tonga,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Oxford/AstraZeneca,

@@ -11,7 +11,6 @@ class Sweden(object):
         source_url: str,
         location: str,
         columns_rename: dict = None,
-        columns_cumsum: list = None,
     ):
         """Constructor.
 
@@ -19,8 +18,6 @@ class Sweden(object):
             source_url (str): Source data url
             location (str): Location name
             columns_rename (dict, optional): Maps original to new names. Defaults to None.
-            columns_cumsum (list, optional): List of columns to apply cumsum to. Comes handy when the values reported
-                                                are daily. Defaults to None.
         """
         self.source_url = source_url
         self.location = location

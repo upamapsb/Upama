@@ -1,11 +1,11 @@
-location,date,vaccine,source_url,total_vaccinations,people_vaccinated,people_fully_vaccinated
-Solomon Islands,2021-03-23,Oxford/AstraZeneca,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,0,0,
-Solomon Islands,2021-04-13,Oxford/AstraZeneca,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,2622,2622,0
-Solomon Islands,2021-04-20,Oxford/AstraZeneca,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,3479,3479,0
-Solomon Islands,2021-06-21,Oxford/AstraZeneca,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,21469,18042,3427
-Solomon Islands,2021-06-29,Oxford/AstraZeneca,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,21742,18050,3692
-Solomon Islands,2021-07-13,Oxford/AstraZeneca,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,25628,19641,5987
-Solomon Islands,2021-07-20,Oxford/AstraZeneca,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,27820,20538,7282
-Solomon Islands,2021-07-27,Oxford/AstraZeneca,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,39363,29429,9934
-Solomon Islands,2021-08-02,Oxford/AstraZeneca,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,40404,29429,10975
-Solomon Islands,2021-08-09,Oxford/AstraZeneca,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,56621,43466,13155
+date,people_vaccinated,people_fully_vaccinated,total_vaccinations,location,source_url,vaccine,total_boosters
+2021-03-23,0,,0,Solomon Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Oxford/AstraZeneca,
+2021-04-13,2622,0,2622,Solomon Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Oxford/AstraZeneca,
+2021-04-20,3479,0,3479,Solomon Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Oxford/AstraZeneca,
+2021-06-21,18042,3427,21469,Solomon Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Oxford/AstraZeneca,
+2021-06-29,18050,3692,21742,Solomon Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Oxford/AstraZeneca,
+2021-07-13,19641,5987,25628,Solomon Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Oxford/AstraZeneca,
+2021-07-20,20538,7282,27820,Solomon Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Oxford/AstraZeneca,
+2021-07-27,29429,9934,39363,Solomon Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Oxford/AstraZeneca,
+2021-08-02,29429,10975,40404,Solomon Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Oxford/AstraZeneca,
+2021-08-09,43466,13155,56621,Solomon Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Oxford/AstraZeneca,

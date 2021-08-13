@@ -6,7 +6,7 @@
 
 Vaccination data is updated on a daily basis. For some countries, the update is done by means of an automated process,
 while others require some manual work. To keep track of the currently automated processes, check [this
-table](automation_state.csv). 
+table](../../output/vaccinations/automation_state.csv). 
 
 ### Content
 1. [Vaccination pipeline files](#1-vaccination-pipeline-files)
@@ -26,7 +26,7 @@ This directory contains the following files:
 | [`src/cowidev/vax/`](../../src/cowidev/vax)      | Scripts to automate country data imports.       |
 | [`config.yaml`](config.yaml)      | Data pipeline configuration.       |
 | [`MANIFEST.in`](MANIFEST.IN), [`setup.py`](setup.py), [`requirements.txt`](requirements.txt), [`requirements-flake.txt`](requirements-flake.txt)      |     Library development related files   |
-| [`automation_state.csv`](automation_state.csv)      |     Lists if country process is automated (TRUE) or not (FALSE).   |
+| [`automation_state.csv`](../../output/vaccinations/automation_state.csv)      |     Lists if country process is automated (TRUE) or not (FALSE).   |
 | [`source_table.html`](source_table.html)      | HTML table with country source URLs. Shown at [OWID's website](https://ourworldindata.org/covid-vaccinations#source-information-country-by-country).       |
 | [`vax_update.sh.template`](vax_update.sh.template)      | Template to push vaccination update changes.       |
 
@@ -34,7 +34,7 @@ _*Only most relevant files have been listed_
 
 
 ## 2. Development environment
-<details open>
+<details closed>
 <summary>Show steps ...</summary>
 Follow the steps below to correctly set up your virtual environment.
 
@@ -99,7 +99,7 @@ The environment variable `${OWID_COVID_VAX_CREDENTIALS_FILE}` corresponds to the
 
 ### Check the style
 We use [flake8](https://flake8.pycqa.org/en/latest/) to check the style of our code. The configuration lives in file 
-[tox.ini](tox.ini). To check the style, simply run
+[tox.ini](../../tox.ini). To check the style, simply run
 
 ```sh
 $ tox
@@ -108,7 +108,7 @@ $ tox
 </details>
 
 ## 3. The data pipeline
-To update the data, prior to running the code, make sure to correctly [set up the development environment](#development-environment).
+To update the data, prior to running the code, make sure to correctly [set up the development environment](#2-development-environment).
 
 ### Manual data updates
 
@@ -121,11 +121,11 @@ Once all manual processes have been finished, it  is time to leverage the tool `
 further broken into 4 sub-steps, which we explain below. While these can all be run at once, we recommend running them
 one by one. Prior to running these, make sure you are correctly using your [configuration file](#configuration-file).
 
-*Note*: you can use [vax_update.sh.template](vax_update.sh.template) as an example of how to run the data pipeline
+*Note*: you can use [vax_update.sh.template](../../vax_update.sh.template) as an example of how to run the data pipeline
 automated step.
 
 #### Data pipeline configuration
-To correctly use the configuration in your [config.yaml](config.yaml), you can:
+To correctly use the configuration in your [config.yaml](../../config.yaml), you can:
   - Set environment variable `${OWID_COVID_VAX_CONFIG_FILE}` to file's path.
   - Save configuration under `~/.config/cowid/config.yaml` and run.
   - Run `$ cowid-vax --config config.yaml`, explicitly specifying the path to the config file.
@@ -178,7 +178,7 @@ Run:
 ```
 $ cowid-vax get
 ```
-This step runs the scrips for [batch](../src/cowidev/vax/batch) and [incremental](../src/cowidev/vax/incremental) updates. It will then generate
+This step runs the scrips for [batch](../../src/cowidev/vax/batch) and [incremental](../../src/cowidev/vax/incremental) updates. It will then generate
 individual country files and save them in [`output`](output/vaccinations/main_data/).
 
 *Note:* This step might crash for some countries, as the automation scripts might no longer (or temporarily) work
@@ -304,7 +304,7 @@ Countries are given from the one with the least to the one with he most number o
 
 
 ## 5. Contribute
-We welcome contributions! Read more in [CONTRIBUTE](vaccinations/CONTRIBUTE.md)
+We welcome contributions! Read more in [CONTRIBUTE](CONTRIBUTE.md)
 ## 6. FAQs
 
 ### Any question or suggestion?
@@ -314,5 +314,5 @@ open a [pull request](https://github.com/owid/covid-19-data/compare)
 ### An automation no longer works (internal)
 If you detect that an automation is no longer working, and the process seems like it can't be fixed at the moment:
 - Set its state to `automated = FALSE` in the `LOCATIONS` tab of the internal spreadsheet.
-- Add a new tab in the spreadsheet to manually input the country data. Make sure to include the historical data from the [`output`](output) file.
+- Add a new tab in the spreadsheet to manually input the country data. Make sure to include the historical data from the [`output`](../../output) file.
 - Delete the automation script and automated CSV output to avoid confusion.

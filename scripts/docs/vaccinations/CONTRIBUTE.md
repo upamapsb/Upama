@@ -4,7 +4,7 @@
 
 We welcome contributions to our vaccination dataset! Note that due to the nature of our pipeline, **we cannot accept pull requests
 for manually imported country data**. To see which countries are automated and which reaquire manual import, check
-[this file](automation_state.csv).
+[this file](../../output/vaccinations/automation_state.csv).
 
 ### Content
 - [About our vaccination data](#about-our-vaccination-data)
@@ -93,7 +93,7 @@ being accepted. This is to ensure scalability of the project.
 
 ## Report new data values
 To report new values for a country/location, first check if the imports for that country/territory are automated. You
-can check column `automated` in [this file](automation_state.csv).
+can check column `automated` in [this file](../../output/vaccinations/automation_state.csv).
 
 - If the country imports are automated (`TRUE` value in file above), note that the new value might be added in next
   update. **Only report new values if the data is missing for more than 48 hours!** Report the new data as a [pull request](https://github.com/owid/covid-19-data/compare).
