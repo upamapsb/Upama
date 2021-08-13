@@ -326,12 +326,12 @@ def add_switzerland(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def add_countries(df):
-    df = add_switzerland(df)
-    df = add_united_states(df)
-    df = add_canada(df)
-    df = add_uk(df)
-    df = add_israel(df)
     df = add_algeria(df)
+    df = add_canada(df)
+    df = add_israel(df)
+    df = add_switzerland(df)
+    df = add_uk(df)
+    df = add_united_states(df)
     return df
 
 
