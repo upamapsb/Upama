@@ -6,22 +6,17 @@ from cowidev.vax.utils.utils import make_monotonic
 
 
 class Sweden(object):
-    def __init__(
-        self,
-        source_url: str,
-        location: str,
-        columns_rename: dict = None,
-    ):
-        """Constructor.
-
-        Args:
-            source_url (str): Source data url
-            location (str): Location name
-            columns_rename (dict, optional): Maps original to new names. Defaults to None.
-        """
-        self.source_url = source_url
-        self.location = location
-        self.columns_rename = columns_rename
+    def __init__(self):
+        """Constructor."""
+        self.source_url_daily = (
+            "https://www.folkhalsomyndigheten.se/smittskydd-beredskap/utbrott/aktuella-utbrott/covid-19/"
+            "vaccination-mot-covid-19/statistik/statistik-over-registrerade-vaccinationer-covid-19/"
+        )
+        self.source_url_weekly = (
+            "https://fohm.maps.arcgis.com/sharing/rest/content/items/fc749115877443d29c2a49ea9eca77e9/data"
+        )
+        self.location = "Sweden"
+        self.columns_rename = None
 
     def read(self) -> pd.DataFrame:
         daily = self._read_daily_data()
@@ -30,7 +25,7 @@ class Sweden(object):
         return pd.concat([daily, weekly]).sort_values("date").reset_index(drop=True)
 
     def enrich_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(location=self.location, source_url=self.source_url)
+        return df.assign(location=self.location, source_url=self.source_url_daily)
 
     def enrich_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(vaccine="Moderna, Oxford/AstraZeneca, Pfizer/BioNTech")
@@ -49,8 +44,7 @@ class Sweden(object):
         return origin_date + pd.DateOffset(days=7 * int(row.Vecka))
 
     def _read_weekly_data(self) -> pd.DataFrame:
-        url = "https://fohm.maps.arcgis.com/sharing/rest/content/items/fc749115877443d29c2a49ea9eca77e9/data"
-        df = pd.read_excel(url, sheet_name="Vaccinerade tidsserie")
+        df = pd.read_excel(self.source_url_weekly, sheet_name="Vaccinerade tidsserie")
         df = df[df["Region"] == "| Sverige |"][
             ["Vecka", "Antal vaccinerade", "Vaccinationsstatus"]
         ]
@@ -77,11 +71,7 @@ class Sweden(object):
         return df
 
     def _read_daily_data(self) -> pd.DataFrame:
-        url = (
-            "https://www.folkhalsomyndigheten.se/smittskydd-beredskap/utbrott/aktuella-utbrott/covid-19/"
-            "vaccination-mot-covid-19/statistik/statistik-over-registrerade-vaccinationer-covid-19/"
-        )
-        df = pd.read_html(url)[1]
+        df = pd.read_html(self.source_url_daily)[1]
         df = df[
             [
                 "Datum",
@@ -113,14 +103,4 @@ class Sweden(object):
 
 
 def main(paths):
-    Sweden(
-        source_url=(
-            "https://www.folkhalsomyndigheten.se/smittskydd-beredskap/utbrott/aktuella-utbrott/covid-19/"
-            "vaccination-mot-covid-19/statistik/statistik-over-registrerade-vaccinationer-covid-19/"
-        ),
-        location="Sweden",
-    ).to_csv(paths)
-
-
-if __name__ == "__main__":
-    main(output_dir)
+    Sweden().to_csv(paths)
