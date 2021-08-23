@@ -14,7 +14,7 @@ suppressPackageStartupMessages({
 })
 rm(list = ls())
 
-SKIP <- c()
+SKIP <- c("south_sudan")
 
 args <- commandArgs(trailingOnly=TRUE)
 execution_mode <- args[1]
