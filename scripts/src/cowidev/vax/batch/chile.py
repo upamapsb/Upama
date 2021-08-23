@@ -14,6 +14,7 @@ vaccine_mapping = {
 class Chile:
     def __init__(self):
         self.location = "Chile"
+        # Alternative: https://github.com/MinCiencia/Datos-COVID19/tree/master/output/producto83
         self.source_url_manufacturer = (
             "https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto76/fabricante.csv"
         )
