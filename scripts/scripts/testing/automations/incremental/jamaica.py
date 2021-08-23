@@ -19,14 +19,12 @@ def main():
     soup = BeautifulSoup(req.content, "html.parser")
 
     # find and assign url
-    source_url = (
-        soup.find("div", class_="block-content").find("h2").find("a").attrs["href"]
-    )
+    source_url = soup.find("div", class_="block-content").find("h2").find("a").attrs["href"]
 
     # find and assign date
-    date = soup.find("div", class_="block-content").find("h2").text
+    date = soup.find("div", class_="block-content").find("h2").text.upper()
     date = re.search(
-        r"(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+(\d{1,2})\,\s*(\d{4})",
+        r"(JAN(?:UARY)?|FEB(?:RUARY)?|MAR(?:CH)?|APR(?:IL)?|MAY|JUN(?:E)?|JUL(?:Y)?|AUG(?:UST)?|SEP(?:TEMBER)?|OCT(?:OBER)?|NOV(?:EMBER)?|DEC(?:EMBER)?)\s+(\d{1,2})\,\s*(\d{4})",
         date,
     ).group(0)
     date = str(pd.to_datetime(date).date())
