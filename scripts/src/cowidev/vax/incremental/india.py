@@ -6,19 +6,22 @@ from cowidev.vax.utils.dates import localdate
 
 
 class India:
-    def __init__(self) -> None:
-        self.location = "India"
-        self.source_name = "cowin"  # mohfw, cowin
-        self.source_url = {
+
+    location: str = "India"
+    source_name: str = "cowin"  # mohfw, cowin
+    source_url_ref: str = {
+        "mohfw": "https://www.mohfw.gov.in/",
+        "cowin": "https://dashboard.cowin.gov.in/",
+    }
+
+    @property
+    def source_url(self):
+        return {
             "mohfw": "https://www.mygov.in/sites/default/files/covid/vaccine/vaccine_counts_today.json",
             "cowin": (
-                f"https://api.cowin.gov.in/api/v1/reports/v2/getPublicReports?state_id=&district_id=&date="
+                "https://api.cowin.gov.in/api/v1/reports/v2/getPublicReports?state_id=&district_id=&date="
                 f"{self.date_str}"
             ),
-        }
-        self.source_url_ref = {
-            "mohfw": "https://www.mohfw.gov.in/",
-            "cowin": "https://dashboard.cowin.gov.in/",
         }
 
     def read(self):
@@ -74,9 +77,7 @@ class India:
         return enrich_data(ds, "source_url", self.source_url_ref[self.source_name])
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
-        )
+        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
 
     def export(self, paths):
         data = self.read().pipe(self.pipeline)
