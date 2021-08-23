@@ -42,6 +42,7 @@ class PAHO:
             "Second dose [4,6]": "dose_2",
             "Complete Schedule [2]": "people_fully_vaccinated",
             "Total Doses [1,11]": "total_vaccinations",
+            "Additional dose [9]": "total_boosters",
             "date": "date",
         }
 
@@ -114,7 +115,7 @@ class PAHO:
         columns_missing = set(self.columns_mapping).difference(df.columns)
         columns_unknown = df.columns.difference(self.columns_mapping)
         if columns_missing:
-            raise ValueError(f"Missing column fields: {columns_missing}. Unknown columns: {columns_unknown}")
+            raise ValueError(f"Missing column fields: {columns_missing}")
         return df
 
     def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -158,6 +159,7 @@ class PAHO:
                 "total_vaccinations",
                 "people_vaccinated",
                 "people_fully_vaccinated",
+                "total_boosters",
             ]
         ]
 
@@ -181,6 +183,7 @@ class PAHO:
                 total_vaccinations=row["total_vaccinations"],
                 people_vaccinated=row["people_vaccinated"],
                 people_fully_vaccinated=row["people_fully_vaccinated"],
+                total_boosters=row["total_boosters"],
                 date=row["date"],
                 vaccine=row["vaccine"],
                 source_url=row["source_url"],
