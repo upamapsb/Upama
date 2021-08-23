@@ -17,10 +17,14 @@ COUNTRIES = {
     "Chad": "Chad",
     "Congo": "Congo",
     "Djibouti": "Djibouti",
+    "Eswatini": "Eswatini",
     "Gabon": "Gabon",
     "Gambia": "Gambia",
     "Mauritania": "Mauritania",
+    "Mauritius": "Mauritius",
+    "Namibia": "Namibia",
     "Rwanda": "Rwanda",
+    "Senegal": "Senegal",
 }
 
 
@@ -106,15 +110,11 @@ class AfricaCDC:
 
     def pipe_vaccine_who(self, df: pd.DataFrame) -> pd.DataFrame:
         url = "https://covid19.who.int/who-data/vaccination-data.csv"
-        df_who = pd.read_csv(url, usecols=["ISO3", "VACCINES_USED"]).rename(
-            columns={"VACCINES_USED": "vaccine"}
-        )
+        df_who = pd.read_csv(url, usecols=["ISO3", "VACCINES_USED"]).rename(columns={"VACCINES_USED": "vaccine"})
         df_who = df_who.dropna(subset=["vaccine"])
         df_who = df_who.assign(
             vaccine=df_who.vaccine.apply(
-                lambda x: ", ".join(
-                    sorted(set(VACCINES_WHO_MAPPING[xx.strip()] for xx in x.split(",")))
-                )
+                lambda x: ", ".join(sorted(set(VACCINES_WHO_MAPPING[xx.strip()] for xx in x.split(","))))
             )
         )
         df = df.merge(df_who, left_on="ISO_3_CODE", right_on="ISO3")
