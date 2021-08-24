@@ -13,6 +13,7 @@ from cowidev.vax.utils.dates import clean_date
 # https://www.cdc.gov.tw/En/Bulletin/Detail/SEd8rAKMzywG_b92N6z8nA?typeid=158
 vaccines_mapping = {
     "AstraZeneca": "Oxford/AstraZeneca",
+    "高端": "Medigen",
     "Moderna": "Moderna",
 }
 
@@ -110,9 +111,7 @@ class Taiwan:
         return enrich_data(ds, "source_url", self.source_data_url)
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds.pipe(self.pipe_metrics).pipe(self.pipe_location).pipe(self.pipe_source)
-        )
+        return ds.pipe(self.pipe_metrics).pipe(self.pipe_location).pipe(self.pipe_source)
 
     def to_csv(self, paths):
         data = self.read().pipe(self.pipeline)
