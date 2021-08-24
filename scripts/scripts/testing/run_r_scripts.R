@@ -24,7 +24,7 @@ if (length(SKIP) > 0) warning("Skipping the following countries: ", paste0(SKIP,
 CONFIG <- rjson::fromJSON(file = "testing_dataset_config.json")
 `_` <- Sys.setlocale("LC_TIME", "en_US")
 
-add_snapshot <- function(count, sheet_name, country, units, date = today(),
+add_snapshot <- function(count, sheet_name, country, units, date = today() - 1,
                          source_url, source_label, testing_type = NA_character_,
                          notes = NA_character_, daily_change = NA_integer_) {
 
@@ -34,7 +34,6 @@ add_snapshot <- function(count, sheet_name, country, units, date = today(),
     stopifnot(!is.na(date))
     stopifnot(is.integer(count))
     stopifnot(!is.na(count))
-    stopifnot(testing_type %in% c("PCR only", "unclear", "includes non-PCR"))
     stopifnot(units %in% c("people tested", "samples tested", "tests performed", "units unclear", "tests performed (CDC)"))
     stopifnot(length(count) == 1)
     stopifnot(count >= max(prev$`Cumulative total`, na.rm = TRUE))
