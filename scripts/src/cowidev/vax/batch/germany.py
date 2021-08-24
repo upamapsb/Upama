@@ -31,18 +31,12 @@ class Germany:
 
         def _is_vaccine_column(column_name: str):
             if re.search(self.regex_doses_colnames, column_name):
-                if (
-                    re.search(self.regex_doses_colnames, column_name).group(1)
-                    not in EXCLUDE
-                ):
+                if re.search(self.regex_doses_colnames, column_name).group(1) not in EXCLUDE:
                     return True
             return False
 
         for column_name in df.columns:
-            if (
-                _is_vaccine_column(column_name)
-                and column_name not in self.vaccine_mapping
-            ):
+            if _is_vaccine_column(column_name) and column_name not in self.vaccine_mapping:
                 raise ValueError(f"Found unknown vaccine: {column_name}")
         return df
 
@@ -68,17 +62,11 @@ class Germany:
 
     def _vaccine_start_dates(self, df: pd.DataFrame):
         date2vax = sorted(
-            (
-                (df.loc[df[vaccine] > 0, "date"].min(), vaccine)
-                for vaccine in self.vaccine_mapping.values()
-            ),
+            ((df.loc[df[vaccine] > 0, "date"].min(), vaccine) for vaccine in self.vaccine_mapping.values()),
             key=lambda x: x[0],
             reverse=True,
         )
-        return [
-            (date2vax[i][0], ", ".join(sorted(v[1] for v in date2vax[i:])))
-            for i in range(len(date2vax))
-        ]
+        return [(date2vax[i][0], ", ".join(sorted(v[1] for v in date2vax[i:]))) for i in range(len(date2vax))]
 
     def enrich_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
         vax_date_mapping = self._vaccine_start_dates(df)
@@ -105,11 +93,7 @@ class Germany:
         ]
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        return (
-            df.pipe(self.enrich_source)
-            .pipe(self.enrich_vaccine)
-            .pipe(self.select_output_columns)
-        )
+        return df.pipe(self.enrich_source).pipe(self.enrich_vaccine).pipe(self.select_output_columns)
 
     def melt_manufacturers(self, df: pd.DataFrame) -> pd.DataFrame:
         id_vars = ["date", "location"]
@@ -128,9 +112,7 @@ class Germany:
         # Export manufacturer data
         df = df_base.pipe(self.pipeline_manufacturer)
         df.to_csv(paths.tmp_vax_out_man(self.location), index=False)
-        export_metadata(
-            df, "Robert Koch Institut", self.source_url_ref, paths.tmp_vax_metadata_man
-        )
+        export_metadata(df, "Robert Koch Institut", self.source_url_ref, paths.tmp_vax_metadata_man)
 
 
 def main(paths):
@@ -146,7 +128,7 @@ def main(paths):
         vaccine_mapping={
             "dosen_biontech_kumulativ": "Pfizer/BioNTech",
             "dosen_moderna_kumulativ": "Moderna",
-            "dosen_astrazeneca_kumulativ": "Oxford/AstraZeneca",
+            "dosen_astra_kumulativ": "Oxford/AstraZeneca",
             "dosen_johnson_kumulativ": "Johnson&Johnson",
         },
     ).to_csv(paths)
