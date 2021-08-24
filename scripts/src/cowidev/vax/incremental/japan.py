@@ -40,13 +40,11 @@ def enrich_location(ds: pd.Series) -> pd.Series:
 
 
 def enrich_vaccine(ds: pd.Series) -> pd.Series:
-    return enrich_data(ds, "vaccine", "Moderna, Pfizer/BioNTech")
+    return enrich_data(ds, "vaccine", "Moderna, Pfizer/BioNTech, Oxford/AstraZeneca")
 
 
 def enrich_source(ds: pd.Series) -> pd.Series:
-    return enrich_data(
-        ds, "source_url", "https://www.kantei.go.jp/jp/headline/kansensho/vaccine.html"
-    )
+    return enrich_data(ds, "source_url", "https://www.kantei.go.jp/jp/headline/kansensho/vaccine.html")
 
 
 def pipeline(ds: pd.Series) -> pd.Series:
