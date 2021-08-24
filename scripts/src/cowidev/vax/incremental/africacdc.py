@@ -22,9 +22,11 @@ COUNTRIES = {
     "Gambia": "Gambia",
     "Mauritania": "Mauritania",
     "Mauritius": "Mauritius",
+    "Mozambique": "Mozambique",
     "Namibia": "Namibia",
     "Rwanda": "Rwanda",
     "Senegal": "Senegal",
+    "Uganda": "Uganda",
 }
 
 
