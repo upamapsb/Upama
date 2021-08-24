@@ -1,18 +1,15 @@
-url <- "https://coronavirus.bg/"
+url <- "https://coronavirus.bg/bg/statistika"
 
 page <- read_html(url)
 
-values <- page %>%
-    html_nodes(".statistics-container .statistics-value") %>%
-    html_text() %>%
-    as.integer()
+tables <- page %>% html_nodes("table") %>% html_table()
 
-labels <- page %>%
-    html_nodes(".statistics-container .statistics-label") %>%
-    html_text() %>%
-    str_detect("Направени тестове")
-
-count <- values[labels]
+for (table in tables) {
+    setDT(table)
+    if ("RT PCR" %in% unlist(table[, 1])) {
+        count <- table[Тип == "Общо", Общо]
+    }
+}
 
 add_snapshot(
     count = count,
@@ -20,6 +17,5 @@ add_snapshot(
     country = "Bulgaria",
     units = "tests performed",
     source_url = url,
-    source_label = "Bulgaria COVID-10 Information Portal",
-    testing_type = "unclear"
+    source_label = "Bulgaria COVID-10 Information Portal"
 )
