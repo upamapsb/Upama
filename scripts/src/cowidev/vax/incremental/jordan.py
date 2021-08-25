@@ -1,4 +1,7 @@
 import re
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 import pandas as pd
 from selenium.webdriver.common.by import By
@@ -30,13 +33,9 @@ class Jordan:
             for block in data_blocks:
                 block_title = block.get_attribute("aria-label")
                 if "first dose" in block_title:
-                    people_vaccinated = re.search(
-                        r"first dose +(\d+)\.", block_title
-                    ).group(1)
+                    people_vaccinated = re.search(r"first dose +(\d+)\.", block_title).group(1)
                 elif "sec dose" in block_title:
-                    people_fully_vaccinated = re.search(
-                        r"sec dose +(\d+)\.", block_title
-                    ).group(1)
+                    people_fully_vaccinated = re.search(r"sec dose +(\d+)\.", block_title).group(1)
 
             people_vaccinated = clean_count(people_vaccinated)
             people_fully_vaccinated = clean_count(people_fully_vaccinated)
@@ -66,9 +65,7 @@ class Jordan:
 
     def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
         # Johnson&Johnson authorized, no doses arrived or given yet
-        vaccines_used = (
-            "Pfizer/BioNTech, Sinopharm/Beijing, Sputnik V, Oxford/AstraZeneca"
-        )
+        vaccines_used = "Pfizer/BioNTech, Sinopharm/Beijing, Sputnik V, Oxford/AstraZeneca"
         return enrich_data(ds, "vaccine", vaccines_used)
 
     def pipe_source(self, ds: pd.Series) -> pd.Series:
