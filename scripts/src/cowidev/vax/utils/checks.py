@@ -8,6 +8,7 @@ VACCINES_ACCEPTED = [
     "Abdala",
     "CanSino",
     "Covaxin",
+    "COVIran Barekat",
     "EpiVacCorona",
     "Johnson&Johnson",
     "Medigen",

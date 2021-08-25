@@ -72,6 +72,12 @@ COUNTRIES = {
     "Yemen": "Yemen",
 }
 
+# Sometimes the WHO doesn't yet include a vaccine in a country's metadata
+# while there is evidence that it has been administered in the country
+ADDITIONAL_VACCINES_USED = {
+    "Iran": ["COVIran Barekat"],
+}
+
 
 class WHO:
     def __init__(self) -> None:
@@ -131,6 +137,10 @@ class WHO:
         vaccines = pd.Series(row.VACCINES_USED.split(","))
         vaccines = vaccines.replace(VACCINES_WHO_MAPPING)
         only_2doses = all(-vaccines.isin(pd.Series(VACCINES_ONE_DOSE)))
+
+        # Add vaccines that aren't yet recorded by the WHO
+        if row.COUNTRY in ADDITIONAL_VACCINES_USED.keys():
+            vaccines = pd.concat([vaccines, pd.Series(ADDITIONAL_VACCINES_USED[row.COUNTRY])])
 
         return pd.Series([", ".join(sorted(vaccines.unique())), only_2doses])
 
