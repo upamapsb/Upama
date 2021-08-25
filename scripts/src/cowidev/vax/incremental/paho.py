@@ -22,7 +22,6 @@ COUNTRIES = {
     "Bermuda": "Bermuda",
     "Dominica": "Dominica",
     "Honduras": "Honduras",
-    "Jamaica": "Jamaica",
     "Nicaragua": "Nicaragua",
     "Panama": "Panama",
     "Paraguay": "Paraguay",
