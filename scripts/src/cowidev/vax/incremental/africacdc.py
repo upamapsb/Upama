@@ -20,6 +20,7 @@ COUNTRIES = {
     "Eswatini": "Eswatini",
     "Gabon": "Gabon",
     "Gambia": "Gambia",
+    "Ghana": "Ghana",
     "Mauritania": "Mauritania",
     "Mauritius": "Mauritius",
     "Mozambique": "Mozambique",
