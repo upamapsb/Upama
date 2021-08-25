@@ -24,9 +24,11 @@ def read(source: str) -> pd.Series:
 def parse_data(soup: BeautifulSoup) -> pd.Series:
 
     total_vaccinations = clean_count(soup.find(id="stats").find_all("span")[0].text)
+    people_fully_vaccinated = clean_count(soup.find(id="stats").find_all("span")[1].text)
 
     data = {
         "total_vaccinations": total_vaccinations,
+        "people_fully_vaccinated": people_fully_vaccinated,
     }
     return pd.Series(data=data)
 
@@ -53,12 +55,7 @@ def enrich_source(ds: pd.Series) -> pd.Series:
 
 
 def pipeline(ds: pd.Series) -> pd.Series:
-    return (
-        ds.pipe(format_date)
-        .pipe(enrich_location)
-        .pipe(enrich_vaccine)
-        .pipe(enrich_source)
-    )
+    return ds.pipe(format_date).pipe(enrich_location).pipe(enrich_vaccine).pipe(enrich_source)
 
 
 def main(paths):
@@ -68,6 +65,7 @@ def main(paths):
         paths=paths,
         location=data["location"],
         total_vaccinations=data["total_vaccinations"],
+        people_fully_vaccinated=data["people_fully_vaccinated"],
         date=data["date"],
         source_url=data["source_url"],
         vaccine=data["vaccine"],
