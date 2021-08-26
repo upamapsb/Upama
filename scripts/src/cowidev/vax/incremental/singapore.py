@@ -24,6 +24,7 @@ class Singapore:
 
     def read(self) -> pd.Series:
         self.source_url = self.find_article()
+        print(self.source_url)
         soup = get_soup(self.source_url)
         return self.parse_text(soup)
 
@@ -35,7 +36,7 @@ class Singapore:
         national_doses = clean_count(data[1])
         national_people_vaccinated = clean_count(data[2])
 
-        who_eul = r"In addition, ([\d,]+) doses of other vaccines recognised in the World Health Organization’s Emergency Use Listing \(WHO EUL\) have been administered as of ([\d]+ [A-Za-z]+ 20\d{2}), covering ([\d,]+) individuals\. In total, (\d+)% of our population has completed their full regimen/ received two doses of COVID-19 vaccines, and (\d+)% has received at least one dose"
+        who_eul = r"In addition, ([\d,]+) doses of other vaccines recognised in the World Health Organization.s Emergency Use Listing \(WHO EUL\) have been administered as of ([\d]+ [A-Za-z]+ 20\d{2}), covering ([\d,]+) individuals\. In total, (\d+)% of our population has completed their full regimen/ received two doses of COVID-19 vaccines, and (\d+)% has received at least one dose"
         data = re.search(who_eul, soup.text).groups()
         who_doses = clean_count(data[0])
         who_date = clean_date(data[1], fmt="%d %B %Y", lang="en_US", loc="en_US")
