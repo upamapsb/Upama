@@ -16,26 +16,23 @@ from cowidev.vax.utils.dates import clean_date
 
 
 class Thailand:
-    def __init__(self):
-        self.location = "Thailand"
-        self.source_url = "https://ddc.moph.go.th/dcd/pagecontent.php?page=643&dept=dcd"
-        self.regex_date = r"\s?ข้อมูล ณ วันที่ (\d{1,2}) (.*) (\d{4})"
+    location: str = "Thailand"
+    source_url: str = "https://ddc.moph.go.th/dcd/pagecontent.php?page=643&dept=dcd"
+    regex_date: str = r"\s?ข้อมูล ณ วันที่ (\d{1,2}) (.*) (\d{4})"
 
     @property
     def regex_vax(self):
         regex_aux = r"\((?:รา|รำ)ย\)"
         regex_vax = (
             r" ".join([f"เข็มที่ {i} {regex_aux}" for i in range(1, 4)])
-            + r" รวม \(โดส\) ([\d,]+) ([\d,]+) ([\d,]+) ([\d,]+)"
+            + r" รวม \(โดส\)\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)"
         )
         return regex_vax
 
     def read(self, last_update: str) -> pd.DataFrame:
         yearly_report_page = get_soup(self.source_url)
         # Get Newest Month Report Page
-        monthly_report_link = yearly_report_page.find(
-            "div", class_="col-lg-12", id="content-detail"
-        ).find("a")["href"]
+        monthly_report_link = yearly_report_page.find("div", class_="col-lg-12", id="content-detail").find("a")["href"]
         monthly_report_page = get_soup(monthly_report_link)
         # Get links
         df = self._parse_data(monthly_report_page, last_update)
@@ -95,13 +92,9 @@ class Thailand:
             "\uf713": "\u0e48",
             "\uf714": "\u0e49",
         }
-        special_char_replace = dict(
-            (re.escape(k), v) for k, v in special_char_replace.items()
-        )
+        special_char_replace = dict((re.escape(k), v) for k, v in special_char_replace.items())
         pattern = re.compile("|".join(special_char_replace.keys()))
-        text = pattern.sub(
-            lambda m: special_char_replace[re.escape(m.group(0))], raw_text
-        )
+        text = pattern.sub(lambda m: special_char_replace[re.escape(m.group(0))], raw_text)
         return text
 
     def _parse_metrics(self, text: str):
