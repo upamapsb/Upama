@@ -13,14 +13,21 @@ logger = get_logger()
 
 # Dict mapping Africa CDC country names -> OWID country names
 COUNTRIES = {
+    "Angola": "Angola",
+    "Benin": "Benin",
+    "Botswana": "Botswana",
+    "Burkina Faso": "Burkina Faso",
     "Central African Republic": "Central African Republic",
     "Chad": "Chad",
     "Congo": "Congo",
     "Djibouti": "Djibouti",
+    "Egypt": "Egypt",
     "Eswatini": "Eswatini",
     "Gabon": "Gabon",
     "Gambia": "Gambia",
     "Ghana": "Ghana",
+    "Lesotho": "Lesotho",
+    "Libya": "Libya",
     "Mauritania": "Mauritania",
     "Mauritius": "Mauritius",
     "Mozambique": "Mozambique",
@@ -147,6 +154,16 @@ class AfricaCDC:
             ]
         ]
 
+    def pipe_exclude_observations(self, df: pd.DataFrame) -> pd.DataFrame:
+        # Exclude observations where people_fully_vaccinated == 0, as they always seem to be
+        # data errors rather than countries without any full vaccination.
+        df = df[df.people_fully_vaccinated > 0]
+
+        # Exclude observations where people_fully_vaccinated > people_vaccinated
+        df = df[df.people_fully_vaccinated <= df.people_vaccinated]
+
+        return df
+
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
             df.pipe(self.pipe_rename)
@@ -156,6 +173,7 @@ class AfricaCDC:
             .pipe(self.pipe_source)
             .pipe(self.pipe_date)
             .pipe(self.pipe_select_out_cols)
+            .pipe(self.pipe_exclude_observations)
         )
 
     def increment_countries(self, df: pd.DataFrame, paths):
