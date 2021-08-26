@@ -1,61 +1,25 @@
+import datetime
+
 import pandas as pd
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
 from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
 from cowidev.vax.utils.dates import clean_date
+from cowidev.vax.utils.utils import get_soup
 
 
 def read(source: str) -> pd.Series:
-    return connect_parse_data(source)
+    soup = get_soup(source)
 
+    counters = soup.find_all(class_="text-brand-blue")
+    dose_1 = clean_count(counters[1].text)
+    dose_2 = clean_count(counters[2].text)
+    assert dose_1 >= dose_2
 
-def connect_parse_data(source: str) -> pd.Series:
-    op = Options()
-    op.add_argument("--headless")
+    date = soup.find(class_="text-gray-500").text
+    date = date.replace("Updated ", "") + str(datetime.date.today().year)
+    date = clean_date(date, fmt="%d. %B%Y", lang="en")
 
-    with webdriver.Chrome(options=op) as driver:
-        driver.implicitly_wait(20)
-        driver.get(source)
-        # Get date
-        date = parse_date(driver)
-        # Get and load iframe
-        source_iframe = parse_iframe_url(driver)
-        driver.get(source_iframe)
-        # Sanity check
-        _sanity_checks(driver)
-        # Get doses
-        dose_1, dose_2 = parse_doses(driver)
-    return pd.Series(
-        {"people_vaccinated": dose_1, "people_fully_vaccinated": dose_2, "date": date}
-    )
-
-
-def parse_iframe_url(driver: webdriver.Chrome) -> str:
-    iframe_url = driver.find_element_by_class_name("vaccine").get_attribute("src")
-    return iframe_url
-
-
-def parse_doses(driver: webdriver.Chrome) -> tuple:
-    doses = driver.find_element_by_class_name(
-        "igc-graph-group"
-    ).find_elements_by_tag_name("text")
-    dose_1, dose_2 = [clean_count(dose.text) for dose in doses]
-    return dose_1, dose_2
-
-
-def parse_date(driver: webdriver.Chrome) -> str:
-    text = driver.find_element_by_class_name("content").text
-    return clean_date(text, "Opdateret: %d. %B %Y", "da")
-
-
-def _sanity_checks(driver: webdriver.Chrome):
-    elems = driver.find_elements_by_class_name("igc-legend-label")
-    labels = [e.text for e in elems]
-    if labels[0] != "Fået 1. vaccine" or labels[1] != "Modtaget 2. vaccine*":
-        raise Exception(
-            "First graph structure has changed. Consider manually checking the axis labels in the browser."
-        )
+    return pd.Series({"people_vaccinated": dose_1, "people_fully_vaccinated": dose_2, "date": date})
 
 
 def enrich_source(ds: pd.Series, source: str) -> pd.Series:
@@ -76,16 +40,11 @@ def add_totals(ds: pd.Series) -> pd.Series:
 
 
 def pipeline(ds: pd.Series, source: str) -> pd.Series:
-    return (
-        ds.pipe(enrich_location)
-        .pipe(enrich_vaccine)
-        .pipe(enrich_source, source)
-        .pipe(add_totals)
-    )
+    return ds.pipe(enrich_location).pipe(enrich_vaccine).pipe(enrich_source, source).pipe(add_totals)
 
 
 def main(paths):
-    source = "https://corona.nun.gl/emner/statistik/antal_vaccinerede"
+    source = "https://corona.nun.gl"
     data = read(source).pipe(pipeline, source)
     increment(
         paths=paths,
