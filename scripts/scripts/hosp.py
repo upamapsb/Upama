@@ -337,6 +337,7 @@ def generate_dataset():
     df = add_per_million(df)
     df = owid_format(df)
     df = date_to_owid_year(df)
+    df = df.drop_duplicates(keep=False, subset=["Country", "Year"])
     df.to_csv(os.path.join(GRAPHER_PATH, "COVID-2019 - Hospital & ICU.csv"), index=False)
     # Timestamp
     filename = os.path.join(TIMESTAMP_PATH, "owid-covid-data-last-updated-timestamp-hosp.txt")
