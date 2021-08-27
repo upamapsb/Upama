@@ -1,5 +1,5 @@
-url <- read_html("https://www.gub.uy/ministerio-salud-publica/comunicacion/noticias") %>%
-    html_nodes(".List--media h3 a") %>%
+url <- read_html("https://www.gub.uy/ministerio-salud-publica/home") %>%
+    html_nodes(".Box-gridList h3 a") %>%
     html_attr("href")
 
 url <- str_subset(url, "situacion-sobre-coronavirus") %>%
@@ -9,7 +9,8 @@ url <- str_subset(url, "situacion-sobre-coronavirus") %>%
 page <- read_html(url)
 
 date <- page %>%
-    html_node(".Page-date") %>%
+    html_nodes(".Page-date") %>%
+    tail(1) %>%
     html_text() %>%
     dmy()
 
