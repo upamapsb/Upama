@@ -109,8 +109,10 @@ def sel_options(headless: bool = True):
     return op
 
 
-def get_driver(headless: bool = True, download_folder: str = None):
-    driver = webdriver.Chrome(options=sel_options(headless=headless))
+def get_driver(headless: bool = True, download_folder: str = None, options=None):
+    if options is None:
+        options = sel_options(headless=headless)
+    driver = webdriver.Chrome(options=options)
     if download_folder:
         set_download_settings(driver, download_folder)
     return driver
@@ -137,9 +139,9 @@ def get_latest_file(path, extension):
 
 def scroll_till_element(driver, element):
     desired_y = (element.size["height"] / 2) + element.location["y"]
-    current_y = (
-        driver.execute_script("return window.innerHeight") / 2
-    ) + driver.execute_script("return window.pageYOffset")
+    current_y = (driver.execute_script("return window.innerHeight") / 2) + driver.execute_script(
+        "return window.pageYOffset"
+    )
     scroll_y_by = desired_y - current_y
     driver.execute_script("window.scrollBy(0, arguments[0]);", scroll_y_by)
 
