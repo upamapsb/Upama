@@ -12,6 +12,6 @@
 - [Data: COVID-19 vaccinations](public/data/vaccinations/README.md)
 - [Data: excess mortality](public/data/excess_mortality/README.md)
 - [Development: general](scripts/README.md)
-- [Development: vaccinations](scripts/scripts/vaccinations/README.md)
-- [Development: vaccinations (contribution guidelines)](scripts/scripts/vaccinations/CONTRIBUTE.md)
+- [Development: vaccinations](scripts/docs/vaccinations/README.md)
+- [Development: vaccinations (contribution guidelines)](scripts/docs/vaccinations/CONTRIBUTE.md)
 - [Development: testing](scripts/scripts/testing/README.md)
