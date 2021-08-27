@@ -16,8 +16,8 @@ def read(source: str) -> pd.Series:
     assert dose_1 >= dose_2
 
     date = soup.find(class_="text-gray-500").text
-    date = date.replace("Updated ", "") + str(datetime.date.today().year)
-    date = clean_date(date, fmt="%d. %B%Y", lang="en")
+    date = date + str(datetime.date.today().year)
+    date = clean_date(date, fmt="Nutarterneqarpoq: %d. %B%Y", lang="en")
 
     return pd.Series({"people_vaccinated": dose_1, "people_fully_vaccinated": dose_2, "date": date})
 
