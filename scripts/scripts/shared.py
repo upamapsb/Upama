@@ -22,11 +22,11 @@ zero_day = datetime.strptime(ZERO_DAY, "%Y-%m-%d")
 # =========
 
 
-def _find_closest_year_row(df, year=2020):
+def _find_closest_year_row(df, year=2021):
     """Returns the row which is closest to the year specified (in either direction)"""
     df = df.copy()
     df["year"] = df["year"].sort_values(ascending=True)
-    return df.loc[df["year"].map(lambda x: abs(x - 2020)).idxmin()]
+    return df.loc[df["year"].map(lambda x: abs(x - year)).idxmin()]
 
 
 # ============
@@ -34,7 +34,7 @@ def _find_closest_year_row(df, year=2020):
 # ============
 
 
-def load_population(year=2020):
+def load_population(year=2021):
     df = pd.read_csv(
         POPULATION_CSV_PATH,
         keep_default_na=False,

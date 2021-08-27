@@ -119,7 +119,7 @@ def add_united_states(df):
 
     usa.loc[:, "entity"] = "United States"
     usa.loc[:, "iso_code"] = "USA"
-    usa.loc[:, "population"] = 331002647
+    usa.loc[:, "population"] = 332915074
 
     df = pd.concat([df, usa])
     return df
@@ -143,7 +143,7 @@ def add_canada(df):
     canada.loc[:, "date"] = canada["date"].dt.date
     canada.loc[:, "entity"] = "Canada"
     canada.loc[:, "iso_code"] = "CAN"
-    canada.loc[:, "population"] = 37742157
+    canada.loc[:, "population"] = 38067913
 
     df = pd.concat([df, canada])
     return df
@@ -178,7 +178,7 @@ def add_uk(df):
 
     uk.loc[:, "entity"] = "United Kingdom"
     uk.loc[:, "iso_code"] = "GBR"
-    uk.loc[:, "population"] = 67886004
+    uk.loc[:, "population"] = 68207114
 
     df = pd.concat([df, uk])
     return df
@@ -217,7 +217,7 @@ def add_israel(df):
 
     israel.loc[:, "entity"] = "Israel"
     israel.loc[:, "iso_code"] = "ISR"
-    israel.loc[:, "population"] = 8655541
+    israel.loc[:, "population"] = 8789776
 
     return pd.concat([df, israel])
 
@@ -233,7 +233,7 @@ def add_algeria(df):
 
     algeria.loc[:, "entity"] = "Algeria"
     algeria.loc[:, "iso_code"] = "DZA"
-    algeria.loc[:, "population"] = 43851043
+    algeria.loc[:, "population"] = 44616626
 
     return pd.concat([df, algeria])
 
@@ -286,7 +286,7 @@ def add_switzerland(df: pd.DataFrame) -> pd.DataFrame:
 
     swiss.loc[:, "entity"] = "Switzerland"
     swiss.loc[:, "iso_code"] = "CHE"
-    swiss.loc[:, "population"] = 8654618
+    swiss.loc[:, "population"] = 8715494
 
     return pd.concat([df, swiss])
 
