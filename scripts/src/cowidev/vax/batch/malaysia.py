@@ -29,7 +29,9 @@ class Malaysia:
             "astra",
             "sinovac",
         }
-        self._vax_1d = {}
+        self._vax_1d = {
+            "cansino",
+        }
 
     def read(self) -> pd.DataFrame:
         return pd.read_csv(
@@ -55,9 +57,7 @@ class Malaysia:
     def pipe_check_vaccines(self, df: pd.DataFrame) -> pd.DataFrame:
         # Get double-dose vaccines
         columns_2dose = self._check_double_vaccines(df)
-        columns_new = df.columns.difference(
-            self._columns_default + self.columns_1dose + columns_2dose
-        ).tolist()
+        columns_new = df.columns.difference(self._columns_default + self.columns_1dose + columns_2dose).tolist()
         if columns_new:
             raise ValueError(
                 f"New columns {columns_new}! If single-shot data, need to correct variable `people_vaccinated` in "
@@ -66,14 +66,12 @@ class Malaysia:
         return df
 
     def pipe_correct_single_shot(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
-            people_vaccinated=(df.cumul_partial + df[self._vax_1d].sum(axis=1)).astype(
-                int
-            )
-        )
+        return df.assign(people_vaccinated=(df.cumul_partial + df[self._vax_1d].sum(axis=1)).astype(int))
 
     def pipe_vaccine(self, df: pd.DataFrame) -> str:
         def _enrich_vaccine(date):
+            if date >= "2021-08-27":
+                return "CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac"
             if date >= "2021-05-05":
                 return "Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac"
             if date >= "2021-03-17":
