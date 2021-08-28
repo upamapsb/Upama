@@ -11,9 +11,7 @@ from cowidev.vax.utils.dates import localdate
 class UnitedArabEmirates:
     def __init__(self) -> None:
         self.location = "United Arab Emirates"
-        self.source_url = (
-            "https://fcsc.gov.ae/en-us/Pages/Covid19/UAE-Covid-19-Updates.aspx"
-        )
+        self.source_url = "https://fcsc.gov.ae/en-us/Pages/Covid19/UAE-Covid-19-Updates.aspx"
 
     def read(self) -> pd.Series:
         return self._parse_data()
@@ -27,12 +25,12 @@ class UnitedArabEmirates:
             return pd.Series(
                 {
                     "total_vaccinations": total_vaccinations,
-                    "people_vaccinated": self._parse_people_vaccinated(
-                        elem, population
-                    ),
-                    "people_fully_vaccinated": self._parse_people_fully_vaccinated(
-                        elem, population
-                    ),
+                    # "people_vaccinated": self._parse_people_vaccinated(
+                    #     elem, population
+                    # ),
+                    # "people_fully_vaccinated": self._parse_people_fully_vaccinated(
+                    #     elem, population
+                    # ),
                     "date": self._parse_date(driver),
                 }
             )
@@ -55,9 +53,7 @@ class UnitedArabEmirates:
 
     def _parse_people_fully_vaccinated(self, elem, population) -> pd.Series:
         regex = r"Percentage of population fully vaccinated \(against COVID-19\)\s{1,2}([\d\.]+)%"
-        share_fully_vaccinated = self._parse_relative_metric(
-            elem, "fullyVaccintedpct", regex
-        )
+        share_fully_vaccinated = self._parse_relative_metric(elem, "fullyVaccintedpct", regex)
         return round(share_fully_vaccinated * population)
 
     def _parse_relative_metric(self, elem, class_name: str, regex: str):
@@ -84,9 +80,7 @@ class UnitedArabEmirates:
         return enrich_data(ds, "source_url", self.source_url)
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
-        )
+        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
 
     def export(self, paths):
         data = self.read().pipe(self.pipeline)
@@ -94,8 +88,8 @@ class UnitedArabEmirates:
             paths=paths,
             location=data["location"],
             total_vaccinations=int(data["total_vaccinations"]),
-            people_vaccinated=int(data["people_vaccinated"]),
-            people_fully_vaccinated=int(data["people_fully_vaccinated"]),
+            # people_vaccinated=int(data["people_vaccinated"]),
+            # people_fully_vaccinated=int(data["people_fully_vaccinated"]),
             date=data["date"],
             source_url=data["source_url"],
             vaccine=data["vaccine"],
