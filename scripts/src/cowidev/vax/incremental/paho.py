@@ -3,8 +3,6 @@ import time
 from glob import glob
 
 import pandas as pd
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
 from cowidev.vax.utils.files import get_file_encoding
 from cowidev.vax.utils.utils import get_soup, get_driver
@@ -26,6 +24,7 @@ COUNTRIES = {
     "Panama": "Panama",
     "Paraguay": "Paraguay",
     "Venezuela": "Venezuela",
+    "St Kitts & Nevis": "Saint Kitts and Nevis",
 }
 
 
@@ -115,15 +114,23 @@ class PAHO:
         columns_unknown = df.columns.difference(self.columns_mapping)
         if columns_missing:
             raise ValueError(f"Missing column fields: {columns_missing}")
+        # if columns_unknown:
+        #     raise ValueError(f"Unknown column fields: {columns_unknown}")
         return df
+
+    def pipe_check_countries(self, df: pd.DataFrame) -> pd.DataFrame:
+        pass
 
     def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.rename(columns=self.columns_mapping)
 
     def pipe_filter_countries(self, df: pd.DataFrame) -> pd.DataFrame:
         """Get rows from selected countries."""
-        df["location"] = df.location.replace(COUNTRIES)
+        countries_wrong = set(COUNTRIES).difference(df.location)
+        if countries_wrong:
+            raise ValueError(f"Invalid country(s) {countries_wrong}")
         df = df[df.location.isin(COUNTRIES)]
+        df["location"] = df.location.replace(COUNTRIES)
         return df
 
     def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
