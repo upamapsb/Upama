@@ -39,7 +39,7 @@ class SriLanka:
     def read(self):
         soup = get_soup(self.source_url)
         data = self.parse_data(soup)
-        print(data)
+        # print(data)
         return pd.Series(data=data)
 
     def parse_data(self, soup: BeautifulSoup) -> pd.Series:
