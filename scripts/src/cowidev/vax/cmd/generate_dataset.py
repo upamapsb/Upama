@@ -361,6 +361,16 @@ class DatasetGenerator:
             ]
         ].sort_values(["location", "date", "vaccine"])
 
+    def pipe_manufacturer_add_eu(self, df: pd.DataFrame) -> pd.DataFrame:
+        eu_countries = pd.read_csv(self.inputs.eu_countries, usecols=["Country"], squeeze=True).tolist()
+        eu_manufacturer = (
+            df[df.location.isin(eu_countries)]
+            .groupby(["date", "vaccine"], as_index=False)
+            .sum()
+            .assign(location="European Union")
+        )
+        return pd.concat([df, eu_manufacturer])
+
     def pipe_manufacturer_checks(self, df: pd.DataFrame) -> pd.DataFrame:
         vaccines_wrong = set(df.vaccine).difference(VACCINES_ACCEPTED)
         if vaccines_wrong:
@@ -368,7 +378,12 @@ class DatasetGenerator:
         return df
 
     def pipeline_manufacturer(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self.pipe_manufacturer_select_cols).pipe(self.pipe_manufacturer_checks).pipe(self.pipe_to_int)
+        return (
+            df.pipe(self.pipe_manufacturer_select_cols)
+            .pipe(self.pipe_manufacturer_add_eu)
+            .pipe(self.pipe_manufacturer_checks)
+            .pipe(self.pipe_to_int)
+        )
 
     def pipe_age_checks(self, df: pd.DataFrame) -> pd.DataFrame:
         if df[["location", "date", "age_group_min"]].isnull().sum().sum() != 0:
