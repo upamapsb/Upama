@@ -21,7 +21,7 @@ COUNTRIES = {
     "Dominica": "Dominica",
     "Honduras": "Honduras",
     "Nicaragua": "Nicaragua",
-    "Panama": "Panama",
+    # "Panama": "Panama",
     "Paraguay": "Paraguay",
     "Venezuela": "Venezuela",
     "St Kitts & Nevis": "Saint Kitts and Nevis",
