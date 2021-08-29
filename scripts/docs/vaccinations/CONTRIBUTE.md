@@ -122,28 +122,28 @@ To automate the data import for a country, make sure that:
 Next, follow the steps below:
 
 1. Decide if the import is batch (i.e. all the timeseries) or incremental (last value). See the scripts in
-   [`src/vax/batch`](src/vax/batch) and [`src/vax/incremental`](src/vax/incremental) for more details. **Note: Batch is
+   [`src/cowidev/vax/batch`](../../src/cowidev/vax/batch) and [`src/cowidev/vax/incremental`](../../src/cowidev/vax/incremental) for more details. **Note: Batch is
    prefered over Incremental**.
-2. Create a script and place it based on decision in step 1 either in [`src/vax/batch`](src/vax/batch) or
-   [`src/vax/incremental`](src/vax/incremental). Note that each source is different and there is no single pattern that
+2. Create a script and place it based on decision in step 1 either in [`src/cowidev/vax/batch`](../../src/cowidev/vax/batch) or
+   [`src/cowidev/vax/incremental`](../../src/cowidev/vax/incremental). Note that each source is different and there is no single pattern that
    works for all sources, however you can take some inspiration from the scripts below:
     - Batch imports:
-        - CSV: [Peru](src/vax/batch/peru.py)
-        - JSON: [Hong Kong](src/vax/batch/hong_kong.py)
-        - API/JSON (with manufacturer data): [Lithuania](src/vax/batch/lithuania.py)
-        - CSV (with manufacturer data): [Romania](src/vax/batch/romania.py)
-        - Excel (with manufacturer data): [Latvia](src/vax/batch/latvia.py)
-        - Link to excel (with age data): [New Zealand](src/vax/batch/new_zealand.py)
+        - CSV: [Peru](../../src/cowidev/vax/batch/peru.py)
+        - JSON: [Hong Kong](../../src/cowidev/vax/batch/hong_kong.py)
+        - API/JSON (with manufacturer data): [Lithuania](../../src/cowidev/vax/batch/lithuania.py)
+        - CSV (with manufacturer data): [Romania](../../src/cowidev/vax/batch/romania.py)
+        - Excel (with manufacturer data): [Latvia](../../src/cowidev/vax/batch/latvia.py)
+        - Link to excel (with age data): [New Zealand](../../src/cowidev/vax/batch/new_zealand.py)
     - Incremental imports:
-        - HTML: [Bulgaria](src/vax/incremental/bulgaria.py), [Equatorial Guinea](src/vax/incremental/equatorial_guinea.py)
-        - HTML, from news feed: [Macao](src/vax/incremental/macao.py), [Albania](src/vax/incremental/albania.py), [Monaco](src/vax/incremental/monaco.py) 
-        - PDF: [Taiwan](src/vax/incremental/taiwan.py), [Nepal](src/vax/incremental/nepal.py)
-        - CSV: [Argentina](src/vax/incremental/argentina.py)
-        - API/JSON: [Poland](src/vax/incremental/poland.py)
+        - HTML: [Bulgaria](../../src/cowidev/vax/incremental/bulgaria.py), [Equatorial Guinea](../../src/cowidev/vax/incremental/equatorial_guinea.py)
+        - HTML, from news feed: [Macao](../../src/cowidev/vax/incremental/macao.py), [Albania](../../src/cowidev/vax/incremental/albania.py), [Monaco](../../src/cowidev/vax/incremental/monaco.py) 
+        - PDF: [Taiwan](../../src/cowidev/vax/incremental/taiwan.py), [Nepal](../../src/cowidev/vax/incremental/nepal.py)
+        - CSV: [Argentina](../../src/cowidev/vax/incremental/argentina.py)
+        - API/JSON: [Poland](../../src/cowidev/vax/incremental/poland.py)
     - Others:
-        - From WHO: See [WHO](src/vax/incremental/who.py)
-        - From SPC: See [SPC](src/vax/batch/spc.py)
-3. Feel free to add [manufacturer](#Manufacturer-data)/[age data](#Age-data) if you are automating a batch script and
+        - From WHO: See [WHO](../../src/cowidev/vax/incremental/who.py)
+        - From SPC: See [SPC](../../src/cowidev/vax/batch/spc.py)
+3. Feel free to add [manufacturer](#manufacturer-data)/[age data](#age-group-data) if you are automating a batch script and
    the data is available.
 4. Test that it is working and that it is stable. For this you need to have the [library
    installed](README.md#2-development-environment). Run
@@ -164,8 +164,8 @@ but are not limited to, the following:
 
 - Code improvements / bug fixes. As an example, you can take [#465](https://github.com/owid/covid-19-data/pull/465).
 - Updates on the data for countries with automated data imports and incremental processes (this countries are found
-  [here](src/vax/incremental)). For this case, you can create a PR modifying the corresponding file in [output
-  folder](https://github.com/owid/covid-19-data/tree/master/scripts/scripts/vaccinations/output). Create the pull
+  [here](../../src/cowidev/vax/incremental)). For this case, you can create a PR modifying the corresponding file in [output
+  folder](https://github.com/owid/covid-19-data/tree/master/scripts/output/vaccinations). Create the pull
   request only if the daily update already ran but did not update the corresponding country.
 
 You can of course, and we appreciate it very much, create pull requests for other cases.
