@@ -365,11 +365,24 @@ class DatasetGenerator:
         eu_countries = pd.read_csv(self.inputs.eu_countries, usecols=["Country"], squeeze=True).tolist()
         eu_manufacturer = (
             df[df.location.isin(eu_countries)]
+            .pivot(index=["location", "vaccine"], columns="date", values="total_vaccinations")
+            .reset_index()
+            .melt(id_vars=["location", "vaccine"], var_name="date", value_name="total_vaccinations")
+            .sort_values("date")
+        )
+        eu_manufacturer["total_vaccinations"] = (
+            eu_manufacturer.groupby(["location", "vaccine"]).ffill().total_vaccinations
+        )
+        eu_manufacturer = (
+            eu_manufacturer[eu_manufacturer.date.astype(str) >= "2020-12-27"]
             .groupby(["date", "vaccine"], as_index=False)
             .sum()
             .assign(location="European Union")
         )
         return pd.concat([df, eu_manufacturer])
+
+    def pipe_manufacturer_filter_dates(self, df: pd.DataFrame) -> pd.DataFrame:
+        return df[df.date.astype(str) >= "2020-12-01"]
 
     def pipe_manufacturer_checks(self, df: pd.DataFrame) -> pd.DataFrame:
         vaccines_wrong = set(df.vaccine).difference(VACCINES_ACCEPTED)
@@ -381,6 +394,7 @@ class DatasetGenerator:
         return (
             df.pipe(self.pipe_manufacturer_select_cols)
             .pipe(self.pipe_manufacturer_add_eu)
+            .pipe(self.pipe_manufacturer_filter_dates)
             .pipe(self.pipe_manufacturer_checks)
             .pipe(self.pipe_to_int)
         )
