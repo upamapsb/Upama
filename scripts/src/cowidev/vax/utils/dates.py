@@ -120,11 +120,11 @@ def list_timezones():
     return pytz.all_timezones
 
 
-def localdatenow(tz="utc"):
-    return localdate(tz, force_today=True)
+def localdatenow(tz="utc", sum_days=None):
+    return localdate(tz, force_today=True, sum_days=sum_days)
 
 
-def localdate(tz="utc", force_today=False, hour_limit=None, date_format=None):
+def localdate(tz="utc", force_today=False, hour_limit=None, date_format=None, sum_days=None):
     """Get local date.
 
     By default, gets date prior to execution.
@@ -135,6 +135,7 @@ def localdate(tz="utc", force_today=False, hour_limit=None, date_format=None):
         hour_limit (int, optional): If local time hour is lower than this, returned date is previous day.
                                     Defaults to None.
         date_format (str, optional): Format of output datetime. Uses default YYYY-mm-dd.
+        sum_days (int, optional): Number of days to add to local date.
     """
     tz = pytz.timezone(tz)
     local_time = datetime.now(tz=tz)
@@ -142,6 +143,8 @@ def localdate(tz="utc", force_today=False, hour_limit=None, date_format=None):
         local_time = local_time - timedelta(days=1)
     if date_format is None:
         date_format = DATE_FORMAT
+    if sum_days:
+        local_time += timedelta(days=sum_days)
     return local_time.strftime(date_format)
 
 
