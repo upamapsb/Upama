@@ -1,6 +1,5 @@
 import os
 import pandas as pd
-from pandas.core.frame import DataFrame
 
 
 class Serbia:
@@ -39,7 +38,7 @@ class Serbia:
                 "Country": self.location,
                 "Units": self.units,
                 "Source label": self.source_label,
-                "Source URL": self.source_url,
+                "Source URL": self.source_url_ref,
                 "Notes": self.notes,
                 "Testing type": self.testing_type,
             }
