@@ -32,13 +32,15 @@ def parse_data(dose1_soup: BeautifulSoup, dose2_soup: BeautifulSoup) -> pd.Serie
 
 def parse_tableau(soup: BeautifulSoup) -> int:
     tableauData = json.loads(soup.find("textarea", {"id": "tsConfigContainer"}).text)
-    dataUrl = f'https://public.tableau.com{tableauData["vizql_root"]}/bootstrapSession/sessions/{tableauData["sessionid"]}'
+    dataUrl = (
+        f'https://public.tableau.com{tableauData["vizql_root"]}/bootstrapSession/sessions/{tableauData["sessionid"]}'
+    )
     r = requests.post(dataUrl, data={"sheet_id": tableauData["sheetId"]})
     dataReg = re.search(r"\d+;({.*})\d+;({.*})", r.text, re.MULTILINE)
     data = json.loads(dataReg.group(2))
-    return data["secondaryInfo"]["presModelMap"]["dataDictionary"]["presModelHolder"][
-        "genDataDictionaryPresModel"
-    ]["dataSegments"]["0"]["dataColumns"][0]["dataValues"][0]
+    return data["secondaryInfo"]["presModelMap"]["dataDictionary"]["presModelHolder"]["genDataDictionaryPresModel"][
+        "dataSegments"
+    ]["0"]["dataColumns"][0]["dataValues"][0]
 
 
 def enrich_date(ds: pd.Series) -> pd.Series:
@@ -50,9 +52,7 @@ def enrich_location(ds: pd.Series) -> pd.Series:
 
 
 def enrich_vaccine(ds: pd.Series) -> pd.Series:
-    return enrich_data(
-        ds, "vaccine", "Moderna, Oxford/AstraZeneca, Sinopharm/Beijing, Sinovac"
-    )
+    return enrich_data(ds, "vaccine", "Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac")
 
 
 def enrich_source(ds: pd.Series) -> pd.Series:
@@ -60,17 +60,16 @@ def enrich_source(ds: pd.Series) -> pd.Series:
 
 
 def pipeline(ds: pd.Series) -> pd.Series:
-    return (
-        ds.pipe(enrich_date)
-        .pipe(enrich_location)
-        .pipe(enrich_vaccine)
-        .pipe(enrich_source)
-    )
+    return ds.pipe(enrich_date).pipe(enrich_location).pipe(enrich_vaccine).pipe(enrich_source)
 
 
 def main(paths):
-    dose1_source = "https://public.tableau.com/views/DashboardVaksinKemkes/TotalVaksinasiDosis1?:embed=yes&:showVizHome=no"
-    dose2_source = "https://public.tableau.com/views/DashboardVaksinKemkes/TotalVaksinasiDosis2?:embed=yes&:showVizHome=no"
+    dose1_source = (
+        "https://public.tableau.com/views/DashboardVaksinKemkes/TotalVaksinasiDosis1?:embed=yes&:showVizHome=no"
+    )
+    dose2_source = (
+        "https://public.tableau.com/views/DashboardVaksinKemkes/TotalVaksinasiDosis2?:embed=yes&:showVizHome=no"
+    )
     data = read(dose1_source, dose2_source).pipe(pipeline)
     increment(
         paths=paths,
