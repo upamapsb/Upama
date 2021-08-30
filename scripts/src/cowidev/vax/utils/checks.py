@@ -13,6 +13,7 @@ VACCINES_ACCEPTED = [
     "Johnson&Johnson",
     "Medigen",
     "Moderna",
+    "Novavax",
     "Oxford/AstraZeneca",
     "Pfizer/BioNTech",
     "QazVac",
