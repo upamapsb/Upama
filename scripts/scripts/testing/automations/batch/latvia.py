@@ -22,6 +22,7 @@ class Latvia:
     def pipe_date(self, df: pd.DataFrame) -> pd.DataFrame:
         # df <- df[, .SD[1], Date] # TODO: Was in original R code, not sure what it was doing
         df = df.dropna(subset=["Date"])
+        df = df.groupby("Date", as_index=False).head(1)
         return df.assign(Date=df.Date.dt.strftime("%Y-%m-%d")).sort_values("Date")
 
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
