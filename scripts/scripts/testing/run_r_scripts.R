@@ -30,7 +30,7 @@ add_snapshot <- function(count, sheet_name, country, units, date = today() - 1,
 
     prev <- fread(file = sprintf("automated_sheets/%s.csv", sheet_name))
     prev[, Date := as.character(Date)]
-    prev$`Testing type` <- NULL
+    if ("Testing type" %in% names(prev)) prev[, `Testing type` := NULL]
 
     stopifnot(!is.na(date))
     stopifnot(is.integer(count))
