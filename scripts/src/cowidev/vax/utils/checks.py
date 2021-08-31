@@ -24,6 +24,7 @@ VACCINES_ACCEPTED = [
     "Sinovac",
     "Soberana02",
     "Sputnik V",
+    "ZF2001",
 ]
 
 VACCINES_ONE_DOSE = [
