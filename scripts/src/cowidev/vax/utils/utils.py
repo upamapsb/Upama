@@ -99,13 +99,13 @@ def sel_options(headless: bool = True, firefox: bool = False):
     else:
         op = ChroOpt()
         op.add_experimental_option(
-        "prefs",
-        {
-            "download.prompt_for_download": False,
-            "download.directory_upgrade": True,
-            "safebrowsing.enabled": True,
-        },
-    )
+            "prefs",
+            {
+                "download.prompt_for_download": False,
+                "download.directory_upgrade": True,
+                "safebrowsing.enabled": True,
+            },
+        )
     op.add_argument("--disable-notifications")
     if headless:
         op.add_argument("--headless")
