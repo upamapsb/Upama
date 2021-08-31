@@ -32,10 +32,12 @@ class Japan:
         )
 
     def pipe_filter_rows(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.dropna(subset=["Daily changei n cumulative total"])
+        return df.dropna(subset=["Daily change in cumulative total"])
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_date).pipe(self.pipe_metadata)
+        return (
+            df.pipe(self.pipe_rename_columns).pipe(self.pipe_date).pipe(self.pipe_metadata).pipe(self.pipe_filter_rows)
+        )
 
     def export(self):
         df = self.read().pipe(self.pipeline)

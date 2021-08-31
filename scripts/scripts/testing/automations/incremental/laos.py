@@ -30,7 +30,7 @@ def main():
 
     existing = pd.read_csv("automated_sheets/Laos.csv")
 
-    if date > existing["Date"].max():
+    if tests_cumul > existing["Cumulative total"].max() and date > existing["Date"].max():
 
         new = pd.DataFrame(
             {
