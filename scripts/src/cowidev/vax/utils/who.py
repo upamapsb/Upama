@@ -1,7 +1,7 @@
 # Dict mapping WHO vaccine names -> OWID vaccine names
 VACCINES_WHO_MAPPING = {
     "Abdala": "Abdala",
-    "Anhui ZL - Recombinant": "RBD-Dimer",
+    "Anhui ZL - Recombinant": "ZF2001",
     "AstraZeneca - AZD1222": "Oxford/AstraZeneca",
     "AstraZeneca - Vaxzevria": "Oxford/AstraZeneca",
     "Beijing CNBG - BBIBP-CorV": "Sinopharm/Beijing",
@@ -14,7 +14,7 @@ VACCINES_WHO_MAPPING = {
     "Novavax - Covavax": "Novavax",
     "Pfizer BioNTech - Comirnaty": "Pfizer/BioNTech",
     "QazVac": "QazVac",
-    "RBD-Dimer": "RBD-Dimer",
+    "RBD-Dimer": "ZF2001",
     "RIBSP - QazCovid": "QazVac",
     "SII - Covishield": "Oxford/AstraZeneca",
     "Sinopharm/HayatVax": "Sinopharm/HayatVax",

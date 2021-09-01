@@ -50,7 +50,7 @@ class China:
 
     def pipe_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(
-            vaccine="CanSino, Pfizer/BioNTech, RBD-Dimer, Sinopharm/Beijing, Sinopharm/Wuhan, Sinovac, ZF2001"
+            vaccine="CanSino, Pfizer/BioNTech, Sinopharm/Beijing, Sinopharm/Wuhan, Sinovac, ZF2001"
         )
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:

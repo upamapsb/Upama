@@ -17,7 +17,6 @@ VACCINES_ACCEPTED = [
     "Oxford/AstraZeneca",
     "Pfizer/BioNTech",
     "QazVac",
-    "RBD-Dimer",
     "Sinopharm/Beijing",
     "Sinopharm/HayatVax",
     "Sinopharm/Wuhan",
