@@ -18,7 +18,6 @@ country_mapping = {
     "FJ": "Fiji",
     "KI": "Kiribati",
     "NC": "New Caledonia",
-    "NR": "Nauru",
     "NU": "Niue",
     "PF": "French Polynesia",
     "PG": "Papua New Guinea",
@@ -26,7 +25,6 @@ country_mapping = {
     "SB": "Solomon Islands",
     "TK": "Tokelau",
     "TO": "Tonga",
-    "TV": "Tuvalu",
     "VU": "Vanuatu",
     "WF": "Wallis and Futuna",
     "WS": "Samoa",
@@ -68,9 +66,9 @@ class SPC:
         for k, v in series.items():
             _, country_idx, metric_idx = k.split(":")
             if metric_idx in metrics_info:
-                vaccination_data[country_info[country_idx]][
-                    metrics_info[metric_idx]
-                ] = self._build_data_array(v["observations"], date_info)
+                vaccination_data[country_info[country_idx]][metrics_info[metric_idx]] = self._build_data_array(
+                    v["observations"], date_info
+                )
         return self._build_df_list(vaccination_data)
 
     def _parse_country_info(self, data: dict):
@@ -78,10 +76,7 @@ class SPC:
         country_info = data["data"]["structure"]["dimensions"]["series"][1]
         if country_info["id"] != "GEO_PICT":
             raise AttributeError("JSON data has changed")
-        return {
-            str(i): country_mapping[c["id"]]
-            for i, c in enumerate(country_info["values"])
-        }
+        return {str(i): country_mapping[c["id"]] for i, c in enumerate(country_info["values"])}
 
     def _parse_metrics_info(self, data: dict):
         # Get metrics info
@@ -100,9 +95,7 @@ class SPC:
         return {str(i): d["name"] for i, d in enumerate(date_info)}
 
     def _build_data_array(self, observations: dict, date_info: dict):
-        return {
-            date_info[k]: v[0] if len(v) == 1 else None for k, v in observations.items()
-        }
+        return {date_info[k]: v[0] if len(v) == 1 else None for k, v in observations.items()}
 
     def _build_df_list(self, data: dict):
         for k, v in data.items():
@@ -186,8 +179,7 @@ class SPC:
         records = sorted(records, key=lambda x: x[1])
         # Build mapping dictionary
         vax_date_mapping = [
-            (dt, ", ".join(sorted(r[0] for r in records[: i + 1])))
-            for i, (vax, dt) in enumerate(records)
+            (dt, ", ".join(sorted(r[0] for r in records[: i + 1]))) for i, (vax, dt) in enumerate(records)
         ]
         return vax_date_mapping
 
