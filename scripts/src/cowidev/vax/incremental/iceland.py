@@ -5,7 +5,8 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from cowidev.vax.utils.incremental import increment, clean_count
+from cowidev.utils.clean import clean_count
+from cowidev.vax.utils.incremental import increment
 from cowidev.vax.utils.files import export_metadata
 
 

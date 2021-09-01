@@ -1,6 +1,6 @@
 import pandas as pd
 
-from cowidev.vax.utils.utils import get_soup
+from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.files import export_metadata
 
 
@@ -47,9 +47,7 @@ class Latvia:
         return (
             df.replace(vaccine_mapping)
             .drop(columns=["Preparāts"])
-            .replace(
-                {"1.pote": "people_vaccinated", "2.pote": "people_fully_vaccinated"}
-            )
+            .replace({"1.pote": "people_vaccinated", "2.pote": "people_fully_vaccinated"})
         )
 
     def pipe_pivot(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -68,12 +66,8 @@ class Latvia:
         )
 
     def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
-        df["total_vaccinations"] = df["people_vaccinated"].fillna(0) + df[
-            "people_fully_vaccinated"
-        ].fillna(0)
-        df.loc[
-            df["vaccine"].isin(one_dose_vaccines), "people_fully_vaccinated"
-        ] = df.people_vaccinated
+        df["total_vaccinations"] = df["people_vaccinated"].fillna(0) + df["people_fully_vaccinated"].fillna(0)
+        df.loc[df["vaccine"].isin(one_dose_vaccines), "people_fully_vaccinated"] = df.people_vaccinated
         return df
 
     def pipe_aggregate(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -132,22 +126,16 @@ class Latvia:
             .sort_values("date")
         )
         df = df.assign(
-            total_vaccinations=df.groupby("vaccine", as_index=False)[
-                "total_vaccinations"
-            ].cumsum(),
+            total_vaccinations=df.groupby("vaccine", as_index=False)["total_vaccinations"].cumsum(),
             location=self.location,
-        )[["location", "date", "vaccine", "total_vaccinations"]].sort_values(
-            ["date", "vaccine"]
-        )
+        )[["location", "date", "vaccine", "total_vaccinations"]].sort_values(["date", "vaccine"])
         return df
 
     def to_csv(self, paths):
         df = self.read()
         df_base = df.pipe(self.pipe_base)
         # Main data
-        df_base.pipe(self.pipeline).to_csv(
-            paths.tmp_vax_out(self.location), index=False
-        )
+        df_base.pipe(self.pipeline).to_csv(paths.tmp_vax_out(self.location), index=False)
         # Manufacturer data
         df_man = df_base.pipe(self.pipeline_manufacturer)
         df_man.to_csv(paths.tmp_vax_out_man(self.location), index=False)

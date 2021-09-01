@@ -4,8 +4,9 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.utils import get_soup
+from cowidev.utils.clean import clean_count
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.dates import clean_date
 
 
@@ -30,13 +31,22 @@ class Singapore:
 
     def parse_text(self, soup: BeautifulSoup) -> pd.Series:
 
-        national_program = r"As of ([\d]+ [A-Za-z]+ 20\d{2}), we have administered a total of ([\d,]+) doses of COVID-19 vaccines under the national vaccination programme \(Pfizer-BioNTech Comirnaty and Moderna\), covering ([\d,]+) individuals"
+        national_program = (
+            r"As of ([\d]+ [A-Za-z]+ 20\d{2}), we have administered a total of ([\d,]+) doses of COVID-19 vaccines"
+            r" under the national vaccination programme \(Pfizer-BioNTech Comirnaty and Moderna\), covering ([\d,]+)"
+            r" individuals"
+        )
         data = re.search(national_program, soup.text).groups()
         national_date = clean_date(data[0], fmt="%d %B %Y", lang="en_US", loc="en_US")
         national_doses = clean_count(data[1])
         national_people_vaccinated = clean_count(data[2])
 
-        who_eul = r"In addition,\s([\d,]+) doses of other vaccines recognised in the World Health Organization.s Emergency Use Listing \(WHO EUL\) have been administered as of ([\d]+ [A-Za-z]+ 20\d{2}), covering ([\d,]+) individuals\. In total, (\d+)% of our population has completed their full regimen/ received two doses of COVID-19 vaccines, and (\d+)% has received at least one dose"
+        who_eul = (
+            r"In addition,\s([\d,]+) doses of other vaccines recognised in the World Health Organization.s Emergency"
+            r" Use Listing \(WHO EUL\) have been administered as of ([\d]+ [A-Za-z]+ 20\d{2}), covering ([\d,]+)"
+            r" individuals\. In total, (\d+)% of our population has completed their full regimen/ received two doses"
+            r" of COVID-19 vaccines, and (\d+)% has received at least one dose"
+        )
         data = re.search(who_eul, soup.text).groups()
         who_doses = clean_count(data[0])
         who_date = clean_date(data[1], fmt="%d %B %Y", lang="en_US", loc="en_US")

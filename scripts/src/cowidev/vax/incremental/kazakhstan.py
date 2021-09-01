@@ -4,7 +4,8 @@ import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from cowidev.vax.utils.incremental import clean_count, increment, enrich_data
+from cowidev.utils.clean import clean_count
+from cowidev.vax.utils.incremental import increment, enrich_data
 from cowidev.vax.utils.dates import clean_date
 
 
@@ -26,9 +27,7 @@ def read(source: str) -> pd.Series:
 
 def parse_vaccinations(driver: webdriver.Chrome) -> tuple:
     people_vaccinated = clean_count(driver.find_element_by_id("vaccinated_1").text)
-    people_fully_vaccinated = clean_count(
-        driver.find_element_by_id("vaccinated_2").text
-    )
+    people_fully_vaccinated = clean_count(driver.find_element_by_id("vaccinated_2").text)
     return people_vaccinated, people_fully_vaccinated
 
 

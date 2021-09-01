@@ -1,8 +1,9 @@
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
+from cowidev.utils.clean import clean_count
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.dates import localdate
-from cowidev.vax.utils.utils import get_soup
 
 
 class Georgia:
@@ -42,9 +43,7 @@ class Georgia:
         return enrich_data(ds, "source_url", self.source_url)
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
-        )
+        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
 
     def export(self, paths):
         data = self.read().pipe(self.pipeline)

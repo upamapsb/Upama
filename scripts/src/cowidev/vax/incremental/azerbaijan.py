@@ -9,7 +9,7 @@ import PyPDF2
 from pdfreader import SimplePDFViewer
 
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.utils import get_soup
+from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.dates import clean_date
 
 
@@ -68,9 +68,7 @@ def parse_vaccinations(filename):
     idx_dose_1 = strs.index("1-ci mərhələ üzrə ")
     idx_dose_2 = strs.index("2-ci mərhələ üzrə ")
     # Get metrics
-    total_vaccinations = max(
-        [int(s) for s in strs[idx_total_vax:idx_dose_1] if s.isnumeric()]
-    )
+    total_vaccinations = max([int(s) for s in strs[idx_total_vax:idx_dose_1] if s.isnumeric()])
     dose_1 = max([int(s) for s in strs[idx_dose_1:idx_dose_2] if s.isnumeric()])
     dose_2 = max([int(s) for s in strs[idx_dose_2:] if s.isnumeric()])
     # Sanity check

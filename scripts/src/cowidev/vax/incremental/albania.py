@@ -3,8 +3,9 @@ import re
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from cowidev.vax.utils.utils import get_soup
-from cowidev.vax.utils.incremental import clean_count, merge_with_current_data
+from cowidev.utils.web.scraping import get_soup
+from cowidev.utils.clean import clean_count
+from cowidev.vax.utils.incremental import merge_with_current_data
 from cowidev.vax.utils.dates import clean_date
 
 
@@ -17,7 +18,9 @@ class Albania:
             "title": r"Vaksinimi antiCOVID\/ Kryhen [0-9,]+ vaksinime",
             "date": r"Postuar më: (\d{1,2}\/\d{1,2}\/202\d)",
             "total_vaccinations": r"total ([\d,]+) doza të vaksinës ndaj COVID19",
-            "people_fully_vaccinated": r"Prej tyre,? ([\d,]+) ?qytetarë i kanë (marrë|kryer) të dy(ja)? dozat e vaksinës antiCOVID",
+            "people_fully_vaccinated": (
+                r"Prej tyre,? ([\d,]+) ?qytetarë i kanë (marrë|kryer) të dy(ja)? dozat e vaksinës antiCOVID"
+            ),
         }
 
     def read(self, last_update: str) -> pd.DataFrame:

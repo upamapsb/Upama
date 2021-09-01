@@ -3,8 +3,9 @@ import re
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from cowidev.vax.utils.utils import get_soup, clean_string
-from cowidev.vax.utils.incremental import clean_count, merge_with_current_data
+from cowidev.utils.clean import clean_count, clean_string
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import merge_with_current_data
 from cowidev.vax.utils.dates import extract_clean_date
 
 
@@ -16,7 +17,8 @@ class Hungary:
         self.regex = {
             "title": r"\d+ [millió]+ \d+ [ezer]+ a beoltott, \d+ az új fertőzött",
             "metrics": (
-                r"A beoltottak száma ([\d ]+), közülük ([\d ]+) fő már a második oltását is megkapta, ([\d ]+) ezren pedig már a harmadik oltást is felvették"
+                r"A beoltottak száma ([\d ]+), közülük ([\d ]+) fő már a második oltását is megkapta, ([\d ]+) ezren"
+                r" pedig már a harmadik oltást is felvették"
             ),
         }
 

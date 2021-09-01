@@ -4,7 +4,8 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
+from cowidev.utils.clean import clean_count
+from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.dates import clean_date
 
 
@@ -38,9 +39,7 @@ def read(source: str) -> pd.Series:
     ).group(1)
     people_fully_vaccinated = clean_count(people_fully_vaccinated)
 
-    total_vaccinations = re.search(
-        r"([\d\s]+) шт\. - всего прививок сделано", text
-    ).group(1)
+    total_vaccinations = re.search(r"([\d\s]+) шт\. - всего прививок сделано", text).group(1)
     total_vaccinations = clean_count(total_vaccinations)
 
     return pd.Series(

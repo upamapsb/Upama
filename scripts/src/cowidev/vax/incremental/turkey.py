@@ -4,7 +4,8 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
+from cowidev.utils.clean import clean_count
+from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.dates import clean_date
 
 

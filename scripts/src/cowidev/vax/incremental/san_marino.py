@@ -4,14 +4,13 @@ import re
 import pandas as pd
 from bs4 import BeautifulSoup
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
+from cowidev.utils.clean import clean_count
+from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.dates import clean_date
 
 
 def read(source: str) -> pd.Series:
-    soup = BeautifulSoup(
-        requests.get(source, verify=False).content, "html.parser"
-    )  # noqa: S501
+    soup = BeautifulSoup(requests.get(source, verify=False).content, "html.parser")  # noqa: S501
     return parse_data(soup)
 
 
@@ -45,9 +44,7 @@ def parse_people_vaccinated(df: pd.DataFrame) -> int:
 
 
 def parse_people_fully_vaccinated(df: pd.DataFrame) -> int:
-    people_fully_vaccinated = re.search(
-        r"([\d,. ]+) [Vv]accinazioni Seconda Dose", df
-    ).group(1)
+    people_fully_vaccinated = re.search(r"([\d,. ]+) [Vv]accinazioni Seconda Dose", df).group(1)
     return clean_count(people_fully_vaccinated)
 
 

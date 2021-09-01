@@ -2,8 +2,9 @@ import time
 
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.utils import get_driver
+from cowidev.utils.clean import clean_count
+from cowidev.utils.web.scraping import get_driver
+from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.dates import extract_clean_date
 
 
@@ -52,7 +53,8 @@ class Philippines:
         return enrich_data(
             ds,
             "vaccine",
-            "Covaxin, Johnson&Johnson, Moderna, Novavax, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac, Sputnik V",
+            "Covaxin, Johnson&Johnson, Moderna, Novavax, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing,"
+            " Sinovac, Sputnik V",
         )
 
     def pipe_source(self, ds: pd.Series) -> pd.Series:

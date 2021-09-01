@@ -2,9 +2,10 @@ import time
 
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
+from cowidev.utils.clean import clean_count
+from cowidev.utils.web.scraping import get_driver
+from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.dates import localdate
-from cowidev.vax.utils.utils import get_driver
 
 
 def read(source: str) -> pd.Series:
@@ -15,13 +16,9 @@ def read(source: str) -> pd.Series:
 
         for block in driver.find_elements_by_class_name("kpimetric"):
             if "1ste dosis" in block.text and "%" not in block.text:
-                people_partly_vaccinated = clean_count(
-                    block.find_element_by_class_name("valueLabel").text
-                )
+                people_partly_vaccinated = clean_count(block.find_element_by_class_name("valueLabel").text)
             elif "2de dosis" in block.text and "%" not in block.text:
-                people_fully_vaccinated = clean_count(
-                    block.find_element_by_class_name("valueLabel").text
-                )
+                people_fully_vaccinated = clean_count(block.find_element_by_class_name("valueLabel").text)
 
     people_vaccinated = people_partly_vaccinated + people_fully_vaccinated
 

@@ -2,10 +2,9 @@ import re
 
 import pandas as pd
 
+from cowidev.utils.clean import clean_count
 from cowidev.vax.manual.twitter.base import TwitterCollectorBase
 from cowidev.vax.utils.dates import clean_date
-from cowidev.vax.utils.utils import clean_count
-
 
 class Paraguay(TwitterCollectorBase):
     def __init__(self, api, paths=None, **kwargs):

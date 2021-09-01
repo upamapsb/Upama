@@ -2,8 +2,9 @@ import re
 
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.utils import get_soup
+from cowidev.utils.clean import clean_count
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.dates import localdate
 
 
@@ -31,18 +32,14 @@ def parse_total_vaccinations(container) -> int:
 
 def parse_people_vaccinated(container) -> int:
     people_vaccinated = container.find(class_="cmp-text").text
-    people_vaccinated = re.search(r"Dose 1\:\s([\d\. ]{6,})", people_vaccinated).group(
-        1
-    )
+    people_vaccinated = re.search(r"Dose 1\:\s([\d\. ]{6,})", people_vaccinated).group(1)
     people_vaccinated = clean_count(people_vaccinated)
     return people_vaccinated
 
 
 def parse_people_fully_vaccinated(container) -> int:
     people_fully_vaccinated = container.find(class_="cmp-text").text
-    people_fully_vaccinated = re.search(
-        r"Dose 2\:\s([\d\. ]{6,})", people_fully_vaccinated
-    ).group(1)
+    people_fully_vaccinated = re.search(r"Dose 2\:\s([\d\. ]{6,})", people_fully_vaccinated).group(1)
     people_fully_vaccinated = clean_count(people_fully_vaccinated)
     return people_fully_vaccinated
 

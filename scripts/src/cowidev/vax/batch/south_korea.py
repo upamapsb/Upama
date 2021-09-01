@@ -1,6 +1,7 @@
 import pandas as pd
 
-from cowidev.vax.utils.utils import read_xlsx_from_url, clean_df_columns_multiindex
+from cowidev.utils.web.download import read_xlsx_from_url
+from cowidev.utils.clean import clean_df_columns_multiindex
 from cowidev.vax.utils.dates import clean_date_series
 
 

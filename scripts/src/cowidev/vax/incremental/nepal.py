@@ -8,8 +8,10 @@ import PyPDF2
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from cowidev.vax.utils.incremental import clean_count, enrich_data, increment
+from cowidev.utils.clean import clean_count
+from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.dates import clean_date
+
 
 class Nepal:
     def __init__(self):
@@ -92,14 +94,10 @@ class Nepal:
         return enrich_data(ds, "vaccine", "Oxford/AstraZeneca, Sinopharm/Beijing")
 
     def pipe_metrics(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(
-            ds, "total_vaccinations", ds.people_vaccinated + ds.people_fully_vaccinated
-        )
+        return enrich_data(ds, "total_vaccinations", ds.people_vaccinated + ds.people_fully_vaccinated)
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_metrics)
-        )
+        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_metrics)
 
     def to_csv(self, paths):
         data = self.read().pipe(self.pipeline)

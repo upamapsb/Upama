@@ -8,7 +8,7 @@ import requests
 import pandas as pd
 
 from cowidev.vax.utils.checks import VACCINES_ONE_DOSE
-from cowidev.vax.utils.utils import get_soup
+from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.dates import clean_date_series
 
 
@@ -20,9 +20,7 @@ class Denmark:
     def __init__(self):
         self.location = "Denmark"
         # self.source_url_ref = "https://covid19.ssi.dk/overvagningsdata/vaccinationstilslutning"
-        self.source_url_ref = (
-            "https://covid19.ssi.dk/overvagningsdata/download-fil-med-vaccinationsdata"
-        )
+        self.source_url_ref = "https://covid19.ssi.dk/overvagningsdata/download-fil-med-vaccinationsdata"
         self.date_limit_one_dose = "2021-05-27"
         self.vaccines_mapping = {
             "AstraZeneca Covid-19 vaccine": "Oxford/AstraZeneca",
@@ -50,9 +48,7 @@ class Denmark:
             self._download_data(url, tf)
             df = self._parse_data(tf)
             total_vaccinations_latest = self._parse_total_vaccinations(tf)
-            df.loc[
-                df["Vaccinedato"] == df["Vaccinedato"].max(), "total_vaccinations"
-            ] = total_vaccinations_latest
+            df.loc[df["Vaccinedato"] == df["Vaccinedato"].max(), "total_vaccinations"] = total_vaccinations_latest
         return df
 
     def _parse_link_zip(self):
@@ -66,12 +62,8 @@ class Denmark:
         z.extractall(output_path)
 
     def _parse_data(self, path):
-        df_dose1 = self._load_df_metric(
-            path, "PaabegVacc_daek_DK_prdag.csv", "Kumuleret antal påbegyndt vacc."
-        )
-        df_fully = self._load_df_metric(
-            path, "FaerdigVacc_daekning_DK_prdag.csv", "Kumuleret antal færdigvacc."
-        )
+        df_dose1 = self._load_df_metric(path, "PaabegVacc_daek_DK_prdag.csv", "Kumuleret antal påbegyndt vacc.")
+        df_fully = self._load_df_metric(path, "FaerdigVacc_daekning_DK_prdag.csv", "Kumuleret antal færdigvacc.")
         df = df_fully.merge(df_dose1, on="Vaccinedato", how="outer")
         return df.sort_values("Vaccinedato")
 
@@ -132,9 +124,7 @@ class Denmark:
 
     def _check_df_vax_2(self, df, mask):
         if (df.loc[mask, "dose_1"] - df.loc[mask, "dose_2"]).sum() != 0:
-            raise ValueError(
-                f"First and second dose counts for single-shot vaccines should be equal."
-            )
+            raise ValueError(f"First and second dose counts for single-shot vaccines should be equal.")
 
     def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.rename(

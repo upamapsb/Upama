@@ -3,8 +3,9 @@ import re
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from cowidev.vax.utils.utils import get_soup
-from cowidev.vax.utils.incremental import clean_count, increment, enrich_data
+from cowidev.utils.clean import clean_count
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import increment, enrich_data
 from cowidev.vax.utils.dates import extract_clean_date
 
 
@@ -40,9 +41,7 @@ class Gabon:
         )
 
     def pipe_people_vaccinated(self, ds: pd.Series) -> pd.Series:
-        total_vaccinations = (
-            ds.loc["people_vaccinated"] + ds.loc["people_fully_vaccinated"]
-        )
+        total_vaccinations = ds.loc["people_vaccinated"] + ds.loc["people_fully_vaccinated"]
         return enrich_data(ds, "total_vaccinations", total_vaccinations)
 
     def pipe_location(self, ds: pd.Series) -> pd.Series:

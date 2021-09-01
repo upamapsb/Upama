@@ -5,7 +5,8 @@ import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
+from cowidev.utils.clean import clean_count
+from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.dates import localdate
 
 
@@ -28,15 +29,9 @@ def connect_parse_data(source: str) -> pd.Series:
         assert "Two doses" in people_fully_vaccinated_share
 
     # This logic is only valid as long as Qatar *exclusively* uses 2-dose vaccines
-    people_vaccinated_share = float(
-        re.search(r"[\d.]+", people_vaccinated_share).group(0)
-    )
-    people_fully_vaccinated_share = float(
-        re.search(r"[\d.]+", people_fully_vaccinated_share).group(0)
-    )
-    vaccinated_proportion = people_vaccinated_share / (
-        people_vaccinated_share + people_fully_vaccinated_share
-    )
+    people_vaccinated_share = float(re.search(r"[\d.]+", people_vaccinated_share).group(0))
+    people_fully_vaccinated_share = float(re.search(r"[\d.]+", people_fully_vaccinated_share).group(0))
+    vaccinated_proportion = people_vaccinated_share / (people_vaccinated_share + people_fully_vaccinated_share)
     people_vaccinated = round(total_vaccinations * vaccinated_proportion)
     people_fully_vaccinated = total_vaccinations - people_vaccinated
 

@@ -7,11 +7,9 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from pdfreader import SimplePDFViewer
 
-from cowidev.vax.utils.incremental import (
-    clean_count,
-    merge_with_current_data,
-)
-from cowidev.vax.utils.utils import get_soup
+from cowidev.utils.clean import clean_count
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import merge_with_current_data
 from cowidev.vax.utils.dates import clean_date
 
 

@@ -7,9 +7,10 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import PyPDF2
 
+from cowidev.utils.clean import clean_count
+from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import increment
 from cowidev.vax.utils.dates import clean_date
-from cowidev.vax.utils.utils import get_soup, clean_count
 
 
 vaccines_mapping = {
@@ -90,9 +91,7 @@ class SriLanka:
 
     def _parse_vaccines_table_as_df(self, text):
         # Extract doses relevant sentence
-        regex = (
-            r"COVID-19 Vaccination (.*) District"  # Country(/Region)? Cumulative Cases"
-        )
+        regex = r"COVID-19 Vaccination (.*) District"  # Country(/Region)? Cumulative Cases"
         vax_info = re.search(regex, text).group(1).strip().replace("No", "")
         vax_info = re.sub("\s+", " ", vax_info)
         # Sentence to DataFrame
@@ -101,9 +100,7 @@ class SriLanka:
             results = re.findall(vaccine_regex, vax_info, re.IGNORECASE)
             allresults.append(results)
         flat_ls = list(itertools.chain(*allresults))
-        df = pd.DataFrame(flat_ls, columns=["vaccine", "doses_1", "doses_2"]).replace(
-            "-", 0
-        )
+        df = pd.DataFrame(flat_ls, columns=["vaccine", "doses_1", "doses_2"]).replace("-", 0)
         df = df.replace(to_replace=[None], value=0)
         df = df.assign(
             doses_1=df["doses_1"].astype(str).apply(clean_count),

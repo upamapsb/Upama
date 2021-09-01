@@ -5,7 +5,7 @@ from glob import glob
 import pandas as pd
 
 from cowidev.vax.utils.files import get_file_encoding
-from cowidev.vax.utils.utils import get_soup, get_driver
+from cowidev.utils.web.scraping import get_soup, get_driver
 from cowidev.vax.utils.dates import clean_date
 from cowidev.vax.utils.incremental import increment
 from cowidev.vax.utils.who import VACCINES_WHO_MAPPING

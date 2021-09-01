@@ -4,8 +4,9 @@ from urllib.parse import urlparse
 import pandas as pd
 from bs4 import BeautifulSoup
 
-import cowidev.vax.utils.utils as utils
 from cowidev.vax.utils.dates import clean_date_series, clean_date
+from cowidev.utils.web.scraping import get_soup
+from cowidev.utils.web.download import read_xlsx_from_url
 
 
 class NewZealand:
@@ -28,7 +29,7 @@ class NewZealand:
         self.columns_cumsum_by_age = ["Ten year age group"]
 
     def read(self) -> pd.DataFrame:
-        soup = utils.get_soup(self.source_url)
+        soup = get_soup(self.source_url)
 
         # Get latest figures from HTML table
         latest = pd.read_html(str(soup.find("table")))[0]
@@ -45,7 +46,7 @@ class NewZealand:
         )
 
         link = self._parse_file_link(soup)
-        df = utils.read_xlsx_from_url(link, sheet_name="Date")
+        df = read_xlsx_from_url(link, sheet_name="Date")
         return df
 
     def _parse_file_link(self, soup: BeautifulSoup) -> str:

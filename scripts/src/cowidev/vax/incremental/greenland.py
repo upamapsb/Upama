@@ -2,9 +2,10 @@ import datetime
 
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
+from cowidev.utils.clean import clean_count
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.dates import clean_date
-from cowidev.vax.utils.utils import get_soup
 
 
 def read(source: str) -> pd.Series:

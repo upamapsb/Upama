@@ -2,7 +2,8 @@ import datetime
 
 import pandas as pd
 
-from cowidev.vax.utils.utils import make_monotonic, clean_count
+from cowidev.vax.utils.utils import make_monotonic
+from cowidev.utils.clean import clean_count
 
 
 class Sweden(object):
