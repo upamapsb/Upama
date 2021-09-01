@@ -27,7 +27,7 @@ class EquatorialGuinea:
         return pd.Series(data)
 
     def parse_vaccinated(self, soup):
-        regex = r"De los ([\d\.]+) vacunados un total de ([\d\.]+) \(([\d\.,]+)%\) ya han recibido la 2ª dosis"
+        regex = r"Sur les ([\d ]+) vaccinés, un total de ([\d ]+)"
         match = re.search(regex, soup.text)
         people_vaccinated = match.group(1)
         people_fully_vaccinated = match.group(2)
@@ -36,9 +36,9 @@ class EquatorialGuinea:
     def parse_date(self, soup):
         return extract_clean_date(
             text=soup.text,
-            regex=r"Datos:\s{1,2}a (\d{1,2} [a-zA-Z]+ de 202\d)",
-            date_format="%d %B de %Y",
-            lang="es",
+            regex=r"Données au (\d+ \w+ 20\d{2})",
+            date_format="%d %B %Y",
+            lang="fr",
             unicode_norm=True,
         )
 
@@ -52,9 +52,7 @@ class EquatorialGuinea:
         return enrich_data(ds, "source_url", self.source_url)
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
-        )
+        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
 
     def to_csv(self, paths):
         """Generalized."""
@@ -73,7 +71,7 @@ class EquatorialGuinea:
 
 def main(paths):
     EquatorialGuinea(
-        source_url="https://guineasalud.org/estadisticas/",
+        source_url="https://guineasalud.org/statistiques/?lang=fr",
         location="Equatorial Guinea",
     ).to_csv(paths)
 
