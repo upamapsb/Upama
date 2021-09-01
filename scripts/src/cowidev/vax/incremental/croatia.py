@@ -10,10 +10,10 @@ def read(source: str) -> pd.Series:
 
     data = requests.get(source).json()
 
-    total_vaccinations = data[0]["CijepljenjeBrUtrosenihDoza"]
-    people_vaccinated = data[0]["CijepljeniJednomDozom"]
-    people_fully_vaccinated = data[0]["CijepljeniDvijeDoze"]
-    date = str((pd.to_datetime(data[0]["Datum"]) - timedelta(days=1)).date())
+    total_vaccinations = int(data["CijepljenjeBrUtrosenihDoza"])
+    people_vaccinated = int(data["CijepljeniJednomDozom"])
+    people_fully_vaccinated = int(data["CijepljeniDvijeDoze"])
+    date = str((pd.to_datetime(data["Datum"]) - timedelta(days=1)).date())
 
     return pd.Series(
         data={
@@ -42,7 +42,7 @@ def pipeline(ds: pd.Series) -> pd.Series:
 
 
 def main(paths):
-    source = "https://www.koronavirus.hr/json/?action=podaci_zadnji"
+    source = "https://www.koronavirus.hr/data/stats_latest.json"
     data = read(source).pipe(pipeline)
     increment(
         paths=paths,
