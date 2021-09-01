@@ -51,10 +51,7 @@ class Philippines:
 
     def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
         return enrich_data(
-            ds,
-            "vaccine",
-            "Covaxin, Johnson&Johnson, Moderna, Novavax, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing,"
-            " Sinovac, Sputnik V",
+            ds, "vaccine", "Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac, Sputnik V"
         )
 
     def pipe_source(self, ds: pd.Series) -> pd.Series:
