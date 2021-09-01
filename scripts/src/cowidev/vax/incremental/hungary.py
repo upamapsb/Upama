@@ -16,7 +16,7 @@ class Hungary:
         self.regex = {
             "title": r"\d+ [millió]+ \d+ [ezer]+ a beoltott, \d+ az új fertőzött",
             "metrics": (
-                r"A beoltottak száma ([\d ]{6,}) fő, közülük ([\d ]{6,}) (fő )?már a második oltását is megkapta."
+                r"A beoltottak száma ([\d ]+), közülük ([\d ]+) fő már a második oltását is megkapta, ([\d ]+) ezren pedig már a harmadik oltást is felvették"
             ),
         }
 
@@ -43,7 +43,7 @@ class Hungary:
                 **self.parse_data_news_page(soup),
             }
             if record["date"] > last_update:
-                # print(record["date"], record["people_vaccinated"], record["people_fully_vaccinated"], "added")
+                # print(record, "added")
                 records.append(record)
             else:
                 # print(record["date"], "END")
@@ -56,11 +56,22 @@ class Hungary:
         return elems
 
     def parse_data_news_page(self, soup: BeautifulSoup):
+        """
+        2021-09-01
+        Due to the use of J&J, people_fully_vaccinated can't be collected based on information published
+        """
+
         text = clean_string(soup.find(class_="page_body").text)
         match = re.search(self.regex["metrics"], text)
-        metrics = {
-            "people_vaccinated": clean_count(match.group(1)),
-            "people_fully_vaccinated": clean_count(match.group(2)),
+
+        dose_1 = clean_count(match.group(1))
+        dose_2 = clean_count(match.group(2))
+        dose_3 = 1000 * clean_count(match.group(3))
+
+        return {
+            "people_vaccinated": dose_1,
+            "total_boosters": dose_3,
+            "total_vaccinations": dose_1 + dose_2 + dose_3,
             "date": extract_clean_date(
                 soup.find("p").text,
                 regex="(202\d. .* \d+.) - .*",
@@ -69,16 +80,13 @@ class Hungary:
                 minus_days=1,
             ),
         }
-        return metrics
 
     def parse_link(self, elem):
         href = elem.parent["href"]
         return f"{self.source_url}/{href}"
 
     def pipe_drop_duplicates(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.sort_values("date").drop_duplicates(
-            subset=["people_vaccinated", "people_fully_vaccinated"], keep="first"
-        )
+        return df.sort_values("date").drop_duplicates(keep="first")
 
     def pipe_location(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(location=self.location)
@@ -96,7 +104,8 @@ class Hungary:
                 "vaccine",
                 "source_url",
                 "people_vaccinated",
-                "people_fully_vaccinated",
+                "total_vaccinations",
+                "total_boosters",
             ]
         ]
 
