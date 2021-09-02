@@ -26,7 +26,7 @@ class Philippines:
             spans = [span for span in driver.find_elements_by_tag_name("span") if span.get_attribute("data-text")]
             # Date
             date = extract_clean_date(
-                spans[6].text,
+                spans[6].text.replace("Sept", "Sep"),
                 "\(as of ([a-zA-Z]+)\.\s?(\d{1,2}), (20\d{2})\)",
                 "%b %d %Y",
                 lang="en",
@@ -51,10 +51,7 @@ class Philippines:
 
     def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
         return enrich_data(
-            ds,
-            "vaccine",
-            "Covaxin, Johnson&Johnson, Moderna, Novavax, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing,"
-            " Sinovac, Sputnik V",
+            ds, "vaccine", "Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac, Sputnik V"
         )
 
     def pipe_source(self, ds: pd.Series) -> pd.Series:
