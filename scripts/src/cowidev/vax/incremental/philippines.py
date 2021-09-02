@@ -26,7 +26,7 @@ class Philippines:
             spans = [span for span in driver.find_elements_by_tag_name("span") if span.get_attribute("data-text")]
             # Date
             date = extract_clean_date(
-                spans[6].text,
+                spans[6].text.replace("Sept", "Sep"),
                 "\(as of ([a-zA-Z]+)\.\s?(\d{1,2}), (20\d{2})\)",
                 "%b %d %Y",
                 lang="en",
