@@ -8,24 +8,11 @@ from cowidev.vax.utils.files import get_file_encoding
 from cowidev.utils.web.scraping import get_soup, get_driver
 from cowidev.vax.utils.dates import clean_date
 from cowidev.vax.utils.incremental import increment
-from cowidev.vax.utils.who import VACCINES_WHO_MAPPING
+from cowidev.vax.utils.orgs import WHO_VACCINES, PAHO_COUNTRIES
 from cowidev.vax.cmd.utils import get_logger
 
 
 logger = get_logger()
-
-
-COUNTRIES = {
-    "Bahamas": "Bahamas",
-    "Bermuda": "Bermuda",
-    "Dominica": "Dominica",
-    "Honduras": "Honduras",
-    "Nicaragua": "Nicaragua",
-    # "Panama": "Panama",
-    "Paraguay": "Paraguay",
-    "Venezuela": "Venezuela",
-    "St Kitts & Nevis": "Saint Kitts and Nevis",
-}
 
 
 class PAHO:
@@ -126,11 +113,11 @@ class PAHO:
 
     def pipe_filter_countries(self, df: pd.DataFrame) -> pd.DataFrame:
         """Get rows from selected countries."""
-        countries_wrong = set(COUNTRIES).difference(df.location)
+        countries_wrong = set(PAHO_COUNTRIES).difference(df.location)
         if countries_wrong:
             raise ValueError(f"Invalid country(s) {countries_wrong}")
-        df = df[df.location.isin(COUNTRIES)]
-        df["location"] = df.location.replace(COUNTRIES)
+        df = df[df.location.isin(PAHO_COUNTRIES)]
+        df["location"] = df.location.replace(PAHO_COUNTRIES)
         return df
 
     def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -149,7 +136,7 @@ class PAHO:
         df_who = df_who.dropna(subset=["vaccine"])
         df_who = df_who.assign(
             vaccine=df_who.vaccine.apply(
-                lambda x: ", ".join(sorted(set(VACCINES_WHO_MAPPING[xx.strip()] for xx in x.split(","))))
+                lambda x: ", ".join(sorted(set(WHO_VACCINES[xx.strip()] for xx in x.split(","))))
             )
         )
         df = df.merge(df_who, left_on="country_code", right_on="ISO3")

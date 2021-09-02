@@ -3,76 +3,12 @@ import numpy as np
 
 from cowidev.vax.utils.incremental import increment
 from cowidev.vax.utils.checks import VACCINES_ONE_DOSE
-from cowidev.vax.utils.who import VACCINES_WHO_MAPPING
+from cowidev.vax.utils.orgs import WHO_VACCINES, WHO_COUNTRIES
 from cowidev.vax.cmd.utils import get_logger
 
 
 logger = get_logger()
 
-
-# Dict mapping WHO country names -> OWID country names
-COUNTRIES = {
-    "Afghanistan": "Afghanistan",
-    "Algeria": "Algeria",
-    "Angola": "Angola",
-    "Anguilla": "Anguilla",
-    "Belarus": "Belarus",
-    "Benin": "Benin",
-    "Bhutan": "Bhutan",
-    "Bonaire, Sint Eustatius and Saba": "Bonaire Sint Eustatius and Saba",
-    "British Virgin Islands": "British Virgin Islands",
-    "Burkina Faso": "Burkina Faso",
-    "Cabo Verde": "Cape Verde",
-    "Cameroon": "Cameroon",
-    "Central African Republic": "Central African Republic",
-    "Chad": "Chad",
-    "Comoros": "Comoros",
-    "Democratic Republic of the Congo": "Democratic Republic of Congo",
-    "Djibouti": "Djibouti",
-    "Egypt": "Egypt",
-    "Gabon": "Gabon",
-    "Gambia": "Gambia",
-    "Ghana": "Ghana",
-    "Grenada": "Grenada",
-    "Guinea-Bissau": "Guinea-Bissau",
-    "Honduras": "Honduras",
-    "Iran (Islamic Republic of)": "Iran",
-    "Iraq": "Iraq",
-    "Lao People's Democratic Republic": "Laos",
-    "Lesotho": "Lesotho",
-    "Liberia": "Liberia",
-    "Libya": "Libya",
-    "Madagascar": "Madagascar",
-    "Mali": "Mali",
-    "Mauritania": "Mauritania",
-    "Mauritius": "Mauritius",
-    "Montserrat": "Montserrat",
-    "Mozambique": "Mozambique",
-    "Myanmar": "Myanmar",
-    "Nauru": "Nauru",
-    "Nicaragua": "Nicaragua",
-    "Niger": "Niger",
-    "Nigeria": "Nigeria",
-    "Oman": "Oman",
-    "Rwanda": "Rwanda",
-    "Sao Tome and Principe": "Sao Tome and Principe",
-    "Senegal": "Senegal",
-    "Sierra Leone": "Sierra Leone",
-    "Sint Maarten": "Sint Maarten (Dutch part)",
-    "Somalia": "Somalia",
-    "South Sudan": "South Sudan",
-    "Sudan": "Sudan",
-    "Syrian Arab Republic": "Syria",
-    "Tajikistan": "Tajikistan",
-    "Timor-Leste": "Timor",
-    "Togo": "Togo",
-    "Turkmenistan": "Turkmenistan",
-    "Turks and Caicos Islands": "Turks and Caicos Islands",
-    "Tuvalu": "Tuvalu",
-    "Uganda": "Uganda",
-    "United Republic of Tanzania": "Tanzania",
-    "Yemen": "Yemen",
-}
 
 # Sometimes the WHO doesn't yet include a vaccine in a country's metadata
 # while there is evidence that it has been administered in the country
@@ -100,7 +36,7 @@ class WHO:
         return df
 
     def pipe_rename_countries(self, df: pd.DataFrame) -> pd.DataFrame:
-        df["COUNTRY"] = df.COUNTRY.replace(COUNTRIES)
+        df["COUNTRY"] = df.COUNTRY.replace(WHO_COUNTRIES)
         return df
 
     def pipe_filter_entries(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -120,16 +56,14 @@ class WHO:
             | df.PERSONS_FULLY_VACCINATED.isnull()
         )
         df = df[(mask_1 & mask_2 & mask_3)]
-        df = df[df.COUNTRY.isin(COUNTRIES.values())]
+        df = df[df.COUNTRY.isin(WHO_COUNTRIES.values())]
         return df
 
     def pipe_vaccine_checks(self, df: pd.DataFrame) -> pd.DataFrame:
         vaccines_used = set(df.VACCINES_USED.dropna().apply(lambda x: [xx.strip() for xx in x.split(",")]).sum())
-        vaccines_unknown = vaccines_used.difference(VACCINES_WHO_MAPPING)
+        vaccines_unknown = vaccines_used.difference(WHO_VACCINES)
         if vaccines_unknown:
-            raise ValueError(
-                f"Unknown vaccines {vaccines_unknown}. Update `vax.utils.who.VACCINES_WHO_MAPPING` accordingly."
-            )
+            raise ValueError(f"Unknown vaccines {vaccines_unknown}. Update `vax.utils.who.config` accordingly.")
         return df
 
     def _map_vaccines_func(self, row) -> tuple:
@@ -137,7 +71,7 @@ class WHO:
         if pd.isna(row.VACCINES_USED):
             raise ValueError("Vaccine field is NaN")
         vaccines = pd.Series(row.VACCINES_USED.split(","))
-        vaccines = vaccines.replace(VACCINES_WHO_MAPPING)
+        vaccines = vaccines.replace(WHO_VACCINES)
         only_2doses = all(-vaccines.isin(pd.Series(VACCINES_ONE_DOSE)))
 
         # Add vaccines that aren't yet recorded by the WHO

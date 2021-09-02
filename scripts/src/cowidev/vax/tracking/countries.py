@@ -1,6 +1,5 @@
 import os
 from datetime import datetime
-from matplotlib import use
 
 import pandas as pd
 from cowidev.vax.tracking.vaccines import vaccines_comparison_with_who
@@ -69,18 +68,16 @@ def country_updates_summary(
         path_vaccinations = os.path.abspath(
             os.path.join(
                 CURRENT_DIR,
-                "../../../../../../public/data/vaccinations/vaccinations.csv",
+                "../../../../../public/data/vaccinations/vaccinations.csv",
             )
         )
     if not path_locations:
         path_locations = os.path.abspath(
-            os.path.join(
-                CURRENT_DIR, "../../../../../../public/data/vaccinations/locations.csv"
-            )
+            os.path.join(CURRENT_DIR, "../../../../../public/data/vaccinations/locations.csv")
         )
     if not path_automation_state:
         path_automation_state = os.path.abspath(
-            os.path.join(CURRENT_DIR, "../../../automation_state.csv")
+            os.path.join(CURRENT_DIR, "../../../../output/vaccinations/automation_state.csv")
         )
     columns_output = [
         "location",
@@ -117,9 +114,7 @@ def country_updates_summary(
         df = df.merge(df_who, left_on="iso_code", right_on="ISO3", how="left")
         columns_output += ["reporting_to_WHO", "location_WHO"]
     # Additional fields
-    num_observation_days = (
-        datetime.now() - pd.to_datetime(df.first_observation_date)
-    ).dt.days + 1
+    num_observation_days = (datetime.now() - pd.to_datetime(df.first_observation_date)).dt.days + 1
     num_updates_per_observation_day = df.counts / num_observation_days
 
     df = df.assign(
@@ -235,21 +230,15 @@ def countries_missing(
                                     DataFrame.
     """
     if not path_population:
-        path_population = os.path.abspath(
-            os.path.join(CURRENT_DIR, "../../../../../input/un/population_2020.csv")
-        )
+        path_population = os.path.abspath(os.path.join(CURRENT_DIR, "../../../../../input/un/population_2020.csv"))
     if not path_locations:
         path_locations = os.path.abspath(
-            os.path.join(
-                CURRENT_DIR, "../../../../../../public/data/vaccinations/locations.csv"
-            )
+            os.path.join(CURRENT_DIR, "../../../../../../public/data/vaccinations/locations.csv")
         )
     df_loc = pd.read_csv(path_locations, usecols=["location"])
     df_pop = pd.read_csv(path_population)
     df_pop = df_pop[df_pop.iso_code.apply(lambda x: isinstance(x, str) and len(x) == 3)]
-    df_mis = df_pop.loc[
-        ~df_pop["entity"].isin(df_loc["location"]), ["entity", "population"]
-    ]
+    df_mis = df_pop.loc[~df_pop["entity"].isin(df_loc["location"]), ["entity", "population"]]
     # Sort
     if not ascending:
         df_mis = df_mis.sort_values(by="population", ascending=False)

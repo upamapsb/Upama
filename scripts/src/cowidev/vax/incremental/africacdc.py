@@ -5,37 +5,11 @@ import pandas as pd
 
 from cowidev.vax.utils.dates import clean_date
 from cowidev.vax.utils.incremental import increment
-from cowidev.vax.utils.who import VACCINES_WHO_MAPPING
+from cowidev.vax.utils.orgs import WHO_VACCINES, ACDC_COUNTRIES
 from cowidev.vax.cmd.utils import get_logger
 
 
 logger = get_logger()
-
-# Dict mapping Africa CDC country names -> OWID country names
-COUNTRIES = {
-    "Angola": "Angola",
-    "Benin": "Benin",
-    "Botswana": "Botswana",
-    "Burkina Faso": "Burkina Faso",
-    "Central African Republic": "Central African Republic",
-    "Chad": "Chad",
-    "Congo": "Congo",
-    "Djibouti": "Djibouti",
-    "Egypt": "Egypt",
-    "Eswatini": "Eswatini",
-    "Gabon": "Gabon",
-    "Gambia": "Gambia",
-    "Ghana": "Ghana",
-    "Lesotho": "Lesotho",
-    "Libya": "Libya",
-    "Mauritania": "Mauritania",
-    "Mauritius": "Mauritius",
-    "Mozambique": "Mozambique",
-    "Namibia": "Namibia",
-    "Rwanda": "Rwanda",
-    "Senegal": "Senegal",
-    "Uganda": "Uganda",
-}
 
 
 class AfricaCDC:
@@ -93,8 +67,8 @@ class AfricaCDC:
 
     def pipe_filter_countries(self, df: pd.DataFrame) -> pd.DataFrame:
         """Get rows from selected countries."""
-        df["location"] = df.location.replace(COUNTRIES)
-        df = df[df.location.isin(COUNTRIES)]
+        df["location"] = df.location.replace(ACDC_COUNTRIES)
+        df = df[df.location.isin(ACDC_COUNTRIES)]
         return df
 
     def pipe_one_dose_correction(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -124,7 +98,7 @@ class AfricaCDC:
         df_who = df_who.dropna(subset=["vaccine"])
         df_who = df_who.assign(
             vaccine=df_who.vaccine.apply(
-                lambda x: ", ".join(sorted(set(VACCINES_WHO_MAPPING[xx.strip()] for xx in x.split(","))))
+                lambda x: ", ".join(sorted(set(WHO_VACCINES[xx.strip()] for xx in x.split(","))))
             )
         )
         df = df.merge(df_who, left_on="ISO_3_CODE", right_on="ISO3")
