@@ -3,7 +3,7 @@ from datetime import datetime
 import requests
 import pandas as pd
 
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_date
 from cowidev.vax.utils.incremental import increment
 from cowidev.vax.utils.orgs import WHO_VACCINES, ACDC_COUNTRIES
 from cowidev.vax.cmd.utils import get_logger

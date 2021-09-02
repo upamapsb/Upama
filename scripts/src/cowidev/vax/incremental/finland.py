@@ -1,7 +1,7 @@
 import pandas as pd
 
+from cowidev.utils.clean.dates import localdate
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.dates import localdate
 
 
 def read(source: str) -> pd.Series:
@@ -17,8 +17,7 @@ def parse_data(df: pd.DataFrame) -> pd.Series:
     ].item()
 
     people_fully_vaccinated = df.loc[
-        (df.Measure == "Administered doses")
-        & (df["Vaccination dose"] == "Second dose"),
+        (df.Measure == "Administered doses") & (df["Vaccination dose"] == "Second dose"),
         "val",
     ].item()
 
@@ -47,10 +46,8 @@ def enrich_source(ds: pd.Series) -> pd.Series:
     return enrich_data(
         ds,
         "source_url",
-        (
-            "https://sampo.thl.fi/pivot/prod/en/vaccreg/cov19cov/fact_cov19cov?column=measure-533185.533172.433796."
-            "533175&row=cov_vac_dose-533174L"
-        ),
+        "https://sampo.thl.fi/pivot/prod/en/vaccreg/cov19cov/fact_cov19cov?column=measure-533185.533172.433796."
+        "533175&row=cov_vac_dose-533174L",
     )
 
 

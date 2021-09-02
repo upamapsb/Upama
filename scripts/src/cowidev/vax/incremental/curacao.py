@@ -1,8 +1,8 @@
 import requests
 import pandas as pd
 
+from cowidev.utils.clean.dates import localdate
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.dates import localdate
 
 
 def read(source: str) -> pd.Series:

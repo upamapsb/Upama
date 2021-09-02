@@ -1,7 +1,7 @@
 import pandas as pd
 
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.dates import localdate
+from cowidev.utils.clean.dates import localdate
 
 
 def read(source: str) -> pd.Series:
@@ -52,9 +52,7 @@ def enrich_location(ds: pd.Series) -> pd.Series:
 
 
 def enrich_vaccine(ds: pd.Series) -> pd.Series:
-    return enrich_data(
-        ds, "vaccine", "Moderna, Oxford/AstraZeneca, Sinopharm/Beijing, Sputnik V"
-    )
+    return enrich_data(ds, "vaccine", "Moderna, Oxford/AstraZeneca, Sinopharm/Beijing, Sputnik V")
 
 
 def enrich_source(ds: pd.Series) -> pd.Series:

@@ -5,7 +5,7 @@ import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from cowidev.vax.utils.dates import clean_date_series
+from cowidev.utils.clean import clean_date_series
 
 
 class Norway:
@@ -69,9 +69,9 @@ class Norway:
 
     def _scroll_till_element_middle(self, driver, element):
         desired_y = (element.size["height"] / 2) + element.location["y"]
-        current_y = (
-            driver.execute_script("return window.innerHeight") / 2
-        ) + driver.execute_script("return window.pageYOffset")
+        current_y = (driver.execute_script("return window.innerHeight") / 2) + driver.execute_script(
+            "return window.pageYOffset"
+        )
         scroll_y_by = desired_y - current_y
         driver.execute_script("window.scrollBy(0, arguments[0]);", scroll_y_by)
 
@@ -101,10 +101,7 @@ class Norway:
         return df.assign(vaccine=df.date.apply(_enrich_vaccine))
 
     def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
-            total_vaccinations=df.people_vaccinated
-            + df.people_fully_vaccinated.fillna(0)
-        )
+        return df.assign(total_vaccinations=df.people_vaccinated + df.people_fully_vaccinated.fillna(0))
 
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(
@@ -130,9 +127,7 @@ def main(paths):
     Norway().export(paths)
 
 
-def read_csv_multiple_separators(
-    filepath: str, separators: list, usecols: list
-) -> pd.DataFrame:
+def read_csv_multiple_separators(filepath: str, separators: list, usecols: list) -> pd.DataFrame:
     """Read a csv using potential separator candidates.
 
     Args:
@@ -149,6 +144,4 @@ def read_csv_multiple_separators(
         df = pd.read_csv(filepath, sep=sep)
         if df.shape[1] != 1:
             return df[usecols]
-    raise Exception(
-        "Check regional settings and the delimiter of the downloaded CSV file."
-    )
+    raise Exception("Check regional settings and the delimiter of the downloaded CSV file.")

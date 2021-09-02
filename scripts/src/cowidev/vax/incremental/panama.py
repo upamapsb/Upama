@@ -1,8 +1,8 @@
 import requests
 import pandas as pd
 
+from cowidev.utils.clean.dates import localdatenow
 from cowidev.vax.utils.incremental import increment, enrich_data
-from cowidev.vax.utils.dates import localdatenow
 
 
 class Panama:

@@ -2,7 +2,7 @@ import requests
 from functools import reduce
 import pandas as pd
 
-from cowidev.vax.utils.dates import clean_date_series
+from cowidev.utils.clean import clean_date_series
 
 
 class Greece:
@@ -38,14 +38,10 @@ class Greece:
             )
             for d in data
         ]
-        return reduce(
-            lambda left, right: pd.merge(left, right, on=["date"], how="inner"), dfs
-        )
+        return reduce(lambda left, right: pd.merge(left, right, on=["date"], how="inner"), dfs)
 
     def pipe_replace_nulls_with_nans(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
-            people_fully_vaccinated=df.people_fully_vaccinated.replace(0, pd.NA)
-        )
+        return df.assign(people_fully_vaccinated=df.people_fully_vaccinated.replace(0, pd.NA))
 
     def pipe_date(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(date=clean_date_series(df.date, "%Y-%m-%dT%H:%M:%S"))

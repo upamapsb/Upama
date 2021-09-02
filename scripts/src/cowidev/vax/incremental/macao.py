@@ -7,9 +7,8 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from cowidev.utils.clean import clean_count
+from cowidev.utils.clean import clean_count, clean_date
 from cowidev.utils.web.scraping import get_soup
-from cowidev.vax.utils.dates import clean_date
 
 
 def parse_date(elem) -> str:

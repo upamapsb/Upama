@@ -11,9 +11,9 @@ from shutil import copyfile
 import pandas as pd
 from pandas.api.types import is_numeric_dtype
 
+from cowidev.utils.clean import clean_date
 from cowidev.vax.cmd.utils import get_logger
 from cowidev.vax.utils.checks import VACCINES_ACCEPTED
-from cowidev.vax.utils.dates import clean_date
 
 
 logger = get_logger()

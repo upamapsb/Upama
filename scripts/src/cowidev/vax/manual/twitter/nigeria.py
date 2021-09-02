@@ -2,9 +2,8 @@ import re
 
 import pandas as pd
 
-from cowidev.utils.clean import clean_count
+from cowidev.utils.clean import clean_count, clean_date
 from cowidev.vax.manual.twitter.base import TwitterCollectorBase
-from cowidev.vax.utils.dates import clean_date
 
 
 class Nigeria(TwitterCollectorBase):

@@ -1,8 +1,8 @@
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment
+from cowidev.utils.clean.dates import localdate
 from cowidev.utils.web.scraping import get_soup
-from cowidev.vax.utils.dates import localdate
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 def read(source: str) -> pd.Series:

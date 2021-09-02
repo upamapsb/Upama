@@ -1,8 +1,8 @@
 import requests
 import pandas as pd
 
+from cowidev.utils.clean import clean_date
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.dates import clean_date
 
 
 vaccine_mapping = {

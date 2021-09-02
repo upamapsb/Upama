@@ -36,10 +36,7 @@ class XMortalityETL:
             }
         )
         # Fix date
-        df.loc[:, "date"] = [
-            (datetime(2020, 1, 1) + timedelta(days=d)).strftime("%Y-%m-%d")
-            for d in df.date
-        ]
+        df.loc[:, "date"] = [(datetime(2020, 1, 1) + timedelta(days=d)).strftime("%Y-%m-%d") for d in df.date]
         # Sort rows
         df = df.sort_values(["location", "date"])
         return df

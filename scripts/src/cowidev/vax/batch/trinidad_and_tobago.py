@@ -1,8 +1,8 @@
 import requests
 import pandas as pd
 
+from cowidev.utils.clean import clean_date_series
 from cowidev.vax.utils.files import load_query, load_data
-from cowidev.vax.utils.dates import clean_date_series
 
 
 def read(source: str) -> pd.DataFrame:
@@ -28,9 +28,7 @@ def process_nans(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def add_totals(df: pd.DataFrame) -> pd.DataFrame:
-    return df.assign(
-        total_vaccinations=df.people_vaccinated + df.people_fully_vaccinated
-    )
+    return df.assign(total_vaccinations=df.people_vaccinated + df.people_fully_vaccinated)
 
 
 def format_date(df: pd.DataFrame) -> pd.DataFrame:
@@ -68,9 +66,7 @@ def pipeline(df: pd.DataFrame, source: str) -> pd.DataFrame:
 
 
 def main(paths):
-    source_ref = (
-        "https://experience.arcgis.com/experience/59226cacd2b441c7a939dca13f832112/"
-    )
+    source_ref = "https://experience.arcgis.com/experience/59226cacd2b441c7a939dca13f832112/"
     source = (
         "https://services3.arcgis.com/x3I4DqUw3b3MfTwQ/arcgis/rest/services/service_7a519502598f492a9094fd0ad503cf80/"
         "FeatureServer/0/query"

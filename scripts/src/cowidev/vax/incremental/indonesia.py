@@ -1,4 +1,3 @@
-from datetime import datetime
 from bs4 import BeautifulSoup
 
 import pandas as pd
@@ -6,9 +5,9 @@ import requests
 import json
 import re
 
-from cowidev.vax.utils.incremental import enrich_data, increment
+from cowidev.utils.clean.dates import localdate
 from cowidev.utils.web.scraping import get_soup
-from cowidev.vax.utils.dates import localdate
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 def read(dose1_source: str, dose2_source: str) -> pd.Series:

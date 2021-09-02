@@ -7,9 +7,9 @@ from datetime import datetime
 import requests
 import pandas as pd
 
-from cowidev.vax.utils.checks import VACCINES_ONE_DOSE
+from cowidev.utils.clean import clean_date_series
 from cowidev.utils.web.scraping import get_soup
-from cowidev.vax.utils.dates import clean_date_series
+from cowidev.vax.utils.checks import VACCINES_ONE_DOSE
 
 
 SEPARATOR = ";"

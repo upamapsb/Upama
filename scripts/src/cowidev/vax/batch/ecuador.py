@@ -1,6 +1,6 @@
 import pandas as pd
 
-from cowidev.vax.utils.dates import clean_date_series
+from cowidev.utils.clean import clean_date_series
 
 
 class Ecuador:
@@ -23,9 +23,7 @@ class Ecuador:
     def check_columns(self, df: pd.DataFrame, expected) -> pd.DataFrame:
         n_columns = df.shape[1]
         if n_columns != expected:
-            raise ValueError(
-                f"The provided input does not have {expected} columns. It has n_columns columns"
-            )
+            raise ValueError(f"The provided input does not have {expected} columns. It has n_columns columns")
         return df
 
     def rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:

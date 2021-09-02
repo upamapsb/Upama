@@ -5,10 +5,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from cowidev.utils.web.scraping import get_driver, set_download_settings
 from cowidev.utils.clean import clean_count
+from cowidev.utils.clean.dates import localdate
+from cowidev.utils.web.scraping import get_driver, set_download_settings
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.dates import localdate
 from cowidev.vax.utils.utils import get_latest_file
 
 

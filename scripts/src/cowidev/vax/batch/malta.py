@@ -1,6 +1,6 @@
 import pandas as pd
 
-from cowidev.vax.utils.dates import clean_date_series
+from cowidev.utils.clean import clean_date_series
 
 
 def read(source: str) -> pd.DataFrame:

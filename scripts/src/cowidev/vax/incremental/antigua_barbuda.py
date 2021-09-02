@@ -1,11 +1,8 @@
-import re
-
 import pandas as pd
 
+from cowidev.utils.clean import clean_count, extract_clean_date
 from cowidev.utils.web.scraping import get_soup
-from cowidev.utils.clean import clean_count
 from cowidev.vax.utils.incremental import increment, enrich_data
-from cowidev.vax.utils.dates import extract_clean_date
 
 
 class AntiguaBarbuda:

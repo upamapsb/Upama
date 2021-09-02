@@ -3,8 +3,8 @@ from datetime import datetime
 import requests
 import pandas as pd
 
+from cowidev.utils.clean import clean_date
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.dates import clean_date
 
 
 class Zambia:
@@ -38,9 +38,7 @@ class Zambia:
         return enrich_data(ds, "vaccine", "Oxford/AstraZeneca, Sinopharm/Beijing")
 
     def pipe_people_vaccinated(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(
-            ds, "people_vaccinated", ds.total_vaccinations - ds.people_fully_vaccinated
-        )
+        return enrich_data(ds, "people_vaccinated", ds.total_vaccinations - ds.people_fully_vaccinated)
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
         return (

@@ -1,6 +1,6 @@
 import pandas as pd
 
-from cowidev.vax.utils.dates import localdatenow
+from cowidev.utils.clean.dates import localdatenow
 from cowidev.vax.utils.files import export_metadata
 
 

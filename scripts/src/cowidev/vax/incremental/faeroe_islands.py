@@ -3,8 +3,8 @@ import requests
 import pandas as pd
 
 from cowidev.utils.clean import clean_count
+from cowidev.utils.clean.dates import localdate
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.dates import localdate
 
 
 class FaeroeIslands:
@@ -18,12 +18,8 @@ class FaeroeIslands:
         return pd.DataFrame.from_records(data).iloc[0]
 
     def pipe_metrics(self, ds: pd.Series) -> pd.Series:
-        ds = enrich_data(
-            ds, "people_vaccinated", clean_count(ds["first_vaccine_number"])
-        )
-        ds = enrich_data(
-            ds, "people_fully_vaccinated", clean_count(ds["second_vaccine_number"])
-        )
+        ds = enrich_data(ds, "people_vaccinated", clean_count(ds["first_vaccine_number"]))
+        ds = enrich_data(ds, "people_fully_vaccinated", clean_count(ds["second_vaccine_number"]))
         total_vaccinations = ds["people_vaccinated"] + ds["people_fully_vaccinated"]
         return enrich_data(ds, "total_vaccinations", total_vaccinations)
 

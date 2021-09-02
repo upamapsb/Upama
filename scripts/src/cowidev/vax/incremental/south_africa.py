@@ -4,9 +4,9 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 from cowidev.utils.clean import clean_count
+from cowidev.utils.clean.dates import localdate
 from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.dates import localdate
 
 
 class SouthAfrica:

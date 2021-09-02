@@ -3,9 +3,9 @@ from datetime import datetime
 import requests
 import pandas as pd
 
+from cowidev.utils.clean import clean_date
 from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.files import load_query
-from cowidev.vax.utils.dates import clean_date
 
 
 class Ireland:
@@ -66,9 +66,7 @@ class Ireland:
         return ds.rename({"dose_2": "people_fully_vaccinated"})
 
     def pipe_total_vaccinations(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(
-            ds, "total_vaccinations", ds.pfizer + ds.oxford + ds.moderna + ds.johnson
-        )
+        return enrich_data(ds, "total_vaccinations", ds.pfizer + ds.oxford + ds.moderna + ds.johnson)
 
     def pipe_date(self, ds: pd.Series) -> pd.Series:
         date_str = clean_date(datetime.fromtimestamp(ds.date / 1000))
@@ -96,9 +94,7 @@ class Ireland:
         return enrich_data(ds, "vaccine", vaccines)
 
     def pipe_source(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(
-            ds, "source_url", "https://covid19ireland-geohive.hub.arcgis.com/"
-        )
+        return enrich_data(ds, "source_url", "https://covid19ireland-geohive.hub.arcgis.com/")
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
         return (
@@ -128,9 +124,7 @@ class Ireland:
 
 
 def main(paths):
-    Ireland(
-        source_url="https://covid19ireland-geohive.hub.arcgis.com/", location="Ireland"
-    ).to_csv(paths)
+    Ireland(source_url="https://covid19ireland-geohive.hub.arcgis.com/", location="Ireland").to_csv(paths)
 
 
 if __name__ == "__main__":

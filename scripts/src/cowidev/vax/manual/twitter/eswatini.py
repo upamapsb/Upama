@@ -3,7 +3,7 @@ import re
 import pandas as pd
 
 from cowidev.vax.manual.twitter.base import TwitterCollectorBase
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_date
 
 
 class Eswatini(TwitterCollectorBase):

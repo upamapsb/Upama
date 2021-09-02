@@ -5,7 +5,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.dates import localdate
+from cowidev.utils.clean.dates import localdate
 
 
 def read(source: str) -> pd.Series:
@@ -14,9 +14,7 @@ def read(source: str) -> pd.Series:
 
 
 def parse_data(soup: BeautifulSoup) -> pd.Series:
-    table = soup.find("p", string=re.compile("Поставени ваксини по")).parent.find(
-        "table"
-    )
+    table = soup.find("p", string=re.compile("Поставени ваксини по")).parent.find("table")
     data = pd.read_html(str(table))[0]
     data = data.droplevel(level=0, axis=1)
     data = data[data["Област"] == "Общо"]
@@ -42,9 +40,7 @@ def enrich_location(ds: pd.Series) -> pd.Series:
 
 
 def enrich_vaccine(ds: pd.Series) -> pd.Series:
-    return enrich_data(
-        ds, "vaccine", "Johnson&Johnson, Oxford/AstraZeneca, Moderna, Pfizer/BioNTech"
-    )
+    return enrich_data(ds, "vaccine", "Johnson&Johnson, Oxford/AstraZeneca, Moderna, Pfizer/BioNTech")
 
 
 def enrich_source(ds: pd.Series) -> pd.Series:
@@ -52,13 +48,7 @@ def enrich_source(ds: pd.Series) -> pd.Series:
 
 
 def pipeline(ds: pd.Series) -> pd.Series:
-    return (
-        ds.pipe(translate_index)
-        .pipe(enrich_date)
-        .pipe(enrich_location)
-        .pipe(enrich_vaccine)
-        .pipe(enrich_source)
-    )
+    return ds.pipe(translate_index).pipe(enrich_date).pipe(enrich_location).pipe(enrich_vaccine).pipe(enrich_source)
 
 
 def main(paths):

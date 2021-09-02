@@ -3,10 +3,9 @@ import re
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from cowidev.utils.clean import clean_count, clean_string
+from cowidev.utils.clean import clean_count, clean_string, extract_clean_date
 from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import merge_with_current_data
-from cowidev.vax.utils.dates import extract_clean_date
 
 
 class Hungary:

@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 import pandas as pd
 from bs4 import BeautifulSoup
 
-from cowidev.vax.utils.dates import clean_date_series, clean_date
+from cowidev.utils.clean import clean_date_series, clean_date
 from cowidev.utils.web.scraping import get_soup
 from cowidev.utils.web.download import read_xlsx_from_url
 

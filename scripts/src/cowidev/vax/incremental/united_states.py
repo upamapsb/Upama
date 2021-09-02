@@ -5,8 +5,8 @@ import re
 
 import requests
 
+from cowidev.utils.clean import clean_date
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.dates import clean_date
 from cowidev.vax.utils.files import export_metadata
 
 
@@ -43,16 +43,12 @@ class UnitedStates:
         # Get only US data (total)
         data = [d for d in data if d["ShortName"] == "USA"]
         if len(data) != 1:
-            raise ValueError(
-                "More than one data element with ShortName=='USA'. Check source data!"
-            )
+            raise ValueError("More than one data element with ShortName=='USA'. Check source data!")
         return data[0]
 
     def _parse_vaccines(self, data: dict):
         r = re.compile(r"Administered_([a-zA-Z]+)")
-        vaccines = set(
-            [re.fullmatch(r, k).group(1) for k in data.keys() if re.fullmatch(r, k)]
-        )
+        vaccines = set([re.fullmatch(r, k).group(1) for k in data.keys() if re.fullmatch(r, k)])
         vaccines_wrong = vaccines.difference(vaccines_mapping)
         if vaccines_wrong:
             raise ValueError(f"Missing vaccines: {vaccines_wrong}")
@@ -98,9 +94,7 @@ class UnitedStates:
                 }
             )
         )
-        df = df.melt(
-            ["date", "location"], var_name="vaccine", value_name="total_vaccinations"
-        )
+        df = df.melt(["date", "location"], var_name="vaccine", value_name="total_vaccinations")
         df = df.dropna(subset=["total_vaccinations"])
         return df
 
@@ -131,9 +125,7 @@ class UnitedStates:
                 "series_complete_yes",
             ],
         ).astype({"administered_dose1": int, "series_complete_yes": int})
-        df = df.assign(
-            demographic_category=df.demographic_category.replace(age_groups_accepted)
-        )
+        df = df.assign(demographic_category=df.demographic_category.replace(age_groups_accepted))
         return df
 
     def pipe_age_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -152,9 +144,7 @@ class UnitedStates:
         return df.assign(location=self.location)
 
     def pipe_age_minmax_values(self, df: pd.DataFrame) -> pd.DataFrame:
-        df[["age_group_min", "age_group_max"]] = df.age_group.str.split(
-            "-", expand=True
-        )
+        df[["age_group_min", "age_group_max"]] = df.age_group.str.split("-", expand=True)
         return df
 
     def pipe_age_total_vaccinations(self, df: pd.DataFrame) -> pd.DataFrame:

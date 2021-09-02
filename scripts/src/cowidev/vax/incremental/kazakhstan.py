@@ -1,12 +1,9 @@
-from datetime import datetime
-
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from cowidev.utils.clean import clean_count
+from cowidev.utils.clean import clean_count, clean_date
 from cowidev.vax.utils.incremental import increment, enrich_data
-from cowidev.vax.utils.dates import clean_date
 
 
 def read(source: str) -> pd.Series:

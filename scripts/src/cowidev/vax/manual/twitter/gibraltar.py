@@ -5,18 +5,13 @@ import numpy as np
 import pandas as pd
 
 from cowidev.vax.manual.twitter.base import TwitterCollectorBase
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_date
 
 
 class Gibraltar(TwitterCollectorBase):
     def __init__(self, api, paths=None, **kwargs):
         super().__init__(
-            api=api,
-            username="GibraltarGov",
-            location="Gibraltar",
-            add_metrics_nan=True,
-            paths=paths,
-            **kwargs
+            api=api, username="GibraltarGov", location="Gibraltar", add_metrics_nan=True, paths=paths, **kwargs
         )
 
     def _propose_df(self):
@@ -29,9 +24,7 @@ class Gibraltar(TwitterCollectorBase):
             if cond:
                 url = tweet.extended_entities["media"][0]["media_url_https"]
                 # print(url)
-                im = Image.open(
-                    requests.get(url, stream=True).raw, formats=["png", "jpeg"]
-                )
+                im = Image.open(requests.get(url, stream=True).raw, formats=["png", "jpeg"])
                 pixel_values = [x for i, x in enumerate(im.getdata()) if i < 100000]
                 h = pd.value_counts(pixel_values, normalize=True).index[0][:3]
                 # print(h)

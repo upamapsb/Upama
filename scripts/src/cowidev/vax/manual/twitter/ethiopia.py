@@ -2,8 +2,7 @@ import pandas as pd
 import re
 
 from cowidev.vax.manual.twitter.base import TwitterCollectorBase
-from cowidev.vax.utils.dates import clean_date
-
+from cowidev.utils.clean import clean_date
 
 class Ethiopia(TwitterCollectorBase):
     def __init__(self, api, paths=None):
