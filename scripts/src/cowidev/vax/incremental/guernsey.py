@@ -1,6 +1,7 @@
 import pandas as pd
 
-from cowidev.utils.web.scraping import get_soup, extract_clean_date
+from cowidev.utils.clean import extract_clean_date
+from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
 
 
