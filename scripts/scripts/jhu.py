@@ -45,9 +45,10 @@ WARNING = colored("[Warning]", "yellow")
 DATASET_NAME = "COVID-19 - Johns Hopkins University"
 
 LARGE_DATA_CORRECTIONS = [
-    ("Turkey", "2020-12-10", "cases"),
-    ("France", "2021-05-20", "cases"),
     ("Ecuador", "2021-07-20", "deaths"),
+    ("France", "2021-05-20", "cases"),
+    ("France", "2021-08-17", "deaths"),
+    ("Turkey", "2020-12-10", "cases"),
 ]
 
 
@@ -93,15 +94,9 @@ def get_metric(metric, region):
     # Relabel Hong Kong to its own time series
     df.loc[df["Province/State"] == "Hong Kong", "Country/Region"] = "Hong Kong"
 
-    national = (
-        df.drop(columns="Province/State")
-        .groupby("Country/Region", as_index=False)
-        .sum()
-    )
+    national = df.drop(columns="Province/State").groupby("Country/Region", as_index=False).sum()
 
-    df = (
-        national.copy()
-    )  # df = pd.concat([national, subnational]).reset_index(drop=True)
+    df = national.copy()  # df = pd.concat([national, subnational]).reset_index(drop=True)
     df = df.melt(id_vars="Country/Region", var_name="date", value_name=metric)
     df.loc[:, "date"] = pd.to_datetime(df["date"], format="%m/%d/%y").dt.date
     df = df.sort_values("date")
@@ -116,18 +111,14 @@ def get_metric(metric, region):
     df = df.merge(cutoff, on="Country/Region", how="left")
     df = df[(df.date >= df.cutoff) | (df.cutoff.isna())].drop(columns="cutoff")
 
-    df.loc[:, metric.replace("total_", "new_")] = df[metric] - df.groupby(
-        "Country/Region"
-    )[metric].shift(1)
+    df.loc[:, metric.replace("total_", "new_")] = df[metric] - df.groupby("Country/Region")[metric].shift(1)
     return df
 
 
 def load_data():
     global_cases = get_metric("confirmed", "global")
     global_deaths = get_metric("deaths", "global")
-    return pd.merge(
-        global_cases, global_deaths, on=["date", "Country/Region"], how="outer"
-    )
+    return pd.merge(global_cases, global_deaths, on=["date", "Country/Region"], how="outer")
 
 
 def load_locations():
@@ -170,9 +161,7 @@ def check_data_correctness(df_merged):
     )
     if len(pop_entity_diff) > 0:
         # this is not an error, so don't increment errors variable
-        print(
-            "\n" + WARNING + " These entities were not found in the population dataset:"
-        )
+        print("\n" + WARNING + " These entities were not found in the population dataset:")
         print(pop_entity_diff)
         print()
         formatted_msg = ", ".join(f"`{entity}`" for entity in pop_entity_diff)
@@ -187,9 +176,7 @@ def check_data_correctness(df_merged):
 
 def discard_rows(df):
     for ldc in LARGE_DATA_CORRECTIONS:
-        df.loc[
-            (df.location == ldc[0]) & (df.date.astype(str) == ldc[1]), f"new_{ldc[2]}"
-        ] = np.nan
+        df.loc[(df.location == ldc[0]) & (df.date.astype(str) == ldc[1]), f"new_{ldc[2]}"] = np.nan
     return df
 
 
@@ -206,10 +193,7 @@ def reinstate_rows(df):
                 (df["location"] == agg) & (df["date"].astype(str) == dc["date"]),
                 dc["metric"],
             ].item()
-            df.loc[
-                (df["location"] == agg) & (df["date"].astype(str) == dc["date"]),
-                dc["metric"],
-            ] = (
+            df.loc[(df["location"] == agg) & (df["date"].astype(str) == dc["date"]), dc["metric"],] = (
                 original + correction
             )
     return df
@@ -222,9 +206,7 @@ def patch_ireland(df: pd.DataFrame) -> pd.DataFrame:
     # receiving the data directly from the government — we therefore patch the series with WHO data
 
     may_15 = pd.to_datetime("2021-05-15").date()
-    may_15_cases = df.loc[
-        (df.location == "Ireland") & (df.date == may_15), "new_cases"
-    ].item()
+    may_15_cases = df.loc[(df.location == "Ireland") & (df.date == may_15), "new_cases"].item()
 
     if may_15_cases == 0:
 
@@ -244,9 +226,7 @@ def patch_ireland(df: pd.DataFrame) -> pd.DataFrame:
         )
         who_data["date"] = pd.to_datetime(who_data.date).dt.date
 
-        patch_data = who_data[
-            (who_data.location == "Ireland") & (who_data.date >= may_15)
-        ]
+        patch_data = who_data[(who_data.location == "Ireland") & (who_data.date >= may_15)]
         jhu_data = df[(df.location != "Ireland") | (df.date < may_15)]
         df = pd.concat([jhu_data, patch_data]).reset_index(drop=True)
 
@@ -254,9 +234,7 @@ def patch_ireland(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def load_standardized(df):
-    df = df[
-        ["date", "location", "new_cases", "new_deaths", "total_cases", "total_deaths"]
-    ]
+    df = df[["date", "location", "new_cases", "new_deaths", "total_cases", "total_deaths"]]
     # df = patch_ireland(df)
     df = discard_rows(df)
     df = inject_owid_aggregates(df)
@@ -310,10 +288,7 @@ def main(skip_download=False):
         sys.exit(1)
 
     if export(df_merged):
-        print(
-            "Successfully exported CSVs to %s\n"
-            % colored(os.path.abspath(OUTPUT_PATH), "magenta")
-        )
+        print("Successfully exported CSVs to %s\n" % colored(os.path.abspath(OUTPUT_PATH), "magenta"))
     else:
         print_err("JHU export failed.\n")
         sys.exit(1)
@@ -326,11 +301,7 @@ def main(skip_download=False):
 
 
 def update_db():
-    time_str = (
-        datetime.now()
-        .astimezone(pytz.timezone("Europe/London"))
-        .strftime("%-d %B, %H:%M")
-    )
+    time_str = datetime.now().astimezone(pytz.timezone("Europe/London")).strftime("%-d %B, %H:%M")
     source_name = f"Johns Hopkins University CSSE COVID-19 Data – Last updated {time_str} (London time)"
     import_dataset(
         dataset_name=DATASET_NAME,
