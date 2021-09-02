@@ -24,12 +24,8 @@ class UnitedArabEmirates:
             return pd.Series(
                 {
                     "total_vaccinations": total_vaccinations,
-                    # "people_vaccinated": self._parse_people_vaccinated(
-                    #     elem, population
-                    # ),
-                    # "people_fully_vaccinated": self._parse_people_fully_vaccinated(
-                    #     elem, population
-                    # ),
+                    "people_vaccinated": self._parse_people_vaccinated(elem, population),
+                    "people_fully_vaccinated": self._parse_people_fully_vaccinated(elem, population),
                     "date": self._parse_date(driver),
                 }
             )
@@ -87,8 +83,8 @@ class UnitedArabEmirates:
             paths=paths,
             location=data["location"],
             total_vaccinations=int(data["total_vaccinations"]),
-            # people_vaccinated=int(data["people_vaccinated"]),
-            # people_fully_vaccinated=int(data["people_fully_vaccinated"]),
+            people_vaccinated=int(data["people_vaccinated"]),
+            people_fully_vaccinated=int(data["people_fully_vaccinated"]),
             date=data["date"],
             source_url=data["source_url"],
             vaccine=data["vaccine"],
