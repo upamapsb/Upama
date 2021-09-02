@@ -4,7 +4,9 @@
 from datetime import datetime, timedelta
 
 import pandas as pd
+
 from cowidev.utils.utils import export_timestamp
+from cowidev.utils.clean import clean_date
 
 
 class XMortalityETL:
@@ -36,7 +38,7 @@ class XMortalityETL:
             }
         )
         # Fix date
-        df.loc[:, "date"] = [(datetime(2020, 1, 1) + timedelta(days=d)).strftime("%Y-%m-%d") for d in df.date]
+        df.loc[:, "date"] = [clean_date(datetime(2020, 1, 1) + timedelta(days=d)) for d in df.date]
         # Sort rows
         df = df.sort_values(["location", "date"])
         return df

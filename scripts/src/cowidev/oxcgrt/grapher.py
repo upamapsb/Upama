@@ -3,10 +3,10 @@ from datetime import datetime
 import pandas as pd
 from cowidev.grapher.db.base import GrapherBaseUpdater
 from cowidev.utils.utils import time_str_grapher, get_filename
-
+from cowidev.utils.clean.dates import DATE_FORMAT
 
 ZERO_DAY = "2020-01-01"
-zero_day = datetime.strptime(ZERO_DAY, "%Y-%m-%d")
+zero_day = datetime.strptime(ZERO_DAY, DATE_FORMAT)
 
 
 def run_grapheriser(input_path: str, input_path_country_std: str, output_path: str):
@@ -43,9 +43,7 @@ def run_grapheriser(input_path: str, input_path_country_std: str, output_path: s
 
     cgrt = cgrt[usecols]
 
-    cgrt.loc[:, "Date"] = pd.to_datetime(cgrt["Date"], format="%Y%m%d").map(
-        lambda date: (date - zero_day).days
-    )
+    cgrt.loc[:, "Date"] = pd.to_datetime(cgrt["Date"], format="%Y%m%d").map(lambda date: (date - zero_day).days)
     cgrt = country_mapping.merge(cgrt, on="CountryName", how="right")
 
     missing_from_mapping = cgrt[cgrt["Country"].isna()]["CountryName"].unique()
@@ -88,8 +86,8 @@ def run_db_updater(input_path: str):
     GrapherBaseUpdater(
         dataset_name=dataset_name,
         source_name=(
-            f"Hale, Angrist, Goldszmidt, Kira, Petherick, Phillips, Webster, Cameron-Blake, Hallas, Majumdar, and"
-            f" Tatlow (2021). “A global panel database of pandemic policies (Oxford COVID-19 Government Response"
+            "Hale, Angrist, Goldszmidt, Kira, Petherick, Phillips, Webster, Cameron-Blake, Hallas, Majumdar, and"
+            " Tatlow (2021). “A global panel database of pandemic policies (Oxford COVID-19 Government Response"
             f"Tracker).” Nature Human Behaviour. – Last updated {time_str_grapher()} (London time)"
         ),
         zero_day=ZERO_DAY,

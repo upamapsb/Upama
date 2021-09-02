@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 
 from cowidev.utils.utils import get_project_dir
+from cowidev.utils.clean.dates import DATE_FORMAT
 
 
 DEBUG = False
@@ -314,7 +315,7 @@ def _aggregate(df):
 
     # constructs date variable for internal Grapher usage.
     df_agg.loc[:, "date_internal_use"] = (
-        df_agg["date"] - datetime.datetime.strptime(ZERO_DAY, "%Y-%m-%d").date()
+        df_agg["date"] - datetime.datetime.strptime(ZERO_DAY, DATE_FORMAT).date()
     ).dt.days
     df_agg.drop("date", axis=1, inplace=True)
 
@@ -403,10 +404,9 @@ def _create_composite_cols(df):
             "uncertain_covid_vaccinate_this_week_pct_pop",
         ]
 
-        assert all(df_temp[cols].sum(axis=1, min_count=len(cols)).dropna().round(1) == 100), (
-            f"Expected {cols} to sum to *nearly* 100 for every entity-date "
-            "observation, prior to rounding adjustment."
-        )
+        assert all(
+            df_temp[cols].sum(axis=1, min_count=len(cols)).dropna().round(1) == 100
+        ), f"Expected {cols} to sum to *nearly* 100 for every entity-date observation, prior to rounding adjustment."
 
         # adjusts one variable to ensure sum of all cols equals exactly
         # 100. Otherwise, rounding errors may lead the sum to be
@@ -419,7 +419,7 @@ def _create_composite_cols(df):
         )
         assert all(
             df_temp[cols[:-1] + [f"{cols[-1]}_adjusted"]].sum(axis=1, min_count=len(cols)).dropna().round(2) == 100
-        ), (f"Expected {cols} to sum to exactly 100 for every entity-date " "observation, after rounding adjustment.")
+        ), f"Expected {cols} to sum to exactly 100 for every entity-date observation, after rounding adjustment."
         df_temp[cols[-1]] = df_temp[f"{cols[-1]}_adjusted"]
 
         df_temp = df_temp[

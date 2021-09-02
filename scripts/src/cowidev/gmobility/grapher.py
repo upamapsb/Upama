@@ -4,19 +4,17 @@ import pandas as pd
 
 from cowidev.grapher.db.base import GrapherBaseUpdater
 from cowidev.utils.utils import time_str_grapher, get_filename
-
+from cowidev.utils.clean.dates import DATE_FORMAT
 
 ZERO_DAY = "2020-01-01"
-zero_day = datetime.strptime(ZERO_DAY, "%Y-%m-%d")
+zero_day = datetime.strptime(ZERO_DAY, DATE_FORMAT)
 
 
 def run_grapheriser(input_path: str, input_path_country_std: str, output_path: str):
     mobility = pd.read_csv(input_path, low_memory=False)
 
     # Convert date column to days since zero_day
-    mobility["date"] = pd.to_datetime(mobility["date"], format="%Y/%m/%d").map(
-        lambda date: (date - zero_day).days
-    )
+    mobility["date"] = pd.to_datetime(mobility["date"], format="%Y/%m/%d").map(lambda date: (date - zero_day).days)
 
     # Standardise country names to OWID country names
     country_mapping = pd.read_csv(input_path_country_std)
@@ -59,9 +57,7 @@ def run_grapheriser(input_path: str, input_path_country_std: str, output_path: s
     country_mobility = country_mobility.rename(columns=rename_dict)
 
     # Replace time series with 7-day rolling averages
-    country_mobility = country_mobility.sort_values(by=["Country", "Year"]).reset_index(
-        drop=True
-    )
+    country_mobility = country_mobility.sort_values(by=["Country", "Year"]).reset_index(drop=True)
     smoothed_cols = [
         "retail_and_recreation",
         "grocery_and_pharmacy",

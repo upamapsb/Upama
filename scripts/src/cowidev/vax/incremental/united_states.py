@@ -5,7 +5,7 @@ import re
 
 import requests
 
-from cowidev.utils.clean import clean_date
+from cowidev.utils.clean import clean_date, clean_date_series
 from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.files import export_metadata
 

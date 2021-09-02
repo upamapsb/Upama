@@ -6,9 +6,9 @@ import numpy as np
 import requests
 import PyPDF2
 
-from cowidev.vax.utils.incremental import enrich_data, increment
+from cowidev.utils.clean import clean_date
 from cowidev.utils.web.scraping import get_soup
-from cowidev.vax.utils.dates import clean_date
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 class Bolivia:
