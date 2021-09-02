@@ -74,15 +74,9 @@ def rename_cols(df):
 
 def add_per_capita(df):
 
-    df["people_fully_vaccinated_per_hundred"] = df.people_fully_vaccinated.div(
-        df.Census2019
-    ).mul(100)
-    df["total_vaccinations_per_hundred"] = df.total_vaccinations.div(df.Census2019).mul(
-        100
-    )
-    df["people_vaccinated_per_hundred"] = df.people_vaccinated.div(df.Census2019).mul(
-        100
-    )
+    df["people_fully_vaccinated_per_hundred"] = df.people_fully_vaccinated.div(df.Census2019).mul(100)
+    df["total_vaccinations_per_hundred"] = df.total_vaccinations.div(df.Census2019).mul(100)
+    df["people_vaccinated_per_hundred"] = df.people_vaccinated.div(df.Census2019).mul(100)
     df["distributed_per_hundred"] = df.total_distributed.div(df.Census2019).mul(100)
 
     for var in df.columns:
@@ -96,13 +90,11 @@ def add_smoothed_state(df):
     df = df.set_index("date").resample("1D").asfreq().reset_index().sort_values("date")
     df[["location", "Census2019"]] = df[["location", "Census2019"]].ffill()
     interpolated_totals = df["total_vaccinations"].interpolate("linear")
-    df["daily_vaccinations_raw"] = interpolated_totals - interpolated_totals.shift(1)
     df["daily_vaccinations"] = (
-        df["daily_vaccinations_raw"].rolling(7, min_periods=1).mean().round()
+        (interpolated_totals - interpolated_totals.shift(1)).rolling(7, min_periods=1).mean().round()
     )
-    df["daily_vaccinations_per_million"] = (
-        df["daily_vaccinations"].mul(1000000).div(df["Census2019"]).round()
-    )
+    df["daily_vaccinations_raw"] = df.total_vaccinations - df.total_vaccinations.shift(1)
+    df["daily_vaccinations_per_million"] = df["daily_vaccinations"].mul(1000000).div(df["Census2019"]).round()
     return df
 
 
@@ -114,9 +106,7 @@ def add_smoothed(df):
 
 
 def add_usage(df):
-    df["share_doses_used"] = (
-        df["total_vaccinations"].div(df["total_distributed"]).round(3)
-    )
+    df["share_doses_used"] = df["total_vaccinations"].div(df["total_distributed"]).round(3)
     return df
 
 
@@ -130,9 +120,7 @@ def export_to_public(df):
 
 def export_to_grapher(df):
     df = df.rename(columns={"date": "Year", "location": "Country"})
-    df["Year"] = (
-        pd.to_datetime(df["Year"], format="%Y-%m-%d") - datetime(2021, 1, 1)
-    ).dt.days
+    df["Year"] = (pd.to_datetime(df["Year"], format="%Y-%m-%d") - datetime(2021, 1, 1)).dt.days
     df.insert(0, "Country", df.pop("Country"))
     df.to_csv(
         os.path.join(GRAPHER_PATH, "COVID-19 - United States vaccinations.csv"),
@@ -177,9 +165,7 @@ def generate_dataset():
 
 def update_db():
     time_str = (
-        (datetime.now() - timedelta(minutes=10))
-        .astimezone(pytz.timezone("US/Eastern"))
-        .strftime("%B %-d, %H:%M")
+        (datetime.now() - timedelta(minutes=10)).astimezone(pytz.timezone("US/Eastern")).strftime("%B %-d, %H:%M")
     )
     source_name = f"Centers for Disease Control and Prevention – Last updated {time_str} (Eastern Time)"
     import_dataset(
