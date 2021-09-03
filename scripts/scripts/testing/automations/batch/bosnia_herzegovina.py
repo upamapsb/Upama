@@ -43,9 +43,7 @@ class BosniaHerzegovina:
         return value
 
     def _parse_date(self, elem):
-        return datetime.strptime(elem.find("p").text.strip(), "%d.%m.%Y.").strftime(
-            "%Y-%m-%d"
-        )
+        return datetime.strptime(elem.find("p").text.strip(), "%d.%m.%Y.").strftime("%Y-%m-%d")
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.assign(
@@ -57,10 +55,7 @@ class BosniaHerzegovina:
             }
         ).sort_values("Date")
         df.loc[:, "Cumulative total"] = (
-            df.loc[:, "Cumulative total"]
-            .astype(str)
-            .str.replace(r"\s|\*", "", regex=True)
-            .astype(int)
+            df.loc[:, "Cumulative total"].astype(str).str.replace(r"\s|\*", "", regex=True).astype(int)
         )
         df = df.pipe(self._remove_typo)
         if not (df.Date.value_counts() == 1).all():
