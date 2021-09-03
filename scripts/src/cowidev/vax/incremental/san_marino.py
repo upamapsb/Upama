@@ -1,15 +1,15 @@
-import requests
 import re
 
 import pandas as pd
 from bs4 import BeautifulSoup
 
 from cowidev.utils.clean import clean_count, clean_date
+from cowidev.utils.web import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 def read(source: str) -> pd.Series:
-    soup = BeautifulSoup(requests.get(source, verify=False).content, "html.parser")  # noqa: S501
+    soup = get_soup(source)  # noqa: S501
     return parse_data(soup)
 
 

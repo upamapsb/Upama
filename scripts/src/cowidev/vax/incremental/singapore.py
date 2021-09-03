@@ -1,11 +1,10 @@
 import re
-import requests
 
 from bs4 import BeautifulSoup
 import pandas as pd
 
 from cowidev.utils.clean import clean_count, clean_date
-from cowidev.utils.web.scraping import get_soup
+from cowidev.utils.web import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
 
 
@@ -15,7 +14,7 @@ class Singapore:
         self.feed_url = "https://www.moh.gov.sg/feeds/news-highlights"
 
     def find_article(self) -> str:
-        soup = BeautifulSoup(requests.get(self.feed_url).content, "lxml")
+        soup = get_soup(self.feed_url)
         for link in soup.find_all("item"):
             elements = link.children
             for elem in elements:

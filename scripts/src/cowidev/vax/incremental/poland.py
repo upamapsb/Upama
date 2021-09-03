@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta
 
-import requests
 import pandas as pd
 
 from cowidev.utils.clean import clean_date
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.files import load_query
 
@@ -23,7 +23,7 @@ class Poland:
 
     def read(self) -> pd.Series:
         params = load_query("poland-all", to_str=False)
-        data = requests.get(self.source_url, params=params).json()["features"][0]["attributes"]
+        data = request_json(self.source_url, params=params)["features"][0]["attributes"]
         return pd.Series(data)
 
     def pipe_rename_columns(self, ds: pd.Series) -> pd.Series:

@@ -1,9 +1,9 @@
 import re
-import requests
 
 from bs4 import BeautifulSoup
 import pandas as pd
 
+from cowidev.utils.web import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
 
 
@@ -17,7 +17,7 @@ def read(source: str) -> pd.Series:
         "Pragma": "no-cache",
         "Cache-Control": "no-cache",
     }
-    soup = BeautifulSoup(requests.get(source, headers=headers).content, "html.parser")
+    soup = get_soup(source)
     return parse_data(soup)
 
 

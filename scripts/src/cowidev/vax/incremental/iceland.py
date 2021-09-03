@@ -1,11 +1,10 @@
 import re
 import json
 
-import requests
-from bs4 import BeautifulSoup
 import pandas as pd
 
 from cowidev.utils.clean import clean_count
+from cowidev.utils.web import get_soup
 from cowidev.vax.utils.incremental import increment
 from cowidev.vax.utils.files import export_metadata
 
@@ -28,7 +27,7 @@ VACCINE_MAPPING = {
 def main(paths):
 
     url = "https://e.infogram.com/c3bc3569-c86d-48a7-9d4c-377928f102bf"
-    soup = BeautifulSoup(requests.get(url).content, "html.parser")
+    soup = get_soup(url)
 
     for script in soup.find_all("script"):
         if "infographicData" in str(script):

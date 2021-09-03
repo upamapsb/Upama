@@ -1,16 +1,16 @@
 import re
-import requests
 
 from bs4 import BeautifulSoup
 import pandas as pd
 
 from cowidev.utils.clean import clean_count
 from cowidev.utils.clean.dates import localdate
+from cowidev.utils.web import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 def read(source: str) -> pd.Series:
-    soup = BeautifulSoup(requests.get(source).content, "html.parser")
+    soup = get_soup(source)
     data = parse_data(soup)
     return enrich_data(data, "source_url", source)
 
@@ -18,7 +18,8 @@ def read(source: str) -> pd.Series:
 def parse_data(soup: BeautifulSoup) -> pd.Series:
 
     regex = (
-        r"([\d,]+) \(\d+% of (the estimated population of )?[\d,]+\) have had at least one dose of a COVID-19 vaccine and"
+        r"([\d,]+) \(\d+% of (the estimated population of )?[\d,]+\) have had at least one dose of a COVID-19"
+        r" vaccine and"
         r" ([\d,]+)"
     )
     matches = re.search(regex, soup.text)

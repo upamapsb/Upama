@@ -1,10 +1,10 @@
 import re
 
-import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 
 from cowidev.utils.clean import clean_count, clean_date
+from cowidev.utils.web import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
 
 
@@ -16,7 +16,7 @@ METRIC_LABELS = {
 
 
 def read(source: str) -> pd.Series:
-    soup = BeautifulSoup(requests.get(source).content, "html.parser")
+    soup = get_soup(source)
     return parse_data(soup)
 
 
