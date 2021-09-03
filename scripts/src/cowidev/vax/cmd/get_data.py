@@ -1,3 +1,4 @@
+import time
 import importlib
 
 from joblib import Parallel, delayed
@@ -12,9 +13,7 @@ logger = get_logger()
 
 # Import modules
 country_to_module_batch = {c: f"cowidev.vax.batch.{c}" for c in batch_countries}
-country_to_module_incremental = {
-    c: f"cowidev.vax.incremental.{c}" for c in incremental_countries
-}
+country_to_module_incremental = {c: f"cowidev.vax.incremental.{c}" for c in incremental_countries}
 country_to_module = {
     **country_to_module_batch,
     **country_to_module_incremental,
@@ -63,6 +62,7 @@ def main_get_data(
 
     Is equivalent to script `run_python_scripts.py`
     """
+    t0 = time.time()
     print("-- Getting data... --")
     skip_countries = [x.lower() for x in skip_countries]
     country_data_getter = CountryDataGetter(paths, skip_countries, gsheets_api)
@@ -81,21 +81,21 @@ def main_get_data(
                     module_name,
                 )
             )
-
-    modules_failed = [
-        m["module_name"] for m in modules_execution_results if m["success"] is False
-    ]
+    t_sec_1 = round(time.time() - t0, 2)
+    t_min_1 = round(t_sec_1 / 60, 2)
     # Retry failed modules
+    modules_failed = [m["module_name"] for m in modules_execution_results if m["success"] is False]
     logger.info(f"\n---\n\nRETRIALS ({len(modules_failed)})")
     modules_execution_results = []
     for module_name in modules_failed:
         modules_execution_results.append(country_data_getter.run(module_name))
-    modules_failed_retrial = [
-        m["module_name"] for m in modules_execution_results if m["success"] is False
-    ]
+    modules_failed_retrial = [m["module_name"] for m in modules_execution_results if m["success"] is False]
     if len(modules_failed_retrial) > 0:
         failed_str = "\n".join([f"* {m}" for m in modules_failed_retrial])
-        print(
-            f"\n---\n\nThe following scripts failed to run ({len(modules_failed_retrial)}):\n{failed_str}"
-        )
+        print(f"\n---\n\nThe following scripts failed to run ({len(modules_failed_retrial)}):\n{failed_str}")
+    t_sec_2 = round(time.time() - t0, 2)
+    t_min_2 = round(t_sec_2 / 60, 2)
+    print("---")
+    print(f"Took {t_sec_1} seconds (i.e. {t_min_1} minutes).")
+    print(f"Took {t_sec_2} seconds (i.e. {t_min_2} minutes) [AFRTER RETRIALS].")
     print_eoe()
