@@ -31,6 +31,9 @@ def get_soup(
     verify: bool = True,
     from_encoding: str = None,
     timeout=20,
+    # parser="html.parser",
+    parser="lxml",
+    **kwargs
 ) -> BeautifulSoup:
     """Get soup from website.
 
@@ -41,23 +44,25 @@ def get_soup(
         from_encoding (str, optional): Encoding to use. Defaults to None.
         timeout (int, optional): If no response is received after `timeout` seconds, exception is raied.
                                  Defaults to 20.
+        parser (str, optional): HTML parser. Read https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+                                #installing-a-parser. Defaults to 'lxml'
     Returns:
         BeautifulSoup: Website soup.
     """
     if headers is None:
         headers = get_headers()
     try:
-        response = requests.get(source, headers=headers, verify=verify, timeout=timeout)
+        response = requests.get(source, headers=headers, verify=verify, timeout=timeout, **kwargs)
     except Exception as err:
         raise err
     if not response.ok:
         raise HTTPError("Web {} not found! {response.content}")
     content = response.content
-    return BeautifulSoup(content, "html.parser", from_encoding=from_encoding)
+    return BeautifulSoup(content, parser, from_encoding=from_encoding)
 
 
-def request_json(url):
-    soup = get_soup(url)
+def request_json(url, **kwargs):
+    soup = get_soup(url, **kwargs)
     data = json.loads(soup.text)
     return data
 
