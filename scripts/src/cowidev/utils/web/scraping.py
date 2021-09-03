@@ -1,3 +1,4 @@
+import json
 from urllib.error import HTTPError
 
 from bs4 import BeautifulSoup
@@ -53,6 +54,12 @@ def get_soup(
         raise HTTPError("Web {} not found! {response.content}")
     content = response.content
     return BeautifulSoup(content, "html.parser", from_encoding=from_encoding)
+
+
+def request_json(url):
+    soup = get_soup(url)
+    data = json.loads(soup.text)
+    return data
 
 
 def sel_options(headless: bool = True, firefox: bool = False):
