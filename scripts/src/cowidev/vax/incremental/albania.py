@@ -16,8 +16,8 @@ class Albania:
         self.regex = {
             "title": r"Vaksinimi antiCOVID\/ Kryhen [0-9,]+ vaksinime",
             "date": r"Postuar më: (\d{1,2}\/\d{1,2}\/202\d)",
-            "total_vaccinations": r"Prej fillimit të vaksinimit janë kryer në total ([\d,]+) vaksinime ndaj COVID19",
-            "people_fully_vaccinated": r"Prej tyre, ([\d,]+) qytetarë i kanë kryer të dy dozat e vaksinës antiCOVID",
+            "total_vaccinations": r"Prej fillimit të vaksinimit janë kryer në total ([\d,]+) (vaksinime|doza)",
+            "people_fully_vaccinated": r"Prej tyre,? ([\d,]+) qytetarë i kanë kryer të dy dozat e vaksinës antiCOVID",
         }
 
     def read(self, last_update: str) -> pd.DataFrame:
