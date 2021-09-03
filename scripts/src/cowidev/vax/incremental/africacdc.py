@@ -1,9 +1,9 @@
 from datetime import datetime
 
-import requests
 import pandas as pd
 
 from cowidev.utils.clean import clean_date
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.incremental import increment
 from cowidev.vax.utils.orgs import WHO_VACCINES, ACDC_COUNTRIES
 from cowidev.vax.cmd.utils import get_logger
@@ -39,7 +39,7 @@ class AfricaCDC:
         return f"{self._base_url}?f=pjson"
 
     def read(self) -> pd.DataFrame:
-        data = requests.get(self.source_url).json()
+        data = request_json(self.source_url)
         res = [d["attributes"] for d in data["features"]]
         df = pd.DataFrame(
             res,
@@ -111,7 +111,7 @@ class AfricaCDC:
         return df.assign(date=self._parse_date())
 
     def _parse_date(self):
-        res = requests.get(self.source_url_date).json()
+        res = request_json(self.source_url_date)
         edit_ts = res["editingInfo"]["lastEditDate"]
         return clean_date(datetime.fromtimestamp(edit_ts / 1000))
 

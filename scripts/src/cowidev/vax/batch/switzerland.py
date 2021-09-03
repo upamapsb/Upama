@@ -1,8 +1,7 @@
-import requests
-
 import pandas as pd
 
 from cowidev.vax.utils.files import export_metadata
+from cowidev.utils.web import request_json
 
 
 class Switzerland:
@@ -15,7 +14,7 @@ class Switzerland:
         return df, df_manufacturer
 
     def _get_file_url(self) -> str:
-        response = requests.get("https://www.covid19.admin.ch/api/data/context").json()
+        response = request_json("https://www.covid19.admin.ch/api/data/context")
         context = response["sources"]["individual"]["csv"]
         doses_url = context["vaccDosesAdministered"]
         people_url = context["vaccPersonsV2"]
@@ -42,9 +41,7 @@ class Switzerland:
 
     def pipe_pivot(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
-            df.pivot(index=["geoRegion", "date"], columns="type", values="sumTotal")
-            .reset_index()
-            .sort_values("date")
+            df.pivot(index=["geoRegion", "date"], columns="type", values="sumTotal").reset_index().sort_values("date")
         )
 
     def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -58,15 +55,11 @@ class Switzerland:
         )
 
     def pipe_fix_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
-        df.loc[
-            df.total_vaccinations < df.people_vaccinated, "total_vaccinations"
-        ] = df.people_vaccinated
+        df.loc[df.total_vaccinations < df.people_vaccinated, "total_vaccinations"] = df.people_vaccinated
         return df
 
     def pipe_translate_country_code(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
-            location=df.location.replace({"CH": "Switzerland", "FL": "Liechtenstein"})
-        )
+        return df.assign(location=df.location.replace({"CH": "Switzerland", "FL": "Liechtenstein"}))
 
     def pipe_source(self, df: pd.DataFrame, country_code: str) -> pd.DataFrame:
         return df.assign(
@@ -118,13 +111,9 @@ class Switzerland:
     def to_csv(self, paths):
         vaccine_data, manufacturer_data = self.read()
 
-        vaccine_data.pipe(self.pipeline, country_code="CH").to_csv(
-            paths.tmp_vax_out("Switzerland"), index=False
-        )
+        vaccine_data.pipe(self.pipeline, country_code="CH").to_csv(paths.tmp_vax_out("Switzerland"), index=False)
 
-        vaccine_data.pipe(self.pipeline, country_code="FL").to_csv(
-            paths.tmp_vax_out("Liechtenstein"), index=False
-        )
+        vaccine_data.pipe(self.pipeline, country_code="FL").to_csv(paths.tmp_vax_out("Liechtenstein"), index=False)
 
         df_man = manufacturer_data.pipe(self.pipeline_manufacturer)
         df_man.to_csv(paths.tmp_vax_out_man("Switzerland"), index=False)

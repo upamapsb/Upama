@@ -1,7 +1,7 @@
-import requests
 import pandas as pd
 
 from cowidev.utils.clean.dates import localdate
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.incremental import enrich_data, increment
 
 
@@ -25,7 +25,7 @@ class India:
         }
 
     def read(self):
-        data = requests.get(self.source_url[self.source_name]).json()
+        data = request_json(self.source_url[self.source_name])
         if self.source_name == "mohfw":
             return self.read_mohfw(data)
         elif self.source_name == "cowin":

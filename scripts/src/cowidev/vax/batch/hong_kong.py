@@ -1,10 +1,12 @@
 import requests
 import pandas as pd
+
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.files import export_metadata
 
 
 def read(source: str) -> pd.DataFrame:
-    data = requests.get(source).json()
+    data = request_json(source)
     return pd.DataFrame.from_dict(
         [
             {
@@ -30,9 +32,7 @@ def enrich_vaccine(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def enrich_metadata(df: pd.DataFrame) -> pd.DataFrame:
-    return df.assign(
-        location="Hong Kong", source_url="https://www.covidvaccine.gov.hk/en/dashboard"
-    )
+    return df.assign(location="Hong Kong", source_url="https://www.covidvaccine.gov.hk/en/dashboard")
 
 
 def pipeline(df: pd.DataFrame) -> pd.DataFrame:
@@ -55,16 +55,12 @@ def main(paths):
     data = read(source).pipe(pipeline)
 
     destination = paths.tmp_vax_out("Hong Kong")
-    data.drop(columns=["total_pfizer", "total_sinovac"]).to_csv(
-        destination, index=False
-    )
+    data.drop(columns=["total_pfizer", "total_sinovac"]).to_csv(destination, index=False)
 
     destination = paths.tmp_vax_out_man("Hong Kong")
     manufacturer = data.pipe(manufacturer_pipeline)
     manufacturer.to_csv(destination, index=False)
-    export_metadata(
-        manufacturer, "Government of Hong Kong", source, paths.tmp_vax_metadata_man
-    )
+    export_metadata(manufacturer, "Government of Hong Kong", source, paths.tmp_vax_metadata_man)
 
 
 if __name__ == "__main__":

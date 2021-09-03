@@ -1,12 +1,13 @@
-import requests
 import pandas as pd
+
+from cowidev.utils.web import request_json
 
 
 def main(paths):
 
     url = "https://services6.arcgis.com/bKYAIlQgwHslVRaK/arcgis/rest/services/Vaccination_Individual_Total/FeatureServer/0/query?f=json&cacheHint=true&outFields=*&resultType=standard&returnGeometry=false&spatialRel=esriSpatialRelIntersects&where=1%3D1"
 
-    data = requests.get(url).json()
+    data = request_json(url)
 
     df = pd.DataFrame.from_records(elem["attributes"] for elem in data["features"])
 

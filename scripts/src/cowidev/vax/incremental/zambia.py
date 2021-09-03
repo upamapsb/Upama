@@ -1,9 +1,9 @@
 from datetime import datetime
 
-import requests
 import pandas as pd
 
 from cowidev.utils.clean import clean_date
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.incremental import enrich_data, increment
 
 
@@ -19,7 +19,7 @@ class Zambia:
         self.source_url_ref = "https://rtc-planning.maps.arcgis.com/apps/dashboards/3b3a01c1d8444932ba075fb44b119b63"
 
     def read(self):
-        data = requests.get(self.source_url).json()["features"][0]["attributes"]
+        data = request_json(self.source_url)["features"][0]["attributes"]
         return pd.Series(
             {
                 "total_vaccinations": data["Vaccine_total"],

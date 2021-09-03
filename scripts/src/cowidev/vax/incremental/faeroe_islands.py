@@ -1,9 +1,8 @@
-import requests
-
 import pandas as pd
 
 from cowidev.utils.clean import clean_count
 from cowidev.utils.clean.dates import localdate
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.incremental import enrich_data, increment
 
 
@@ -14,7 +13,7 @@ class FaeroeIslands:
         self.location = location
 
     def read(self) -> pd.Series:
-        data = requests.get(self.source_url).json()["stats"]
+        data = request_json(self.source_url)["stats"]
         return pd.DataFrame.from_records(data).iloc[0]
 
     def pipe_metrics(self, ds: pd.Series) -> pd.Series:

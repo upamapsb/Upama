@@ -1,7 +1,7 @@
-import requests
 import pandas as pd
 
 from cowidev.utils.clean.dates import localdatenow
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.incremental import increment, enrich_data
 
 
@@ -41,7 +41,7 @@ class Panama:
             "returnGeometry": "false",
             "where": f"fecha BETWEEN timestamp '{date_low} 05:00:00' AND timestamp '{date_up} 04:59:59'",
         }
-        data = requests.get(self.source_url, params=params).json()
+        data = request_json(self.source_url, params=params)
         return data
 
     def pipe_metadata(self, ds: pd.Series) -> pd.Series:

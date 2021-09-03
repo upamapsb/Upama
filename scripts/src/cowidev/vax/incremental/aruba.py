@@ -1,12 +1,12 @@
-import requests
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.utils.clean.dates import localdate
+from cowidev.utils.web import request_json
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 def read(source: str) -> pd.Series:
-    data = requests.get(source).json()
+    data = request_json(source)
     for count in data:
         if count[0] == "2nd Vaccine taken":
             people_fully_vaccinated = count[1]

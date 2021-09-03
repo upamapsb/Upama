@@ -1,12 +1,11 @@
 from collections import defaultdict
 import copy
 
-import requests
 import pandas as pd
 
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.files import load_data
 from cowidev.vax.utils.utils import make_monotonic
-
 
 metrics_mapping = {
     "COVIDVACAD1": "people_vaccinated",
@@ -54,7 +53,7 @@ class SPC:
 
     def read(self):
         # Get data
-        data = requests.get(self.source_url).json()
+        data = request_json(self.source_url)
         return self.parse_data(data)
 
     def parse_data(self, data: dict):

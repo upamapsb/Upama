@@ -1,8 +1,8 @@
-import requests
 from functools import reduce
 import pandas as pd
 
 from cowidev.utils.clean import clean_date_series
+from cowidev.utils.web import request_json
 
 
 class Greece:
@@ -19,7 +19,7 @@ class Greece:
         self.location = location
 
     def read(self) -> pd.DataFrame:
-        data = requests.get(self.source_url).json()
+        data = request_json(self.source_url)
         return self.parse_data(data)
 
     def parse_data(self, data: dict):

@@ -4,6 +4,7 @@ import requests
 import pandas as pd
 
 from cowidev.utils.clean import clean_date
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.files import load_query
 
@@ -39,7 +40,7 @@ class Ireland:
 
     def parse_doses(self) -> str:
         params = load_query("ireland-doses", to_str=False)
-        data = requests.get(self.endpoint_doses, params=params).json()
+        data = request_json(self.endpoint_doses, params=params)
         res = data["features"][0]["attributes"]
         return {
             "dose_1": res["firstDose"],
@@ -49,7 +50,7 @@ class Ireland:
 
     def parse_vaccines_manufacturer(self):
         params = load_query("ireland-doses-manufacturer", to_str=False)
-        data = requests.get(self.endpoint_vaccines_manufacturer, params=params).json()
+        data = request_json(self.endpoint_vaccines_manufacturer, params=params)
         res = data["features"][0]["attributes"]
         return {
             "pfizer": res["pf"],

@@ -1,7 +1,7 @@
-import requests
 import pandas as pd
 
 from cowidev.utils.clean.dates import localdate
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.incremental import enrich_data, increment
 
 
@@ -17,7 +17,7 @@ def read(source: str) -> pd.Series:
 
 
 def parse_data(source: str) -> dict:
-    data = requests.get(source).json()
+    data = request_json(source)
     return {d["code"]: d["count"] for d in data["stats"]}
 
 

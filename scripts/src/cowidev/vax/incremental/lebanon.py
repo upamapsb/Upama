@@ -1,15 +1,15 @@
 import json
 
-import requests
 import pandas as pd
 
 from cowidev.utils.clean.dates import localdate
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 def get_api_value(source: str, query: str, headers: dict):
     query = json.loads(query)
-    data = requests.post(source, json=query, headers=headers).json()
+    data = request_json(source, json=query, headers=headers)
     value = int(data["hits"]["total"])
     return value
 

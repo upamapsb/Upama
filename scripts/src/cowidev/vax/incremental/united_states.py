@@ -3,9 +3,8 @@ import pandas as pd
 from glob import glob
 import re
 
-import requests
-
 from cowidev.utils.clean import clean_date, clean_date_series
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.incremental import enrich_data, increment
 from cowidev.vax.utils.files import export_metadata
 
@@ -38,7 +37,7 @@ class UnitedStates:
 
     def _parse_data(self):
         # Request data
-        data = requests.get(self.source_url).json()
+        data = request_json(self.source_url)
         data = data["vaccination_data"]
         # Get only US data (total)
         data = [d for d in data if d["ShortName"] == "USA"]
@@ -99,7 +98,7 @@ class UnitedStates:
         return df
 
     def read_age(self) -> pd.DataFrame:
-        data = requests.get(self.source_url_age).json()
+        data = request_json(self.source_url_age)
         age_groups_accepted = {
             #     'Ages_<12yrs',
             #     'Ages_12-15_yrs',

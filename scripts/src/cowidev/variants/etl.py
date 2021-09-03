@@ -72,7 +72,7 @@ class VariantsETL:
     @property
     def _parse_last_update_date(self):
         field_name = "lastUpdated"
-        date_json = requests.get(self.source_url_date).json()
+        date_json = request_json(self.source_url_date)
         if field_name in date_json:
             date_raw = date_json[field_name]
             return datetime.fromisoformat(date_raw).date()

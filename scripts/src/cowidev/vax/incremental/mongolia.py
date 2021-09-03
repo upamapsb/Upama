@@ -1,7 +1,7 @@
-import requests
 import pandas as pd
 
 from cowidev.utils.clean import clean_date
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.incremental import enrich_data, increment
 
 
@@ -16,7 +16,7 @@ vaccine_mapping = {
 
 
 def read(source: str) -> pd.Series:
-    data = requests.get(source).json()
+    data = request_json(source)
     return parse_data(data)
 
 

@@ -1,14 +1,14 @@
 from datetime import timedelta
-import requests
 
 import pandas as pd
 
 from cowidev.vax.utils.incremental import enrich_data, increment
+from cowidev.utils.web import request_json
 
 
 def read(source: str) -> pd.Series:
 
-    data = requests.get(source).json()
+    data = request_json(source)
 
     total_vaccinations = int(data["CijepljenjeBrUtrosenihDoza"])
     people_vaccinated = int(data["CijepljeniJednomDozom"])

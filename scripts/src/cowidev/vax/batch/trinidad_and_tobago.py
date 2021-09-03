@@ -1,13 +1,13 @@
-import requests
 import pandas as pd
 
 from cowidev.utils.clean import clean_date_series
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.files import load_query, load_data
 
 
 def read(source: str) -> pd.DataFrame:
     params = load_query("trinidad-and-tobago-metrics", to_str=False)
-    data = requests.get(source, params=params).json()
+    data = request_json(source, params=params)
     return parse_data(data)
 
 
