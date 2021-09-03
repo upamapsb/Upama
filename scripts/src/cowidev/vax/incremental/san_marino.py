@@ -9,7 +9,7 @@ from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 def read(source: str) -> pd.Series:
-    soup = get_soup(source)  # noqa: S501
+    soup = get_soup(source, verify=False)  # noqa: S501
     return parse_data(soup)
 
 

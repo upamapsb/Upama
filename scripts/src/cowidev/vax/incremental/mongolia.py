@@ -16,7 +16,7 @@ vaccine_mapping = {
 
 
 def read(source: str) -> pd.Series:
-    data = request_json(source)
+    data = request_json(source, parser="html.parser")
     return parse_data(data)
 
 

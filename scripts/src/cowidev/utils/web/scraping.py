@@ -27,38 +27,45 @@ def get_headers() -> dict:
 
 def get_soup(
     source: str,
-    headers: dict = None,
-    verify: bool = True,
     from_encoding: str = None,
-    timeout=20,
     # parser="html.parser",
     parser="lxml",
-    **kwargs
+    request_method: str = "get",
+    **kwargs,
 ) -> BeautifulSoup:
     """Get soup from website.
 
     Args:
         source (str): Website url.
-        headers (dict, optional): Headers to be used for request. Defaults to general one.
-        verify (bool, optional): Verify source URL. Defaults to True.
         from_encoding (str, optional): Encoding to use. Defaults to None.
-        timeout (int, optional): If no response is received after `timeout` seconds, exception is raied.
-                                 Defaults to 20.
         parser (str, optional): HTML parser. Read https://www.crummy.com/software/BeautifulSoup/bs4/doc/
-                                #installing-a-parser. Defaults to 'lxml'
+                                #installing-a-parser. Defaults to 'lxml'.
+        request_method (str, optional): Request method. Options are 'get' and 'post'. Defaults to GET method. For POST
+                                        ßmethod, make sure to specify a header (default one does not work).
+        kwargs (dict): Extra arguments passed to requests.get method. Default values for `headers`, `verify` and
+                        `timeout` are used.
     Returns:
         BeautifulSoup: Website soup.
     """
-    if headers is None:
-        headers = get_headers()
+    kwargs["headers"] = kwargs.get("headers", get_headers())
+    kwargs["verify"] = kwargs.get("verify", True)
+    kwargs["timeout"] = kwargs.get("timeout", 20)
     try:
-        response = requests.get(source, headers=headers, verify=verify, timeout=timeout, **kwargs)
+        if request_method == "get":
+            response = requests.get(source, **kwargs)
+        elif request_method == "post":
+            response = requests.post(source, **kwargs)
+        else:
+            raise ValueError(f"Invalid value for `request_method`: {request_method}. Use 'get' or 'post'")
     except Exception as err:
         raise err
     if not response.ok:
-        raise HTTPError("Web {} not found! {response.content}")
+        raise HTTPError(f"Web {source} not found! {response.content}")
     content = response.content
-    return BeautifulSoup(content, parser, from_encoding=from_encoding)
+    soup = BeautifulSoup(content, parser, from_encoding=from_encoding)
+    if soup.text == "":
+        soup = BeautifulSoup(content, "html.parser", from_encoding=from_encoding)
+    return soup
 
 
 def request_json(url, **kwargs):

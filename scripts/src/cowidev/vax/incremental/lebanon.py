@@ -9,7 +9,7 @@ from cowidev.vax.utils.incremental import enrich_data, increment
 
 def get_api_value(source: str, query: str, headers: dict):
     query = json.loads(query)
-    data = request_json(source, json=query, headers=headers)
+    data = request_json(source, json=query, headers=headers, request_method="post")
     value = int(data["hits"]["total"])
     return value
 
