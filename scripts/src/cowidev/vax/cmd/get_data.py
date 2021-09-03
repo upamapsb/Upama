@@ -35,7 +35,7 @@ class CountryDataGetter:
         country = module_name.split(".")[-1]
         if country.lower() in self.skip_countries:
             logger.info(f"{module_name}: skipped! ⚠️")
-            return {"module_name": module_name, "success": None, "skipped": True}
+            return {"module_name": module_name, "success": None, "skipped": True, "time": None}
         args = [self.paths]
         if country == "colombia":
             args.append(self.gsheets_api)
