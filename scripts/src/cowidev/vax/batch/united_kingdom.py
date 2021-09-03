@@ -1,6 +1,7 @@
+import locale
+
 import pandas as pd
 
-from cowidev.vax.utils.pipeline import enrich_total_vaccinations
 from cowidev.vax.utils.utils import make_monotonic
 from uk_covid19 import Cov19API
 
@@ -41,22 +42,12 @@ class UnitedKingdom:
         return df.assign(**{metric: df[f"{metric}_report"].fillna(df[metric])})
 
     def pipe_fix_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
-        df = df.pipe(self._fix_metric, "people_vaccinated").pipe(
-            self._fix_metric, "people_fully_vaccinated"
-        )
+        df = df.pipe(self._fix_metric, "people_vaccinated").pipe(self._fix_metric, "people_fully_vaccinated")
         cols = ["people_vaccinated", "people_fully_vaccinated", "total_vaccinations"]
         df = df.sort_values(["location", "date"])
-        _tmp = (
-            df.groupby("location", as_index=False)[cols]
-            .fillna(method="ffill")
-            .fillna(0)
-        )
+        _tmp = df.groupby("location", as_index=False)[cols].fillna(method="ffill").fillna(0)
         df.loc[_tmp.index, cols] = _tmp
-        df = df.assign(
-            total_vaccinations=df[["total_vaccinations", "people_vaccinated"]].max(
-                axis=1
-            )
-        )
+        df = df.assign(total_vaccinations=df[["total_vaccinations", "people_vaccinated"]].max(axis=1))
         return df
 
     def pipe_aggregate_first_date(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -125,4 +116,5 @@ class UnitedKingdom:
 
 
 def main(paths):
+    locale.setlocale(locale.LC_ALL, "en_GB")
     UnitedKingdom().to_csv(paths)
