@@ -2,6 +2,7 @@ import time
 import importlib
 
 from joblib import Parallel, delayed
+import pandas as pd
 
 from cowidev.vax.batch import __all__ as batch_countries
 from cowidev.vax.incremental import __all__ as incremental_countries
@@ -30,6 +31,7 @@ class CountryDataGetter:
         self.gsheets_api = gsheets_api
 
     def run(self, module_name: str):
+        t0 = time.time()
         country = module_name.split(".")[-1]
         if country.lower() in self.skip_countries:
             logger.info(f"{module_name}: skipped! ⚠️")
@@ -47,7 +49,8 @@ class CountryDataGetter:
         else:
             success = True
             logger.info(f"{module_name}: SUCCESS ✅")
-        return {"module_name": module_name, "success": success, "skipped": False}
+        t = round(time.time() - t0, 2)
+        return {"module_name": module_name, "success": success, "skipped": False, "time": t}
 
 
 def main_get_data(
@@ -81,6 +84,13 @@ def main_get_data(
                     module_name,
                 )
             )
+    # Get timing dataframe
+    df_time = (
+        pd.DataFrame([{"module": m["module_name"], "execution_time": m["time"]} for m in modules_execution_results])
+        .set_index("module")
+        .sort_values(by="execution_time", ascending=False)
+    )
+
     t_sec_1 = round(time.time() - t0, 2)
     t_min_1 = round(t_sec_1 / 60, 2)
     # Retry failed modules
@@ -96,6 +106,8 @@ def main_get_data(
     t_sec_2 = round(time.time() - t0, 2)
     t_min_2 = round(t_sec_2 / 60, 2)
     print("---")
-    print(f"Took {t_sec_1} seconds (i.e. {t_min_1} minutes).")
-    print(f"Took {t_sec_2} seconds (i.e. {t_min_2} minutes) [AFRTER RETRIALS].")
+    print("TIMING DETAILS")
+    print(f"- Took {t_sec_1} seconds (i.e. {t_min_1} minutes).")
+    print(df_time.head(20))
+    print(f"- Took {t_sec_2} seconds (i.e. {t_min_2} minutes) [AFRTER RETRIALS].")
     print_eoe()
