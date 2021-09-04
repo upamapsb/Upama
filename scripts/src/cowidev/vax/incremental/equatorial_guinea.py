@@ -35,7 +35,7 @@ class EquatorialGuinea:
 
     def parse_date(self, soup):
         return extract_clean_date(
-            text=soup.text,
+            text=soup.text.replace("September", "Septembre"),
             regex=r"Données au (\d+ \w+ 20\d{2})",
             date_format="%d %B %Y",
             lang="fr",
