@@ -109,5 +109,5 @@ def main_get_data(
     print("TIMING DETAILS")
     print(f"- Took {t_sec_1} seconds (i.e. {t_min_1} minutes).")
     print(df_time.head(20))
-    print(f"- Took {t_sec_2} seconds (i.e. {t_min_2} minutes) [AFRTER RETRIALS].")
+    print(f"- Took {t_sec_2} seconds (i.e. {t_min_2} minutes) [AFTER RETRIALS].")
     print_eoe()
