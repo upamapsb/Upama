@@ -86,9 +86,11 @@ def main_get_data(
             )
     # Get timing dataframe
     df_time = (
-        pd.DataFrame([{"module": m["module_name"], "execution_time": m["time"]} for m in modules_execution_results])
+        pd.DataFrame(
+            [{"module": m["module_name"], "execution_time (sec)": m["time"]} for m in modules_execution_results]
+        )
         .set_index("module")
-        .sort_values(by="execution_time", ascending=False)
+        .sort_values(by="execution_time (sec)", ascending=False)
     )
 
     t_sec_1 = round(time.time() - t0, 2)
@@ -102,12 +104,13 @@ def main_get_data(
     modules_failed_retrial = [m["module_name"] for m in modules_execution_results if m["success"] is False]
     if len(modules_failed_retrial) > 0:
         failed_str = "\n".join([f"* {m}" for m in modules_failed_retrial])
-        print(f"\n---\n\nThe following scripts failed to run ({len(modules_failed_retrial)}):\n{failed_str}")
+        print(f"\n---\n\nFAILED\nThe following scripts failed to run ({len(modules_failed_retrial)}):\n{failed_str}")
     t_sec_2 = round(time.time() - t0, 2)
     t_min_2 = round(t_sec_2 / 60, 2)
     print("---")
     print("TIMING DETAILS")
-    print(f"- Took {t_sec_1} seconds (i.e. {t_min_1} minutes).")
+    print(f"Took {t_sec_1} seconds (i.e. {t_min_1} minutes).")
+    print(f"Top 20 most time consuming scripts:")
     print(df_time.head(20))
-    print(f"- Took {t_sec_2} seconds (i.e. {t_min_2} minutes) [AFTER RETRIALS].")
+    print(f"\nTook {t_sec_2} seconds (i.e. {t_min_2} minutes) [AFTER RETRIALS].")
     print_eoe()
