@@ -4,6 +4,7 @@ import copy
 import pandas as pd
 
 from cowidev.utils.web import request_json
+from cowidev.vax.utils.orgs import SPC_COUNTRIES
 from cowidev.vax.utils.files import load_data
 from cowidev.vax.utils.utils import make_monotonic
 
@@ -11,22 +12,6 @@ metrics_mapping = {
     "COVIDVACAD1": "people_vaccinated",
     "COVIDVACAD2": "people_fully_vaccinated",
     "COVIDVACADT": "total_vaccinations",
-}
-country_mapping = {
-    "CK": "Cook Islands",
-    "FJ": "Fiji",
-    "KI": "Kiribati",
-    "NC": "New Caledonia",
-    "NU": "Niue",
-    "PF": "French Polynesia",
-    "PG": "Papua New Guinea",
-    "PN": "Pitcairn",
-    "SB": "Solomon Islands",
-    "TK": "Tokelau",
-    "TO": "Tonga",
-    "VU": "Vanuatu",
-    "WF": "Wallis and Futuna",
-    "WS": "Samoa",
 }
 
 # Dictionary containing vaccines being used in each country and their start date. Element 'default' is used for all
@@ -75,7 +60,7 @@ class SPC:
         country_info = data["data"]["structure"]["dimensions"]["series"][1]
         if country_info["id"] != "GEO_PICT":
             raise AttributeError("JSON data has changed")
-        return {str(i): country_mapping[c["id"]] for i, c in enumerate(country_info["values"])}
+        return {str(i): SPC_COUNTRIES[c["id"]] for i, c in enumerate(country_info["values"])}
 
     def _parse_metrics_info(self, data: dict):
         # Get metrics info
@@ -189,7 +174,7 @@ class SPC:
 
 
 def main(paths):
-    country_codes_url = "+".join(country_mapping.keys())
+    country_codes_url = "+".join(SPC_COUNTRIES.keys())
     SPC(
         source_url=(
             f"https://stats-nsi-stable.pacificdata.org/rest/data/SPC,DF_COVID_VACCINATION,1.0/D.{country_codes_url}.?"
