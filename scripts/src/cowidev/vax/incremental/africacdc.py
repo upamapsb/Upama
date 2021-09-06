@@ -5,7 +5,7 @@ import pandas as pd
 from cowidev.utils.clean import clean_date
 from cowidev.utils.web import request_json
 from cowidev.vax.utils.incremental import increment
-from cowidev.vax.utils.orgs import WHO_VACCINES, ACDC_COUNTRIES
+from cowidev.vax.utils.orgs import WHO_VACCINES, ACDC_COUNTRIES, ACDC_VACCINES
 from cowidev.vax.cmd.utils import get_logger
 
 
@@ -19,16 +19,6 @@ class AfricaCDC:
             "Admin_Boundaries_Africa_corr_Go_Vaccine_DB_JOIN/FeatureServer/0"
         )
         self.source_url_ref = "https://africacdc.org/covid-19-vaccination/"
-        self.vaccines_mapping = {
-            "AstraZeneca": "Oxford/AstraZeneca",
-            "Sinopharm": "Sinopharm/Beijing",
-            "Sputnik V": "Sputnik V",
-            "Sinovac": "Sinovac",
-            "BioNTech": "Pfizer/BioNTech",
-            "Moderna": "Moderna",
-            "J&J": "Johnson&Johnson",
-            "Covaxin": "Covaxin",
-        }
 
     @property
     def source_url(self):
@@ -81,7 +71,7 @@ class AfricaCDC:
     def _map_vaccines(self, vaccine_raw: str):
         vaccine_raw = vaccine_raw.strip()
         vaccines = []
-        for vax_old, vax_new in self.vaccines_mapping.items():
+        for vax_old, vax_new in ACDC_VACCINES.items():
             if vax_old in vaccine_raw:
                 vaccines.append(vax_new)
                 vaccine_raw = vaccine_raw.replace(vax_old, "").strip()
