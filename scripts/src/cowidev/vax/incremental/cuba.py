@@ -14,7 +14,7 @@ class Cuba:
         self.source_url = "https://salud.msp.gob.cu/actualizacion-de-la-vacunacion-en-el-marco-de-los-estudios-de-los-candidatos-vacunales-cubanos-y-la-intervencion-sanitaria/"
         self.location = "Cuba"
         self.regex = {
-            "title": r"Al cierre del (\d{1,2}(ro?) de [a-z]+) se acumulan en el país ([\d ]+) dosis administradas",
+            "title": r"Al cierre del (\d{1,2}(?:ro)? de [a-z]+) se acumulan en el país ([\d ]+) dosis administradas",
             "data": (
                 r"([\d ]+) personas han recibido al menos una dosis de uno de los candidatos vacunales cubanos.*De "
                 r"ellas ya tienen segunda dosis ([\d ]+) personas y tercera dosis ([\d ]+) personas"
@@ -33,7 +33,7 @@ class Cuba:
             date_str = match.group(1).replace("ro", "")
             data["date"] = clean_date(f"{date_str} {datetime.now().year}", "%d de %B %Y", lang="es")
             # vaccinations
-            data["total_vaccinations"] = clean_count(match.group(3))
+            data["total_vaccinations"] = clean_count(match.group(2))
         match = re.search(self.regex["data"], soup.text)
         if match:
             data["people_vaccinated"] = clean_count(match.group(1))
