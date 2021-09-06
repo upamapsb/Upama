@@ -8,9 +8,9 @@ from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 class EquatorialGuinea:
-    def __init__(self, source_url: str, location: str, columns_rename: dict = None):
-        self.source_url = source_url
-        self.location = location
+    def __init__(self):
+        self.source_url = "https://guineasalud.org/statistiques/?lang=fr"
+        self.location = "Equatorial Guinea"
 
     def read(self) -> pd.Series:
         soup = get_soup(self.source_url)
@@ -27,7 +27,7 @@ class EquatorialGuinea:
         return pd.Series(data)
 
     def parse_vaccinated(self, soup):
-        regex = r"Sur les ([\d ]+) vaccinés, un total de ([\d ]+)"
+        regex = r"Sur les ([\d \.]+) vaccinés, un total de ([\d ]+)"
         match = re.search(regex, soup.text)
         people_vaccinated = match.group(1)
         people_fully_vaccinated = match.group(2)
@@ -70,10 +70,7 @@ class EquatorialGuinea:
 
 
 def main(paths):
-    EquatorialGuinea(
-        source_url="https://guineasalud.org/statistiques/?lang=fr",
-        location="Equatorial Guinea",
-    ).to_csv(paths)
+    EquatorialGuinea().to_csv(paths)
 
 
 if __name__ == "__main__":
