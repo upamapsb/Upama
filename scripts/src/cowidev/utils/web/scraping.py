@@ -69,6 +69,17 @@ def get_soup(
 
 
 def request_json(url, **kwargs):
+    """Get data from `url` as a dictionary.
+
+    Content at `url` should be a dictionary.
+
+    Args:
+        url (str): URL to data.
+        kwargs: Check `get_soup` for the complete list of accepted arguments.
+
+    Returns:
+        dict: Data
+    """
     soup = get_soup(url, **kwargs)
     data = json.loads(soup.text)
     return data
