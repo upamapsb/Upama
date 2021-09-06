@@ -70,3 +70,15 @@ def countries(config_path):
     """
     config_loader = ConfigLoader.from_yaml(config_path)
     return config_loader.config
+
+
+def get_org_constants(config_file: str):
+    """Get organisation's constants (country + vaccine mapping)
+
+    Args:
+        config_file (str): Path to config file (YAML)
+
+    Returns:
+        tuple: Country and vaccine mapping
+    """
+    return countries_mapping(config_file), vaccines_mapping(config_file)
