@@ -1,3 +1,21 @@
+vaccines:
+  - owid_name: "Covaxin"
+    org_name: "Covaxin"
+  - owid_name: "Johnson&Johnson"
+    org_name: "J&J"
+  - owid_name: "Moderna"
+    org_name: "Moderna"
+  - owid_name: "Oxford/AstraZeneca"
+    org_name: "AstraZeneca"
+  - owid_name: "Pfizer/BioNTech"
+    org_name: "BioNTech"
+  - owid_name: "Sinopharm/Beijing"
+    org_name: "Sinopharm"
+  - owid_name: "Sinovac"
+    org_name: "Sinovac"
+  - owid_name: "Sputnik V"
+    org_name: "Sputnik V"
+
 countries:
   - org_name: "Angola"
     owid_name: "Angola"
