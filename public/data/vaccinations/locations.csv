@@ -1,8 +1,8 @@
 location,iso_code,vaccines,last_observation_date,source_name,source_website
 Afghanistan,AFG,"Johnson&Johnson, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing",2021-08-31,World Health Organization,https://app.powerbi.com/view?r=eyJrIjoiYTkyM2VmMDUtNDJjOC00YjU2LWI3Y2MtNTRhMWY4YzU0YTRlIiwidCI6ImY2MTBjMGI3LWJkMjQtNGIzOS04MTBiLTNkYzI4MGFmYjU5MCIsImMiOjh9
 Albania,ALB,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac, Sputnik V",2021-09-02,Ministry of Health,https://shendetesia.gov.al/vaksinimi-anticovid-kryhen-1499898-vaksinime/
-Algeria,DZA,"Oxford/AstraZeneca, Sinopharm/Beijing, Sputnik V",2021-08-20,World Health Organization,https://covid19.who.int/
-Andorra,AND,"Oxford/AstraZeneca, Pfizer/BioNTech",2021-08-15,Government of Andorra,https://who.maps.arcgis.com/apps/dashboards/ead3c6475654481ca51c248d52ab9c61
+Algeria,DZA,"Oxford/AstraZeneca, Sinopharm/Beijing, Sputnik V",2021-09-04,World Health Organization,https://www.liberte-algerie.com/actualite/coup-denvoi-de-la-campagne-nationale-de-vaccination-contre-le-covid-19-364407
+Andorra,AND,"Oxford/AstraZeneca, Pfizer/BioNTech",2021-08-29,Government of Andorra,https://who.maps.arcgis.com/apps/dashboards/ead3c6475654481ca51c248d52ab9c61
 Angola,AGO,Oxford/AstraZeneca,2021-09-01,World Health Organization,https://covid19.who.int/
 Anguilla,AIA,Oxford/AstraZeneca,2021-08-20,World Health Organization,https://covid19.who.int/
 Antigua and Barbuda,ATG,Oxford/AstraZeneca,2021-08-31,Ministry of Health,https://covid19.gov.ag
@@ -28,7 +28,7 @@ Bosnia and Herzegovina,BIH,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac, Sputni
 Botswana,BWA,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",2021-09-01,Africa Centres for Disease Control and Prevention,https://africacdc.org/covid-19-vaccination/
 Brazil,BRA,"Johnson&Johnson, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",2021-09-05,Ministry of Health,https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html
 British Virgin Islands,VGB,"Johnson&Johnson, Oxford/AstraZeneca",2021-08-27,World Health Organization,https://covid19.who.int/
-Brunei,BRN,"Oxford/AstraZeneca, Sinopharm/Beijing",2021-08-31,Ministry of Health,https://www.facebook.com/MOHBrunei/photos/pcb.4102737083187960/4102736996521302/
+Brunei,BRN,"Oxford/AstraZeneca, Sinopharm/Beijing",2021-09-04,Ministry of Health,https://www.facebook.com/MOHBrunei/photos/a.1164129587048739/4115215091940159/
 Bulgaria,BGR,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",2021-09-05,Ministry of Health,https://coronavirus.bg/bg/statistika
 Burkina Faso,BFA,Oxford/AstraZeneca,2021-08-31,World Health Organization,https://covid19.who.int/
 Cambodia,KHM,"Johnson&Johnson, Oxford/AstraZeneca, Sinopharm/Beijing, Sinovac",2021-09-05,Ministry of Health,https://www.facebook.com/MinistryofHealthofCambodia/photos/a.930887636950343/4361245217247884/
@@ -81,10 +81,10 @@ Greenland,GRL,Moderna,2021-08-30,Government of Greenland,https://corona.nun.gl
 Grenada,GRD,Oxford/AstraZeneca,2021-08-27,World Health Organization,https://covid19.who.int/
 Guatemala,GTM,"Moderna, Oxford/AstraZeneca",2021-09-04,Ministry of Health,https://gtmvigilanciacovid.shinyapps.io/3869aac0fb95d6baf2c80f19f2da5f98
 Guernsey,GGY,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",2021-09-03,Government of Guernsey,https://covid19.gov.gg/guidance/vaccine/stats
-Guinea,GIN,Sputnik V,2021-08-29,National Health Security Agency,https://twitter.com/anss_guinee/status/1432655853123948548
+Guinea,GIN,Sputnik V,2021-09-03,National Health Security Agency,https://twitter.com/anss_guinee/status/1434246051960168453
 Guinea-Bissau,GNB,"Oxford/AstraZeneca, Sinopharm/Beijing",2021-08-23,World Health Organization,https://covid19.who.int/
 Guyana,GUY,"Oxford/AstraZeneca, Sputnik V",2021-09-03,Ministry of Health,https://www.facebook.com/mohguyana/photos/a.1505704143066460/2680139435622919/
-Haiti,HTI,"Johnson&Johnson, Oxford/AstraZeneca",2021-08-27,Pan American Health Organization,https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp
+Haiti,HTI,"Johnson&Johnson, Oxford/AstraZeneca",2021-08-31,Pan American Health Organization,https://www.facebook.com/msppht/posts/1822048881314515
 Honduras,HND,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",2021-08-29,World Health Organization,https://twitter.com/Covid19Honduras/status/1432538769488551938
 Hong Kong,HKG,"Pfizer/BioNTech, Sinovac",2021-09-05,Government of Hong Kong,https://www.covidvaccine.gov.hk/en/dashboard
 Hungary,HUN,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sputnik V",2021-09-05,Government of Hungary,https://koronavirus.gov.hu//cikkek/5-millio-817-ezer-beoltott-648-az-uj-fertozott-elhunyt-9-beteg
@@ -103,11 +103,11 @@ Jersey,JEY,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",2021-08-29,Government 
 Jordan,JOR,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sputnik V",2021-09-05,Government of Jordan,https://corona.moh.gov.jo/ar
 Kazakhstan,KAZ,"QazVac, Sinopharm/HayatVax, Sputnik V",2021-09-05,Government of Kazakhstan,https://www.coronavirus2020.kz/
 Kenya,KEN,"Oxford/AstraZeneca, Sputnik V",2021-09-05,Ministry of Health,https://twitter.com/MOH_Kenya/status/1434522093958451212
-Kiribati,KIR,Oxford/AstraZeneca,2021-08-09,SPC Public Health Division,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0
+Kiribati,KIR,Oxford/AstraZeneca,2021-08-26,SPC Public Health Division,https://covid19.who.int/
 Kosovo,OWID_KOS,"Oxford/AstraZeneca, Pfizer/BioNTech",2021-09-05,Ministry of Health,https://www.facebook.com/Ministria.Shendetesise.RKS/posts/2081394908684752
 Kuwait,KWT,Pfizer/BioNTech,2021-08-14,Ministry of Health,https://twitter.com/KUWAIT_MOH/status/1426546539279929347
 Kyrgyzstan,KGZ,"Sinopharm/Beijing, Sputnik V",2021-09-05,Ministry of Health,https://vc.emed.gov.kg/
-Laos,LAO,"Johnson&Johnson, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac, Sputnik V",2021-08-20,World Health Organization,https://covid19.who.int/
+Laos,LAO,"Johnson&Johnson, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac, Sputnik V",2021-09-05,World Health Organization,https://www.facebook.com/CCEH.MoH.Lao/posts/4584409798250345
 Latvia,LVA,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",2021-09-05,National Health Service,https://data.gov.lv/dati/eng/dataset/covid19-vakcinacijas
 Lebanon,LBN,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sputnik V",2021-09-05,Government of Lebanon,https://impact.cib.gov.lb/home/dashboard/vaccine
 Lesotho,LSO,Oxford/AstraZeneca,2021-08-28,World Health Organization,https://covid19.who.int/
@@ -152,7 +152,7 @@ Oman,OMN,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac, Sputnik V",2021-08-30,Wo
 Pakistan,PAK,"CanSino, Covaxin, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac, Sputnik V",2021-09-05,National Command and Operation Centre,https://ncoc.gov.pk/covid-vaccination-en.php
 Palestine,PSE,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",2021-08-31,Ministry of Health,https://www.facebook.com/mohps/posts/4115645041894676
 Panama,PAN,"Oxford/AstraZeneca, Pfizer/BioNTech",2021-09-05,Pan American Health Organization,https://vacunas.panamasolidario.gob.pa/vacunometro
-Papua New Guinea,PNG,Oxford/AstraZeneca,2021-08-16,SPC Public Health Division,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0
+Papua New Guinea,PNG,"Johnson&Johnson, Oxford/AstraZeneca, Sinopharm/Beijing",2021-08-30,SPC Public Health Division,https://covid19.who.int/
 Paraguay,PRY,"Covaxin, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac, Sputnik V",2021-09-05,Pan American Health Organization,https://www.vacunate.gov.py/index-listado-vacunados.html
 Peru,PER,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing",2021-09-04,Ministerio de Salud via github.com/jmcastagnetto/covid-19-peru-vacunas,https://www.datosabiertos.gob.pe/dataset/vacunaci%C3%B3n-contra-covid-19-ministerio-de-salud-minsa
 Philippines,PHL,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac, Sputnik V",2021-09-05,Department of Health via ABS-CBN Investigative and Research Group,https://news.abs-cbn.com/spotlight/multimedia/infographic/03/23/21/philippines-covid-19-vaccine-tracker
@@ -166,7 +166,7 @@ Rwanda,RWA,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",2021-08-29,World Healt
 Saint Helena,SHN,Oxford/AstraZeneca,2021-05-05,Government of Saint Helena,https://www.sainthelena.gov.sh/2021/news/preliminary-data-from-the-covid-19-vaccination-programme/
 Saint Kitts and Nevis,KNA,"Oxford/AstraZeneca, Pfizer/BioNTech",2021-09-03,Pan American Health Organization,https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp
 Saint Lucia,LCA,Oxford/AstraZeneca,2021-08-30,Ministry of Health,https://www.covid19response.lc/
-Saint Vincent and the Grenadines,VCT,Oxford/AstraZeneca,2021-08-19,Ministry of Health,https://www.facebook.com/SVGHEALTH/photos/a.460089407384821/4770878302972555/
+Saint Vincent and the Grenadines,VCT,Oxford/AstraZeneca,2021-09-04,Ministry of Health,https://www.facebook.com/SVGHEALTH/posts/4820686887991696
 Samoa,WSM,Oxford/AstraZeneca,2021-08-23,SPC Public Health Division,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0
 San Marino,SMR,"Pfizer/BioNTech, Sputnik V",2021-09-01,Social Security Institute,https://vaccinocovid.iss.sm/
 Sao Tome and Principe,STP,Oxford/AstraZeneca,2021-09-01,World Health Organization,https://covid19.who.int/
@@ -180,7 +180,7 @@ Singapore,SGP,"Moderna, Pfizer/BioNTech, Sinovac",2021-09-04,Ministry of Health,
 Sint Maarten (Dutch part),SXM,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",2021-08-27,World Health Organization,https://covid19.who.int/
 Slovakia,SVK,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",2021-08-31,Ministry of Health,https://github.com/Institut-Zdravotnych-Analyz/covid19-data
 Slovenia,SVN,"Oxford/AstraZeneca, Pfizer/BioNTech",2021-09-05,National Institute of Public Health via covid-19.sledilnik.org,https://covid-19.sledilnik.org/en/stats
-Solomon Islands,SLB,Oxford/AstraZeneca,2021-08-16,SPC Public Health Division,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0
+Solomon Islands,SLB,"Oxford/AstraZeneca, Sinopharm/Beijing",2021-08-31,SPC Public Health Division,https://covid19.who.int/
 Somalia,SOM,"Johnson&Johnson, Oxford/AstraZeneca, Sinopharm/Beijing, Sinovac",2021-09-01,World Health Organization,https://covid19.who.int/
 South Africa,ZAF,"Johnson&Johnson, Pfizer/BioNTech",2021-09-05,Ministry of Health,https://sacoronavirus.co.za/latest-vaccine-statistics/
 South Korea,KOR,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",2021-09-05,Korea Centers for Disease Control and Prevention,https://ncv.kdca.go.kr/
@@ -206,14 +206,14 @@ Turkey,TUR,"Pfizer/BioNTech, Sinovac",2021-09-05,COVID-19 Vaccine Information Pl
 Turkmenistan,TKM,"EpiVacCorona, Oxford/AstraZeneca, Sinopharm/Beijing, Sputnik V",2021-04-04,World Health Organization,https://covid19.who.int/
 Turks and Caicos Islands,TCA,Pfizer/BioNTech,2021-08-13,World Health Organization,https://covid19.who.int/
 Tuvalu,TUV,Oxford/AstraZeneca,2021-08-26,World Health Organization,https://covid19.who.int/
-Uganda,UGA,Oxford/AstraZeneca,2021-08-21,World Health Organization,https://twitter.com/MinofHealthUG/status/1429746162907717633
+Uganda,UGA,Oxford/AstraZeneca,2021-09-02,World Health Organization,https://twitter.com/MinofHealthUG/status/1434113908609097733
 Ukraine,UKR,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",2021-09-05,Ministry of Health,https://vaccination.covid19.gov.ua/
 United Arab Emirates,ARE,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinopharm/Wuhan, Sputnik V",2021-09-04,National Emergency Crisis and Disaster Management Authority,https://fcsc.gov.ae/en-us/Pages/Covid19/UAE-Covid-19-Updates.aspx
 United Kingdom,GBR,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",2021-09-04,Government of the United Kingdom,https://coronavirus.data.gov.uk/details/vaccinations
 United States,USA,"Johnson&Johnson, Moderna, Pfizer/BioNTech",2021-09-04,Centers for Disease Control and Prevention,https://covid.cdc.gov/covid-data-tracker/COVIDData/getAjaxData?id=vaccination_data
 Uruguay,URY,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",2021-09-05,Ministry of Health via vacuna.uy,https://monitor.uruguaysevacuna.gub.uy/
 Uzbekistan,UZB,"Oxford/AstraZeneca, Sputnik V, ZF2001",2021-08-30,Government of Uzbekistan,https://t.me/sputnikuzbekistan/14854
-Vanuatu,VUT,Oxford/AstraZeneca,2021-08-16,SPC Public Health Division,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0
+Vanuatu,VUT,"Oxford/AstraZeneca, Sinopharm/Beijing",2021-08-29,SPC Public Health Division,https://covid19.who.int/
 Venezuela,VEN,"Sinopharm/Beijing, Sinopharm/Wuhan, Sputnik V",2021-08-27,Pan American Health Organization,https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp
 Vietnam,VNM,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sputnik V",2021-09-01,Government of Vietnam,https://moh.gov.vn:443/tin-tong-hop/-/asset_publisher/k206Q9qkZOqn/content/ban-tin-dich-covid-19-toi-1-9-them-11-434-ca-mac-covid-19-tp-hcm-nhieu-nhat-voi-5-368-ca
 Wales,OWID_WLS,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",2021-09-02,Government of the United Kingdom,https://coronavirus.data.gov.uk/details/vaccinations
