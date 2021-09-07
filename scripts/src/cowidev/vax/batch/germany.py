@@ -7,27 +7,29 @@ from cowidev.vax.utils.files import export_metadata
 
 
 class Germany:
-    def __init__(
-        self,
-        source_url: str,
-        source_url_ref: str,
-        location: str,
-        columns_rename: dict = None,
-        vaccine_mapping: dict = None,
-    ):
-        self.source_url = source_url
-        self.source_url_ref = source_url_ref
-        self.location = location
-        self.columns_rename = columns_rename
-        self.vaccine_mapping = vaccine_mapping
-        self.regex_doses_colnames = r"dosen_([a-zA-Z]*)_kumulativ"
+    source_url: str = "https://impfdashboard.de/static/data/germany_vaccinations_timeseries_v2.tsv"
+    source_url_ref: str = "https://impfdashboard.de/"
+    location: str = "Germany"
+    columns_rename: str = {
+        "dosen_kumulativ": "total_vaccinations",
+        "personen_erst_kumulativ": "people_vaccinated",
+        "personen_voll_kumulativ": "people_fully_vaccinated",
+        "dosen_dritt_kumulativ": "total_boosters",
+    }
+    vaccine_mapping: str = {
+        "dosen_biontech_kumulativ": "Pfizer/BioNTech",
+        "dosen_moderna_kumulativ": "Moderna",
+        "dosen_astra_kumulativ": "Oxford/AstraZeneca",
+        "dosen_johnson_kumulativ": "Johnson&Johnson",
+    }
+    regex_doses_colnames: str = r"dosen_([a-zA-Z]*)_kumulativ"
 
     def read(self):
         return pd.read_csv(self.source_url, sep="\t")
 
     def _check_vaccines(self, df: pd.DataFrame):
         """Get vaccine columns mapped to Vaccine names."""
-        EXCLUDE = ["kbv", "dim", "erst", "zweit"]
+        EXCLUDE = ["kbv", "dim", "erst", "zweit", "dritt"]
 
         def _is_vaccine_column(column_name: str):
             if re.search(self.regex_doses_colnames, column_name):
@@ -89,6 +91,7 @@ class Germany:
                 "total_vaccinations",
                 "people_vaccinated",
                 "people_fully_vaccinated",
+                "total_boosters",
             ]
         ]
 
@@ -116,22 +119,7 @@ class Germany:
 
 
 def main(paths):
-    Germany(
-        source_url="https://impfdashboard.de/static/data/germany_vaccinations_timeseries_v2.tsv",
-        source_url_ref="https://impfdashboard.de/",
-        location="Germany",
-        columns_rename={
-            "dosen_kumulativ": "total_vaccinations",
-            "personen_erst_kumulativ": "people_vaccinated",
-            "personen_voll_kumulativ": "people_fully_vaccinated",
-        },
-        vaccine_mapping={
-            "dosen_biontech_kumulativ": "Pfizer/BioNTech",
-            "dosen_moderna_kumulativ": "Moderna",
-            "dosen_astra_kumulativ": "Oxford/AstraZeneca",
-            "dosen_johnson_kumulativ": "Johnson&Johnson",
-        },
-    ).to_csv(paths)
+    Germany().to_csv(paths)
 
 
 if __name__ == "__main__":
