@@ -13,10 +13,10 @@ class Vietnam:
     location: str = "Vietnam"
     source_url: str = "https://moh.gov.vn/tin-tong-hop"
     regex: dict = {
-        "date": r"Bản tin dịch (?:COVID-19 )?tối (\d{1,2}/\d{1,2})",
+        "date": r"Bản tin dịch COVID-19 ngày (\d{1,2}/\d{1,2}) của Bộ",
         "metrics": (
-            r"Trong ngày \d{1,2}/\d{1,2} có \d+\.\d+ liều vắc xin phòng COVID-19 được tiêm. Như "
-            r"vậy, tổng số liều vắc xin đã được tiêm là ([\d\.]+) liều"
+            r"Trong ngày \d{1,2}/\d{1,2} có \d+\.\d+ liều (?:vắc xin phòng|vaccine) COVID-19 được tiêm. Như "
+            r"vậy, tổng số liều (?:vắc xin|vaccine) đã được tiêm là ([\d\.]+) liều"
             r", trong đó tiêm 1 mũi là ([\d\.]+) liều, tiêm mũi 2 là ([\d\.]+) liều\."
         ),
     }
@@ -26,6 +26,7 @@ class Vietnam:
         news_info_all = self._parse_news_info(soup)
         records = []
         for news_info in news_info_all:
+            print(news_info)
             if news_info["date"] < last_updated:
                 break
             records.append(self._parse_metrics(news_info))
@@ -33,8 +34,8 @@ class Vietnam:
 
     def _parse_news_info(self, soup):
         news = soup.find_all(class_="page-list-news")
-        news = list(filter(lambda x: re.search(self.regex["date"], x.text), news))
-        return [{"link": n.a.get("href"), "date": self._parse_date(n.text)} for n in news]
+        news = list(filter(lambda x: re.search(self.regex["date"], x.p.text), news))
+        return [{"link": n.a.get("href"), "date": self._parse_date(n.p.text)} for n in news]
 
     def _parse_date(self, text: str):
         dt_raw = re.search(self.regex["date"], text).group(1) + f"/{datetime.now().year}"
