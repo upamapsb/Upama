@@ -7,7 +7,8 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from pdfreader import SimplePDFViewer
 
-from cowidev.utils.clean import clean_count, clean_date
+from cowidev.utils.clean import clean_count
+from cowidev.utils.clean.dates import clean_date, localdate
 from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import merge_with_current_data
 
@@ -15,7 +16,10 @@ from cowidev.vax.utils.incremental import merge_with_current_data
 class Thailand:
     location: str = "Thailand"
     source_url: str = "https://ddc.moph.go.th/dcd/pagecontent.php?page=643&dept=dcd"
+    base_url_template: str = "https://ddc.moph.go.th/vaccine-covid19/diaryReportMonth/{}/9/2021"
     regex_date: str = r"\s?ข้อมูล ณ วันที่ (\d{1,2}) (.*) (\d{4})"
+    _year_difference_conversion = 543
+    _current_month = localdate("Asia/Bangkok", date_format="%m")
 
     @property
     def regex_vax(self):
@@ -27,45 +31,51 @@ class Thailand:
         return regex_vax
 
     def read(self, last_update: str) -> pd.DataFrame:
-        yearly_report_page = get_soup(self.source_url)
         # Get Newest Month Report Page
-        monthly_report_link = yearly_report_page.find("div", class_="col-lg-12", id="content-detail").find("a")["href"]
-        monthly_report_page = get_soup(monthly_report_link)
+        url_month = self.base_url_template.format(self._current_month)
+        soup_month = get_soup(url_month)
         # Get links
-        df = self._parse_data(monthly_report_page, last_update)
+        df = self._parse_data(soup_month, last_update)
         return df
 
-    def _parse_data(self, monthly_report_page: BeautifulSoup, last_update: str):
-        elems = monthly_report_page.find("div", class_="col-lg-12", id="content-detail")
-        links = [link["href"].replace(" ", "%20") for link in elems.find_all("a")]
+    def _parse_data(self, soup: BeautifulSoup, last_update: str):
+        links = self._get_month_links(soup)
         records = []
         for link in links:
-            # print("-------------------")
-            # print(link)
-            record, stop = self._parse_data_date(link, last_update)
-            if stop:
+            print(link["date"])
+            if link["date"] <= last_update:
                 break
-            records.append(record)
+            records.append(self._parse_metrics(link))
         return pd.DataFrame(records)
 
-    def _parse_data_date(self, link: str, last_update: str) -> dict:
-        # Get text from PDF
-        raw_text = self._text_from_pdf(link)
+    def _get_month_links(self, soup):
+        links = soup.find_all("a", class_="selectModelMedia")
+        links = [
+            {
+                "link": link.get("href"),
+                "date": self._parse_date_from_link_title(link.parent.parent.text.strip()),
+            }
+            for link in links
+        ]
+        return sorted(links, key=lambda x: x["date"], reverse=True)
+
+    def _parse_date_from_link_title(self, title):
+        match = re.search(r"สรุปวัคซีน ประจำวันที่ (\d+) .* (25\d\d)", title).group(1, 2)
+        year = int(match[1]) - self._year_difference_conversion
+        return clean_date(f"{year}-{self._current_month}-{match[0]}", "%Y-%m-%d")
+
+    def _parse_metrics(self, link: str):
+        raw_text = self._text_from_pdf(link["link"])
         text = self._substitute_special_chars(raw_text)
-        # Get date
-        date_str = self._parse_date(text)
-        if date_str < last_update:
-            return None, True
-        data = self._parse_metrics(text)
-        data["date"] = date_str
-        data["source_url"] = link.replace(" ", "%20")
-        return data, False
+        record = self._parse_variables(text)
+        record["date"] = link["date"]
+        record["source_url"] = link["link"].replace(" ", "%20")
+        return record
 
     def _text_from_pdf(self, pdf_link: str):
         with tempfile.NamedTemporaryFile() as tf:
             with open(tf.name, mode="wb") as f:
                 f.write(requests.get(pdf_link).content)
-
             with open(tf.name, mode="rb") as f:
                 viewer = SimplePDFViewer(f)
                 viewer.render()
@@ -94,7 +104,7 @@ class Thailand:
         text = pattern.sub(lambda m: special_char_replace[re.escape(m.group(0))], raw_text)
         return text
 
-    def _parse_metrics(self, text: str):
+    def _parse_variables(self, text: str):
         metrics = re.search(self.regex_vax, text).groups()
         people_vaccinated = clean_count(metrics[0])
         people_fully_vaccinated = clean_count(metrics[1])
@@ -130,7 +140,7 @@ class Thailand:
         date_raw = re.search(self.regex_date, text)
         day = clean_count(date_raw.group(1))
         month = thai_date_replace[date_raw.group(2)]
-        year = clean_count(date_raw.group(3)) - 543
+        year = clean_count(date_raw.group(3)) - self._year_difference_conversion
         return clean_date(datetime(year, month, day))
 
     def pipe_location(self, df: pd.DataFrame) -> pd.DataFrame:
