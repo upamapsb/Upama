@@ -17,7 +17,11 @@ DATE_FORMAT = "%Y-%m-%d"
 
 
 def clean_date(
-    date_or_text: Union[str, datetime], fmt: str = None, lang: str = None, loc: str = "", minus_days: int = 0
+    date_or_text: Union[str, datetime],
+    fmt: str = None,
+    lang: str = None,
+    loc: str = "",
+    minus_days: int = 0,
 ):
     """Extract a date from a `text`.
 
@@ -123,8 +127,8 @@ def list_timezones():
     return pytz.all_timezones
 
 
-def localdatenow(tz: str = "utc", sum_days: int = None):
-    return localdate(tz, force_today=True, sum_days=sum_days)
+def localdatenow(tz: str = "utc", **kwargs):
+    return localdate(tz, force_today=True, **kwargs)
 
 
 def localdate(
@@ -133,6 +137,7 @@ def localdate(
     hour_limit: int = None,
     date_format: str = DATE_FORMAT,
     sum_days: int = None,
+    as_datetime: bool = False,
 ):
     """Get local date.
 
@@ -145,6 +150,7 @@ def localdate(
                                     Defaults to None.
         date_format (str, optional): Format of output datetime. Uses default YYYY-mm-dd.
         sum_days (int, optional): Number of days to add to local date.
+        as_datetime (bool, optional): Set to True to return the date as a datetime.
     """
     tz = pytz.timezone(tz)
     local_time = datetime.now(tz=tz)
@@ -152,6 +158,8 @@ def localdate(
         local_time = local_time - timedelta(days=1)
     if sum_days:
         local_time += timedelta(days=sum_days)
+    if as_datetime:
+        return local_time
     return local_time.strftime(date_format)
 
 
