@@ -64,12 +64,25 @@ add_snapshot <- function(count, sheet_name, country, units, date = today() - 1,
     fwrite(df, sprintf("automated_sheets/%s.csv", sheet_name))
 }
 
+make_monotonic <- function(df) {
+    # Forces time series to become monotonic.
+    # The algorithm assumes that the most recent values are the correct ones,
+    # and therefore removes previous higher values.
+    setDT(df)
+    setorder(df, Date)
+    while (any(df$`Cumulative total` - shift(df$`Cumulative total`) < 0, na.rm = TRUE)) {
+        diff <- shift(df$`Cumulative total`, -1) - df$`Cumulative total`
+        df <- df[diff >= 0 | is.na(diff)]
+    }
+    return(df)
+}
+
 scripts_path <- ifelse(execution_mode == "quick", "automations/incremental", "automations")
 scripts <- list.files(scripts_path, pattern = "\\.R$", full.names = TRUE, include.dirs = FALSE, recursive = TRUE)
 if (length(SKIP) > 0) scripts <- scripts[!str_detect(scripts, paste(SKIP, collapse = "|"))]
 
 for (s in scripts) {
-    rm(list = setdiff(ls(), c("scripts", "add_snapshot", "s", "CONFIG")))
+    rm(list = setdiff(ls(), c("scripts", "add_snapshot", "s", "CONFIG", "make_monotonic")))
     message(sprintf("%s - %s", Sys.time(), s))
     try(source(s))
 }
