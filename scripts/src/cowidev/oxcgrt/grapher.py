@@ -97,9 +97,8 @@ def run_db_updater(input_path: str):
     GrapherBaseUpdater(
         dataset_name=dataset_name,
         source_name=(
-            "Hale, Angrist, Goldszmidt, Kira, Petherick, Phillips, Webster, Cameron-Blake, Hallas, Majumdar, and"
-            " Tatlow (2021). “A global panel database of pandemic policies (Oxford COVID-19 Government Response"
-            f"Tracker).” Nature Human Behaviour. – Last updated {time_str_grapher()} (London time)"
+            "Oxford COVID-19 Government Response Tracker, Blavatnik School of Government, University of Oxford"
+            f" – Last updated {time_str_grapher()} (London time)"
         ),
         zero_day=ZERO_DAY,
         slack_notifications=True,
