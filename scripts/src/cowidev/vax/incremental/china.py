@@ -58,8 +58,9 @@ class China:
         output_file = paths.tmp_vax_out(self.location)
         last_update = pd.read_csv(output_file).date.max()
         df = self.read(last_update)
-        if df is not None:
+        if not df.empty:
             df = df.pipe(self.pipeline)
+            print(df.tail())
             df = merge_with_current_data(df, output_file)
             df.to_csv(output_file, index=False)
 
