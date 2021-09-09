@@ -8,40 +8,66 @@ from cowidev.utils.clean.dates import DATE_FORMAT
 ZERO_DAY = "2020-01-01"
 zero_day = datetime.strptime(ZERO_DAY, DATE_FORMAT)
 
+URL_VACCINE = "https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_vaccines_full.csv"
+
+
+def derive_vax_eligibility(df: pd.DataFrame) -> pd.DataFrame:
+    df.loc[df["V2_General 80+ yrs"] == 1, "vaccine_eligibility"] = 1
+    df.loc[df["V2_General 16-19 yrs"] == 1, "vaccine_eligibility"] = 2
+    df.loc[df["V2_5-15 yrs young people"] == 1, "vaccine_eligibility"] = 3
+    df.loc[df["V2_0-4 yrs infants"] == 1, "vaccine_eligibility"] = 4
+    return df[["CountryName", "Date", "vaccine_eligibility"]]
+
 
 def run_grapheriser(input_path: str, input_path_country_std: str, output_path: str):
-    usecols = [
-        "CountryName",
-        "Date",
-        "C1_School closing",
-        "C2_Workplace closing",
-        "C3_Cancel public events",
-        "C4_Restrictions on gatherings",
-        "C5_Close public transport",
-        "C6_Stay at home requirements",
-        "C7_Restrictions on internal movement",
-        "C8_International travel controls",
-        "E1_Income support",
-        "E2_Debt/contract relief",
-        "E3_Fiscal measures",
-        "E4_International support",
-        "H1_Public information campaigns",
-        "H2_Testing policy",
-        "H3_Contact tracing",
-        "H4_Emergency investment in healthcare",
-        "H5_Investment in vaccines",
-        "H6_Facial Coverings",
-        "H7_Vaccination policy",
-        "StringencyIndex",
-        "ContainmentHealthIndex",
-    ]
-    cgrt = pd.read_csv(input_path, low_memory=False)
+    cgrt = pd.read_csv(
+        input_path,
+        low_memory=False,
+        usecols=[
+            "CountryName",
+            "Date",
+            "RegionCode",
+            "C1_School closing",
+            "C2_Workplace closing",
+            "C3_Cancel public events",
+            "C4_Restrictions on gatherings",
+            "C5_Close public transport",
+            "C6_Stay at home requirements",
+            "C7_Restrictions on internal movement",
+            "C8_International travel controls",
+            "E1_Income support",
+            "E2_Debt/contract relief",
+            "E3_Fiscal measures",
+            "E4_International support",
+            "H1_Public information campaigns",
+            "H2_Testing policy",
+            "H3_Contact tracing",
+            "H4_Emergency investment in healthcare",
+            "H5_Investment in vaccines",
+            "H6_Facial Coverings",
+            "H7_Vaccination policy",
+            "StringencyIndex",
+            "ContainmentHealthIndex",
+        ],
+    )
     country_mapping = pd.read_csv(input_path_country_std)
 
-    if "RegionCode" in cgrt.columns:
-        cgrt = cgrt[cgrt.RegionCode.isnull()]
+    cgrt = cgrt[cgrt.RegionCode.isnull()].drop(columns="RegionCode")
 
-    cgrt = cgrt[usecols]
+    vax = pd.read_csv(
+        URL_VACCINE,
+        low_memory=False,
+        usecols=[
+            "CountryName",
+            "Date",
+            "V2_0-4 yrs infants",
+            "V2_5-15 yrs young people",
+            "V2_General 16-19 yrs",
+            "V2_General 80+ yrs",
+        ],
+    )
+    vax = derive_vax_eligibility(vax)
+    cgrt = pd.merge(cgrt, vax, how="outer", on=["CountryName", "Date"], validate="one_to_one")
 
     cgrt.loc[:, "Date"] = pd.to_datetime(cgrt["Date"], format="%Y%m%d").map(lambda date: (date - zero_day).days)
     cgrt = country_mapping.merge(cgrt, on="CountryName", how="right")
