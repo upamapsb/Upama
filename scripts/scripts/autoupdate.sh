@@ -91,13 +91,11 @@ UPDATED_TIME=$(stat $OXCGRT_CSV_PATH -c %Y)
 
 if [ $(expr $CURRENT_TIME - $UPDATED_TIME) -gt $UPDATE_INTERVAL_SECONDS ]; then
   # Download CSV
-  # run_python 'import oxcgrt; oxcgrt.download_csv()'
   python -m cowidev.oxcgrt etl
   # If there are any unstaged changes in the repo, then the
   # CSV has changed, and we need to run the update script.
   if has_changed $OXCGRT_CSV_PATH; then
     echo "Generating OxCGRT export..."
-    # run_python 'import oxcgrt; oxcgrt.export_grapher()'
     python -m cowidev.oxcgrt grapher-file
     git add .
     git commit -m "Automated OxCGRT update"
