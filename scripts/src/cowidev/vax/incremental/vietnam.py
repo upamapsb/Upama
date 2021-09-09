@@ -1,6 +1,6 @@
 import os
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pandas as pd
 
@@ -39,7 +39,8 @@ class Vietnam:
 
     def _parse_date(self, text: str):
         dt_raw = re.search(self.regex["date"], text).group(1) + f"/{datetime.now().year}"
-        return clean_date(dt_raw, "%d/%m/%Y")
+        dt = datetime.strptime(dt_raw, "%d/%m/%Y") - timedelta(days=1)
+        return clean_date(dt)
 
     def _parse_metrics(self, news_info: dict):
         soup = get_soup(news_info["link"])
