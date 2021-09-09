@@ -36,7 +36,7 @@ class China:
         return {
             "date": extract_clean_date(elem.text, self.regex["date"], "%Y %m %d"),
             "total_vaccinations": clean_count(re.search(self.regex["total_vaccinations"], elem.text).group(1)) * 1000,
-            "source_url": self.source_url,
+            "source_url": url,
         }
 
     def _get_links(self, driver) -> list:
@@ -49,7 +49,7 @@ class China:
         )
 
     def pipe_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(vaccine="CanSino, Pfizer/BioNTech, Sinopharm/Beijing, Sinopharm/Wuhan, Sinovac, ZF2001")
+        return df.assign(vaccine="CanSino, Sinopharm/Beijing, Sinopharm/Wuhan, Sinovac, ZF2001")
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.pipe(self.pipe_metadata).pipe(self.pipe_vaccine)
