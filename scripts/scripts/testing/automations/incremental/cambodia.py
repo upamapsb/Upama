@@ -2,6 +2,7 @@ import os
 
 import pandas as pd
 import requests
+from bs4 import BeautifulSoup
 from datetime import date
 
 def main():
@@ -10,9 +11,9 @@ def main():
 
     url = 'http://cdcmoh.gov.kh/'
     req = requests.get(url)
-    text = req.text
+    soup = BeautifulSoup(req.text, "html.parser")
 
-    count = int(text.split('ááá¸ááá¶áááááá¸ááááááááá½áâ ')[1].split(' ')[0])
+    count = int(soup.select("span:nth-child(1) strong span")[0].text.replace(" ", "").replace(",", ""))
 
     date_str = date.today().strftime("%Y-%m-%d")
 
