@@ -4,6 +4,8 @@ from datetime import datetime
 import pandas as pd
 from bs4 import BeautifulSoup
 
+from utils import make_monotonic
+
 
 class BosniaHerzegovina:
     def __init__(self):
@@ -71,7 +73,7 @@ class BosniaHerzegovina:
 
     def to_csv(self):
         output_path = f"automated_sheets/{self.location}.csv"
-        df = self.read().pipe(self.pipeline)
+        df = self.read().pipe(self.pipeline).pipe(make_monotonic)
         df.to_csv(output_path, index=False)
 
 

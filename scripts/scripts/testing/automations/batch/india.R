@@ -14,7 +14,7 @@ df <- df[, .SD[1], Samples]
 setorder(df, Date)
 df <- df[, .SD[1], Date]
 
-samples <- data.table(
+df <- data.table(
     Date = df$Date,
     `Cumulative total` = df$Samples,
     Country = "India",
@@ -24,4 +24,7 @@ samples <- data.table(
     Notes = "Made available by DataMeet on GitHub"
 )
 
-fwrite(samples, "automated_sheets/India - Samples tested.csv")
+# Exclude incorrect data point
+df <- df[Date != "2021-09-02"]
+
+fwrite(df, "automated_sheets/India.csv")

@@ -13,6 +13,7 @@ scripts = glob(scripts_path)
 
 if SKIP:
     print(f"Warning message:\nSkipping the following countries: {', '.join(SKIP)}")
+    SKIP.append("utils")
     SKIP = "|".join(SKIP)
     scripts = [s for s in scripts if not bool(re.search(pattern=SKIP, string=s))]
 

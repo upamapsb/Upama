@@ -117,6 +117,16 @@ parse_country <- function(sheet_name) {
                                                                 `Daily change in cumulative total`)) %>%
             mutate(`Cumulative total` = cumsum(`Daily change in cumulative total`))
     }
+    
+    # Check if cumulative total is monotonically increasing
+    mononotic_check <- collated %>%
+        arrange(Date) %>%
+        mutate(increase = `Cumulative total` - lag(`Cumulative total`)) %>%
+        filter(increase < 0)
+    if (nrow(mononotic_check) > 0) {
+        cat(as.character(mononotic_check$Date), sep = "\n")
+        stop("The series doesn't increase monotonically. Check the above dates.")
+    }
 
     # Calculate rates per capita
     collated <- collated %>%
