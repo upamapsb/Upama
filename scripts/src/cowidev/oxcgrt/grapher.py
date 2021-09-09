@@ -11,14 +11,6 @@ zero_day = datetime.strptime(ZERO_DAY, DATE_FORMAT)
 URL_VACCINE = "https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_vaccines_full.csv"
 
 
-def derive_vax_eligibility(df: pd.DataFrame) -> pd.DataFrame:
-    df.loc[df["V2_General 80+ yrs"] == 1, "vaccine_eligibility"] = 1
-    df.loc[df["V2_General 16-19 yrs"] == 1, "vaccine_eligibility"] = 2
-    df.loc[df["V2_5-15 yrs young people"] == 1, "vaccine_eligibility"] = 3
-    df.loc[df["V2_0-4 yrs infants"] == 1, "vaccine_eligibility"] = 4
-    return df[["CountryName", "Date", "vaccine_eligibility"]]
-
-
 def run_grapheriser(input_path: str, input_path_country_std: str, output_path: str):
     cgrt = pd.read_csv(
         input_path,
@@ -57,16 +49,8 @@ def run_grapheriser(input_path: str, input_path_country_std: str, output_path: s
     vax = pd.read_csv(
         URL_VACCINE,
         low_memory=False,
-        usecols=[
-            "CountryName",
-            "Date",
-            "V2_0-4 yrs infants",
-            "V2_5-15 yrs young people",
-            "V2_General 16-19 yrs",
-            "V2_General 80+ yrs",
-        ],
+        usecols=["CountryName", "Date", "V2_Vaccine Availability (summary)"],
     )
-    vax = derive_vax_eligibility(vax)
     cgrt = pd.merge(cgrt, vax, how="outer", on=["CountryName", "Date"], validate="one_to_one")
 
     cgrt.loc[:, "Date"] = pd.to_datetime(cgrt["Date"], format="%Y%m%d").map(lambda date: (date - zero_day).days)
@@ -101,6 +85,7 @@ def run_grapheriser(input_path: str, input_path_country_std: str, output_path: s
         "E4_International support": "international_support",
         "H7_Vaccination policy": "vaccination_policy",
         "H2_Testing policy": "testing_policy",
+        "V2_Vaccine Availability (summary)": "vaccine_eligibility",
     }
 
     cgrt = cgrt.rename(columns=rename_dict).sort_values(["Country", "Year"])
