@@ -2,6 +2,8 @@ from datetime import datetime
 
 import pandas as pd
 
+from utils import make_monotonic
+
 
 class Austria:
     def __init__(self):
@@ -10,9 +12,7 @@ class Austria:
         self.location = "Austria"
 
     def read(self):
-        return pd.read_csv(
-            self.source_url, sep=";", usecols=["Meldedat", "TestGesamt", "Bundesland"]
-        )
+        return pd.read_csv(self.source_url, sep=";", usecols=["Meldedat", "TestGesamt", "Bundesland"])
 
     def pipeline(self, df: pd.DataFrame):
         df = df[df.Bundesland == "Alle"]
@@ -31,23 +31,16 @@ class Austria:
                 "Source URL": self.source_url_ref,
                 "Source label": "Federal Ministry for Social Affairs, Health, Care and Consumer Protection",
                 "Notes": pd.NA,
-                "Date": df.Date.apply(
-                    lambda x: datetime.strptime(x, "%d.%m.%Y").strftime("%Y-%m-%d")
-                ),
+                "Date": df.Date.apply(lambda x: datetime.strptime(x, "%d.%m.%Y").strftime("%Y-%m-%d")),
             }
         )
 
-        df = (
-            df.sort_values("Cumulative total")
-            .groupby("Cumulative total", as_index=False)
-            .head(1)
-            .sort_values("Date", ascending=False)
-        )
+        df = df.sort_values("Cumulative total").groupby("Cumulative total", as_index=False).head(1).sort_values("Date")
         return df
 
     def to_csv(self):
         output_path = f"automated_sheets/{self.location}.csv"
-        df = self.read().pipe(self.pipeline)
+        df = self.read().pipe(self.pipeline).pipe(make_monotonic)
         df.to_csv(output_path, index=False)
 
 

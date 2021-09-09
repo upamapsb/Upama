@@ -1,5 +1,9 @@
-df <- fread("https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-andamento-nazionale/dpc-covid19-ita-andamento-nazionale.csv",
-            select = c("data", "tamponi", "casi_testati"), showProgress = FALSE)
+df <-
+  fread(
+    "https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-andamento-nazionale/dpc-covid19-ita-andamento-nazionale.csv",
+    select = c("data", "tamponi", "casi_testati"),
+    showProgress = FALSE
+  )
 
 setnames(df, "data", "Date")
 
@@ -15,6 +19,7 @@ samples[, Units := "tests performed"]
 samples[, casi_testati := NULL]
 setnames(samples, "tamponi", "Cumulative total")
 samples <- samples[!is.na(`Cumulative total`)]
+samples <- make_monotonic(samples)
 
 fwrite(samples, "automated_sheets/Italy - tests performed.csv")
 
@@ -23,5 +28,6 @@ people[, Units := "people tested"]
 people[, tamponi := NULL]
 setnames(people, "casi_testati", "Cumulative total")
 people <- people[!is.na(`Cumulative total`)]
+people <- make_monotonic(people)
 
 fwrite(people, "automated_sheets/Italy - people tested.csv")
