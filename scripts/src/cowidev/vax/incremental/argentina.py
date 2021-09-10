@@ -48,12 +48,13 @@ class Argentina:
             raise ValueError(
                 f"`segunda_dosis_cantidad` field for one dose vaccines ({self.one_dose_vaccine}) must be 0!"
             )
+        vaccines = ", ".join(sorted(set(df.vacuna_nombre.replace(self.vaccine_mapping))))
         return pd.Series(
             {
                 "people_vaccinated": first_shots + single_shots,
                 "people_fully_vaccinated": second_shots + single_shots,
                 "total_vaccinations": df["primera_dosis_cantidad"].sum() + df["segunda_dosis_cantidad"].sum(),
-                "vaccine": set(df.vacuna_nombre.replace(self.vaccine_mapping)),
+                "vaccine": vaccines,
             }
         )
 
