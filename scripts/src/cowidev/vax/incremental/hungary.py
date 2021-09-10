@@ -58,21 +58,26 @@ class Hungary:
 
     def parse_data_news_page(self, soup: BeautifulSoup):
         """
-        2021-09-01
-        Due to the use of J&J, people_fully_vaccinated can't be collected based on information published
+        2021-09-10
+        We received confirmation from the International Communications Office, State Secretariat
+        for International Communications and Relations, that the part of the report referring to
+        people who received the 2nd dose ("közülük ([\d ]+) fő már a második oltását is megkapt")
+        also included those who have received the J&J vaccine.
+        On the other hand, we cannot estimate the number of vaccinations administered, as adding
+        the two reported metrics would count J&J vaccines twice.
         """
 
         text = clean_string(soup.find(class_="page_body").text)
         match = re.search(self.regex["metrics"], text)
 
-        dose_1 = clean_count(match.group(1))
-        dose_2 = clean_count(match.group(2))
-        dose_3 = 1000 * clean_count(match.group(3))
+        people_vaccinated = clean_count(match.group(1))
+        people_fully_vaccinated = clean_count(match.group(2))
+        total_boosters = 1000 * clean_count(match.group(3))
 
         return {
-            "people_vaccinated": dose_1,
-            "total_boosters": dose_3,
-            "total_vaccinations": dose_1 + dose_2 + dose_3,
+            "people_vaccinated": people_vaccinated,
+            "people_fully_vaccinated": people_fully_vaccinated,
+            "total_boosters": total_boosters,
             "date": extract_clean_date(
                 soup.find("p").text,
                 regex="(202\d. .* \d+.) - .*",
@@ -105,7 +110,7 @@ class Hungary:
                 "vaccine",
                 "source_url",
                 "people_vaccinated",
-                "total_vaccinations",
+                "people_fully_vaccinated",
                 "total_boosters",
             ]
         ]
