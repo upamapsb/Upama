@@ -9,36 +9,48 @@ from cowidev.vax.utils.incremental import enrich_data, increment
 
 class EquatorialGuinea:
     def __init__(self):
-        self.source_url = "https://guineasalud.org/statistiques/?lang=fr"
+        self.source_url = "https://guineasalud.org/estadisticas/"
         self.location = "Equatorial Guinea"
 
     def read(self) -> pd.Series:
         soup = get_soup(self.source_url)
-        people_vaccinated, people_fully_vaccinated = self.parse_vaccinated(soup)
+        data = self.parse_metrics(soup)
         date_str = self.parse_date(soup)
-        data = pd.Series(
+        return pd.Series(
             {
-                "people_vaccinated": people_vaccinated,
-                "people_fully_vaccinated": people_fully_vaccinated,
-                "total_vaccinations": people_vaccinated + people_fully_vaccinated,
+                **data,
                 "date": date_str,
             }
         )
-        return pd.Series(data)
 
-    def parse_vaccinated(self, soup):
-        regex = r"Sur les ([\d \.]+) vaccinés, un total de ([\d ]+)"
+    def parse_metrics(self, soup):
+        # Get key points table (total_vaccinations, people_vaccinated)
+        dfs = pd.read_html(self.source_url)
+        df = dfs[0].rename(columns={"Unnamed: 0": "metric"}).set_index("metric")
+        people_vaccinated = clean_count(df.loc["Total Vacunados 1ª dosis", "Totales"])
+        total_vaccinations = clean_count(df.loc["Total dosis administradas", "Totales"])
+        # Get people_fully_vaccinated from text
+        regex = r"De los ([\d\.]+) vacunados un total de ([\d\.]+) \([\d,]+%\) ya han recibido la 2ª dosis"
         match = re.search(regex, soup.text)
-        people_vaccinated = match.group(1)
-        people_fully_vaccinated = match.group(2)
-        return clean_count(people_vaccinated), clean_count(people_fully_vaccinated)
+        people_fully_vaccinated = clean_count(match.group(2))
+        # Sanity check
+        if people_vaccinated != clean_count(match.group(1)):
+            raise ValueError(
+                f"There is an error! First dose metrics appears with different values in the source website!"
+            )
+        # Build data
+        return {
+            "total_vaccinations": total_vaccinations,
+            "people_vaccinated": people_vaccinated,
+            "people_fully_vaccinated": people_fully_vaccinated,
+        }
 
     def parse_date(self, soup):
         return extract_clean_date(
-            text=soup.text.replace("September", "Septembre"),
-            regex=r"Données au (\d+ \w+ 20\d{2})",
-            date_format="%d %B %Y",
-            lang="fr",
+            text=soup.text,
+            regex=r"Datos: a (\d+ \w+ de 20\d{2})",
+            date_format="%d %B de %Y",
+            lang="es",
             unicode_norm=True,
         )
 
