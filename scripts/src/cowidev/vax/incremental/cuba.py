@@ -16,9 +16,10 @@ class Cuba:
         self.regex = {
             "title": r"Al cierre del (\d{1,2}(?:ro)? de [a-z]+) se acumulan en el país ([\d ]+) dosis administradas",
             "data": (
-                r"([\d ]+) personas han recibido al menos una dosis de uno de los candidatos vacunales cubanos.*De "
-                r"ellas ya tienen segunda dosis ([\d ]+) personas y tercera dosis ([\d ]+) personas"
+                r"([\d ]+) personas han recibido al menos una dosis de.*"
+                r"De ellas ya tienen segunda dosis ([\d ]+) personas y tercera dosis ([\d ]+) personas"
             ),
+            "boosters": r"Como dosis única de la vacuna SOBERANA Plus se han administrado ([\d ]+) dosis",
         }
 
     def read(self) -> pd.Series:
@@ -27,6 +28,7 @@ class Cuba:
 
     def parse_data(self, soup: BeautifulSoup) -> pd.Series:
         data = {}
+
         match = re.search(self.regex["title"], soup.text)
         if match:
             # date
@@ -34,10 +36,16 @@ class Cuba:
             data["date"] = clean_date(f"{date_str} {datetime.now().year}", "%d de %B %Y", lang="es")
             # vaccinations
             data["total_vaccinations"] = clean_count(match.group(2))
+
         match = re.search(self.regex["data"], soup.text)
         if match:
             data["people_vaccinated"] = clean_count(match.group(1))
             data["people_fully_vaccinated"] = clean_count(match.group(3))
+
+        match = re.search(self.regex["boosters"], soup.text)
+        if match:
+            data["total_boosters"] = clean_count(match.group(1))
+
         return pd.Series(data)
 
     def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
@@ -54,6 +62,7 @@ class Cuba:
             total_vaccinations=data["total_vaccinations"],
             people_vaccinated=data["people_vaccinated"],
             people_fully_vaccinated=data["people_fully_vaccinated"],
+            total_boosters=data["total_boosters"],
             date=data["date"],
             source_url=self.source_url,
             vaccine=data["vaccine"],
