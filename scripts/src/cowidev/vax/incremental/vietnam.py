@@ -26,7 +26,7 @@ class Vietnam:
         news_info_all = self._parse_news_info(soup)
         records = []
         for news_info in news_info_all:
-            print(news_info)
+            # print(news_info)
             if news_info["date"] < last_updated:
                 break
             records.append(self._parse_metrics(news_info))
