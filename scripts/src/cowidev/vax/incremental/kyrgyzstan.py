@@ -20,11 +20,12 @@ class Kyrgyzstan:
         metrics_raw = soup.find_all("h3", class_="ml-4")
         data = {}
         for h in metrics_raw:
-            if h.parent.p.text == "Всего вакцинаций":
+            title = h.parent.p.text.strip()
+            if title == "Всего вакцинаций":
                 data["total_vaccinations"] = clean_count(h.text)
-            elif h.parent.p.text == "Количество вакцинированных 1 дозой":
+            elif title == "Количество вакцинированных 1 дозой":
                 data["people_vaccinated"] = clean_count(h.text)
-            elif h.parent.p.text == "Количество лиц, прошедших полный курс вакцинации":
+            elif title == "Количество лиц, прошедших полный курс вакцинации":
                 data["people_fully_vaccinated"] = clean_count(h.text)
         return data
 
