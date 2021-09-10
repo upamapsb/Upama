@@ -49,7 +49,7 @@ class Brazil:
         return ds
 
     def _parse_unique_doses(self, driver):
-        time.sleep(5)
+        time.sleep(10)
         elem = driver.find_element_by_id("QV1-export")
         elem.click()
         elem = elem.find_element_by_class_name("fa-download")
