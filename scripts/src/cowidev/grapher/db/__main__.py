@@ -12,7 +12,7 @@ from cowidev.grapher.db.utils.slack_client import send_error
 
 updaters = [
     GrapherTestUpdater,
-    # GrapherVariantsUpdater,
+    GrapherVariantsUpdater,
     GrapherVaxAgeUpdater,
     GrapherVaxManufacturerUpdater,
     GrapherVaxUpdater,
