@@ -1,3 +1,7 @@
+import tempfile
+from xlsx2csv import Xlsx2csv
+from cowidev.utils.utils import xlsx2csv
+
 import pandas as pd
 
 from cowidev.utils.web.scraping import get_soup
@@ -25,6 +29,22 @@ class Latvia:
         soup = get_soup(self.source_url)
         file_url = soup.find_all("a", class_="resource-url-analytics")[-1]["href"]
         return file_url
+
+    def read_new(self):
+        link = self._get_file_link()
+        with tempfile.NamedTemporaryFile() as tmp:
+            xlsx2csv(link, tmp.name)
+            df = pd.read_csv(
+                tmp.name,
+                usecols=[
+                    "Vakcinācijas datums",
+                    "Vakcinēto personu skaits",
+                    "Vakcinācijas posms",
+                    "Preparāts",
+                ],
+                parse_dates=["Vakcinācijas datums"]
+            )
+            return df
 
     def read(self):
         link = self._get_file_link()
@@ -131,7 +151,7 @@ class Latvia:
         )[["location", "date", "vaccine", "total_vaccinations"]].sort_values(["date", "vaccine"])
         return df
 
-    def to_csv(self, paths):
+    def export(self, paths):
         df = self.read()
         df_base = df.pipe(self.pipe_base)
         # Main data
@@ -148,7 +168,7 @@ class Latvia:
 
 
 def main(paths):
-    Latvia().to_csv(paths)
+    Latvia().export(paths)
 
 
 if __name__ == "__main__":
