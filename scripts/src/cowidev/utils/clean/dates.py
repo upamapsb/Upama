@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from contextlib import contextmanager
 import locale
 
@@ -17,7 +17,7 @@ DATE_FORMAT = "%Y-%m-%d"
 
 
 def clean_date(
-    date_or_text: Union[str, datetime],
+    date_or_text: Union[str, datetime, date],
     fmt: str = None,
     lang: str = None,
     loc: str = "",
@@ -30,7 +30,7 @@ def clean_date(
     By default, system default locale is used.
 
     Args:
-        date_or_text (str): Input text or date.
+        date_or_text (Union[str, datetime, date]): Input text or date.
         fmt (str, optional): Text format. More details at
                              https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes.
         lang (str, optional): Language two-letter code, e.g. 'da' (dansk). If given, `loc` will be ignored and redefined
@@ -42,7 +42,7 @@ def clean_date(
     Returns:
         str: Extracted date in format %Y-%m-%d
     """
-    if isinstance(date_or_text, datetime):
+    if isinstance(date_or_text, (datetime, date)):
         return date_or_text.strftime(DATE_FORMAT)
     # If lang is given, map language to a locale
     if fmt is None:
