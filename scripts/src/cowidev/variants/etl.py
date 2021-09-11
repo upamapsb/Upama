@@ -1,7 +1,6 @@
 import os
 from datetime import timedelta, datetime
 
-import requests
 import pandas as pd
 
 from cowidev.utils.utils import get_project_dir
@@ -15,6 +14,7 @@ class VariantsETL:
             "https://raw.githubusercontent.com/hodcroftlab/covariants/master/web/data/perCountryData.json"
         )
         self.source_url_date = "https://github.com/hodcroftlab/covariants/raw/master/web/data/update.json"
+        # CoVariants -> OWID name mapping. If who=False, variant is placed in bucket "others"
         self.variants_details = {
             "20A.EU2": {"rename": "B.1.160", "who": False},
             "20A/S:439K": {"rename": "B.1.258", "who": False},
@@ -34,7 +34,7 @@ class VariantsETL:
             "21D (Eta)": {"rename": "Eta", "who": True},
             "21F (Iota)": {"rename": "Iota", "who": True},
             "21G (Lambda)": {"rename": "Lambda", "who": True},
-            "21H": {"rename": "B.1.621", "who": False},
+            "21H (Mu)": {"rename": "Mu", "who": True},
             "S:677H.Robin1": {"rename": "S:677H.Robin1", "who": False},
             "S:677P.Pelican": {"rename": "S:677P.Pelican", "who": False},
         }
