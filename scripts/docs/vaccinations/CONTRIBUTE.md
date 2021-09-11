@@ -18,14 +18,21 @@ for manually imported country data**. To see which countries are automated and w
 ## About our vaccination data
 For details about the development environment, check the details in [README](README.md#2-development-environment).
 
+
 We are currently collecting vaccination data at country level in the following format:
+|location|date      |vaccine                                                        |source_url                                                                                   |total_vaccinations|people_vaccinated|people_fully_vaccinated|total_boosters|
+|--------|----------|---------------------------------------------------------------|---------------------------------------------------------------------------------------------|------------------|-----------------|-----------------------|--------------|
+|Cambodia|2021-09-10|Johnson&Johnson, Oxford/AstraZeneca, Sinopharm/Beijing, Sinovac|https://www.facebook.com/MinistryofHealthofCambodia/photos/a.930887636950343/4376835072355565|20554497          |11406989         |9350408                |742293        |
 
-|location   |date      |vaccine                                               |source_url                                                                                                  |total_vaccinations|people_vaccinated|people_fully_vaccinated|
-|-----------|----------|------------------------------------------------------|------------------------------------------------------------------------------------------------------------|------------------|-----------------|-----------------------|
-|Afghanistan|2021-05-30|Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing|https://covid19.who.int/                                                                                    |600152            |480226           |119926                 |
 
-Where the metrics `total_vaccinations`, `people_vaccinated` and `people_fully_vaccinated` are defined as read
-[here](https://github.com/owid/covid-19-data/tree/master/public/data/vaccinations#vaccination-data).
+Where metrics:
+
+- `total_vaccinations`
+- `people_vaccinated`
+- `people_fully_vaccinated`
+- `total_boosters`
+
+are defined [here](https://github.com/owid/covid-19-data/tree/master/public/data#vaccinations).
  
 Note that for some countries, some metrics can't be reported as these are not be available. This is not ideal but it is OK.
 
