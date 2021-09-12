@@ -15,7 +15,7 @@ class Vietnam:
     regex: dict = {
         "date": r"Bản tin dịch COVID-19 ngày (\d{1,2}/\d{1,2}) của Bộ",
         "metrics": (
-            r"Trong ngày \d{1,2}/\d{1,2} có \d+\.\d+ liều (?:vắc xin phòng|vaccine) COVID-19 được tiêm. Như "
+            r"Trong ngày \d{1,2}/\d{1,2} có [\.\d]+ liều (?:vắc xin phòng|vaccine) COVID-19 được tiêm(?:.*)?. Như "
             r"vậy, tổng số liều (?:vắc xin|vaccine) đã được tiêm là ([\d\.]+) liều"
             r", trong đó tiêm 1 mũi là ([\d\.]+) liều, tiêm mũi 2 là ([\d\.]+) liều\."
         ),
