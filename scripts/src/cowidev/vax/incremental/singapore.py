@@ -18,7 +18,7 @@ class Singapore:
         for link in soup.find_all("item"):
             elements = link.children
             for elem in elements:
-                if "vaccination-progress" in elem:
+                if "local-covid-19-situation" in elem:
                     return elem
 
     def read(self) -> pd.Series:
@@ -29,30 +29,31 @@ class Singapore:
 
     def parse_text(self, soup: BeautifulSoup) -> pd.Series:
 
+        preamble = (
+            r"As of ([\d]+ [A-Za-z]+ 20\d{2}), (\d+)% of our population has completed their full regimen/"
+            r" received two doses of COVID-19 vaccines, and (\d+)% has received at least one dose\."
+        )
+        data = re.search(preamble, soup.text).groups()
+        date = clean_date(data[0], fmt="%d %B %Y", lang="en_US", loc="en_US")
+        share_fully_vaccinated = int(data[1])
+        share_vaccinated = int(data[2])
+
         national_program = (
-            r"As of ([\d]+ [A-Za-z]+ 20\d{2}), we have administered a total of ([\d,]+) doses of COVID-19 vaccines"
-            r" under the national vaccination programme \(Pfizer-BioNTech Comirnaty and Moderna\), covering ([\d,]+)"
-            r" individuals"
+            r"We have administered a total of ([\d,]+) doses of COVID-19 vaccines under the national vaccination programme"
+            r" \(Pfizer-BioNTech Comirnaty and Moderna\), covering ([\d,]+) individuals"
         )
         data = re.search(national_program, soup.text).groups()
-        national_date = clean_date(data[0], fmt="%d %B %Y", lang="en_US", loc="en_US")
-        national_doses = clean_count(data[1])
-        national_people_vaccinated = clean_count(data[2])
+        national_doses = clean_count(data[0])
+        national_people_vaccinated = clean_count(data[1])
 
         who_eul = (
-            r"In addition,\s([\d,]+) doses of other vaccines recognised in the World Health Organization.s Emergency"
-            r" Use Listing \(WHO EUL\) have been administered as of ([\d]+ [A-Za-z]+ 20\d{2}), covering ([\d,]+)"
-            r" individuals\. In total, (\d+)% of our population has completed their full regimen/ received two doses"
-            r" of COVID-19 vaccines, and (\d+)% has received at least one dose"
+            r"In addition, ([\d,]+) doses of other vaccines recognised in the World Health Organization.s Emergency"
+            r" Use Listing \(WHO EUL\) have been administered, covering ([\d,]+) individuals\."
         )
         data = re.search(who_eul, soup.text).groups()
         who_doses = clean_count(data[0])
-        who_date = clean_date(data[1], fmt="%d %B %Y", lang="en_US", loc="en_US")
-        who_people_vaccinated = clean_count(data[2])
-        share_fully_vaccinated = int(data[3])
-        share_vaccinated = int(data[4])
+        who_people_vaccinated = clean_count(data[1])
 
-        date = max([national_date, who_date])
         total_vaccinations = national_doses + who_doses
         people_vaccinated = national_people_vaccinated + who_people_vaccinated
         people_fully_vaccinated = round(people_vaccinated * (share_fully_vaccinated / share_vaccinated))
