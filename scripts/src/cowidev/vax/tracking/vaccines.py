@@ -5,7 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from cowidev.utils.web.scraping import get_soup, get_headers
-from cowidev.vax.utils.who import WHO_VACCINES
+from cowidev.vax.utils.orgs import WHO_VACCINES
 
 
 CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
