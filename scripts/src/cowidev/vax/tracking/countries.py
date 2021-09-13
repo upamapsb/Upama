@@ -3,6 +3,7 @@ from datetime import datetime
 
 import pandas as pd
 from cowidev.vax.tracking.vaccines import vaccines_comparison_with_who
+from cowidev.utils.utils import get_project_dir
 
 
 CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -67,17 +68,20 @@ def country_updates_summary(
     if not path_vaccinations:
         path_vaccinations = os.path.abspath(
             os.path.join(
-                CURRENT_DIR,
-                "../../../../../public/data/vaccinations/vaccinations.csv",
+                get_project_dir(),
+                "public",
+                "data",
+                "vaccinations",
+                "vaccinations.csv",
             )
         )
     if not path_locations:
         path_locations = os.path.abspath(
-            os.path.join(CURRENT_DIR, "../../../../../public/data/vaccinations/locations.csv")
+            os.path.join(get_project_dir(), "public", "data", "vaccinations", "locations.csv")
         )
     if not path_automation_state:
         path_automation_state = os.path.abspath(
-            os.path.join(CURRENT_DIR, "../../../../output/vaccinations/automation_state.csv")
+            os.path.join(CURRENT_DIR, "scripts", "output", "vaccinations", "automation_state.csv")
         )
     columns_output = [
         "location",
@@ -230,10 +234,12 @@ def countries_missing(
                                     DataFrame.
     """
     if not path_population:
-        path_population = os.path.abspath(os.path.join(CURRENT_DIR, "../../../../../input/un/population_2020.csv"))
+        path_population = os.path.abspath(
+            os.path.join(get_project_dir(), "scripts", "input", "un", "population_2020.csv")
+        )
     if not path_locations:
         path_locations = os.path.abspath(
-            os.path.join(CURRENT_DIR, "../../../../../../public/data/vaccinations/locations.csv")
+            os.path.join(get_project_dir(), "public", "data", "vaccinations", "locations.csv")
         )
     df_loc = pd.read_csv(path_locations, usecols=["location"])
     df_pop = pd.read_csv(path_population)
