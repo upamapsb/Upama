@@ -69,6 +69,7 @@ class BosniaHerzegovina:
             ds = abs(df.loc[df.Date == "2021-01-08", "Cumulative total"] - 535439)
             id_remove = ds.idxmax()
             df = df.drop(id_remove)
+        df = df[df.Date != "2021-08-23"]
         return df
 
     def to_csv(self):
