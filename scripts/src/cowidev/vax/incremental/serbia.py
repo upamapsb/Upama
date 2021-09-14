@@ -52,7 +52,7 @@ class Serbia:
                 x.append(elem)
         if len(x) > 1:
             raise ValueError("Format of source has changed")
-        date_str = clean_date(x[0].text, "ажурирано %d.%m.%Y")
+        date_str = clean_date(x[0].text.strip(), "ажурирано %d.%m.%Y")
         return date_str
 
     def pipe_location(self, ds: pd.Series) -> pd.Series:
