@@ -24,10 +24,9 @@ class Greece:
 
     def parse_data(self, data: dict):
         metrics_mapping = {
-            "Συνολικοί εμβολιασμοί με τουλάχιστον 1 δόση": "people_partly_vaccinated",
             "Συνολικοί ολοκληρωμένοι εμβολιασμοί": "people_fully_vaccinated",
             "Συνολικοί εμβολιασμοί": "total_vaccinations",
-            "Σύνολο ατόμων που έχουν εμβολιαστεί ": "people_vaccinated",
+            "Συνολικοί εμβολιασμοί με τουλάχιστον 1 δόση": "people_vaccinated",
         }
         dfs = [
             pd.DataFrame.from_records(d["data"]).rename(
@@ -39,9 +38,6 @@ class Greece:
             for d in data
         ]
         return reduce(lambda left, right: pd.merge(left, right, on=["date"], how="inner"), dfs)
-
-    def pipe_replace_nulls_with_nans(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(people_fully_vaccinated=df.people_fully_vaccinated.replace(0, pd.NA))
 
     def pipe_date(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(date=clean_date_series(df.date, "%Y-%m-%dT%H:%M:%S"))
@@ -80,8 +76,7 @@ class Greece:
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
-            df.pipe(self.pipe_replace_nulls_with_nans)
-            .pipe(self.pipe_date)
+            df.pipe(self.pipe_date)
             .pipe(self.pipe_metadata)
             .pipe(self.pipe_vaccine)
             .pipe(self.pipe_select_output_columns)
