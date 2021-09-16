@@ -13,12 +13,16 @@ def read(source: str) -> pd.Series:
 def connect_parse_data(source: str) -> pd.Series:
 
     soup = get_soup(source)
-    people_vaccinated = soup.find_all(class_="repart-stlucia")[0].text
-    people_vaccinated = clean_count(people_vaccinated)
 
-    people_fully_vaccinated = soup.find_all(class_="repart-stlucia")[1].text
-    people_fully_vaccinated = clean_count(people_fully_vaccinated)
+    az_dose1 = clean_count(soup.find_all(class_="yellow")[0].text)
+    az_dose2 = clean_count(soup.find_all(class_="yellow")[1].text)
+    assert az_dose1 >= az_dose2
+    pfizer_dose1 = clean_count(soup.find_all(class_="yellow")[2].text)
+    pfizer_dose2 = clean_count(soup.find_all(class_="yellow")[3].text)
+    assert pfizer_dose1 >= pfizer_dose2
 
+    people_vaccinated = az_dose1 + pfizer_dose1
+    people_fully_vaccinated = az_dose2 + pfizer_dose2
     total_vaccinations = people_vaccinated + people_fully_vaccinated
 
     date = localdate("America/St_Lucia")
