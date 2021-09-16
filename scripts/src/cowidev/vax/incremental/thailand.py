@@ -147,7 +147,7 @@ class Thailand:
         return df.assign(location=self.location)
 
     def pipe_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(vaccine="Oxford/AstraZeneca, Sinovac")
+        return df.assign(vaccine="Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac")
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.pipe(self.pipe_location).pipe(self.pipe_vaccine)
