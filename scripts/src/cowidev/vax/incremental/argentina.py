@@ -11,12 +11,13 @@ class Argentina:
     )
     source_url: str = "https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19VacunasAgrupadas.csv.zip"
     vaccine_mapping: dict = {
-        "COVISHIELD ChAdOx1nCoV COVID 19": "Oxford/AstraZeneca",
         "AstraZeneca ChAdOx1 S recombinante": "Oxford/AstraZeneca",
+        "Cansino Ad5 nCoV": "CanSino",
+        "COVISHIELD ChAdOx1nCoV COVID 19": "Oxford/AstraZeneca",
+        "Moderna ARNm": "Moderna",
+        "Pfizer BioNTech Comirnaty": "Pfizer/BioNTech",
         "Sinopharm Vacuna SARSCOV 2 inactivada": "Sinopharm/Beijing",
         "Sputnik V COVID19 Instituto Gamaleya": "Sputnik V",
-        "Moderna ARNm": "Moderna",
-        "Cansino Ad5 nCoV": "CanSino",
     }
     one_dose_vaccine: list = ["Cansino Ad5 nCoV"]
 

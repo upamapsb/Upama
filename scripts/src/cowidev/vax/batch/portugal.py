@@ -30,12 +30,8 @@ def format_date(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def calculate_metrics(df: pd.DataFrame) -> pd.DataFrame:
-    df = df.assign(
-        people_vaccinated=df.pessoas_vacinadas_parcialmente + df.people_fully_vaccinated
-    )
-    return df[
-        ["date", "total_vaccinations", "people_vaccinated", "people_fully_vaccinated"]
-    ]
+    df = df.assign(people_vaccinated=df.pessoas_vacinadas_parcialmente + df.people_fully_vaccinated)
+    return df[["date", "total_vaccinations", "people_vaccinated", "people_fully_vaccinated"]]
 
 
 def enrich_vaccine_name(df: pd.DataFrame) -> pd.DataFrame:
@@ -50,14 +46,12 @@ def enrich_vaccine_name(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def enrich_columns(df: pd.DataFrame) -> pd.DataFrame:
-    return df.assign(
-        location="Portugal", source_url="https://github.com/dssg-pt/covid19pt-data"
-    )
+    return df.assign(location="Portugal", source_url="https://github.com/dssg-pt/covid19pt-data")
 
 
 def sanity_checks(df: pd.DataFrame) -> pd.DataFrame:
     assert all(df.total_vaccinations.fillna(0) >= df.people_vaccinated.fillna(0))
-    return df
+    return df[-df.total_vaccinations.isna()]
 
 
 def pipeline(df: pd.DataFrame) -> pd.DataFrame:
