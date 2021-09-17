@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, date
 import json
 import os
 import requests
@@ -6,7 +6,6 @@ import sys
 
 import numpy as np
 import pandas as pd
-import pytz
 
 
 CURRENT_DIR = os.path.dirname(__file__)
@@ -106,7 +105,7 @@ def add_united_states(df):
         flow.previous_day_admission_pediatric_covid_confirmed
     )
     flow.loc[:, "date"] = (flow["date"] + pd.to_timedelta(6 - flow["date"].dt.dayofweek, unit="d")).dt.date
-    flow = flow[flow["date"] <= datetime.date.today()]
+    flow = flow[flow["date"] <= date.today()]
     flow = flow[["date", "value"]]
     flow = flow.groupby("date", as_index=False).agg({"value": ["sum", "count"]})
     flow.columns = ["date", "value", "count"]
@@ -161,7 +160,7 @@ def add_uk(df):
 
     flow = uk[["date", "newAdmissions"]].copy()
     flow.loc[:, "date"] = (flow["date"] + pd.to_timedelta(6 - flow["date"].dt.dayofweek, unit="d")).dt.date
-    flow = flow[flow["date"] <= datetime.date.today()]
+    flow = flow[flow["date"] <= date.today()]
     flow = flow.groupby("date", as_index=False).agg({"newAdmissions": ["sum", "count"]})
     flow.columns = ["date", "newAdmissions", "count"]
     flow = flow[flow["count"] == 7]
@@ -197,7 +196,7 @@ def add_israel(df):
 
     flow = israel[["date", "new_hospitalized", "serious_critical_new"]].copy()
     flow.loc[:, "date"] = (flow["date"] + pd.to_timedelta(6 - flow["date"].dt.dayofweek, unit="d")).dt.date
-    flow = flow[flow["date"] <= datetime.date.today()]
+    flow = flow[flow["date"] <= date.today()]
     flow = flow.groupby("date", as_index=False).agg(
         {"new_hospitalized": ["sum", "count"], "serious_critical_new": "sum"}
     )
@@ -266,7 +265,7 @@ def add_switzerland(df: pd.DataFrame) -> pd.DataFrame:
     flow = flow[flow.geoRegion == "CH"].drop(columns=["geoRegion"]).rename(columns={"datum": "date"})
     flow.loc[:, "date"] = pd.to_datetime(flow["date"])
     flow.loc[:, "date"] = (flow["date"] + pd.to_timedelta(6 - flow["date"].dt.dayofweek, unit="d")).dt.date
-    flow = flow[flow["date"] <= datetime.date.today()]
+    flow = flow[flow["date"] <= date.today()]
     flow = flow.groupby("date", as_index=False).agg({"entries": ["sum", "count"]})
     flow.columns = ["date", "entries", "count"]
     flow = flow[flow["count"] == 7]
@@ -291,7 +290,34 @@ def add_switzerland(df: pd.DataFrame) -> pd.DataFrame:
     return pd.concat([df, swiss])
 
 
+def add_singapore(df):
+    print("Downloading Singapore data…")
+    # Get data
+    url = "https://covidsitrep.moh.gov.sg/_dash-layout"
+    data = requests.get(url).json()["props"]["children"][1]["props"]["children"][3]["props"]["children"][0]["props"][
+        "figure"
+    ]["data"]
+    data_icu = data[6]
+    # data_ward = data[3]
+
+    df_sgp = pd.DataFrame(
+        {
+            "date": data_icu["x"],
+            "value": data_icu["y"],
+        }
+    )
+    df_sgp = df.assign(
+        date=df_sgp.date.apply(lambda x: datetime.strptime(x, "%Y-%m-%dT%H:%M:%S").strftime("%Y-%m-%d")),
+        indicator="Daily ICU occupancy",
+        entity="Singapore",
+        iso_code="SGP",
+        population=5896684,
+    )
+    return pd.concat([df, df_sgp])
+
+
 def add_countries(df):
+    df = add_singapore(df)
     df = add_algeria(df)
     df = add_canada(df)
     df = add_israel(df)
@@ -323,7 +349,7 @@ def owid_format(df):
 
 
 def date_to_owid_year(df):
-    df.loc[:, "date"] = (pd.to_datetime(df.date, format="%Y-%m-%d") - datetime.datetime(2020, 1, 21)).dt.days
+    df.loc[:, "date"] = (pd.to_datetime(df.date, format="%Y-%m-%d") - datetime(2020, 1, 21)).dt.days
     df = df.rename(columns={"date": "Year"})
     return df
 
@@ -345,8 +371,11 @@ def generate_dataset():
 
 
 def update_db():
-    time_str = datetime.datetime.now().astimezone(pytz.timezone("Europe/London")).strftime("%-d %B, %H:%M")
-    source_name = f"European CDC for EU countries, government sources for other countries – Last updated {time_str} (London time)"
+    time_str = datetime.now().astimezone(pytz.timezone("Europe/London")).strftime("%-d %B, %H:%M")
+    source_name = (
+        f"European CDC for EU countries, government sources for other countries – Last updated {time_str} (London"
+        " time)"
+    )
     import_dataset(
         dataset_name=DATASET_NAME,
         namespace="owid",
