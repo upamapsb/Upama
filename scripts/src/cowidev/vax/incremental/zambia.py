@@ -40,12 +40,19 @@ class Zambia:
     def pipe_people_vaccinated(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "people_vaccinated", ds.total_vaccinations - ds.people_fully_vaccinated)
 
+    def pipe_sanity_checks(self, ds: pd.Series) -> pd.Series:
+        if ds.people_fully_vaccinated > ds.people_vaccinated:
+            ds["people_vaccinated"] = pd.NA
+            ds["people_fully_vaccinated"] = pd.NA
+        return ds
+
     def pipeline(self, ds: pd.Series) -> pd.Series:
         return (
             ds.pipe(self.pipe_location)
             .pipe(self.pipe_source)
             .pipe(self.pipe_vaccine)
             .pipe(self.pipe_people_vaccinated)
+            .pipe(self.pipe_sanity_checks)
         )
 
     def export(self, paths):
