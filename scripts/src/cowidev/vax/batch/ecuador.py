@@ -47,12 +47,14 @@ class Ecuador:
         """
 
         def _enrich_vaccine(date: str):
-            if date < "2021-03-06":
+            if date < "2021-01-29":
                 return "Pfizer/BioNTech"
-            elif date < "17/03/2021":
+            elif date < "2021-02-04":
                 return "Pfizer/BioNTech, Sinovac"
-            else:
+            elif date < "2021-08-01":
                 return "Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac"
+            else:
+                return "Pfizer/BioNTech, CanSino, Oxford/AstraZeneca, Sinovac"
 
         return df.assign(vaccine=df.date.apply(_enrich_vaccine))
 
