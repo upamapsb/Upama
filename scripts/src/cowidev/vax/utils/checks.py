@@ -31,6 +31,12 @@ VACCINES_ONE_DOSE = [
     "CanSino",
 ]
 
+VACCINES_THREE_DOSES = [
+    "ZF2001",
+    "Abdala",
+    "Soberana02",
+]
+
 
 def country_df_sanity_checks(
     df: pd.DataFrame,
