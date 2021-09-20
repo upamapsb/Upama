@@ -4,13 +4,13 @@ from cowidev.vax.utils.files import export_metadata
 
 LOCATION = "Italy"
 SOURCE_URL = (
-    "https://raw.githubusercontent.com/italia/covid19-opendata-vaccini/master/dati/"
-    "somministrazioni-vaccini-latest.csv"
+    "https://raw.githubusercontent.com/italia/covid19-opendata-vaccini/master/dati/somministrazioni-vaccini-latest.csv"
 )
 COLUMNS_RENAME = {
     "data_somministrazione": "date",
     "fornitore": "vaccine",
     "fascia_anagrafica": "age_group",
+    "dose_aggiuntiva": "total_boosters",
 }
 VACCINE_MAPPING = {
     "Pfizer/BioNTech": "Pfizer/BioNTech",
@@ -47,6 +47,7 @@ class Italy:
                 "prima_dose",
                 "seconda_dose",
                 "pregressa_infezione",
+                "dose_aggiuntiva",
             ],
         )
         return df
@@ -64,9 +65,7 @@ class Italy:
 
     def get_total_vaccinations(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(
-            total_vaccinations=df["prima_dose"]
-            + df["seconda_dose"]
-            + df["pregressa_infezione"]
+            total_vaccinations=df.prima_dose + df.seconda_dose + df.pregressa_infezione + df.total_boosters
         )
 
     def pipeline_base(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -83,9 +82,7 @@ class Italy:
     def get_people_fully_vaccinated(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(
             people_fully_vaccinated=lambda x: x.apply(
-                lambda row: row["prima_dose"]
-                if row["vaccine"] in self.one_dose_vaccines
-                else row["seconda_dose"],
+                lambda row: row["prima_dose"] if row["vaccine"] in self.one_dose_vaccines else row["seconda_dose"],
                 axis=1,
             )
         )
@@ -93,7 +90,7 @@ class Italy:
     def get_final_numbers(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
             df.groupby("date")[
-                ["total_vaccinations", "people_vaccinated", "people_fully_vaccinated"]
+                ["total_vaccinations", "people_vaccinated", "people_fully_vaccinated", "total_boosters"]
             ]
             .sum()
             .sort_index()
@@ -109,17 +106,11 @@ class Italy:
 
     def vaccine_start_dates(self, df: pd.DataFrame):
         date2vax = sorted(
-            (
-                (df.loc[df["vaccine"] == vaccine, "date"].min(), vaccine)
-                for vaccine in self.vaccine_mapping.values()
-            ),
+            ((df.loc[df["vaccine"] == vaccine, "date"].min(), vaccine) for vaccine in self.vaccine_mapping.values()),
             key=lambda x: x[0],
             reverse=True,
         )
-        return [
-            (date2vax[i][0], ", ".join(sorted(v[1] for v in date2vax[i:])))
-            for i in range(len(date2vax))
-        ]
+        return [(date2vax[i][0], ", ".join(sorted(v[1] for v in date2vax[i:]))) for i in range(len(date2vax))]
 
     def enrich_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
         def _enrich_vaccine(date: str) -> str:
@@ -146,26 +137,18 @@ class Italy:
             .sum()
             .sort_index()
             .reset_index()
-            .assign(
-                total_vaccinations=lambda x: x.groupby("vaccine")[
-                    "total_vaccinations"
-                ].cumsum()
-            )
+            .assign(total_vaccinations=lambda x: x.groupby("vaccine")["total_vaccinations"].cumsum())
         )
 
     def pipeline_manufacturer(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self.get_total_vaccinations_by_manufacturer).pipe(
-            self.enrich_location
-        )
+        return df.pipe(self.get_total_vaccinations_by_manufacturer).pipe(self.enrich_location)
 
     def to_csv(self, paths):
         vaccine_data = self.read().pipe(self.pipeline_base)
 
         self.vax_date_mapping = self.vaccine_start_dates(vaccine_data)
 
-        vaccine_data.pipe(self.pipeline).to_csv(
-            paths.tmp_vax_out(self.location), index=False
-        )
+        vaccine_data.pipe(self.pipeline).to_csv(paths.tmp_vax_out(self.location), index=False)
 
         df_man = vaccine_data.pipe(self.pipeline_manufacturer)
         df_man.to_csv(paths.tmp_vax_out_man(self.location), index=False)
