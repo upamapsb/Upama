@@ -137,12 +137,6 @@ class Ecuador:
         )
         return df
 
-    def exclude_data_points(self, df: pd.DataFrame) -> pd.DataFrame:
-        # The data point on 2021-04-10 contains an error, which creates a negative change in the
-        # people_fully_vaccinated series (from 112624 to 183300)
-        df = df[df.date != "2021-04-10"]
-        return df
-
     def to_csv(self, paths):
         """Generalized."""
         df = self.read().pipe(self.pipeline_base)
