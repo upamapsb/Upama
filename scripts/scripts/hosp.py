@@ -293,28 +293,28 @@ def add_switzerland(df: pd.DataFrame) -> pd.DataFrame:
 
 def add_singapore(df):
     print("Downloading Singapore data…")
+
     # Get data
     url = "https://covidsitrep.moh.gov.sg/_dash-layout"
     data = requests.get(url).json()["props"]["children"][1]["props"]["children"][3]["props"]["children"][0]["props"][
         "figure"
     ]["data"]
     data_icu = data[6]
-    # data_ward = data[3]
 
-    df_sgp = pd.DataFrame(
+    singapore = pd.DataFrame(
         {
             "date": data_icu["x"],
             "value": data_icu["y"],
         }
     )
-    df_sgp = df.assign(
-        date=df_sgp.date.apply(lambda x: datetime.strptime(x, "%Y-%m-%dT%H:%M:%S").strftime("%Y-%m-%d")),
+    singapore = singapore.assign(
+        date=singapore.date.apply(lambda x: datetime.strptime(x, "%Y-%m-%dT%H:%M:%S").strftime("%Y-%m-%d")),
         indicator="Daily ICU occupancy",
         entity="Singapore",
         iso_code="SGP",
         population=5896684,
     )
-    return pd.concat([df, df_sgp])
+    return pd.concat([df, singapore])
 
 
 def add_countries(df):
