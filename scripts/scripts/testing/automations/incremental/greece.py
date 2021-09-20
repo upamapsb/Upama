@@ -24,8 +24,8 @@ def main():
             'Date': [date_str],
             'Cumulative total': count,
             'Source URL': url,
-            'Source label': 'Greece Ministry of Health',
-            'Units': 'tests performed',
+            'Source label': 'National Organization of Public Health',
+            'Units': 'samples tested',
         })
 
         data = pd.concat([new, data], sort=False)
