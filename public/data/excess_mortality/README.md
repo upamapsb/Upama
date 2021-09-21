@@ -63,7 +63,7 @@ As of 20 September 2021, the data columns are:
 
 As of 20 September 2021, we calculate P-scores using the reported deaths data from HMD and WMD and the projected deaths for 2020 from WMD, as an estimate of expected deaths. The P-score is the percentage difference between the reported number of weekly or monthly deaths in 2020–2021 and the projected number of deaths for the same period based on previous years.
 
-Before 20 September 2021, we calculated P-scores using a different estimate of expected deaths the five-year average from 2015–2019. We made this change because using the five-year average has an important limitation — it does not account for year-to-year trends in mortality and thus can misestimate excess mortality. The WMD projection we now use, on the other hand, does not suffer from this limitation because it accounts for these year-to-year trends.
+Before 20 September 2021, we calculated P-scores using a different estimate of expected deaths: the five-year average from 2015–2019. We made this change because using the five-year average has an important limitation — it does not account for year-to-year trends in mortality and thus can misestimate excess mortality. The WMD projection we now use, on the other hand, does not suffer from this limitation because it accounts for these year-to-year trends.
 
 ## Important points about the data
 
