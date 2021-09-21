@@ -737,6 +737,9 @@ def create_internal(df):
     df_b.loc[:, "people_partly_vaccinated"] = df_b.people_vaccinated - df_b.people_fully_vaccinated
     df = pd.concat([df_a, df_b], ignore_index=True).sort_values(["location", "date"])
     df.loc[:, "people_partly_vaccinated_per_hundred"] = df["people_partly_vaccinated"] / df["population"] * 100
+    df.loc[df.location == "United States", "people_partly_vaccinated_per_hundred"] = (
+        df["people_partly_vaccinated"] / 336324782 * 100
+    )
 
     # Export
     for name, config in internal_files_columns.items():
