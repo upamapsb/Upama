@@ -45,7 +45,7 @@ class PAHO:
         with get_driver(download_folder=self._download_path) as driver:
             # Go to page
             driver.get(url)
-            time.sleep(10)
+            time.sleep(7.5)
             # Go to tab
             driver.find_element_by_id("tableauTabbedNavigation_tab_3").click()
             time.sleep(5)
