@@ -26,6 +26,12 @@ vaccines_startdates = {
     "Tokelau": [
         ["Pfizer/BioNTech", None],
     ],
+    "Cook Islands": [
+        ["Pfizer/BioNTech", None],
+    ],
+    "Wallis and Futuna": [
+        ["Moderna", None],
+    ],
     "default": [
         ["Oxford/AstraZeneca", None],
     ],
