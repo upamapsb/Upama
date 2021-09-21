@@ -81,7 +81,7 @@ def country_updates_summary(
         )
     if not path_automation_state:
         path_automation_state = os.path.abspath(
-            os.path.join(CURRENT_DIR, "scripts", "output", "vaccinations", "automation_state.csv")
+            os.path.join(get_project_dir(), "scripts", "output", "vaccinations", "automation_state.csv")
         )
     columns_output = [
         "location",
@@ -182,21 +182,29 @@ def country_updates_summary(
             "experience.arcgis.com/experience/cab84dcfe0464c2a8050a78f817924ca",
             "gtmvigilanciacovid.shinyapps",
             "belta.by",
+            "fohm.se",
+            "moh.",
+            "vaccines.ncdc.ge",
+            "opendata.swiss",
         ]
         if "facebook." in x.lower():
             return "Facebook"
         elif "twitter." in x.lower():
             return "Twitter"
-        elif "github." in x.lower():
+        elif "github." in x.lower() or "githubusercontent" in x.lower():
             return "GitHub"
         elif any(gov in x.lower() for gov in govs):
             return "Govern/Official"
-        elif ".who.int" in x.lower():
+        elif (".who.int" in x.lower()) or ("who.maps.arcgis.com" in x.lower()):
             return "WHO"
         elif ".pacificdata.org" in x.lower():
             return "SPC"
         elif "ecdc.europa." in x.lower():
             return "ECDC"
+        elif "paho.org" in x.lower():
+            return "PAHO"
+        elif "africacdc.org" in x.lower():
+            return "Africa CDC"
         else:
             return "Others"
 
