@@ -30,9 +30,9 @@ class Bolivia:
 
     def _parse_data(self, url) -> pd.Series:
         pages = self._get_pages_relevant_pdf(url)
-        date = self._parse_date(pages[0])
+        date = self._parse_date(url)
         metrics = self._parse_metrics(pages[1])
-        data = {"date": date, **metrics}
+        data = {"date": date, "source_url": url, **metrics}
         ds = pd.Series(data)
         return ds
 
@@ -44,8 +44,10 @@ class Bolivia:
                 reader = PyPDF2.PdfFileReader(f)
                 return [reader.getPage(0).extractText(), reader.getPage(1).extractText()]
 
-    def _parse_date(self, text: str) -> str:
-        return clean_date(text, "REPORTE DE VACUNACIÓN NACIONAL \n%d/%m/%Y\n")
+    def _parse_date(self, url: str) -> str:
+        # return clean_date(text, "REPORTE DE VACUNACIÓN NACIONAL \n%d/%m/%Y\n")
+        date_str = url.split("-")[-1].split(".")[0]
+        return clean_date(date_str, "%d_%m_%Y")
 
     def _parse_metrics(self, text: str) -> dict:
         fields_accepted = {
@@ -104,11 +106,8 @@ class Bolivia:
         ds = ds.drop("DOSIS UNICA")
         return ds
 
-    def pipe_source(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(ds, "source_url", self.source_url)
-
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source).pipe(self.pipe_metrics)
+        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_metrics)
 
     def export(self, paths):
         """Generalized."""
