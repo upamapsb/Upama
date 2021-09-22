@@ -3,7 +3,7 @@ import json
 import pandas as pd
 from bs4 import BeautifulSoup
 
-from cowidev.utils.clean import clean_count, clean_date
+from cowidev.utils.clean import clean_count, extract_clean_date
 from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
 
@@ -56,7 +56,7 @@ def parse_infogram_vaccinations(infogram_data: dict) -> int:
 
 def parse_infogram_date(infogram_data: dict) -> str:
     x = _get_infogram_value(infogram_data, "525b6366-cc8a-4646-b67a-5c9bfca66e22", join_text=True)
-    dt = clean_date(x, "RESUMEN DE VACUNACIÓN%d-%b-%y ", "es")
+    dt = extract_clean_date(x, "RESUMEN DE VACUNACIÓN(\d+-[A-Z]+-2\d)\s?", "%d-%b-%y", lang="es")
     return dt
 
 
