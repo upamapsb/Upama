@@ -54,7 +54,7 @@ class Nepal:
         return text
 
     def _parse_date(self, pdf_text: str):
-        regex = r"(\d{1,2}) ([A-Za-z]+) (202\d)"
+        regex = r"(\d{1,2})\s+([A-Za-z]+)\s+(202\d)"
         day = clean_count(re.search(regex, pdf_text).group(1))
         month = self._get_month(re.search(regex, pdf_text).group(2))
         year = clean_count(re.search(regex, pdf_text).group(3))
