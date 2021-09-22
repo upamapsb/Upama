@@ -83,7 +83,7 @@ class Peru:
         )
 
     def pipe_age_checks(self, df: pd.DataFrame) -> pd.DataFrame:
-        print(df.columns)
+        # print(df.columns)
         if (df.people_vaccinated_per_hundred > 100).sum():
             raise ValueError("Check `people_vaccinated_per_hundred` field! Found values above 100%.")
         if (df.people_fully_vaccinated_per_hundred > 100).sum():

@@ -42,7 +42,7 @@ class Thailand:
         links = self._get_month_links(soup)
         records = []
         for link in links:
-            print(link["date"])
+            # print(link["date"])
             if link["date"] <= last_update:
                 break
             records.append(self._parse_metrics(link))
