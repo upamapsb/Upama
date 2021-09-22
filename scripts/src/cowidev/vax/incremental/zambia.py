@@ -35,7 +35,7 @@ class Zambia:
         return enrich_data(ds, "source_url", self.source_url_ref)
 
     def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(ds, "vaccine", "Oxford/AstraZeneca, Sinopharm/Beijing")
+        return enrich_data(ds, "vaccine", "Johnson&Johnson, Oxford/AstraZeneca, Sinopharm/Beijing")
 
     def pipe_people_vaccinated(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "people_vaccinated", ds.total_vaccinations - ds.people_fully_vaccinated)
