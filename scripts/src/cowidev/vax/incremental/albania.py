@@ -9,14 +9,14 @@ from cowidev.vax.utils.incremental import merge_with_current_data
 
 
 class Albania:
-    def __init__(self, source_url: str, location: str):
-        self.source_url = source_url
-        self.location = location
+    def __init__(self):
+        self.location = "Albania"
+        self.source_url = "https://shendetesia.gov.al/category/lajme/page"
         self._num_max_pages = 3
         self.regex = {
             "title": r"Vaksinimi antiCOVID\/ Kryhen [0-9,]+ vaksinime",
             "date": r"Postuar më: (\d{1,2}\/\d{1,2}\/202\d)",
-            "total_vaccinations": r"Prej fillimit të vaksinimit janë kryer në total ([\d,]+) (vaksinime|doza)",
+            "total_vaccinations": r"[Pp]rej fillimit të vaksinimit janë kryer në total ([\d,]+) (vaksinime|doza)",
             "people_fully_vaccinated": r"Prej tyre,? ([\d,]+) qytetarë i kanë kryer të dy dozat e vaksinës antiCOVID",
         }
 
@@ -39,7 +39,7 @@ class Albania:
             if elem["date"] > last_update:
                 # print(elem["date"], elem)
                 soup = get_soup(elem["link"], verify=False)
-                print(elem["link"])
+                # print(elem["link"])
                 record = {
                     "source_url": elem["link"],
                     "date": elem["date"],
@@ -128,10 +128,7 @@ class Albania:
 
 
 def main(paths):
-    Albania(
-        source_url="https://shendetesia.gov.al/category/lajme/page",
-        location="Albania",
-    ).to_csv(paths)
+    Albania().to_csv(paths)
 
 
 if __name__ == "__main__":
