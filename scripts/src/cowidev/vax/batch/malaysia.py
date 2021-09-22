@@ -25,6 +25,8 @@ class Malaysia:
             "pending",
             "cumul_full_child",
             "cumul_partial_child",
+            "daily_full_child",
+            "daily_partial_child",
         ]
         self._vax_2d = {
             "pfizer",
