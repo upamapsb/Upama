@@ -544,6 +544,20 @@ internal_files_columns = {
         ],
         "dropna": "all",
     },
+    "all-reduced": {
+        "columns": [
+            "new_cases_smoothed_per_million",
+            "new_deaths_smoothed_per_million",
+            "weekly_hosp_admissions_per_million",
+            "icu_patients_per_million",
+            "total_vaccinations_per_hundred",
+            "new_tests_smoothed_per_thousand",
+            "positive_rate",
+            "reproduction_rate",
+            "excess_mortality",
+        ],
+        "dropna": "all",
+    },
 }
 
 
