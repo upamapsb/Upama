@@ -1,15 +1,15 @@
 from datetime import datetime, timedelta, date
 from contextlib import contextmanager
 import locale
-
 import threading
 from sys import platform
 from typing import Union
 import pytz
-import unicodedata
 import re
 
 import pandas as pd
+
+from cowidev.utils.clean.strings import clean_string
 
 
 LOCALE_LOCK = threading.Lock()
@@ -22,6 +22,7 @@ def clean_date(
     lang: str = None,
     loc: str = "",
     minus_days: int = 0,
+    unicode_norm: bool = True,
 ):
     """Extract a date from a `text`.
 
@@ -38,6 +39,7 @@ def clean_date(
         loc (str, optional): Locale, e.g es_ES. Get list of available locales with `locale.locale_alias` or
                                 `locale.windows_locale` in windows. Defaults to "" (system default).
         minus_days (int, optional): Number of days to subtract. Defaults to 0.
+        unicode_norm (bool, optional): [description]. Defaults to True.
 
     Returns:
         str: Extracted date in format %Y-%m-%d
@@ -53,6 +55,9 @@ def clean_date(
     if platform == "win32":
         if loc is not None:
             loc = loc.replace("_", "-")
+    # Unicode
+    if unicode_norm:
+        date_or_text = clean_string(date_or_text)
     # Thread-safe extract date
     with _setlocale(loc):
         return (datetime.strptime(date_or_text, fmt) - timedelta(days=minus_days)).strftime(DATE_FORMAT)
@@ -96,11 +101,13 @@ def extract_clean_date(
         replace_year (str): Replace the year with this one.
     """
     if unicode_norm:
-        text = unicodedata.normalize("NFKC", text)
+        text = clean_string(text)
     date_raw = re.search(regex, text).groups()
     if isinstance(date_raw, tuple):
         date_raw = " ".join(date_raw)
-    date_str = clean_date(date_raw, fmt=date_format, lang=lang, loc=loc, minus_days=minus_days)
+    date_str = clean_date(
+        date_raw, fmt=date_format, lang=lang, loc=loc, minus_days=minus_days, unicode_norm=unicode_norm
+    )
     if replace_year is not None:
         date_str = _replace_date_fields(date_str, {"year": replace_year})
     return date_str
