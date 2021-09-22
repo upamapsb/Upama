@@ -337,9 +337,11 @@ def get_cgrt():
 def add_excess_mortality(df: pd.DataFrame) -> pd.DataFrame:
     xm = pd.read_csv(
         os.path.join(DATA_DIR, "excess_mortality/excess_mortality.csv"),
-        usecols=["location", "date", "p_proj_all_ages"],
+        usecols=["location", "date", "p_proj_all_ages", "cum_excess_proj_all_ages"],
     )
-    df = df.merge(xm, how="left", on=["location", "date"]).rename(columns={"p_proj_all_ages": "excess_mortality"})
+    df = df.merge(xm, how="left", on=["location", "date"]).rename(
+        columns={"p_proj_all_ages": "excess_mortality", "cum_excess_proj_all_ages": "excess_mortality_cumulative"}
+    )
     return df
 
 
@@ -515,6 +517,7 @@ internal_files_columns = {
             "location",
             "date",
             "excess_mortality",
+            "excess_mortality_cumulative",
         ],
         "dropna": "all",
     },
