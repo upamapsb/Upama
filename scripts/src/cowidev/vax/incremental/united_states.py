@@ -30,6 +30,7 @@ class UnitedStates:
                 "total_vaccinations": data["Doses_Administered"],
                 "people_vaccinated": data["Administered_Dose1_Recip"],
                 "people_fully_vaccinated": data["Series_Complete_Yes"],
+                "total_boosters": data["additional_doses"],
                 "date": clean_date(data["Date"], "%Y-%m-%d"),
                 "vaccine": self._parse_vaccines(data),
             }
@@ -42,7 +43,7 @@ class UnitedStates:
         # Get only US data (total)
         data = [d for d in data if d["ShortName"] == "USA"]
         if len(data) != 1:
-            raise ValueError("More than one data element with ShortName=='USA'. Check source data!")
+            raise ValueError('More than one data element with ShortName == "USA". Check source data!')
         return data[0]
 
     def _parse_vaccines(self, data: dict):
@@ -178,6 +179,7 @@ class UnitedStates:
             total_vaccinations=data["total_vaccinations"],
             people_vaccinated=data["people_vaccinated"],
             people_fully_vaccinated=data["people_fully_vaccinated"],
+            total_boosters=data["total_boosters"],
             date=data["date"],
             source_url=data["source_url"],
             vaccine=data["vaccine"],
