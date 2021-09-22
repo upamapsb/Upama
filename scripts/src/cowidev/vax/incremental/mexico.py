@@ -51,7 +51,7 @@ class Mexico:
                 )
 
             elif "Personas vacunadas reportadas" in page_text:
-                people_vaccinated = clean_count(re.search(r"Personas vacunadas \*([\d,]{10,})", page_text).group(1))
+                people_vaccinated = clean_count(re.search(r"Personas vacunadas \*\s?([\d,]{10,})", page_text).group(1))
                 people_fully_vaccinated = clean_count(re.search(r"Esquema completo ([\d,]{10,})", page_text).group(1))
 
         # Tests
