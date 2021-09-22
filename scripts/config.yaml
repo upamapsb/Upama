@@ -9,6 +9,7 @@ pipeline:
     skip_countries:
       - Andorra
       - Gabon
+      - Morocco # Government data doesn't differentiate 1- and 2-dose vaccines so we use WHO instead
       - North Macedonia
       - Northern Cyprus
       - South Africa
