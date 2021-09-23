@@ -15,6 +15,7 @@ vaccines_mapping = {
     "AstraZeneca": "Oxford/AstraZeneca",
     "高端": "Medigen",
     "Moderna": "Moderna",
+    "BioNTech": "Pfizer/BioNTech",
 }
 
 
