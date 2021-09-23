@@ -2,7 +2,7 @@ url <- "https://www.moh.gov.sg/covid-19/statistics"
 
 page <- read_html(url)
 
-date <- page %>% html_nodes("h4") %>%
+date <- page %>% html_nodes("h3") %>%
     html_text() %>%
     str_subset("Tested") %>%
     str_extract("as .. [^)]+") %>%
