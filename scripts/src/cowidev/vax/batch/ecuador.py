@@ -33,13 +33,12 @@ class Ecuador:
         }
 
     def read(self) -> pd.DataFrame:
-        url = f"{self.source_url}/raw/master/datos_crudos/vacunometro/fabricantes.csv"
         return pd.read_csv(self.source_url)
 
     def pipe_check_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         n_columns = df.shape[1]
         if n_columns != 6:
-            raise ValueError(f"The provided input does not have {6} columns. It has n_columns columns")
+            raise ValueError(f"The provided input does not have {n_columns} columns. It has n_columns columns")
         return df
 
     def pipe_column_rename(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -112,7 +111,7 @@ class Ecuador:
         single_shots = df.merge(df_single, on="date", how="left")["single_shots"]
         df = df.assign(
             people_vaccinated=df.people_vaccinated + single_shots.fillna(0),
-            total_vaccinations=df.total_vaccinations + single_shots.fillna(0),
+            # total_vaccinations=df.total_vaccinations + single_shots.fillna(0),
         )
         return df
 
