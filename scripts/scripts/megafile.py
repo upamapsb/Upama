@@ -521,6 +521,7 @@ internal_files_columns = {
             "date",
             "excess_mortality",
             "excess_mortality_cumulative",
+            "excess_mortality_cumulative_absolute",
         ],
         "dropna": "all",
     },
