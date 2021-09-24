@@ -29,11 +29,15 @@ def read(source: str) -> pd.Series:
     total_vaccinations = re.search(r"([\d\s]+) шт\. - всего прививок сделано", text).group(1)
     total_vaccinations = clean_count(total_vaccinations)
 
+    total_boosters = re.search(r"([\d\s]+) чел\. - прошли ревакцинацию", text).group(1)
+    total_boosters = clean_count(total_boosters)
+
     return pd.Series(
         {
             "total_vaccinations": total_vaccinations,
             "people_vaccinated": people_vaccinated,
             "people_fully_vaccinated": people_fully_vaccinated,
+            "total_boosters": total_boosters,
             "date": date,
         }
     )
@@ -61,9 +65,10 @@ def main(paths):
     increment(
         paths=paths,
         location=data["location"],
-        total_vaccinations=int(data["total_vaccinations"]),
-        people_vaccinated=int(data["people_vaccinated"]),
-        people_fully_vaccinated=int(data["people_fully_vaccinated"]),
+        total_vaccinations=data["total_vaccinations"],
+        people_vaccinated=data["people_vaccinated"],
+        people_fully_vaccinated=data["people_fully_vaccinated"],
+        total_boosters=data["total_boosters"],
         date=data["date"],
         source_url=data["source_url"],
         vaccine=data["vaccine"],
