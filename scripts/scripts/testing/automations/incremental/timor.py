@@ -31,15 +31,8 @@ def main():
 
     if os.path.isfile(output_file):
         existing = pd.read_csv(output_file)
-        if (
-            count > existing["Cumulative total"].max()
-            and date_str > existing["Date"].max()
-        ):
-            df = (
-                pd.concat([df, existing])
-                .sort_values("Date", ascending=False)
-                .drop_duplicates()
-            )
+        if count > existing["Cumulative total"].max() and date_str > existing["Date"].max():
+            df = pd.concat([df, existing]).sort_values("Date", ascending=False).drop_duplicates()
             df.to_csv(output_file, index=False)
 
 
