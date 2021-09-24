@@ -180,7 +180,9 @@ If you are interested in the individual files that make up the complete dataset,
 - On 15 July 2021, we added data on intensive care unit (ICU) patients for Algeria, sourced from the [Ministry of Health](https://github.com/yasserkaddour/covid19-icu-data-algeria).
 - On 11 August 2021, we added the metric `total_boosters` to our vaccination data. This counts the total number of booster doses (doses administered beyond the number prescribed by the vaccination protocol).
 - On 12 August 2021, we added hospital and ICU data for Switzerland, sourced from the [Federal Office of Public Health](https://opendata.swiss/fr/dataset/covid-19-schweiz).
+- On 20 September 2021, we changed the way we estimate the excess mortality. More details [here](https://github.com/owid/covid-19-data/tree/master/public/data/excess_mortality#how-p-scores-are-defined-and-calculated).
 - On 22 September 2021, we added new variable `excess_mortality_cumulative`, the cumulative version of variable `excess_mortality`.
+- On 24 September 2021, we added new variable `excess_mortality_cumulative_absolute`, same as variable `excess_mortality_cumulative`, but in absolute numbers.
 
 ## Data alterations
 
