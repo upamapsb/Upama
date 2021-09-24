@@ -60,7 +60,7 @@ class China:
         df = self.read(last_update)
         if not df.empty:
             df = df.pipe(self.pipeline)
-            print(df.tail())
+            # print(df.tail())
             df = merge_with_current_data(df, output_file)
             df.to_csv(output_file, index=False)
 

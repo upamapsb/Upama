@@ -12,7 +12,7 @@ class Lithuania:
         "https://services3.arcgis.com/MF53hRPmwfLccHCj/arcgis/rest/services/"
         "covid_vaccinations_by_drug_name_new/FeatureServer/0/query"
     )
-    source_url_ref: str = ""
+    source_url_ref: str = "https://experience.arcgis.com/experience/cab84dcfe0464c2a8050a78f817924ca/page/page_3/"
     query_params: dict = {
         "f": "json",
         "where": "municipality_code='00'",

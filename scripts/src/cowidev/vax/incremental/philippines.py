@@ -35,8 +35,12 @@ class Philippines:
             people_partly_vaccinated = clean_count(spans[14].text)
             people_fully_vaccinated = clean_count(spans[13].text)
         # Sanity check
-        if total_vaccinations != people_partly_vaccinated + people_fully_vaccinated:
-            raise ValueError("total_vaccinations should equal sum of first and second doses.")
+        if abs(total_vaccinations - people_partly_vaccinated - people_fully_vaccinated) > 100:
+            raise ValueError(
+                f"total_vaccinations should equal sum of first and second doses. {total_vaccinations} !="
+                f" {people_fully_vaccinated} + {people_partly_vaccinated}. Note: We actually allow for +100"
+                " difference."
+            )
 
         return {
             "total_vaccinations": total_vaccinations,

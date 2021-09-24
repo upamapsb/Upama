@@ -22,12 +22,12 @@ class PAHO:
         self.columns_mapping = {
             "Country/ Territory": "location",
             "Country code": "country_code",
-            "Single dose [5]": "single_dose",
-            "First dose [3,6]": "dose_1",
-            "Second dose [4,6]": "dose_2",
-            "Complete Schedule [2]": "people_fully_vaccinated",
-            "Total Doses [1,11]": "total_vaccinations",
-            "Additional dose [9]": "total_boosters",
+            "Single dose": "single_dose",
+            "First dose": "dose_1",
+            "Second dose": "dose_2",
+            "Complete Schedule": "people_fully_vaccinated",
+            "Total doses": "total_vaccinations",
+            "Additional dose": "total_boosters",
             "date": "date",
         }
 
@@ -47,7 +47,7 @@ class PAHO:
             driver.get(url)
             time.sleep(7.5)
             # Go to tab
-            driver.find_element_by_id("tableauTabbedNavigation_tab_3").click()
+            driver.find_element_by_id("tableauTabbedNavigation_tab_2").click()
             time.sleep(5)
             # Download data
             self._download_csv(driver, "Crosstab", "RDT: Overview Table")
@@ -97,12 +97,10 @@ class PAHO:
         return max(files, key=os.path.getctime)
 
     def pipe_check_columns(self, df: pd.DataFrame) -> pd.DataFrame:
+        df.columns = df.columns.str.replace(" \[\d.*", "", regex=True)
         columns_missing = set(self.columns_mapping).difference(df.columns)
-        columns_unknown = df.columns.difference(self.columns_mapping)
         if columns_missing:
-            raise ValueError(f"Missing column fields: {columns_missing}")
-        # if columns_unknown:
-        #     raise ValueError(f"Unknown column fields: {columns_unknown}")
+            raise ValueError(f"Missing column fields: {columns_missing}. Present columns are: {df.columns}")
         return df
 
     def pipe_check_countries(self, df: pd.DataFrame) -> pd.DataFrame:

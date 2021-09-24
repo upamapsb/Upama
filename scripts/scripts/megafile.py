@@ -546,6 +546,8 @@ internal_files_columns = {
     },
     "all-reduced": {
         "columns": [
+            "location",
+            "date",
             "new_cases_smoothed_per_million",
             "new_deaths_smoothed_per_million",
             "weekly_hosp_admissions_per_million",

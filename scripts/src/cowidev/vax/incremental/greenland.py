@@ -31,7 +31,7 @@ class Greenland:
     def _parse_data_date(self, soup) -> dict:
         date = soup.find(class_="text-gray-500").text
         date = date.strip() + str(datetime.date.today().year)
-        date = extract_clean_date(date, self.regex["date"], "%d. %B%Y")
+        date = extract_clean_date(date, self.regex["date"], "%d. %B%Y", lang="en")
         return {"date": date}
 
     def pipe_source(self, ds: pd.Series) -> pd.Series:
