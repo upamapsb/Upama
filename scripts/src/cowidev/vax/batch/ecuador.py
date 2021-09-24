@@ -3,6 +3,7 @@ import pandas as pd
 from cowidev.utils.clean import clean_date_series
 from cowidev.vax.utils.checks import VACCINES_ONE_DOSE
 from cowidev.vax.utils.files import export_metadata
+from cowidev.vax.utils.utils import make_monotonic
 
 
 class Ecuador:
@@ -134,6 +135,7 @@ class Ecuador:
             .pipe(self.pipe_metadata)
             .pipe(self.pipe_exclude_dp)
             .pipe(self.pipe_sort_date)
+            .pipe(make_monotonic)
         )
         return df
 
