@@ -28,7 +28,7 @@ class Ecuador:
             "Pfizer/BioNTech": "Pfizer/BioNTech",
             "Sinovac": "Sinovac",
             "Oxford/AstraZeneca": "Oxford/AstraZeneca",
-            "Cansino": "CanSino",
+            "CanSino": "CanSino",
         }
 
     def read(self) -> pd.DataFrame:
