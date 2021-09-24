@@ -23,12 +23,33 @@ one_dose_vaccines = ["Johnson&Johnson"]
 class Latvia:
     def __init__(self):
         self.location = "Latvia"
-        self.source_page = "https://data.gov.lv/dati/eng/dataset/covid19-vakcinacijas"
-        self.source_url = "https://data.gov.lv/dati/eng/datastore/dump/51725018-49f3-40d1-9280-2b13219e026f"
+        self.source_url = "https://data.gov.lv/dati/eng/dataset/covid19-vakcinacijas"
+
+    def _get_file_link(self):
+        soup = get_soup(self.source_url)
+        file_url = soup.find_all("a", class_="resource-url-analytics")[-1]["href"]
+        return file_url
+
+    def read_new(self):
+        link = self._get_file_link()
+        with tempfile.NamedTemporaryFile() as tmp:
+            xlsx2csv(link, tmp.name)
+            df = pd.read_csv(
+                tmp.name,
+                usecols=[
+                    "Vakcinācijas datums",
+                    "Vakcinēto personu skaits",
+                    "Vakcinācijas posms",
+                    "Preparāts",
+                ],
+                parse_dates=["Vakcinācijas datums"]
+            )
+            return df
 
     def read(self):
-        df = pd.read_csv(
-            self.source_url,
+        link = self._get_file_link()
+        df = pd.read_excel(
+            link,
             usecols=[
                 "Vakcinācijas datums",
                 "Vakcinēto personu skaits",
@@ -70,7 +91,6 @@ class Latvia:
         return df
 
     def pipe_aggregate(self, df: pd.DataFrame) -> pd.DataFrame:
-        df["date"] = df.date.str.slice(0, 10)
         return (
             df[df.date >= "2020-12-01"]
             .groupby("date", as_index=False)
@@ -91,7 +111,7 @@ class Latvia:
         return df
 
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(location=self.location, source_url=self.source_page)
+        return df.assign(location=self.location, source_url=self.source_url)
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
@@ -134,10 +154,8 @@ class Latvia:
     def export(self, paths):
         df = self.read()
         df_base = df.pipe(self.pipe_base)
-
         # Main data
         df_base.pipe(self.pipeline).to_csv(paths.tmp_vax_out(self.location), index=False)
-
         # Manufacturer data
         df_man = df_base.pipe(self.pipeline_manufacturer)
         df_man.to_csv(paths.tmp_vax_out_man(self.location), index=False)
