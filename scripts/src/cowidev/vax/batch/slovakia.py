@@ -52,7 +52,7 @@ def main(paths):
     df.loc[df.date >= "2021-01-27", "vaccine"] = "Moderna, Pfizer/BioNTech"
     df.loc[
         df.date >= "2021-02-13", "vaccine"
-    ] = "Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
+    ] = "Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V"
 
     df.to_csv(paths.tmp_vax_out("Slovakia"), index=False)
 
