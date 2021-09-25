@@ -104,7 +104,7 @@ class Armenia:
         return df.assign(location=self.location)
 
     def pipe_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(vaccine="Oxford/AstraZeneca, Sinovac, Sputnik V")
+        return df.assign(vaccine="Oxford/AstraZeneca, Sinopharm/Beijing, Sinovac, Sputnik V")
 
     def pipe_select_output_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         return df[
