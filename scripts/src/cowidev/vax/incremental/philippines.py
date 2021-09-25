@@ -32,8 +32,8 @@ class Philippines:
             )
             # Metrics
             total_vaccinations = clean_count(spans[8].text)
-            people_partly_vaccinated = clean_count(spans[14].text)
-            people_fully_vaccinated = clean_count(spans[13].text)
+            people_partly_vaccinated = clean_count(spans[13].text)
+            people_fully_vaccinated = clean_count(spans[14].text)
         # Sanity check
         if abs(total_vaccinations - people_partly_vaccinated - people_fully_vaccinated) > 100:
             raise ValueError(
