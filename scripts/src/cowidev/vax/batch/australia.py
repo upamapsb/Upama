@@ -44,7 +44,7 @@ class Australia:
     def pipe_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
         def _enrich_vaccine(date: str) -> str:
             if date >= "2021-03-08":
-                return "Oxford/AstraZeneca, Pfizer/BioNTech"
+                return "Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
             return "Pfizer/BioNTech"
 
         return df.assign(vaccine=df.date.astype(str).apply(_enrich_vaccine))
