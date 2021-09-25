@@ -17,14 +17,18 @@ def read(source: str) -> pd.Series:
 
 def parse_data(soup: BeautifulSoup) -> pd.Series:
 
-    regex = (
-        r"([\d,]+) \(\d+% of (the estimated population of )?[\d,]+\) have had at least one dose of a COVID-19"
-        r" vaccine and"
-        r" ([\d,]+)"
+    people_vaccinated = clean_count(
+        re.search(
+            r"([\d,]+) \(.*\) have had at least one dose of a COVID-19 vaccine",
+            soup.text,
+        ).group(1)
     )
-    matches = re.search(regex, soup.text)
-    people_vaccinated = clean_count(matches.group(1))
-    people_fully_vaccinated = clean_count(matches.group(3))
+    people_fully_vaccinated = clean_count(
+        re.search(
+            r"([\d,]+) \(.*\) have completed the two-dose course",
+            soup.text,
+        ).group(1)
+    )
     total_vaccinations = people_vaccinated + people_fully_vaccinated
 
     return pd.Series(
