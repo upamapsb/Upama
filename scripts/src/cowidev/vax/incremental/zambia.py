@@ -37,23 +37,8 @@ class Zambia:
     def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "vaccine", "Johnson&Johnson, Oxford/AstraZeneca, Sinopharm/Beijing")
 
-    def pipe_people_vaccinated(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(ds, "people_vaccinated", ds.total_vaccinations - ds.people_fully_vaccinated)
-
-    def pipe_sanity_checks(self, ds: pd.Series) -> pd.Series:
-        if ds.people_fully_vaccinated > ds.people_vaccinated:
-            ds["people_vaccinated"] = pd.NA
-            ds["people_fully_vaccinated"] = pd.NA
-        return ds
-
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds.pipe(self.pipe_location)
-            .pipe(self.pipe_source)
-            .pipe(self.pipe_vaccine)
-            .pipe(self.pipe_people_vaccinated)
-            .pipe(self.pipe_sanity_checks)
-        )
+        return ds.pipe(self.pipe_location).pipe(self.pipe_source).pipe(self.pipe_vaccine)
 
     def export(self, paths):
         data = self.read().pipe(self.pipeline)
@@ -61,7 +46,6 @@ class Zambia:
             paths=paths,
             location=data["location"],
             total_vaccinations=data["total_vaccinations"],
-            people_vaccinated=data["people_vaccinated"],
             people_fully_vaccinated=data["people_fully_vaccinated"],
             date=data["date"],
             source_url=data["source_url"],
