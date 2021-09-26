@@ -90,7 +90,7 @@ class Nepal:
         return enrich_data(ds, "location", self.location)
 
     def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(ds, "vaccine", "Oxford/AstraZeneca, Sinopharm/Beijing")
+        return enrich_data(ds, "vaccine", "Johnson&Johnson, Oxford/AstraZeneca, Sinopharm/Beijing")
 
     def pipe_metrics(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "total_vaccinations", ds.people_vaccinated + ds.people_fully_vaccinated)
