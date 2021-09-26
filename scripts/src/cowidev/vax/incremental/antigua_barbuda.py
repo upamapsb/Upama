@@ -59,7 +59,7 @@ class AntiguaBarbuda:
         return enrich_data(ds, "location", self.location)
 
     def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(ds, "vaccine", "Oxford/AstraZeneca")
+        return enrich_data(ds, "vaccine", "Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V")
 
     def pipe_source(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "source_url", self.source_url)
