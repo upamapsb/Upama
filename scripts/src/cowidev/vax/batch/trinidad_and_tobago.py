@@ -40,7 +40,7 @@ def enrich_location(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def enrich_vaccine_name(df: pd.DataFrame) -> pd.DataFrame:
-    return df.assign(vaccine="Oxford/AstraZeneca, Sinopharm/Beijing")
+    return df.assign(vaccine="Oxford/AstraZeneca, Pfizer/BioNTech Sinopharm/Beijing")
 
 
 def enrich_source(df: pd.DataFrame, source: str) -> pd.DataFrame:
