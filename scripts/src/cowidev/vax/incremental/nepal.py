@@ -61,7 +61,7 @@ class Nepal:
         return clean_date(datetime(year, month, day))
 
     def _parse_metrics(self, pdf_text: str):
-        regex = r"1st Dose\s+\|\s+Fully Vaccinated (\d+) (\d+)"
+        regex = r"1st Dose\s+\|\s+Fully Vaccinated +(\d+) +\([\d\.]+\) +(\d+)"
         data = re.search(regex, pdf_text)
         people_vaccinated = clean_count(data.group(1))
         people_fully_vaccinated = clean_count(data.group(2))
