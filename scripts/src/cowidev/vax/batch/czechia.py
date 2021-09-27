@@ -19,7 +19,7 @@ one_dose_vaccines = ["Johnson&Johnson"]
 
 
 def read(source: str) -> pd.DataFrame:
-    return pd.read_csv(source, parse_dates=["datum"])
+    return pd.read_csv(source)
 
 
 def check_columns(df: pd.DataFrame) -> pd.DataFrame:
@@ -34,11 +34,7 @@ def check_columns(df: pd.DataFrame) -> pd.DataFrame:
         "celkem_davek",
     ]
     if list(df.columns) != expected:
-        raise ValueError(
-            "Wrong columns. Was expecting {} and got {}".format(
-                expected, list(df.columns)
-            )
-        )
+        raise ValueError("Wrong columns. Was expecting {} and got {}".format(expected, list(df.columns)))
     return df
 
 
@@ -66,9 +62,7 @@ def enrich_metadata(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def base_pipeline(df: pd.DataFrame) -> pd.DataFrame:
-    return (
-        df.pipe(check_columns).pipe(check_vaccine_names).pipe(translate_vaccine_names)
-    )
+    return df.pipe(check_columns).pipe(check_vaccine_names).pipe(translate_vaccine_names)
 
 
 def breakdown_per_vaccine(df: pd.DataFrame) -> pd.DataFrame:
@@ -76,11 +70,7 @@ def breakdown_per_vaccine(df: pd.DataFrame) -> pd.DataFrame:
         df.groupby(by=["datum", "vakcina"], as_index=False)[["celkem_davek"]]
         .sum()
         .sort_values("datum")
-        .assign(
-            size=lambda df: df.groupby(by=["vakcina"], as_index=False)[
-                "celkem_davek"
-            ].cumsum()
-        )
+        .assign(size=lambda df: df.groupby(by=["vakcina"], as_index=False)["celkem_davek"].cumsum())
         .drop("celkem_davek", axis=1)
         .rename(
             columns={
@@ -115,9 +105,7 @@ def infer_one_dose_vaccines(df: pd.DataFrame) -> pd.DataFrame:
 
 def infer_total_vaccinations(df: pd.DataFrame) -> pd.DataFrame:
     df.loc[df.vakcina.isin(one_dose_vaccines), "total_vaccinations"] = df[1].fillna(0)
-    df.loc[-df.vakcina.isin(one_dose_vaccines), "total_vaccinations"] = df[1].fillna(
-        0
-    ) + df[2].fillna(0)
+    df.loc[-df.vakcina.isin(one_dose_vaccines), "total_vaccinations"] = df[1].fillna(0) + df[2].fillna(0)
     return df
 
 
