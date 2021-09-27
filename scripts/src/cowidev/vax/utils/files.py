@@ -70,9 +70,7 @@ def load_data(data_filename: str, file_ext: str = "csv"):
     return df
 
 
-def export_metadata(
-    df: pd.DataFrame, source_name: str, source_url: str, output_path: str
-):
+def export_metadata(df: pd.DataFrame, source_name: str, source_url: str, output_path: str):
     if "location" not in df or "date" not in df:
         raise ValueError("df must have columns `location` and `date`.")
     df = (
@@ -84,14 +82,15 @@ def export_metadata(
             source_url=source_url,
         )
     )
+    assert pd.api.types.is_string_dtype(df.last_observation_date), "`date` is not of type string in the dataframe"
+
     if os.path.isfile(output_path):
         df_current = pd.read_csv(output_path)
         df_current = df_current.loc[~df_current.location.isin(df.location)]
         df = pd.concat([df_current, df])
-    (
-        df.sort_values("location")[
-            ["location", "last_observation_date", "source_name", "source_url"]
-        ].to_csv(output_path, index=False)
+
+    df.sort_values("location")[["location", "last_observation_date", "source_name", "source_url"]].to_csv(
+        output_path, index=False
     )
 
 
