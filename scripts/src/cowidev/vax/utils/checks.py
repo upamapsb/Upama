@@ -18,7 +18,6 @@ VACCINES_ACCEPTED = [
     "Pfizer/BioNTech",
     "QazVac",
     "Sinopharm/Beijing",
-    "Sinopharm/HayatVax",
     "Sinopharm/Wuhan",
     "Sinovac",
     "Soberana02",

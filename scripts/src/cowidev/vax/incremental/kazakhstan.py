@@ -39,7 +39,7 @@ def enrich_location(ds: pd.Series):
 
 
 def enrich_vaccine(ds: pd.Series):
-    return enrich_data(ds, "vaccine", "QazVac, Sinopharm/HayatVax, Sputnik V")
+    return enrich_data(ds, "vaccine", "QazVac, Sinopharm/Beijing, Sputnik V")
 
 
 def add_totals(ds: pd.Series):

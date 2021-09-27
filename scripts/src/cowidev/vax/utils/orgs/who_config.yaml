@@ -15,6 +15,7 @@ vaccines:
     org_name: 
       - "Beijing CNBG - BBIBP-CorV"
       - "Beijing CNBG - Inactivated"
+      - "Sinopharm/HayatVax"
   - owid_name: "Covaxin"
     org_name: "Bharat - Covaxin"
   - org_name: "CanSino - Ad5-nCOV"
@@ -33,8 +34,6 @@ vaccines:
     org_name: 
       - "QazVac"
       - "RIBSP - QazCovid"
-  - owid_name: "Sinopharm/HayatVax"
-    org_name: "Sinopharm/HayatVax"
   - owid_name: "Sinovac"
     org_name: "Sinovac - CoronaVac"
   - owid_name: "Soberana02"
