@@ -44,19 +44,21 @@ def _get_infogram_value(infogram_data: dict, field_id: str, join_text: bool = Fa
 
 
 def parse_infogram_vaccinations(infogram_data: dict) -> int:
-    total_vaccinations = clean_count(_get_infogram_value(infogram_data, "4f66ed81-151f-4b97-aa3c-4927bde058b2"))
-    people_vaccinated = clean_count(_get_infogram_value(infogram_data, "4048eac1-24ba-4e24-b081-61dfa0281a0e"))
-    people_fully_vaccinated = clean_count(_get_infogram_value(infogram_data, "50a2486f-7dca-4afd-a551-bd24665d7314"))
+    total_vaccinations = clean_count(_get_infogram_value(infogram_data, "5088d5fc-24f7-46db-bf7e-3234db46a262"))
+    people_vaccinated = clean_count(_get_infogram_value(infogram_data, "90b218fc-f246-4a2e-bc33-fa0af726fb67"))
+    people_fully_vaccinated = clean_count(_get_infogram_value(infogram_data, "efc94320-fe88-4d58-abb6-4d703c5983dc"))
+    total_boosters = clean_count(_get_infogram_value(infogram_data, "12ece579-eb52-4622-b412-4c152c3fa457"))
     return {
         "total_vaccinations": total_vaccinations,
         "people_vaccinated": people_vaccinated,
         "people_fully_vaccinated": people_fully_vaccinated,
+        "total_boosters": total_boosters,
     }
 
 
 def parse_infogram_date(infogram_data: dict) -> str:
-    x = _get_infogram_value(infogram_data, "525b6366-cc8a-4646-b67a-5c9bfca66e22", join_text=True)
-    dt = extract_clean_date(x, "RESUMEN DE VACUNACIÓN(\d+-[A-Z]+-2\d)\s?", "%d-%b-%y", lang="es")
+    x = _get_infogram_value(infogram_data, "3f6fa939-ad51-436f-a5dd-d6952609d242", join_text=True)
+    dt = extract_clean_date(x, "RESUMEN DE VACUNACIÓN\s?(\d+-[A-Z]+-2\d)\s?", "%d-%b-%y", lang="es")
     return dt
 
 
@@ -81,6 +83,7 @@ def main(paths):
         total_vaccinations=data["total_vaccinations"],
         people_vaccinated=data["people_vaccinated"],
         people_fully_vaccinated=data["people_fully_vaccinated"],
+        total_boosters=data["total_boosters"],
         date=data["date"],
         source_url=data["source_url"],
         vaccine=data["vaccine"],
