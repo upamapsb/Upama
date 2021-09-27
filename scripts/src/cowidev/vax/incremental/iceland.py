@@ -72,7 +72,7 @@ def main(paths):
 
     df = df.melt("date", var_name="vaccine", value_name="total_vaccinations")
 
-    df["date"] = pd.to_datetime(df["date"], format="%d.%m.%y")
+    df["date"] = pd.to_datetime(df["date"], format="%d.%m.%y").astype(str)
     df["total_vaccinations"] = pd.to_numeric(df["total_vaccinations"], errors="coerce").fillna(0)
     df["total_vaccinations"] = df.sort_values("date").groupby("vaccine", as_index=False)["total_vaccinations"].cumsum()
     df["location"] = "Iceland"
