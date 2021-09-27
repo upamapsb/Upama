@@ -1,10 +1,5 @@
-import tempfile
-from xlsx2csv import Xlsx2csv
-from cowidev.utils.utils import xlsx2csv
-
 import pandas as pd
 
-from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.files import export_metadata
 
 
@@ -24,11 +19,12 @@ class Latvia:
     def __init__(self):
         self.location = "Latvia"
         self.source_page = "https://data.gov.lv/dati/eng/dataset/covid19-vakcinacijas"
-        self.source_url = "https://data.gov.lv/dati/eng/datastore/dump/51725018-49f3-40d1-9280-2b13219e026f"
+        self.source_url_1 = "https://data.gov.lv/dati/datastore/dump/51725018-49f3-40d1-9280-2b13219e026f"
+        self.source_url_2 = "https://data.gov.lv/dati/datastore/dump/9320d913-a4a2-4172-b521-73e58c2cfe83"
 
-    def read(self):
-        df = pd.read_csv(
-            self.source_url,
+    def _read_one(self, url: str):
+        return pd.read_csv(
+            url,
             usecols=[
                 "Vakcinācijas datums",
                 "Vakcinēto personu skaits",
@@ -36,9 +32,12 @@ class Latvia:
                 "Preparāts",
             ],
         )
-        return df
+
+    def read(self):
+        return pd.concat([self._read_one(self.source_url_1), self._read_one(self.source_url_2)], ignore_index=True)
 
     def pipe_base(self, df: pd.DataFrame) -> pd.DataFrame:
+        df["Vakcinācijas datums"] = df["Vakcinācijas datums"].str.slice(0, 10)
         df["vaccine"] = df["Preparāts"].str.strip()
         vaccines_wrong = set(df["vaccine"].unique()).difference(vaccine_mapping)
         if vaccines_wrong:
@@ -70,7 +69,6 @@ class Latvia:
         return df
 
     def pipe_aggregate(self, df: pd.DataFrame) -> pd.DataFrame:
-        df["date"] = df.date.str.slice(0, 10)
         return (
             df[df.date >= "2020-12-01"]
             .groupby("date", as_index=False)
@@ -144,7 +142,7 @@ class Latvia:
         export_metadata(
             df_man,
             "National Health Service",
-            self.source_url,
+            self.source_page,
             paths.tmp_vax_metadata_man,
         )
 
