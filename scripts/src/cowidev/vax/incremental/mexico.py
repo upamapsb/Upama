@@ -41,7 +41,7 @@ class Mexico:
 
             if "Total de dosis aplicadas reportadas" in page_text:
                 total_vaccinations = clean_count(
-                    re.search(r"([\d,]{10,}) Total de dosis aplicadas reportadas", page_text).group(1)
+                    re.search(r"([\d,]{10,}) ?Total de dosis aplicadas reportadas", page_text).group(1)
                 )
                 date = clean_date(
                     re.search(r"corte de informaci.n al (\d+ \w+ 202\d)", page_text).group(1),
