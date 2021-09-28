@@ -22,7 +22,7 @@ For a more detailed description of the WMD data, including original source infor
 
 Stored in [`excess_mortality.csv`](https://github.com/owid/covid-19-data/blob/master/public/data/excess_mortality/excess_mortality.csv).
 
-As of 20 September 2021, the data columns are:
+As of 28 September 2021, the data columns are:
 
 - `location`: name of the country or region
 - `date`: date on which a reporting week or month ended in 2020 and 2021 only (week dates according to [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date)). These dates do not apply to other years, such as "deaths_2019_all_ages"; instead, the deaths data across years is organized according to the week or month number in that year — see the "time" and "time_unit" columns below.
@@ -56,6 +56,7 @@ As of 20 September 2021, the data columns are:
 - `time_unit`: denotes whether the “time” column values are weekly or monthly
 - `excess_proj_all_ages`: number of excess deaths; calculated as reported deaths minus projected deaths
 - `cum_excess_proj_all_ages`: cumulative number of excess deaths; cumulated starting 1 January 2020
+- `cum_excess_per_million_proj_all_ages`: cumulative number of excess deaths per million people in the population; cumulated starting 1 January 2020
 - `cum_proj_deaths_all_ages`: cumulative number of projected deaths; cumulated starting 1 January 2020
 - `cum_p_proj_all_ages`: cumulative P-scores using projected baseline for all ages
 
