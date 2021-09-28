@@ -9,3 +9,8 @@ vaccinations:
     location:
       - Oceania
     date: "2021-05-24"
+excess-mortality:
+  - annotation_text: "Sweden: Updated series includes deaths with unknown date"
+    location:
+      - Sweden
+    date: "2021-09-27"
