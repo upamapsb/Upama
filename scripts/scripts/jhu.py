@@ -1,11 +1,10 @@
 import argparse
 import os
 import sys
-from functools import reduce
 import pandas as pd
 import numpy as np
 import pytz
-from datetime import datetime, timedelta
+from datetime import datetime
 from termcolor import colored
 
 CURRENT_DIR = os.path.dirname(__file__)
@@ -15,7 +14,6 @@ import megafile
 from shared import (
     load_population,
     load_owid_continents,
-    inject_total_daily_cols,
     inject_owid_aggregates,
     inject_per_million,
     inject_days_since,
@@ -56,10 +54,7 @@ def print_err(*args, **kwargs):
 
 
 def download_csv():
-    files = [
-        "time_series_covid19_confirmed_global.csv",
-        "time_series_covid19_deaths_global.csv",
-    ]
+    files = ["time_series_covid19_confirmed_global.csv", "time_series_covid19_deaths_global.csv"]
     for file in files:
         print(file)
         os.system(
@@ -80,15 +75,7 @@ def get_metric(metric, region):
         sys.exit(1)
 
     # Relabel as 'International'
-    df.loc[
-        df["Country/Region"].isin(
-            [
-                "Diamond Princess",
-                "MS Zaandam",
-            ]
-        ),
-        "Country/Region",
-    ] = "International"
+    df.loc[df["Country/Region"].isin(["Diamond Princess", "MS Zaandam"]), "Country/Region"] = "International"
 
     # Relabel Hong Kong to its own time series
     df.loc[df["Province/State"] == "Hong Kong", "Country/Region"] = "Hong Kong"
@@ -179,62 +166,8 @@ def discard_rows(df):
     return df
 
 
-def reinstate_rows(df):
-    for dc in DATA_CORRECTIONS:
-        df.loc[
-            (df["location"] == dc["location"]) & (df["date"].astype(str) == dc["date"]),
-            dc["metric"],
-        ] = dc["official_value"]
-
-        for agg in dc["aggregates"]:
-            correction = dc["official_value"] - dc["smoothed_value"]
-            original = df.loc[
-                (df["location"] == agg) & (df["date"].astype(str) == dc["date"]),
-                dc["metric"],
-            ].item()
-            df.loc[(df["location"] == agg) & (df["date"].astype(str) == dc["date"]), dc["metric"],] = (
-                original + correction
-            )
-    return df
-
-
-def patch_ireland(df: pd.DataFrame) -> pd.DataFrame:
-    # This is temporary patch implemented on May 27, 2021. Due to the cyberattack against Ireland's
-    # IT systems in early May, case and death counts haven't been publicly updated since May 15,
-    # leading to a series of 0-case and 0-death days in JHU data. However the WHO seems to be
-    # receiving the data directly from the government — we therefore patch the series with WHO data
-
-    may_15 = pd.to_datetime("2021-05-15").date()
-    may_15_cases = df.loc[(df.location == "Ireland") & (df.date == may_15), "new_cases"].item()
-
-    if may_15_cases == 0:
-
-        who_data = (
-            pd.read_csv("https://covid19.who.int/WHO-COVID-19-global-data.csv")
-            .drop(columns=["Country_code", "WHO_region"])
-            .rename(
-                columns={
-                    "Date_reported": "date",
-                    "Country": "location",
-                    "New_cases": "new_cases",
-                    "Cumulative_cases": "total_cases",
-                    "New_deaths": "new_deaths",
-                    "Cumulative_deaths": "total_deaths",
-                }
-            )
-        )
-        who_data["date"] = pd.to_datetime(who_data.date).dt.date
-
-        patch_data = who_data[(who_data.location == "Ireland") & (who_data.date >= may_15)]
-        jhu_data = df[(df.location != "Ireland") | (df.date < may_15)]
-        df = pd.concat([jhu_data, patch_data]).reset_index(drop=True)
-
-    return df
-
-
 def load_standardized(df):
     df = df[["date", "location", "new_cases", "new_deaths", "total_cases", "total_deaths"]]
-    # df = patch_ireland(df)
     df = discard_rows(df)
     df = inject_owid_aggregates(df)
     df = inject_weekly_growth(df)
