@@ -45,7 +45,6 @@ locations_manufacturer_exclude = [
     "Germany",
     "Italy",
     "Latvia",
-    "Lithuania",
     "Romania",
     "Iceland",
     "Switzerland",
