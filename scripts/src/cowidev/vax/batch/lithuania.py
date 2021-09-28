@@ -3,6 +3,8 @@ import json
 import requests
 import pandas as pd
 
+from cowidev.vax.utils.utils import make_monotonic
+
 
 class Lithuania:
     location: str = "Lithuania"
@@ -82,7 +84,7 @@ class Lithuania:
         return ", ".join(sorted(vaccines))
 
     def pipe_add_vaccines(self, df: pd.DataFrame) -> pd.DataFrame:
-        df["vaccines"] = df.date.apply(self._find_vaccines)
+        df["vaccine"] = df.date.apply(self._find_vaccines)
         return df
 
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -102,9 +104,13 @@ class Lithuania:
             .pipe(self.pipe_parse_dates)
             .pipe(self.pipe_clean_doses)
         )
-        pd.merge(coverage, doses, how="inner", on="date").pipe(self.pipe_add_vaccines).pipe(self.pipe_metadata).to_csv(
-            paths.tmp_vax_out(self.location), index=False
+        df = (
+            pd.merge(coverage, doses, how="inner", on="date")
+            .pipe(self.pipe_add_vaccines)
+            .pipe(self.pipe_metadata)
+            .pipe(make_monotonic)
         )
+        df.to_csv(paths.tmp_vax_out(self.location), index=False)
 
 
 def main(paths):
