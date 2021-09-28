@@ -339,6 +339,7 @@ def add_excess_mortality(df: pd.DataFrame) -> pd.DataFrame:
         "p_proj_all_ages": "excess_mortality",
         "cum_p_proj_all_ages": "excess_mortality_cumulative",
         "cum_excess_proj_all_ages": "excess_mortality_cumulative_absolute",
+        "cum_excess_per_million_proj_all_ages": "excess_mortality_cumulative_per_million",
     }
     xm = pd.read_csv(
         os.path.join(DATA_DIR, "excess_mortality/excess_mortality.csv"),
