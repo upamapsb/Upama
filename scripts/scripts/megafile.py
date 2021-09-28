@@ -523,6 +523,7 @@ internal_files_columns = {
             "excess_mortality",
             "excess_mortality_cumulative",
             "excess_mortality_cumulative_absolute",
+            "excess_mortality_cumulative_per_million",
         ],
         "dropna": "all",
     },
