@@ -445,6 +445,30 @@ class DatasetGenerator:
             .pipe(self.pipe_age_output)
         )
 
+    def add_booster_share(self, df: pd.DataFrame) -> pd.DataFrame:
+        shape_before = df.shape
+        global_boosters = df[df.location == "World"][
+            ["location", "date", "total_vaccinations", "total_boosters"]
+        ].sort_values("date")
+        global_boosters[["total_vaccinations", "total_boosters"]] = global_boosters[
+            ["total_vaccinations", "total_boosters"]
+        ].astype(float)
+        global_boosters["share_of_boosters"] = (
+            (
+                (global_boosters.total_boosters - global_boosters.total_boosters.shift(1))
+                / (global_boosters.total_vaccinations - global_boosters.total_vaccinations.shift(1))
+            )
+            .rolling(7)
+            .mean()
+            .round(4)
+        )
+        global_boosters = global_boosters.drop(columns=["total_vaccinations", "total_boosters"])
+        df = pd.merge(df, global_boosters, how="left", on=["location", "date"], validate="one_to_one")
+        assert (
+            df.shape[0] == shape_before[0] and df.shape[1] == shape_before[1] + 1
+        ), "Adding share_of_boosters has changed the shape of the dataframe in an unintended way!"
+        return df
+
     def pipe_grapher(
         self,
         df: pd.DataFrame,
@@ -648,7 +672,7 @@ class DatasetGenerator:
 
         # Grapher
         logger.info("8/10 Generating `grapher` tables...")
-        df_grapher = df_vaccinations_base.pipe(self.pipe_grapher)
+        df_grapher = df_vaccinations_base.pipe(self.add_booster_share).pipe(self.pipe_grapher)
         df_manufacturer_grapher = df_manufacturer.pipe(self.pipeline_manufacturer_grapher)
         df_age_grapher = df_age.pipe(self.pipeline_age_grapher)
         # df_age_grapher_fully = df_age.pipe(self.pipeline_age_grapher, "people_fully_vaccinated_per_hundred")
