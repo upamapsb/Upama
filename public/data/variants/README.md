@@ -26,6 +26,8 @@ The data is sourced from [GISAID](https://gisaid.org), via [CoVariants](https://
 
 Note that `non_who` includes `others` and other variants. For instance, variant _B.1.16_ is counted in the `non_who` category but not in `others`, as it does not have a WHO label but is listed [in this table](https://covariants.org/variants).
 
+As a consequence, for a given date, the sum of `perc_sequences` will exceed 1. In order to sum 1, you should exclude `non_who` category.
+
 ### Example
 |location |date      |variant       |num_sequences|perc_sequences|num_sequences_total|
 |---------|----------|--------------|-------------|--------------|-------------------|
