@@ -86,12 +86,12 @@ class AfricaCDC:
         url = "https://covid19.who.int/who-data/vaccination-data.csv"
         df_who = pd.read_csv(url, usecols=["ISO3", "VACCINES_USED"]).rename(columns={"VACCINES_USED": "vaccine"})
         df_who = df_who.dropna(subset=["vaccine"])
-        df_who = df_who.assign(
-            vaccine=df_who.vaccine.apply(
+        df = df.merge(df_who, left_on="ISO_3_CODE", right_on="ISO3")
+        df = df.assign(
+            vaccine=df.vaccine.apply(
                 lambda x: ", ".join(sorted(set(WHO_VACCINES[xx.strip()] for xx in x.split(","))))
             )
         )
-        df = df.merge(df_who, left_on="ISO_3_CODE", right_on="ISO3")
         return df
 
     def pipe_source(self, df: pd.DataFrame) -> pd.DataFrame:
