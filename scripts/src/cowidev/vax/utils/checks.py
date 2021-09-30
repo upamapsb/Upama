@@ -10,7 +10,9 @@ VACCINES_ACCEPTED = [
     "Covaxin",
     "COVIran Barekat",
     "EpiVacCorona",
+    "IMBCAMS/Inactivated",
     "Johnson&Johnson",
+    "LV-SMENP",
     "Medigen",
     "Moderna",
     "Novavax",
@@ -29,6 +31,7 @@ VACCINES_ACCEPTED = [
 VACCINES_ONE_DOSE = [
     "Johnson&Johnson",
     "CanSino",
+    "Sputnik Light",
 ]
 
 VACCINES_THREE_DOSES = [
