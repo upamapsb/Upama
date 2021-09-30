@@ -9,9 +9,7 @@ VACCINES_ONE_DOSE = ["JANSS"]
 
 def main(paths):
 
-    df = pd.read_csv(
-        URL, usecols=["YearWeekISO", "FirstDose", "SecondDose", "Region", "Vaccine"]
-    )
+    df = pd.read_csv(URL, usecols=["YearWeekISO", "FirstDose", "SecondDose", "Region", "Vaccine"])
 
     df = df[df.Region == "NL"]
 
@@ -26,9 +24,7 @@ def main(paths):
 
     # Calculate metrics
     df = df.assign(total_vaccinations=df.people_vaccinated + df.people_fully_vaccinated)
-    df.loc[
-        df.Vaccine.isin(VACCINES_ONE_DOSE), "people_fully_vaccinated"
-    ] = df.people_vaccinated
+    df.loc[df.Vaccine.isin(VACCINES_ONE_DOSE), "people_fully_vaccinated"] = df.people_vaccinated
     df = df.drop(columns="Vaccine").groupby("date").sum().cumsum().reset_index()
 
     # Convert week numbers to dates (Sunday of each week)
@@ -50,7 +46,6 @@ def main(paths):
 
 def enrich_vaccine_name(df: pd.DataFrame) -> pd.DataFrame:
     def _enrich_vaccine_name(dt: str) -> str:
-        # See timeline in:
         if dt < date(2021, 1, 18):
             return "Pfizer/BioNTech"
         elif date(2021, 1, 18) <= dt < date(2021, 2, 10):
