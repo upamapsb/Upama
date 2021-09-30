@@ -13,7 +13,7 @@ class Malta:
         "Date": "date",
         "Total Vaccination Doses": "total_vaccinations",
         "Fully vaccinated (2 of 2 or 1 of 1)": "people_fully_vaccinated",
-        "Received one dose": "people_vaccinated",
+        "Received one dose (1 of 2 or 1 of 1)": "people_vaccinated",
         "Total Booster doses": "total_boosters",
     }
 
