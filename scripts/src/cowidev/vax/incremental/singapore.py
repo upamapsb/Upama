@@ -60,14 +60,14 @@ class Singapore:
     def _parse_text_national(self, soup):
         national_program = (
             r"We have administered a total of ([\d,]+) doses of COVID-19 vaccines under the national vaccination"
-            r" programme \(Pfizer-BioNTech Comirnaty and Moderna\), including ([\d,]+) booster doses\..*"
+            r" programme \(Pfizer-BioNTech Comirnaty and Moderna\).*"
             r"In total, ([\d,]+) individuals have received at least one dose of vaccine under the national vaccination"
-            r" programme,"
+            r" programme,.*\. ([\d,]+) individuals have received their booster shots"
         )
         data = re.search(national_program, soup.text).groups()
         national_doses = clean_count(data[0])
-        national_boosters = clean_count(data[1])
-        national_people_vaccinated = clean_count(data[2])
+        national_people_vaccinated = clean_count(data[1])
+        national_boosters = clean_count(data[2])
         return national_doses, national_boosters, national_people_vaccinated
 
     def _parse_text_who(self, soup):
@@ -94,10 +94,7 @@ class Singapore:
 
     def to_csv(self, paths):
         data = self.read().pipe(self.pipeline).to_dict()
-        increment(
-            paths=paths,
-            **data
-        )
+        increment(paths=paths, **data)
 
 
 def main(paths):
