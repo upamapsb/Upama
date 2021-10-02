@@ -17,6 +17,8 @@ class ConfigLoader:
         return _records_to_dict_many(self.config["vaccines"])
 
     def countries_mapping(self):
+        if "countries" not in self.config:
+            return {}
         return _records_to_dict(self.config["countries"])
 
     def list_countries(self):
