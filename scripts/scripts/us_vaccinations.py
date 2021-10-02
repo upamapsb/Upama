@@ -7,6 +7,8 @@ import sys
 import pandas as pd
 import pytz
 
+from cowidev.vax.utils.utils import make_monotonic
+
 
 CURRENT_DIR = os.path.dirname(__file__)
 sys.path.append(CURRENT_DIR)
@@ -110,6 +112,10 @@ def add_usage(df):
     return df
 
 
+def make_monotonic_by_state(df: pd.DataFrame) -> pd.DataFrame:
+    return df.groupby("location").apply(make_monotonic, max_removed_rows=100).reset_index(drop=True)
+
+
 def sanity_checks(df):
     assert len(df) == len(df[["date", "location"]].drop_duplicates())
 
@@ -136,6 +142,7 @@ def generate_dataset():
         .pipe(add_smoothed)
         .pipe(add_usage)
         .drop(columns=["Census2019"])
+        .pipe(make_monotonic_by_state)
         .sort_values(["location", "date"])
     )
 
