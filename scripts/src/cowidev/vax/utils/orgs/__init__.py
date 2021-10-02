@@ -19,3 +19,7 @@ ACDC_COUNTRIES, ACDC_VACCINES = get_org_constants(__AFRICACDC_CONFIG)
 # SPC
 __SPC_CONFIG = os.path.join(__CURRENT_DIR, "spc_config.yaml")
 SPC_COUNTRIES, SPC_VACCINES = get_org_constants(__SPC_CONFIG)
+
+# ECDC
+__ECDC_CONFIG = os.path.join(__CURRENT_DIR, "ecdc_config.yaml")
+ECDC_COUNTRIES, ECDC_VACCINES = get_org_constants(__ECDC_CONFIG)
