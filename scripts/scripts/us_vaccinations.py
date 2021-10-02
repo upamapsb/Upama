@@ -113,7 +113,7 @@ def add_usage(df):
 
 
 def make_monotonic_by_state(df: pd.DataFrame) -> pd.DataFrame:
-    return df.groupby("location").apply(make_monotonic, max_removed_rows=100).reset_index(drop=True)
+    return df.groupby("location").apply(make_monotonic, max_removed_rows=None).reset_index(drop=True)
 
 
 def sanity_checks(df):

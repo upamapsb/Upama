@@ -22,7 +22,8 @@ def make_monotonic(df: pd.DataFrame, max_removed_rows=10) -> pd.DataFrame:
             diff = df[metric].ffill().shift(-1) - df[metric].ffill()
             df = df[(diff >= 0) | (diff.isna())]
 
-    if n_rows_before - len(df) > max_removed_rows:
-        raise Exception(f"More than {max_removed_rows} rows removed by make_monotonic() - check the data.")
+    if max_removed_rows is not None:
+        if n_rows_before - len(df) > max_removed_rows:
+            raise Exception(f"More than {max_removed_rows} rows removed by make_monotonic() - check the data.")
 
     return df
