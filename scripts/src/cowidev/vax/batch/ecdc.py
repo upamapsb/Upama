@@ -4,6 +4,7 @@ import pandas as pd
 
 from cowidev.utils.clean.dates import clean_date, localdate
 from cowidev.vax.utils.files import export_metadata
+from cowidev.vax.utils.orgs import ECDC_VACCINES
 
 
 age_groups_known = {
@@ -37,7 +38,9 @@ age_groups_relevant = {
 }
 
 
-locations_age_exclude = []
+locations_age_exclude = [
+    "Switzerland",
+]
 
 locations_manufacturer_exclude = [
     "Czechia",
@@ -75,15 +78,7 @@ class ECDC:
         self.source_url = "https://opendata.ecdc.europa.eu/covid19/vaccine_tracker/csv/data.csv"
         self.source_url_ref = "https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea"
         self.country_mapping = self._load_country_mapping(iso_path)
-        self.vaccine_mapping = {
-            "COM": "Pfizer/BioNTech",
-            "MOD": "Moderna",
-            "AZ": "Oxford/AstraZeneca",
-            "JANSS": "Johnson&Johnson",
-            "SPU": "Sputnik V",
-            "BECNBG": "Sinopharm/Beijing",
-            "UNK": "Unknown",
-        }
+        self.vaccine_mapping = {**ECDC_VACCINES, "UNK": "Unknown"}
 
     def read(self):
         return pd.read_csv(self.source_url)
