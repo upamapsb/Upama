@@ -6,7 +6,7 @@ import numpy as np
 import requests
 import PyPDF2
 
-from cowidev.utils.clean import clean_date
+from cowidev.utils.clean import extract_clean_date
 from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
 
@@ -46,8 +46,9 @@ class Bolivia:
 
     def _parse_date(self, url: str) -> str:
         # return clean_date(text, "REPORTE DE VACUNACIÓN NACIONAL \n%d/%m/%Y\n")
-        date_str = url.split("-")[-1].split(".")[0]
-        return clean_date(date_str, "%d_%m_%Y")
+        return extract_clean_date(url, r"https://.*(\d{1,2}_\d{1,2}_20\d\d).*\.pdf", "%d_%m_%Y")
+        # date_str = url.split("-")[-1].split(".")[0]
+        # return clean_date(date_str, "%d_%m_%Y")
 
     def _parse_metrics(self, text: str) -> dict:
         fields_accepted = {
