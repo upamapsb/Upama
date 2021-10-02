@@ -19,7 +19,7 @@ pipeline:
     skip_monotonic_check:
     skip_anomaly_check:
       Australia:
-        - date: 2021-05-24
+        - date: 2021-05-23
           metrics: people_vaccinated
       Bahrain:
         - date: 2021-03-06
