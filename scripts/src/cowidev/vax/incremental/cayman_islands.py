@@ -50,11 +50,11 @@ class CaymanIslands:
     def pipe_location(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "location", self.location)
 
-    def enrich_vaccine(self, ds: pd.Series) -> pd.Series:
+    def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "vaccine", "Oxford/AstraZeneca, Pfizer/BioNTech")
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return ds.pipe(self.pipe_date).pipe(self.pipe_location).pipe(self.pipe_vaccine)
+        return ds.pipe(self.pipe_date).pipe(self.pipe_location).pipe(self.pipe_source).pipe(self.pipe_vaccine)
 
     def export(self, paths):
         data = self.read().pipe(self.pipeline)
