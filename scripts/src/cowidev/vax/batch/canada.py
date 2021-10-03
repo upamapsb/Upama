@@ -1,10 +1,10 @@
-import requests
-
 import pandas as pd
+
+from cowidev.utils.web import request_json
 
 
 def read(source: str) -> pd.DataFrame:
-    data = requests.get(source).json()
+    data = request_json(source)
     return pd.DataFrame.from_records(data["data"])
 
 

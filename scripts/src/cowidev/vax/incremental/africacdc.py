@@ -1,26 +1,15 @@
 from datetime import datetime
 
-import requests
 import pandas as pd
 
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_date
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.incremental import increment
-from cowidev.vax.utils.who import VACCINES_WHO_MAPPING
+from cowidev.vax.utils.orgs import WHO_VACCINES, ACDC_COUNTRIES, ACDC_VACCINES
 from cowidev.vax.cmd.utils import get_logger
 
 
 logger = get_logger()
-
-# Dict mapping Africa CDC country names -> OWID country names
-COUNTRIES = {
-    "Central African Republic": "Central African Republic",
-    "Chad": "Chad",
-    "Congo": "Congo",
-    "Djibouti": "Djibouti",
-    "Gabon": "Gabon",
-    "Gambia": "Gambia",
-    "Mauritania": "Mauritania",
-}
 
 
 class AfricaCDC:
@@ -30,16 +19,6 @@ class AfricaCDC:
             "Admin_Boundaries_Africa_corr_Go_Vaccine_DB_JOIN/FeatureServer/0"
         )
         self.source_url_ref = "https://africacdc.org/covid-19-vaccination/"
-        self.vaccines_mapping = {
-            "AstraZeneca": "Oxford/AstraZeneca",
-            "Sinopharm": "Sinopharm/Beijing",
-            "Sputnik V": "Sputnik V",
-            "Sinovac": "Sinovac",
-            "BioNTech": "Pfizer/BioNTech",
-            "Moderna": "Moderna",
-            "J&J": "Johnson&Johnson",
-            "Covaxin": "Covaxin",
-        }
 
     @property
     def source_url(self):
@@ -50,7 +29,7 @@ class AfricaCDC:
         return f"{self._base_url}?f=pjson"
 
     def read(self) -> pd.DataFrame:
-        data = requests.get(self.source_url).json()
+        data = request_json(self.source_url)
         res = [d["attributes"] for d in data["features"]]
         df = pd.DataFrame(
             res,
@@ -78,8 +57,8 @@ class AfricaCDC:
 
     def pipe_filter_countries(self, df: pd.DataFrame) -> pd.DataFrame:
         """Get rows from selected countries."""
-        df["location"] = df.location.replace(COUNTRIES)
-        df = df[df.location.isin(COUNTRIES)]
+        df["location"] = df.location.replace(ACDC_COUNTRIES)
+        df = df[df.location.isin(ACDC_COUNTRIES)]
         return df
 
     def pipe_one_dose_correction(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -92,7 +71,7 @@ class AfricaCDC:
     def _map_vaccines(self, vaccine_raw: str):
         vaccine_raw = vaccine_raw.strip()
         vaccines = []
-        for vax_old, vax_new in self.vaccines_mapping.items():
+        for vax_old, vax_new in ACDC_VACCINES.items():
             if vax_old in vaccine_raw:
                 vaccines.append(vax_new)
                 vaccine_raw = vaccine_raw.replace(vax_old, "").strip()
@@ -105,18 +84,14 @@ class AfricaCDC:
 
     def pipe_vaccine_who(self, df: pd.DataFrame) -> pd.DataFrame:
         url = "https://covid19.who.int/who-data/vaccination-data.csv"
-        df_who = pd.read_csv(url, usecols=["ISO3", "VACCINES_USED"]).rename(
-            columns={"VACCINES_USED": "vaccine"}
-        )
+        df_who = pd.read_csv(url, usecols=["ISO3", "VACCINES_USED"]).rename(columns={"VACCINES_USED": "vaccine"})
         df_who = df_who.dropna(subset=["vaccine"])
-        df_who = df_who.assign(
-            vaccine=df_who.vaccine.apply(
-                lambda x: ", ".join(
-                    sorted(set(VACCINES_WHO_MAPPING[xx.strip()] for xx in x.split(",")))
-                )
+        df = df.merge(df_who, left_on="ISO_3_CODE", right_on="ISO3")
+        df = df.assign(
+            vaccine=df.vaccine.apply(
+                lambda x: ", ".join(sorted(set(WHO_VACCINES[xx.strip()] for xx in x.split(","))))
             )
         )
-        df = df.merge(df_who, left_on="ISO_3_CODE", right_on="ISO3")
         return df
 
     def pipe_source(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -126,7 +101,7 @@ class AfricaCDC:
         return df.assign(date=self._parse_date())
 
     def _parse_date(self):
-        res = requests.get(self.source_url_date).json()
+        res = request_json(self.source_url_date)
         edit_ts = res["editingInfo"]["lastEditDate"]
         return clean_date(datetime.fromtimestamp(edit_ts / 1000))
 
@@ -143,6 +118,16 @@ class AfricaCDC:
             ]
         ]
 
+    def pipe_exclude_observations(self, df: pd.DataFrame) -> pd.DataFrame:
+        # Exclude observations where people_fully_vaccinated == 0, as they always seem to be
+        # data errors rather than countries without any full vaccination.
+        df = df[df.people_fully_vaccinated > 0]
+
+        # Exclude observations where people_fully_vaccinated > people_vaccinated
+        df = df[df.people_fully_vaccinated <= df.people_vaccinated]
+
+        return df
+
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
             df.pipe(self.pipe_rename)
@@ -152,6 +137,7 @@ class AfricaCDC:
             .pipe(self.pipe_source)
             .pipe(self.pipe_date)
             .pipe(self.pipe_select_out_cols)
+            .pipe(self.pipe_exclude_observations)
         )
 
     def increment_countries(self, df: pd.DataFrame, paths):

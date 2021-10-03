@@ -1,8 +1,8 @@
-import requests
 import pandas as pd
 
+from cowidev.utils.clean import clean_date
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.dates import clean_date
 
 
 vaccine_mapping = {
@@ -11,11 +11,12 @@ vaccine_mapping = {
     "Pfizer-BioNTech / КОВАКС 🤝": "Pfizer/BioNTech",
     "Синофарм / БНХАУ 🤝+ 💵": "Sinopharm/Beijing",
     "Спутник V / ОХУ 💵": "Sputnik V",
+    "Спутник V / ОХУ 🤝 + 💵": "Sputnik V",
 }
 
 
 def read(source: str) -> pd.Series:
-    data = requests.get(source).json()
+    data = request_json(source, parser="html.parser")
     return parse_data(data)
 
 

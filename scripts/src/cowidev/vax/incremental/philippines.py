@@ -2,13 +2,12 @@ import time
 
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.utils import get_driver
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_count, extract_clean_date
+from cowidev.utils.web.scraping import get_driver
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 class Philippines:
-
     def __init__(self) -> None:
         self.location = "Philippines"
         self.source_url = "https://e.infogram.com/_/yFVE69R1WlSdqY3aCsBF"
@@ -17,32 +16,35 @@ class Philippines:
         )
 
     def read(self) -> pd.Series:
-        return pd.Series(
-            data=self._parse_data()
-        )
+        return pd.Series(data=self._parse_data())
 
     def _parse_data(self) -> dict:
         with get_driver() as driver:
             driver.get(self.source_url)
             time.sleep(2)
-            spans = [
-                span
-                for span in driver.find_elements_by_tag_name("span")
-                if span.get_attribute("data-text")
-            ]
+            spans = [span for span in driver.find_elements_by_tag_name("span") if span.get_attribute("data-text")]
             # Date
-            date = clean_date(spans[6].text, "(as of %b. %d, %Y)")
+            date = extract_clean_date(
+                spans[6].text.replace("Sept", "Sep"),
+                "\(as of ([a-zA-Z]+)\.\s?(\d{1,2}), (20\d{2})\)",
+                "%b %d %Y",
+                lang="en",
+            )
             # Metrics
             total_vaccinations = clean_count(spans[8].text)
-            people_vaccinated = clean_count(spans[13].text)
+            people_partly_vaccinated = clean_count(spans[13].text)
             people_fully_vaccinated = clean_count(spans[14].text)
         # Sanity check
-        if total_vaccinations != people_vaccinated + people_fully_vaccinated:
-            raise ValueError("total_vaccinations should equal sum of first and second doses.")
+        if abs(total_vaccinations - people_partly_vaccinated - people_fully_vaccinated) > 100:
+            raise ValueError(
+                f"total_vaccinations should equal sum of first and second doses. {total_vaccinations} !="
+                f" {people_fully_vaccinated} + {people_partly_vaccinated}. Note: We actually allow for +100"
+                " difference."
+            )
 
         return {
             "total_vaccinations": total_vaccinations,
-            "people_vaccinated": people_vaccinated,
+            # "people_vaccinated": people_vaccinated,
             "people_fully_vaccinated": people_fully_vaccinated,
             "date": date,
         }
@@ -54,7 +56,7 @@ class Philippines:
         return enrich_data(
             ds,
             "vaccine",
-            "Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac, Sputnik V",
+            "Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac, Sputnik V",
         )
 
     def pipe_source(self, ds: pd.Series) -> pd.Series:
@@ -65,12 +67,7 @@ class Philippines:
         )
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds
-            .pipe(self.pipe_location).
-            pipe(self.pipe_vaccine)
-            .pipe(self.pipe_source)
-        )
+        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
 
     def export(self, paths):
         data = self.read().pipe(self.pipeline)
@@ -78,7 +75,7 @@ class Philippines:
             paths=paths,
             location=data["location"],
             total_vaccinations=data["total_vaccinations"],
-            people_vaccinated=data["people_vaccinated"],
+            # people_vaccinated=data["people_vaccinated"],
             people_fully_vaccinated=data["people_fully_vaccinated"],
             date=data["date"],
             source_url=data["source_url"],

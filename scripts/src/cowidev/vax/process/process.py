@@ -2,13 +2,10 @@ from datetime import datetime
 import pandas as pd
 
 from cowidev.vax.utils.checks import country_df_sanity_checks
-from cowidev.vax.utils.dates import clean_date
-from cowidev.vax.process.urls import clean_urls
+from cowidev.utils.clean import clean_urls, clean_date
 
 
-def process_location(
-    df: pd.DataFrame, monotonic_check_skip: list = [], anomaly_check_skip: list = []
-) -> pd.DataFrame:
+def process_location(df: pd.DataFrame, monotonic_check_skip: list = [], anomaly_check_skip: list = []) -> pd.DataFrame:
     # print(df.tail(1))
     # Only report up to previous day to avoid partial reporting
     df = df.assign(date=pd.to_datetime(df.date, dayfirst=True))

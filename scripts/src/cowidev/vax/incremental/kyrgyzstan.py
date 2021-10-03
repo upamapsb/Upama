@@ -1,8 +1,9 @@
 import pandas as pd
 
-from cowidev.vax.utils.utils import get_soup
-from cowidev.vax.utils.incremental import clean_count, enrich_data, increment
-from cowidev.vax.utils.dates import localdate
+from cowidev.utils.clean import clean_count
+from cowidev.utils.clean.dates import localdate
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 class Kyrgyzstan:
@@ -19,11 +20,12 @@ class Kyrgyzstan:
         metrics_raw = soup.find_all("h3", class_="ml-4")
         data = {}
         for h in metrics_raw:
-            if h.parent.p.text == "Всего вакцинаций":
+            title = h.parent.p.text.strip()
+            if title == "Всего вакцинаций":
                 data["total_vaccinations"] = clean_count(h.text)
-            elif h.parent.p.text == "Количество вакцинированных 1 дозой":
+            elif title == "Количество вакцинированных 1 дозой":
                 data["people_vaccinated"] = clean_count(h.text)
-            elif h.parent.p.text == "Количество лиц, прошедших полный курс вакцинации":
+            elif title == "Количество лиц, прошедших полный курс вакцинации":
                 data["people_fully_vaccinated"] = clean_count(h.text)
         return data
 
@@ -37,20 +39,10 @@ class Kyrgyzstan:
         return enrich_data(ds, "location", self.location)
 
     def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(
-            ds,
-            "vaccine",
-            "Sinopharm/Beijing, Sputnik V"
-        )
+        return enrich_data(ds, "vaccine", "Sinopharm/Beijing, Sputnik V")
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds
-            .pipe(self.pipe_date)
-            .pipe(self.pipe_source)
-            .pipe(self.pipe_location)
-            .pipe(self.pipe_vaccine)
-        )
+        return ds.pipe(self.pipe_date).pipe(self.pipe_source).pipe(self.pipe_location).pipe(self.pipe_vaccine)
 
     def export(self, paths):
         """Generalized."""

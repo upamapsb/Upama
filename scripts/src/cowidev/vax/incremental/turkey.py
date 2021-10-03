@@ -1,51 +1,41 @@
 import re
 
-import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.dates import localdate
+from cowidev.utils.clean import clean_count, clean_date
+from cowidev.utils.web import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
+
+
+METRIC_LABELS = {
+    "total_vaccinations": "toplamasidozusayisi",
+    "people_vaccinated": "doz1asisayisi",
+    "people_fully_vaccinated": "doz2asisayisi",
+}
 
 
 def read(source: str) -> pd.Series:
-    soup = BeautifulSoup(requests.get(source).content, "html.parser")
+    soup = get_soup(source)
     return parse_data(soup)
 
 
 def parse_data(soup: BeautifulSoup) -> pd.Series:
-    keys = ("total_vaccinations", "people_vaccinated", "people_fully_vaccinated")
-    values = (
-        parse_total_vaccinations(soup),
-        parse_people_vaccinated(soup),
-        parse_people_fully_vaccinated(soup),
-    )
-    data = dict(zip(keys, values))
+    data = {"date": parse_date(soup)}
+    for k, v in METRIC_LABELS.items():
+        data[k] = parse_metric(soup, v)
+    data["total_boosters"] = data["total_vaccinations"] - data["people_vaccinated"] - data["people_fully_vaccinated"]
     return pd.Series(data=data)
 
 
-def parse_total_vaccinations(soup: BeautifulSoup) -> int:
-    total_vaccinations = re.search(r"var yapilanasisayisi = (\d+);", str(soup)).group(1)
-    return clean_count(total_vaccinations)
+def parse_date(soup: BeautifulSoup) -> str:
+    date_raw = re.search(rf"var asidozuguncellemesaati = '(.*202\d)", str(soup))
+    return clean_date(date_raw.group(1), fmt="%d %B %Y", lang="tr_TR", loc="tr_TR")
 
 
-def parse_people_fully_vaccinated(soup: BeautifulSoup) -> int:
-    people_fully_vaccinated = re.search(
-        r"var asiyapilankisisayisi2Doz = (\d+);", str(soup)
-    ).group(1)
-    return clean_count(people_fully_vaccinated)
-
-
-def parse_people_vaccinated(soup: BeautifulSoup) -> int:
-    people_vaccinated = re.search(
-        r"var asiyapilankisisayisi1Doz = (\d+);", str(soup)
-    ).group(1)
-    return clean_count(people_vaccinated)
-
-
-def format_date(ds: pd.Series) -> pd.Series:
-    date = localdate("Asia/Istanbul", hour_limit=8)
-    return enrich_data(ds, "date", date)
+def parse_metric(soup: BeautifulSoup, metric_name: str) -> int:
+    metric = re.search(rf"var {metric_name} = '([\d\.]+)';", str(soup)).group(1)
+    return clean_count(metric)
 
 
 def enrich_location(ds: pd.Series) -> pd.Series:
@@ -61,12 +51,7 @@ def enrich_source(ds: pd.Series) -> pd.Series:
 
 
 def pipeline(ds: pd.Series) -> pd.Series:
-    return (
-        ds.pipe(format_date)
-        .pipe(enrich_location)
-        .pipe(enrich_vaccine)
-        .pipe(enrich_source)
-    )
+    return ds.pipe(enrich_location).pipe(enrich_vaccine).pipe(enrich_source)
 
 
 def main(paths):
@@ -78,6 +63,7 @@ def main(paths):
         total_vaccinations=data["total_vaccinations"],
         people_vaccinated=data["people_vaccinated"],
         people_fully_vaccinated=data["people_fully_vaccinated"],
+        total_boosters=data["total_boosters"],
         date=data["date"],
         source_url=data["source_url"],
         vaccine=data["vaccine"],

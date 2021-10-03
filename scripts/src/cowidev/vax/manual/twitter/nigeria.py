@@ -2,28 +2,25 @@ import re
 
 import pandas as pd
 
+from cowidev.utils.clean import clean_count, clean_date
 from cowidev.vax.manual.twitter.base import TwitterCollectorBase
-from cowidev.vax.utils.dates import clean_date
-from cowidev.vax.utils.utils import clean_count
 
 
 class Nigeria(TwitterCollectorBase):
     def __init__(self, api, paths=None, **kwargs):
-        super().__init__(
-            api=api,
-            username="NphcdaNG",
-            location="Nigeria",
-            add_metrics_nan=True,
-            paths=paths,
-            **kwargs
-        )
+        super().__init__(api=api, username="NphcdaNG", location="Nigeria", add_metrics_nan=True, paths=paths, **kwargs)
 
     def _propose_df(self):
         regex_1 = (
-            r"COVID-19 Vaccination Update:\n\n1st and second dose — (([a-zA-Z]+) (\d{1,2})(?:th|nd|rd|st) (202\d)), in 36 States \+ the FCT\. \n\n([0-9,]+) eligible "
-            r"Nigerians have been vaccinated with first dose while ([0-9,]+) of Nigerians vaccinated with 1st dose have collected their 2nd dose\."
+            r"COVID-19 Vaccination Update:\n\n1st and second dose — (([a-zA-Z]+) (\d{1,2})(?:th|nd|rd|st) (202\d)), in"
+            r" 36 States \+ the FCT\. \n\n([0-9,]+) eligible "
+            r"Nigerians have been vaccinated with first dose while ([0-9,]+) of Nigerians vaccinated with 1st dose"
+            r" have collected their 2nd dose\."
         )
-        regex_2 = r"COVID-19 Vaccination Update for (([a-zA-Z]+) (\d{1,2})(?:th|nd|rd|st),? (202\d)), in 36 States \+ the FCT\. "
+        regex_2 = (
+            r"COVID-19 Vaccination Update for (([a-zA-Z]+) (\d{1,2})(?:th|nd|rd|st),? (202\d)), in 36 States \+ the"
+            r" FCT\. "
+        )
         regex_3 = r"COVID-19 Vaccination Update"
         data = []
         for tweet in self.tweets:
@@ -39,15 +36,12 @@ class Nigeria(TwitterCollectorBase):
                 data.append(
                     {
                         "date": dt,
-                        "total_vaccinations": people_vaccinated
-                        + people_fully_vaccinated,
+                        "total_vaccinations": people_vaccinated + people_fully_vaccinated,
                         "people_vaccinated": people_vaccinated,
                         "people_fully_vaccinated": people_fully_vaccinated,
                         "text": tweet.full_text,
                         "source_url": self.build_post_url(tweet.id),
-                        "media_url": tweet.extended_entities["media"][0][
-                            "media_url_https"
-                        ],
+                        "media_url": tweet.extended_entities["media"][0]["media_url_https"],
                     }
                 )
             elif match_2:
@@ -59,9 +53,7 @@ class Nigeria(TwitterCollectorBase):
                         "date": dt,
                         "text": tweet.full_text,
                         "source_url": self.build_post_url(tweet.id),
-                        "media_url": tweet.extended_entities["media"][0][
-                            "media_url_https"
-                        ],
+                        "media_url": tweet.extended_entities["media"][0]["media_url_https"],
                     }
                 )
             elif match_3:
@@ -69,9 +61,7 @@ class Nigeria(TwitterCollectorBase):
                     {
                         "text": tweet.full_text,
                         "source_url": self.build_post_url(tweet.id),
-                        "media_url": tweet.extended_entities["media"][0][
-                            "media_url_https"
-                        ],
+                        "media_url": tweet.extended_entities["media"][0]["media_url_https"],
                     }
                 )
         df = pd.DataFrame(data)

@@ -1,5 +1,6 @@
-import requests
 import pandas as pd
+
+from cowidev.utils.web import request_json
 
 
 class Zimbabwe:
@@ -10,10 +11,8 @@ class Zimbabwe:
 
     def read(self) -> pd.DataFrame:
         url = "https://services9.arcgis.com/DnERH4rcjw7NU6lv/arcgis/rest/services/Vaccine_Distribution_Program/FeatureServer/2/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=date_reported%2Cfirst_doses%2Csecond_doses&returnGeometry=true&featureEncoding=esriDefault&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnQueryGeometry=false&returnDistinctValues=false&cacheHint=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=pjson&token="
-        data = requests.get(url).json()
-        return pd.DataFrame.from_records(
-            elem["attributes"] for elem in data["features"]
-        )
+        data = request_json(url)
+        return pd.DataFrame.from_records(elem["attributes"] for elem in data["features"])
 
     def rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         if self.columns_rename:
@@ -25,9 +24,7 @@ class Zimbabwe:
         df["total_vaccinations"] = df.people_vaccinated + df.people_fully_vaccinated
         df = df.groupby("date", as_index=False).sum().sort_values("date")
         df[["total_vaccinations", "people_vaccinated", "people_fully_vaccinated"]] = (
-            df[["total_vaccinations", "people_vaccinated", "people_fully_vaccinated"]]
-            .cumsum()
-            .astype(int)
+            df[["total_vaccinations", "people_vaccinated", "people_fully_vaccinated"]].cumsum().astype(int)
         )
         return df[df.total_vaccinations > 0]
 

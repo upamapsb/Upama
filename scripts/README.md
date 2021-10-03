@@ -42,8 +42,8 @@ It is pobably the most mature and complex process. It has a submodule in the `co
 tools to run all country importers. 
 
 _More info:_
-   - [Vaccination data overview](scripts/docs/VACCINATION_README.md)
-   - [Vaccination data contribution guideline](scripts/docs/VACCINATION_CONTRIBUTE.md)
+   - [Vaccination data overview](scripts/docs/vaccinations/README.md)
+   - [Vaccination data contribution guideline](scripts/docs/vaccinations/CONTRIBUTE.md)
 
 ## Test data
 > 📁 Find it at [`scripts/testing/`](scripts/testing)
@@ -81,6 +81,3 @@ python -m cowidev.yougov
 
 ## Others
 > 📁 Find them at [`scripts/`](scripts/)
-
-Old README content can be found at [README-old.md](README-old.md)
-⚠️ TO DO

@@ -5,14 +5,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.dates import localdate
-from cowidev.vax.utils.utils import (
-    get_driver,
-    set_download_settings,
-    get_latest_file,
-    clean_count,
-)
+from cowidev.utils.clean import clean_count
+from cowidev.utils.clean.dates import localdate
+from cowidev.utils.web.scraping import get_driver, set_download_settings
+from cowidev.vax.utils.incremental import enrich_data, increment
+from cowidev.vax.utils.utils import get_latest_file
 
 
 class Brazil:
@@ -32,21 +29,13 @@ class Brazil:
                 EC.visibility_of_all_elements_located((By.CLASS_NAME, "sn-kpi-data"))
             )
             for block in data_blocks:
-                block_title = block.find_element_by_class_name(
-                    "sn-kpi-measure-title"
-                ).get_attribute("title")
+                block_title = block.find_element_by_class_name("sn-kpi-measure-title").get_attribute("title")
                 if "Total de Doses Aplicadas (Dose1)" in block_title:
-                    people_vaccinated = block.find_element_by_class_name(
-                        "sn-kpi-value"
-                    ).text
+                    people_vaccinated = block.find_element_by_class_name("sn-kpi-value").text
                 elif "Total de Doses Aplicadas (Doses 2 e Única)" in block_title:
-                    people_fully_vaccinated = block.find_element_by_class_name(
-                        "sn-kpi-value"
-                    ).text
+                    people_fully_vaccinated = block.find_element_by_class_name("sn-kpi-value").text
                 elif "Total de Doses Aplicadas" in block_title:
-                    total_vaccinations = block.find_element_by_class_name(
-                        "sn-kpi-value"
-                    ).text
+                    total_vaccinations = block.find_element_by_class_name("sn-kpi-value").text
             doses_unique = self._parse_unique_doses(driver)
 
         ds = pd.Series(
@@ -60,7 +49,7 @@ class Brazil:
         return ds
 
     def _parse_unique_doses(self, driver):
-        time.sleep(5)
+        time.sleep(10)
         elem = driver.find_element_by_id("QV1-export")
         elem.click()
         elem = elem.find_element_by_class_name("fa-download")
@@ -68,9 +57,7 @@ class Brazil:
         time.sleep(5)
         path = get_latest_file(self._download_path, "xlsx")
         df = pd.read_excel(path)
-        doses_unique = (
-            df.loc[df.Fabricante == "JANSSEN", "Doses Aplicadas"].sum().item()
-        )
+        doses_unique = df.loc[df.Fabricante == "JANSSEN", "Doses Aplicadas"].sum().item()
         return doses_unique
 
     def pipe_date(self, ds: pd.Series) -> pd.Series:
@@ -91,12 +78,7 @@ class Brazil:
         return enrich_data(ds, "source_url", self.source_url)
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds.pipe(self.pipe_date)
-            .pipe(self.pipe_location)
-            .pipe(self.pipe_vaccine)
-            .pipe(self.pipe_source)
-        )
+        return ds.pipe(self.pipe_date).pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
 
     def export(self, paths):
         data = self.read().pipe(self.pipeline)

@@ -5,13 +5,12 @@ import pandas as pd
 
 from facebook_scraper import get_posts
 
-from cowidev.vax.utils.incremental import clean_count, merge_with_current_data
+from cowidev.utils.clean import clean_count
+from cowidev.vax.utils.incremental import merge_with_current_data
 
 
 class Armenia:
-    def __init__(
-        self, page_id: str = "ministryofhealthcare", location: str = "Armenia"
-    ):
+    def __init__(self, page_id: str = "ministryofhealthcare", location: str = "Armenia"):
         self.page_id = page_id
         self.location = location
         self._options = {
@@ -79,13 +78,9 @@ class Armenia:
         if people_vaccinated:
             record["people_vaccinated"] = clean_count(people_vaccinated.group(1))
 
-        people_fully_vaccinated = re.search(
-            self.regex["people_fully_vaccinated"], post["text"]
-        )
+        people_fully_vaccinated = re.search(self.regex["people_fully_vaccinated"], post["text"])
         if people_fully_vaccinated:
-            record["people_fully_vaccinated"] = clean_count(
-                people_fully_vaccinated.group(1)
-            )
+            record["people_fully_vaccinated"] = clean_count(people_fully_vaccinated.group(1))
 
         source_url = re.search(self.regex["source_url"], post["text"])
         if source_url:
@@ -109,7 +104,7 @@ class Armenia:
         return df.assign(location=self.location)
 
     def pipe_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(vaccine="Oxford/AstraZeneca, Sinovac, Sputnik V")
+        return df.assign(vaccine="Oxford/AstraZeneca, Sinopharm/Beijing, Sinovac, Sputnik V")
 
     def pipe_select_output_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         return df[

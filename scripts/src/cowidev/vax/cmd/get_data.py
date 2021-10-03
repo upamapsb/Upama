@@ -1,6 +1,8 @@
+import time
 import importlib
 
 from joblib import Parallel, delayed
+import pandas as pd
 
 from cowidev.vax.batch import __all__ as batch_countries
 from cowidev.vax.incremental import __all__ as incremental_countries
@@ -12,9 +14,7 @@ logger = get_logger()
 
 # Import modules
 country_to_module_batch = {c: f"cowidev.vax.batch.{c}" for c in batch_countries}
-country_to_module_incremental = {
-    c: f"cowidev.vax.incremental.{c}" for c in incremental_countries
-}
+country_to_module_incremental = {c: f"cowidev.vax.incremental.{c}" for c in incremental_countries}
 country_to_module = {
     **country_to_module_batch,
     **country_to_module_incremental,
@@ -31,10 +31,11 @@ class CountryDataGetter:
         self.gsheets_api = gsheets_api
 
     def run(self, module_name: str):
+        t0 = time.time()
         country = module_name.split(".")[-1]
         if country.lower() in self.skip_countries:
             logger.info(f"{module_name}: skipped! ⚠️")
-            return {"module_name": module_name, "success": None, "skipped": True}
+            return {"module_name": module_name, "success": None, "skipped": True, "time": None}
         args = [self.paths]
         if country == "colombia":
             args.append(self.gsheets_api)
@@ -48,7 +49,8 @@ class CountryDataGetter:
         else:
             success = True
             logger.info(f"{module_name}: SUCCESS ✅")
-        return {"module_name": module_name, "success": success, "skipped": False}
+        t = round(time.time() - t0, 2)
+        return {"module_name": module_name, "success": success, "skipped": False, "time": t}
 
 
 def main_get_data(
@@ -63,6 +65,7 @@ def main_get_data(
 
     Is equivalent to script `run_python_scripts.py`
     """
+    t0 = time.time()
     print("-- Getting data... --")
     skip_countries = [x.lower() for x in skip_countries]
     country_data_getter = CountryDataGetter(paths, skip_countries, gsheets_api)
@@ -81,21 +84,33 @@ def main_get_data(
                     module_name,
                 )
             )
+    # Get timing dataframe
+    df_time = (
+        pd.DataFrame(
+            [{"module": m["module_name"], "execution_time (sec)": m["time"]} for m in modules_execution_results]
+        )
+        .set_index("module")
+        .sort_values(by="execution_time (sec)", ascending=False)
+    )
 
-    modules_failed = [
-        m["module_name"] for m in modules_execution_results if m["success"] is False
-    ]
+    t_sec_1 = round(time.time() - t0, 2)
+    t_min_1 = round(t_sec_1 / 60, 2)
     # Retry failed modules
+    modules_failed = [m["module_name"] for m in modules_execution_results if m["success"] is False]
     logger.info(f"\n---\n\nRETRIALS ({len(modules_failed)})")
     modules_execution_results = []
     for module_name in modules_failed:
         modules_execution_results.append(country_data_getter.run(module_name))
-    modules_failed_retrial = [
-        m["module_name"] for m in modules_execution_results if m["success"] is False
-    ]
+    modules_failed_retrial = [m["module_name"] for m in modules_execution_results if m["success"] is False]
     if len(modules_failed_retrial) > 0:
         failed_str = "\n".join([f"* {m}" for m in modules_failed_retrial])
-        print(
-            f"\n---\n\nThe following scripts failed to run ({len(modules_failed_retrial)}):\n{failed_str}"
-        )
+        print(f"\n---\n\nFAILED\nThe following scripts failed to run ({len(modules_failed_retrial)}):\n{failed_str}")
+    t_sec_2 = round(time.time() - t0, 2)
+    t_min_2 = round(t_sec_2 / 60, 2)
+    print("---")
+    print("TIMING DETAILS")
+    print(f"Took {t_sec_1} seconds (i.e. {t_min_1} minutes).")
+    print(f"Top 20 most time consuming scripts:")
+    print(df_time.head(20))
+    print(f"\nTook {t_sec_2} seconds (i.e. {t_min_2} minutes) [AFTER RETRIALS].")
     print_eoe()

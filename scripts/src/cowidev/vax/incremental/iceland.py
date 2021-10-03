@@ -1,10 +1,11 @@
+import re
 import json
 
-import requests
-from bs4 import BeautifulSoup
 import pandas as pd
 
-from cowidev.vax.utils.incremental import increment, clean_count
+from cowidev.utils.clean import clean_count
+from cowidev.utils.web import get_soup
+from cowidev.vax.utils.incremental import increment
 from cowidev.vax.utils.files import export_metadata
 
 
@@ -15,93 +16,71 @@ VACCINE_PROTOCOLS = {
     "Janssen": 1,
 }
 
+VACCINE_MAPPING = {
+    "Pfizer/BioNTech": "Pfizer/BioNTech",
+    "Moderna": "Moderna",
+    "Oxford/AstraZeneca": "Oxford/AstraZeneca",
+    "Janssen": "Johnson&Johnson",
+}
+
 
 def main(paths):
 
     url = "https://e.infogram.com/c3bc3569-c86d-48a7-9d4c-377928f102bf"
-    soup = BeautifulSoup(requests.get(url).content, "html.parser")
+    soup = get_soup(url)
 
     for script in soup.find_all("script"):
         if "infographicData" in str(script):
-            json_data = (
-                str(script)
-                .replace("<script>window.infographicData=", "")
-                .replace(";</script>", "")
-            )
+            json_data = str(script).replace("<script>window.infographicData=", "").replace(";</script>", "")
             json_data = json.loads(json_data)
             break
 
-    data = json_data["elements"]["content"]["content"]["entities"][
-        "39ac25a9-8af7-4d26-bd19-62a3696920a2"
-    ]["props"]["chartData"]["data"][0]
+    metric_entities = {
+        "total_vaccinations": "7287c058-7921-4abc-a667-ce298827c969",
+        "people_vaccinated": "8d14f33a-d482-4176-af55-71209314b07b",
+        "people_fully_vaccinated": "16a69e30-01fd-4806-920c-436f8f29e9bf",
+        "total_boosters": "209af2de-9927-4c51-a704-ddc85e28bab9",
+    }
+    data = {}
 
-    df = pd.DataFrame(data[1:], columns=data[0])
-
-    assert set(df.iloc[:, 0]) == set(VACCINE_PROTOCOLS.keys()), "New vaccine found!"
-
-    total_vaccinations = 0
-    people_vaccinated = 0
-    people_fully_vaccinated = 0
-
-    for row in df.iterrows():
-        protocol = VACCINE_PROTOCOLS[row[1][0]]
-
-        if protocol == 1:
-            fv = clean_count(row[1]["Fullbólusettir"])
-            total_vaccinations += fv
-            people_vaccinated += fv
-            people_fully_vaccinated += fv
-
-        elif protocol == 2:
-            fv = clean_count(row[1]["Fullbólusettir"])
-            pv = clean_count(row[1]["Bólusetning hafin"])
-            total_vaccinations += fv * 2 + pv
-            people_vaccinated += fv + pv
-            people_fully_vaccinated += fv
+    for metric, entity in metric_entities.items():
+        value = json_data["elements"]["content"]["content"]["entities"][entity]["props"]["chartData"]["data"][0][0][0]
+        value = re.search(r'18px;">([\d\.]+)', value).group(1)
+        value = clean_count(value)
+        data[metric] = value
 
     date = json_data["updatedAt"][:10]
 
     increment(
         paths=paths,
         location="Iceland",
-        total_vaccinations=total_vaccinations,
-        people_vaccinated=people_vaccinated,
-        people_fully_vaccinated=people_fully_vaccinated,
+        total_vaccinations=data["total_vaccinations"],
+        people_vaccinated=data["people_vaccinated"],
+        people_fully_vaccinated=data["people_fully_vaccinated"],
+        total_boosters=data["total_boosters"],
         date=date,
         source_url="https://www.covid.is/tolulegar-upplysingar-boluefni",
-        vaccine="Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",
+        vaccine=", ".join(sorted(VACCINE_MAPPING.values())),
     )
 
     # By manufacturer
-    data = json_data["elements"]["content"]["content"]["entities"][
-        "e329559c-c3cc-48e9-8b7b-1a5f87ea7ad3"
-    ]["props"]["chartData"]["data"][0]
+    data = json_data["elements"]["content"]["content"]["entities"]["e329559c-c3cc-48e9-8b7b-1a5f87ea7ad3"]["props"][
+        "chartData"
+    ]["data"][0]
     df = pd.DataFrame(data[1:]).reset_index(drop=True)
     df.columns = ["date"] + data[0][1:]
 
     df = df.melt("date", var_name="vaccine", value_name="total_vaccinations")
 
-    df["date"] = pd.to_datetime(df["date"], format="%d.%m.%y")
-    df["total_vaccinations"] = pd.to_numeric(
-        df["total_vaccinations"], errors="coerce"
-    ).fillna(0)
-    df["total_vaccinations"] = (
-        df.sort_values("date")
-        .groupby("vaccine", as_index=False)["total_vaccinations"]
-        .cumsum()
-    )
+    df["date"] = pd.to_datetime(df["date"], format="%d.%m.%y").astype(str)
+    df["total_vaccinations"] = pd.to_numeric(df["total_vaccinations"], errors="coerce").fillna(0)
+    df["total_vaccinations"] = df.sort_values("date").groupby("vaccine", as_index=False)["total_vaccinations"].cumsum()
     df["location"] = "Iceland"
 
-    vaccine_mapping = {
-        "Pfizer/BioNTech": "Pfizer/BioNTech",
-        "Moderna": "Moderna",
-        "Oxford/AstraZeneca": "Oxford/AstraZeneca",
-        "Janssen": "Johnson&Johnson",
-    }
     assert set(df["vaccine"].unique()) == set(
-        vaccine_mapping.keys()
+        VACCINE_MAPPING.keys()
     ), f"Vaccines present in data: {df['vaccine'].unique()}"
-    df = df.replace(vaccine_mapping)
+    df = df.replace(VACCINE_MAPPING)
 
     df.to_csv(paths.tmp_vax_out_man("Iceland"), index=False)
     export_metadata(df, "Ministry of Health", url, paths.tmp_vax_metadata_man)

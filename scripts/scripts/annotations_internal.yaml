@@ -1,5 +1,5 @@
 vaccinations:
-  - annotation_text: "Data for China added on Jun 10"
+  - annotation_text: "Data for China added on Jun 10, Aug 12, Aug 26"
     location:
       - World
       - Asia
@@ -9,3 +9,8 @@ vaccinations:
     location:
       - Oceania
     date: "2021-05-24"
+excess-mortality:
+  - annotation_text: "Updated series includes deaths with unknown date"
+    location:
+      - Sweden
+    date: "2020-01-05"

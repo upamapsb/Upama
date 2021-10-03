@@ -2,13 +2,12 @@ import re
 
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.utils import get_soup
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_count
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 class Pakistan:
-
     def __init__(self) -> None:
         self.location = "Pakistan"
         self.source_url = "https://ncoc.gov.pk/covid-vaccination-en.php"
@@ -44,15 +43,11 @@ class Pakistan:
         return enrich_data(
             ds,
             "vaccine",
-            "CanSino, Oxford/AstraZeneca, Sinovac, Sinopharm/Beijing, Sputnik V",
+            "CanSino, Covaxin, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac, Sputnik V",
         )
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds
-            .pipe(self.pipe_location)
-            .pipe(self.pipe_vaccine)
-        )
+        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine)
 
     def export(self, paths):
         data = self.read().pipe(self.pipeline)

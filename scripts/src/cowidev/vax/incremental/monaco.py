@@ -1,11 +1,12 @@
+import datetime
 import re
 
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from cowidev.vax.utils.utils import get_soup
-from cowidev.vax.utils.incremental import clean_count, merge_with_current_data
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_count, clean_date
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import merge_with_current_data
 
 
 class Monaco:
@@ -16,8 +17,9 @@ class Monaco:
         self._base_url = "https://www.gouv.mc"
         self.regex = {
             "title": r"Covid-19 : .*",
-            "people_vaccinated": r"Nombre de personnes vaccinées en primo injection : ([\d\.]+)",
-            "people_fully_vaccinated": r"Nombre de personnes ayant reçu l’injection de rappel : ([\d\.]+)",
+            "people_vaccinated": r"Nombre de personnes vaccinées en primo injection\s:\s([\d\.]+)",
+            "people_fully_vaccinated": r"Nombre de personnes ayant reçu l’injection de rappel\s:\s([\d\.]+)",
+            "date": r"voici les chiffres arrêtés au (\d+ \w+) inclus",
         }
 
     def read(self, last_update: str) -> pd.DataFrame:
@@ -41,7 +43,6 @@ class Monaco:
                 soup = get_soup(elem["link"])
                 record = {
                     "source_url": elem["link"],
-                    "date": elem["date"],
                     **self.parse_data_news_page(soup),
                 }
                 records.append(record)
@@ -52,23 +53,23 @@ class Monaco:
 
     def get_elements(self, soup: BeautifulSoup) -> list:
         elems = soup.find_all("h3", text=re.compile(self.regex["title"]))
-        elems = [
-            {"link": self.parse_link(elem), "date": self.parse_date(elem)}
-            for elem in elems
-        ]
+        elems = [{"link": self.parse_link(elem), "date": self.parse_date(elem)} for elem in elems]
         return elems
 
     def parse_data_news_page(self, soup: BeautifulSoup):
         people_vaccinated = re.search(self.regex["people_vaccinated"], soup.text)
-        people_fully_vaccinated = re.search(
-            self.regex["people_fully_vaccinated"], soup.text
-        )
+        people_fully_vaccinated = re.search(self.regex["people_fully_vaccinated"], soup.text)
+        date = re.search(self.regex["date"], soup.text)
         metrics = {}
         if people_vaccinated:
             metrics["people_vaccinated"] = clean_count(people_vaccinated.group(1))
         if people_fully_vaccinated:
-            metrics["people_fully_vaccinated"] = clean_count(
-                people_fully_vaccinated.group(1)
+            metrics["people_fully_vaccinated"] = clean_count(people_fully_vaccinated.group(1))
+        if date:
+            metrics["date"] = clean_date(
+                date.group(1) + " " + str(datetime.date.today().year),
+                fmt="%d %B %Y",
+                lang="fr",
             )
         return metrics
 
@@ -84,9 +85,7 @@ class Monaco:
         return df.dropna(subset=["people_vaccinated", "people_fully_vaccinated"])
 
     def pipe_total_vaccinations(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
-            total_vaccinations=df.people_vaccinated + df.people_fully_vaccinated
-        )
+        return df.assign(total_vaccinations=df.people_vaccinated + df.people_fully_vaccinated)
 
     def pipe_drop_duplicates(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.sort_values("date").drop_duplicates(

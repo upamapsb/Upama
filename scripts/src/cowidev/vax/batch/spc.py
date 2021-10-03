@@ -1,35 +1,17 @@
 from collections import defaultdict
 import copy
 
-import requests
 import pandas as pd
 
+from cowidev.utils.web import request_json
+from cowidev.vax.utils.orgs import SPC_COUNTRIES
 from cowidev.vax.utils.files import load_data
 from cowidev.vax.utils.utils import make_monotonic
-
 
 metrics_mapping = {
     "COVIDVACAD1": "people_vaccinated",
     "COVIDVACAD2": "people_fully_vaccinated",
     "COVIDVACADT": "total_vaccinations",
-}
-country_mapping = {
-    "CK": "Cook Islands",
-    "FJ": "Fiji",
-    "KI": "Kiribati",
-    "NC": "New Caledonia",
-    "NR": "Nauru",
-    "NU": "Niue",
-    "PF": "French Polynesia",
-    "PG": "Papua New Guinea",
-    "PN": "Pitcairn",
-    "SB": "Solomon Islands",
-    "TK": "Tokelau",
-    "TO": "Tonga",
-    "TV": "Tuvalu",
-    "VU": "Vanuatu",
-    "WF": "Wallis and Futuna",
-    "WS": "Samoa",
 }
 
 # Dictionary containing vaccines being used in each country and their start date. Element 'default' is used for all
@@ -44,6 +26,12 @@ vaccines_startdates = {
     "Tokelau": [
         ["Pfizer/BioNTech", None],
     ],
+    "Cook Islands": [
+        ["Pfizer/BioNTech", None],
+    ],
+    "Wallis and Futuna": [
+        ["Moderna", None],
+    ],
     "default": [
         ["Oxford/AstraZeneca", None],
     ],
@@ -56,7 +44,7 @@ class SPC:
 
     def read(self):
         # Get data
-        data = requests.get(self.source_url).json()
+        data = request_json(self.source_url)
         return self.parse_data(data)
 
     def parse_data(self, data: dict):
@@ -68,9 +56,9 @@ class SPC:
         for k, v in series.items():
             _, country_idx, metric_idx = k.split(":")
             if metric_idx in metrics_info:
-                vaccination_data[country_info[country_idx]][
-                    metrics_info[metric_idx]
-                ] = self._build_data_array(v["observations"], date_info)
+                vaccination_data[country_info[country_idx]][metrics_info[metric_idx]] = self._build_data_array(
+                    v["observations"], date_info
+                )
         return self._build_df_list(vaccination_data)
 
     def _parse_country_info(self, data: dict):
@@ -78,10 +66,7 @@ class SPC:
         country_info = data["data"]["structure"]["dimensions"]["series"][1]
         if country_info["id"] != "GEO_PICT":
             raise AttributeError("JSON data has changed")
-        return {
-            str(i): country_mapping[c["id"]]
-            for i, c in enumerate(country_info["values"])
-        }
+        return {str(i): SPC_COUNTRIES[c["id"]] for i, c in enumerate(country_info["values"])}
 
     def _parse_metrics_info(self, data: dict):
         # Get metrics info
@@ -100,9 +85,7 @@ class SPC:
         return {str(i): d["name"] for i, d in enumerate(date_info)}
 
     def _build_data_array(self, observations: dict, date_info: dict):
-        return {
-            date_info[k]: v[0] if len(v) == 1 else None for k, v in observations.items()
-        }
+        return {date_info[k]: v[0] if len(v) == 1 else None for k, v in observations.items()}
 
     def _build_df_list(self, data: dict):
         for k, v in data.items():
@@ -186,8 +169,7 @@ class SPC:
         records = sorted(records, key=lambda x: x[1])
         # Build mapping dictionary
         vax_date_mapping = [
-            (dt, ", ".join(sorted(r[0] for r in records[: i + 1])))
-            for i, (vax, dt) in enumerate(records)
+            (dt, ", ".join(sorted(r[0] for r in records[: i + 1]))) for i, (vax, dt) in enumerate(records)
         ]
         return vax_date_mapping
 
@@ -198,7 +180,7 @@ class SPC:
 
 
 def main(paths):
-    country_codes_url = "+".join(country_mapping.keys())
+    country_codes_url = "+".join(SPC_COUNTRIES.keys())
     SPC(
         source_url=(
             f"https://stats-nsi-stable.pacificdata.org/rest/data/SPC,DF_COVID_VACCINATION,1.0/D.{country_codes_url}.?"

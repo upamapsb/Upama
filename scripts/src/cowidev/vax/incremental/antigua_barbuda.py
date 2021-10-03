@@ -1,10 +1,8 @@
-import re
-
 import pandas as pd
 
-from cowidev.vax.utils.utils import get_soup
-from cowidev.vax.utils.incremental import clean_count, increment, enrich_data
-from cowidev.vax.utils.dates import extract_clean_date
+from cowidev.utils.clean import clean_count, extract_clean_date
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import increment, enrich_data
 
 
 class AntiguaBarbuda:
@@ -40,13 +38,9 @@ class AntiguaBarbuda:
 
     def _parse_date(self, dose1_elem, dose2_elem):
         date1_raw = dose1_elem.find("h2").text
-        date1 = extract_clean_date(
-            date1_raw, self.regex["date"], "%B %d, %Y", minus_days=1, lang="en"
-        )
+        date1 = extract_clean_date(date1_raw, self.regex["date"], "%B %d, %Y", minus_days=1, lang="en")
         date2_raw = dose2_elem.find("h2").text
-        date2 = extract_clean_date(
-            date2_raw, self.regex["date"], "%B %d, %Y", minus_days=1, lang="en"
-        )
+        date2 = extract_clean_date(date2_raw, self.regex["date"], "%B %d, %Y", minus_days=1, lang="en")
         if date1 == date2:
             return date1
         raise ValueError("Dates in first and second doses are not aligned")
@@ -58,16 +52,14 @@ class AntiguaBarbuda:
                 return clean_count(elem.find(class_="case-Number").text)
 
     def pipe_people_vaccinated(self, ds: pd.Series) -> pd.Series:
-        total_vaccinations = (
-            ds.loc["people_vaccinated"] + ds.loc["people_fully_vaccinated"]
-        )
+        total_vaccinations = ds.loc["people_vaccinated"] + ds.loc["people_fully_vaccinated"]
         return enrich_data(ds, "total_vaccinations", total_vaccinations)
 
     def pipe_location(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "location", self.location)
 
     def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(ds, "vaccine", "Oxford/AstraZeneca")
+        return enrich_data(ds, "vaccine", "Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V")
 
     def pipe_source(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "source_url", self.source_url)

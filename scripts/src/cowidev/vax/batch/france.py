@@ -13,13 +13,9 @@ def main(paths):
     }
     one_dose_vaccines = ["Johnson&Johnson"]
 
-    source = (
-        "https://www.data.gouv.fr/fr/datasets/r/b273cf3b-e9de-437c-af55-eda5979e92fc"
-    )
+    source = "https://www.data.gouv.fr/fr/datasets/r/b273cf3b-e9de-437c-af55-eda5979e92fc"
 
-    df = pd.read_csv(
-        source, usecols=["vaccin", "jour", "n_cum_dose1", "n_cum_dose2"], sep=";"
-    )
+    df = pd.read_csv(source, usecols=["vaccin", "jour", "n_cum_dose1", "n_cum_dose2", "n_cum_dose3"], sep=";")
 
     df = df.rename(
         columns={
@@ -27,6 +23,7 @@ def main(paths):
             "jour": "date",
             "n_cum_dose1": "people_vaccinated",
             "n_cum_dose2": "people_fully_vaccinated",
+            "n_cum_dose3": "total_boosters",
         }
     )
 
@@ -36,26 +33,21 @@ def main(paths):
     df["vaccine"] = df.vaccine.replace(vaccine_mapping)
 
     # Add total doses
-    df["total_vaccinations"] = df.people_vaccinated + df.people_fully_vaccinated
+    df["total_vaccinations"] = df.people_vaccinated + df.people_fully_vaccinated + df.total_boosters
 
-    manufacturer = df[["date", "total_vaccinations", "vaccine"]].assign(
-        location="France"
-    )
+    manufacturer = df[["date", "total_vaccinations", "vaccine"]].assign(location="France")
     manufacturer.to_csv(paths.tmp_vax_out_man("France"), index=False)
-    export_metadata(
-        manufacturer, "Public Health France", source, paths.tmp_vax_metadata_man
-    )
+    export_metadata(manufacturer, "Public Health France", source, paths.tmp_vax_metadata_man)
 
     # Infer fully vaccinated for one-dose vaccines
-    df.loc[
-        df.vaccine.isin(one_dose_vaccines), "people_fully_vaccinated"
-    ] = df.people_vaccinated
+    df.loc[df.vaccine.isin(one_dose_vaccines), "people_fully_vaccinated"] = df.people_vaccinated
 
     df = df.groupby("date", as_index=False).agg(
         {
             "total_vaccinations": "sum",
             "people_vaccinated": "sum",
             "people_fully_vaccinated": "sum",
+            "total_boosters": "sum",
             "vaccine": lambda x: ", ".join(sorted(x)),
         }
     )

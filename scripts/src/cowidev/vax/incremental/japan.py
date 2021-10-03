@@ -1,8 +1,8 @@
 import pandas as pd
 
+from cowidev.utils.clean.dates import localdate
+from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.utils import get_soup
-from cowidev.vax.utils.dates import localdate
 
 
 def read(source: str) -> pd.Series:
@@ -40,13 +40,11 @@ def enrich_location(ds: pd.Series) -> pd.Series:
 
 
 def enrich_vaccine(ds: pd.Series) -> pd.Series:
-    return enrich_data(ds, "vaccine", "Moderna, Pfizer/BioNTech")
+    return enrich_data(ds, "vaccine", "Moderna, Pfizer/BioNTech, Oxford/AstraZeneca")
 
 
 def enrich_source(ds: pd.Series) -> pd.Series:
-    return enrich_data(
-        ds, "source_url", "https://www.kantei.go.jp/jp/headline/kansensho/vaccine.html"
-    )
+    return enrich_data(ds, "source_url", "https://www.kantei.go.jp/jp/headline/kansensho/vaccine.html")
 
 
 def pipeline(ds: pd.Series) -> pd.Series:

@@ -1,13 +1,15 @@
-url <- read_html(GET(
-        "https://www.msp.gob.do/web/?page_id=6948#1586785071804-577a2da4-6f72",
-        config(ssl_verifypeer=0)
-    )) %>%
-    html_node(".infobox a") %>%
+url <- read_html("https://www.msp.gob.do/web/?page_id=6948") %>%
+    html_node(".downloadlink") %>%
     html_attr("href") %>%
-    paste0("https://www.msp.gob.do", .) %>%
-    str_squish()
+    paste0("https://www.msp.gob.do", .)
 
-download.file(url = url, destfile = "tmp/tmp.pdf", quiet = TRUE, method = "curl", extra = "-k")
+download.file(
+    url = url,
+    destfile = "tmp/tmp.pdf",
+    quiet = TRUE,
+    method = "curl",
+    extra = "-k"
+)
 
 date <- pdf_text("tmp/tmp.pdf") %>%
     str_extract_all("\\d+/\\d+/\\d{4}") %>%

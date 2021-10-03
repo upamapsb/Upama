@@ -1,12 +1,12 @@
-import requests
 import pandas as pd
 
+from cowidev.utils.clean.dates import localdate
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.dates import localdate
 
 
 def read(source: str) -> pd.Series:
-    data = requests.get(source).json()
+    data = request_json(source)
     for count in data:
         if count[0] == "2nd Vaccine taken":
             people_fully_vaccinated = count[1]
@@ -42,9 +42,7 @@ def enrich_location(ds: pd.Series) -> pd.Series:
 
 
 def pipeline(ds: pd.Series) -> pd.Series:
-    return (
-        ds.pipe(add_totals).pipe(enrich_location).pipe(enrich_vaccine).pipe(enrich_date)
-    )
+    return ds.pipe(add_totals).pipe(enrich_location).pipe(enrich_vaccine).pipe(enrich_date)
 
 
 def main(paths):

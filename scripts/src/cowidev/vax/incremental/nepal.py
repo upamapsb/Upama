@@ -8,8 +8,9 @@ import PyPDF2
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from cowidev.vax.utils.incremental import clean_count, enrich_data, increment
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_count, clean_date
+from cowidev.vax.utils.incremental import enrich_data, increment
+
 
 class Nepal:
     def __init__(self):
@@ -53,14 +54,14 @@ class Nepal:
         return text
 
     def _parse_date(self, pdf_text: str):
-        regex = r"(\d{1,2}) ([A-Za-z]+) (202\d)"
+        regex = r"(\d{1,2})\s+([A-Za-z]+)\s+(202\d)"
         day = clean_count(re.search(regex, pdf_text).group(1))
         month = self._get_month(re.search(regex, pdf_text).group(2))
         year = clean_count(re.search(regex, pdf_text).group(3))
         return clean_date(datetime(year, month, day))
 
     def _parse_metrics(self, pdf_text: str):
-        regex = r"1st Dose\s+\|\s+Fully Vaccinated (\d+) (\d+)"
+        regex = r"1st Dose\s+\|\s+Fully Vaccinated +(\d+) +\([\d\.]+\) +(\d+)"
         data = re.search(regex, pdf_text)
         people_vaccinated = clean_count(data.group(1))
         people_fully_vaccinated = clean_count(data.group(2))
@@ -89,17 +90,13 @@ class Nepal:
         return enrich_data(ds, "location", self.location)
 
     def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(ds, "vaccine", "Oxford/AstraZeneca, Sinopharm/Beijing")
+        return enrich_data(ds, "vaccine", "Johnson&Johnson, Oxford/AstraZeneca, Sinopharm/Beijing")
 
     def pipe_metrics(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(
-            ds, "total_vaccinations", ds.people_vaccinated + ds.people_fully_vaccinated
-        )
+        return enrich_data(ds, "total_vaccinations", ds.people_vaccinated + ds.people_fully_vaccinated)
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_metrics)
-        )
+        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_metrics)
 
     def to_csv(self, paths):
         data = self.read().pipe(self.pipeline)

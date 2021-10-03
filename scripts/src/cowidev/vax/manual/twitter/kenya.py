@@ -4,19 +4,13 @@ from PIL import Image
 import numpy as np
 import pandas as pd
 
+from cowidev.utils.clean import clean_date
 from cowidev.vax.manual.twitter.base import TwitterCollectorBase
 
 
 class Kenya(TwitterCollectorBase):
     def __init__(self, api, paths=None, **kwargs):
-        super().__init__(
-            api=api,
-            username="MOH_Kenya",
-            location="Kenya",
-            add_metrics_nan=True,
-            paths=paths,
-            **kwargs
-        )
+        super().__init__(api=api, username="MOH_Kenya", location="Kenya", add_metrics_nan=True, paths=paths, **kwargs)
 
     def _propose_df(self):
         max_iter = 100

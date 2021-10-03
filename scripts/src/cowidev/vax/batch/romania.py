@@ -1,8 +1,8 @@
-import requests
 import pandas as pd
 
 from cowidev.vax.utils.files import export_metadata
 from cowidev.vax.utils.utils import make_monotonic
+from cowidev.utils.web import request_json
 
 
 class Romania:
@@ -23,7 +23,7 @@ class Romania:
         self.vaccines_1d = vaccines_1d
 
     def read(self) -> pd.DataFrame:
-        data = requests.get(self.source_url).json()
+        data = request_json(self.source_url)
         return (
             pd.DataFrame.from_dict(
                 data["historicalData"],
@@ -45,9 +45,7 @@ class Romania:
         def _doses_by_vax(x):
             return {k: v["total_administered"] for k, v in x.items()}
 
-        df_vax = pd.DataFrame.from_records(
-            df.vaccines.apply(_doses_by_vax), index=df.index
-        )
+        df_vax = pd.DataFrame.from_records(df.vaccines.apply(_doses_by_vax), index=df.index)
         # Check vaccine names - Any new ones?
         vaccines_unknown = set(df_vax.columns).difference(self.vaccine_mapping)
         if vaccines_unknown:
@@ -56,11 +54,7 @@ class Romania:
         return df_vax.merge(df, left_index=True, right_index=True)
 
     def pipeline_base(self, df: pd.DataFrame) -> pd.DataFrame:
-        return (
-            df.pipe(self.pipe_rename_columns)
-            .pipe(self.pipe_location)
-            .pipe(self._unnest_vaccine_details)
-        )
+        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_location).pipe(self._unnest_vaccine_details)
 
     def pipe_source(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(source_url=self.source_url_ref)
@@ -69,38 +63,24 @@ class Romania:
         def _people_fully_vaccinated(x):
             return sum(v["immunized"] for v in x.values())
 
-        return df.assign(
-            people_fully_vaccinated=df.vaccines.apply(_people_fully_vaccinated).cumsum()
-        )
+        return df.assign(people_fully_vaccinated=df.vaccines.apply(_people_fully_vaccinated).cumsum())
 
     def pipe_people_vaccinated(self, df: pd.DataFrame) -> pd.DataFrame:
         def _people_fully_vaccinated_1d(x):
             return sum(v["immunized"] for k, v in x.items() if k in self.vaccines_1d)
 
-        people_fully_vaccinated_1d = df.vaccines.apply(
-            _people_fully_vaccinated_1d
-        ).cumsum()
+        people_fully_vaccinated_1d = df.vaccines.apply(_people_fully_vaccinated_1d).cumsum()
         return df.assign(
-            people_vaccinated=(
-                df.total_vaccinations
-                - df.people_fully_vaccinated
-                + people_fully_vaccinated_1d
-            )
+            people_vaccinated=(df.total_vaccinations - df.people_fully_vaccinated + people_fully_vaccinated_1d)
         )
 
     def _vaccine_start_dates(self, df: pd.DataFrame):
         date2vax = sorted(
-            (
-                (df.loc[df[vaccine] > 0, "date"].min(), vaccine)
-                for vaccine in self.vaccine_mapping.values()
-            ),
+            ((df.loc[df[vaccine] > 0, "date"].min(), vaccine) for vaccine in self.vaccine_mapping.values()),
             key=lambda x: x[0],
             reverse=True,
         )
-        return [
-            (date2vax[i][0], ", ".join(sorted(v[1] for v in date2vax[i:])))
-            for i in range(len(date2vax))
-        ]
+        return [(date2vax[i][0], ", ".join(sorted(v[1] for v in date2vax[i:]))) for i in range(len(date2vax))]
 
     def pipe_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
         vax_date_mapping = self._vaccine_start_dates(df)
@@ -145,9 +125,7 @@ class Romania:
         return df[df.total_vaccinations != 0]
 
     def pipe_manufacturer_cumsum(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
-            total_vaccinations=df.groupby("vaccine", as_index=False).cumsum()
-        )
+        return df.assign(total_vaccinations=df.groupby("vaccine", as_index=False).cumsum())
 
     def pipeline_manufacturer(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.pipe(self.pipe_manufacturer_melt).pipe(self.pipe_manufacturer_cumsum)

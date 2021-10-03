@@ -1,159 +1,207 @@
 location,date,vaccine,total_vaccinations
-Hungary,2021-01-01,Pfizer/BioNTech,1093
-Hungary,2021-01-08,Pfizer/BioNTech,72027
-Hungary,2021-01-15,Moderna,3059
-Hungary,2021-01-15,Pfizer/BioNTech,120689
-Hungary,2021-01-22,Moderna,3130
-Hungary,2021-01-22,Pfizer/BioNTech,153234
-Hungary,2021-01-29,Moderna,3342
-Hungary,2021-01-29,Pfizer/BioNTech,300409
-Hungary,2021-02-05,Moderna,14571
+Hungary,2021-01-01,Pfizer/BioNTech,1095
+Hungary,2021-01-08,Pfizer/BioNTech,71815
+Hungary,2021-01-15,Moderna,3045
+Hungary,2021-01-15,Pfizer/BioNTech,120515
+Hungary,2021-01-22,Moderna,3110
+Hungary,2021-01-22,Pfizer/BioNTech,153055
+Hungary,2021-01-29,Moderna,3289
+Hungary,2021-01-29,Pfizer/BioNTech,299730
+Hungary,2021-02-05,Moderna,14413
 Hungary,2021-02-05,Oxford/AstraZeneca,0
-Hungary,2021-02-05,Pfizer/BioNTech,383313
+Hungary,2021-02-05,Pfizer/BioNTech,382360
 Hungary,2021-02-05,Sputnik V,0
-Hungary,2021-02-12,Moderna,17536
-Hungary,2021-02-12,Oxford/AstraZeneca,20288
-Hungary,2021-02-12,Pfizer/BioNTech,441117
-Hungary,2021-02-12,Sputnik V,2438
-Hungary,2021-02-19,Moderna,21309
-Hungary,2021-02-19,Oxford/AstraZeneca,44002
-Hungary,2021-02-19,Pfizer/BioNTech,579603
+Hungary,2021-02-12,Moderna,17526
+Hungary,2021-02-12,Oxford/AstraZeneca,20101
+Hungary,2021-02-12,Pfizer/BioNTech,439830
+Hungary,2021-02-12,Sputnik V,2385
+Hungary,2021-02-19,Moderna,21249
+Hungary,2021-02-19,Oxford/AstraZeneca,43574
+Hungary,2021-02-19,Pfizer/BioNTech,577726
 Hungary,2021-02-19,Sinopharm/Beijing,0
-Hungary,2021-02-19,Sputnik V,18637
-Hungary,2021-02-26,Moderna,22631
-Hungary,2021-02-26,Oxford/AstraZeneca,86075
-Hungary,2021-02-26,Pfizer/BioNTech,667613
-Hungary,2021-02-26,Sinopharm/Beijing,163412
-Hungary,2021-02-26,Sputnik V,19506
-Hungary,2021-03-05,Moderna,59469
-Hungary,2021-03-05,Oxford/AstraZeneca,102715
-Hungary,2021-03-05,Pfizer/BioNTech,774908
-Hungary,2021-03-05,Sinopharm/Beijing,371192
-Hungary,2021-03-05,Sputnik V,22902
-Hungary,2021-03-12,Moderna,74732
-Hungary,2021-03-12,Oxford/AstraZeneca,239643
-Hungary,2021-03-12,Pfizer/BioNTech,894469
-Hungary,2021-03-12,Sinopharm/Beijing,495384
-Hungary,2021-03-12,Sputnik V,55257
-Hungary,2021-03-19,Moderna,79425
-Hungary,2021-03-19,Oxford/AstraZeneca,298931
-Hungary,2021-03-19,Pfizer/BioNTech,1058097
-Hungary,2021-03-19,Sinopharm/Beijing,508083
-Hungary,2021-03-19,Sputnik V,144078
-Hungary,2021-03-26,Moderna,84511
-Hungary,2021-03-26,Oxford/AstraZeneca,398569
-Hungary,2021-03-26,Pfizer/BioNTech,1215063
-Hungary,2021-03-26,Sinopharm/Beijing,691033
-Hungary,2021-03-26,Sputnik V,234773
-Hungary,2021-04-02,Moderna,150530
-Hungary,2021-04-02,Oxford/AstraZeneca,428285
-Hungary,2021-04-02,Pfizer/BioNTech,1432169
-Hungary,2021-04-02,Sinopharm/Beijing,890379
-Hungary,2021-04-02,Sputnik V,389622
-Hungary,2021-04-09,Moderna,204559
-Hungary,2021-04-09,Oxford/AstraZeneca,591410
-Hungary,2021-04-09,Pfizer/BioNTech,1637091
-Hungary,2021-04-09,Sinopharm/Beijing,1017878
-Hungary,2021-04-09,Sputnik V,679033
+Hungary,2021-02-19,Sputnik V,18484
+Hungary,2021-02-26,Moderna,22501
+Hungary,2021-02-26,Oxford/AstraZeneca,85258
+Hungary,2021-02-26,Pfizer/BioNTech,665513
+Hungary,2021-02-26,Sinopharm/Beijing,162077
+Hungary,2021-02-26,Sputnik V,19321
+Hungary,2021-03-05,Moderna,59086
+Hungary,2021-03-05,Oxford/AstraZeneca,101860
+Hungary,2021-03-05,Pfizer/BioNTech,772330
+Hungary,2021-03-05,Sinopharm/Beijing,368592
+Hungary,2021-03-05,Sputnik V,22756
+Hungary,2021-03-12,Moderna,74445
+Hungary,2021-03-12,Oxford/AstraZeneca,239095
+Hungary,2021-03-12,Pfizer/BioNTech,891614
+Hungary,2021-03-12,Sinopharm/Beijing,492383
+Hungary,2021-03-12,Sputnik V,54724
+Hungary,2021-03-19,Moderna,79115
+Hungary,2021-03-19,Oxford/AstraZeneca,298517
+Hungary,2021-03-19,Pfizer/BioNTech,1054896
+Hungary,2021-03-19,Sinopharm/Beijing,505062
+Hungary,2021-03-19,Sputnik V,143314
+Hungary,2021-03-26,Moderna,84172
+Hungary,2021-03-26,Oxford/AstraZeneca,398166
+Hungary,2021-03-26,Pfizer/BioNTech,1211790
+Hungary,2021-03-26,Sinopharm/Beijing,687323
+Hungary,2021-03-26,Sputnik V,233879
+Hungary,2021-04-02,Moderna,149942
+Hungary,2021-04-02,Oxford/AstraZeneca,427844
+Hungary,2021-04-02,Pfizer/BioNTech,1428960
+Hungary,2021-04-02,Sinopharm/Beijing,885907
+Hungary,2021-04-02,Sputnik V,388391
+Hungary,2021-04-09,Moderna,203839
+Hungary,2021-04-09,Oxford/AstraZeneca,590675
+Hungary,2021-04-09,Pfizer/BioNTech,1633326
+Hungary,2021-04-09,Sinopharm/Beijing,1013005
+Hungary,2021-04-09,Sputnik V,676266
 Hungary,2021-04-16,Johnson&Johnson,0
-Hungary,2021-04-16,Moderna,207239
-Hungary,2021-04-16,Oxford/AstraZeneca,638288
-Hungary,2021-04-16,Pfizer/BioNTech,1853078
-Hungary,2021-04-16,Sinopharm/Beijing,1035228
-Hungary,2021-04-16,Sputnik V,929007
+Hungary,2021-04-16,Moderna,206499
+Hungary,2021-04-16,Oxford/AstraZeneca,637425
+Hungary,2021-04-16,Pfizer/BioNTech,1849226
+Hungary,2021-04-16,Sinopharm/Beijing,1030350
+Hungary,2021-04-16,Sputnik V,924750
 Hungary,2021-04-23,Johnson&Johnson,0
-Hungary,2021-04-23,Moderna,270264
-Hungary,2021-04-23,Oxford/AstraZeneca,664407
-Hungary,2021-04-23,Pfizer/BioNTech,2174117
-Hungary,2021-04-23,Sinopharm/Beijing,1056605
-Hungary,2021-04-23,Sputnik V,1102288
+Hungary,2021-04-23,Moderna,269215
+Hungary,2021-04-23,Oxford/AstraZeneca,663482
+Hungary,2021-04-23,Pfizer/BioNTech,2169616
+Hungary,2021-04-23,Sinopharm/Beijing,1051731
+Hungary,2021-04-23,Sputnik V,1097161
 Hungary,2021-04-30,Johnson&Johnson,0
-Hungary,2021-04-30,Moderna,315987
-Hungary,2021-04-30,Oxford/AstraZeneca,670180
-Hungary,2021-04-30,Pfizer/BioNTech,2452747
-Hungary,2021-04-30,Sinopharm/Beijing,1404748
-Hungary,2021-04-30,Sputnik V,1309529
-Hungary,2021-05-07,Johnson&Johnson,3081
-Hungary,2021-05-07,Moderna,360163
-Hungary,2021-05-07,Oxford/AstraZeneca,719967
-Hungary,2021-05-07,Pfizer/BioNTech,2701762
-Hungary,2021-05-07,Sinopharm/Beijing,1478679
-Hungary,2021-05-07,Sputnik V,1530434
-Hungary,2021-05-14,Johnson&Johnson,20377
-Hungary,2021-05-14,Moderna,402017
-Hungary,2021-05-14,Oxford/AstraZeneca,757659
-Hungary,2021-05-14,Pfizer/BioNTech,2918154
-Hungary,2021-05-14,Sinopharm/Beijing,1530501
-Hungary,2021-05-14,Sputnik V,1622155
-Hungary,2021-05-21,Johnson&Johnson,48446
-Hungary,2021-05-21,Moderna,489223
-Hungary,2021-05-21,Oxford/AstraZeneca,782271
-Hungary,2021-05-21,Pfizer/BioNTech,3316610
-Hungary,2021-05-21,Sinopharm/Beijing,1572306
-Hungary,2021-05-21,Sputnik V,1646453
-Hungary,2021-05-28,Johnson&Johnson,60705
-Hungary,2021-05-28,Moderna,525242
-Hungary,2021-05-28,Oxford/AstraZeneca,811579
-Hungary,2021-05-28,Pfizer/BioNTech,3569958
-Hungary,2021-05-28,Sinopharm/Beijing,1875595
-Hungary,2021-05-28,Sputnik V,1709341
-Hungary,2021-06-04,Johnson&Johnson,73856
-Hungary,2021-06-04,Moderna,545714
-Hungary,2021-06-04,Oxford/AstraZeneca,925394
-Hungary,2021-06-04,Pfizer/BioNTech,3755960
-Hungary,2021-06-04,Sinopharm/Beijing,1956369
-Hungary,2021-06-04,Sputnik V,1764044
-Hungary,2021-06-11,Johnson&Johnson,83405
-Hungary,2021-06-11,Moderna,590189
-Hungary,2021-06-11,Oxford/AstraZeneca,975275
-Hungary,2021-06-11,Pfizer/BioNTech,3843891
-Hungary,2021-06-11,Sinopharm/Beijing,2011359
-Hungary,2021-06-11,Sputnik V,1785529
-Hungary,2021-06-18,Johnson&Johnson,90590
-Hungary,2021-06-18,Moderna,621859
-Hungary,2021-06-18,Oxford/AstraZeneca,1028053
-Hungary,2021-06-18,Pfizer/BioNTech,3960029
-Hungary,2021-06-18,Sinopharm/Beijing,2041788
-Hungary,2021-06-18,Sputnik V,1795354
-Hungary,2021-06-25,Johnson&Johnson,95411
-Hungary,2021-06-25,Moderna,651937
-Hungary,2021-06-25,Oxford/AstraZeneca,1067171
-Hungary,2021-06-25,Pfizer/BioNTech,4216713
-Hungary,2021-06-25,Sinopharm/Beijing,2058345
-Hungary,2021-06-25,Sputnik V,1800468
-Hungary,2021-07-02,Johnson&Johnson,97981
-Hungary,2021-07-02,Moderna,665069
-Hungary,2021-07-02,Oxford/AstraZeneca,1163947
-Hungary,2021-07-02,Pfizer/BioNTech,4287642
-Hungary,2021-07-02,Sinopharm/Beijing,2069094
-Hungary,2021-07-02,Sputnik V,1804223
-Hungary,2021-07-09,Johnson&Johnson,102348
-Hungary,2021-07-09,Moderna,673173
-Hungary,2021-07-09,Oxford/AstraZeneca,1193724
-Hungary,2021-07-09,Pfizer/BioNTech,4369334
-Hungary,2021-07-09,Sinopharm/Beijing,2078100
-Hungary,2021-07-09,Sputnik V,1807295
-Hungary,2021-07-16,Johnson&Johnson,107404
-Hungary,2021-07-16,Moderna,676956
-Hungary,2021-07-16,Oxford/AstraZeneca,1208963
-Hungary,2021-07-16,Pfizer/BioNTech,4442145
-Hungary,2021-07-16,Sinopharm/Beijing,2084206
-Hungary,2021-07-16,Sputnik V,1809163
-Hungary,2021-07-23,Johnson&Johnson,113240
-Hungary,2021-07-23,Moderna,678658
-Hungary,2021-07-23,Oxford/AstraZeneca,1213261
-Hungary,2021-07-23,Pfizer/BioNTech,4489652
-Hungary,2021-07-23,Sinopharm/Beijing,2089061
-Hungary,2021-07-23,Sputnik V,1810703
-Hungary,2021-07-30,Johnson&Johnson,119526
-Hungary,2021-07-30,Moderna,679534
-Hungary,2021-07-30,Oxford/AstraZeneca,1237773
-Hungary,2021-07-30,Pfizer/BioNTech,4539600
-Hungary,2021-07-30,Sinopharm/Beijing,2092905
-Hungary,2021-07-30,Sputnik V,1812111
-Hungary,2021-08-06,Johnson&Johnson,122891
-Hungary,2021-08-06,Moderna,681159
-Hungary,2021-08-06,Oxford/AstraZeneca,1240834
-Hungary,2021-08-06,Pfizer/BioNTech,4599500
-Hungary,2021-08-06,Sinopharm/Beijing,2097297
-Hungary,2021-08-06,Sputnik V,1813365
+Hungary,2021-04-30,Moderna,314650
+Hungary,2021-04-30,Oxford/AstraZeneca,669327
+Hungary,2021-04-30,Pfizer/BioNTech,2445274
+Hungary,2021-04-30,Sinopharm/Beijing,1391195
+Hungary,2021-04-30,Sputnik V,1302893
+Hungary,2021-05-07,Johnson&Johnson,3022
+Hungary,2021-05-07,Moderna,358591
+Hungary,2021-05-07,Oxford/AstraZeneca,718481
+Hungary,2021-05-07,Pfizer/BioNTech,2693362
+Hungary,2021-05-07,Sinopharm/Beijing,1464478
+Hungary,2021-05-07,Sputnik V,1520581
+Hungary,2021-05-14,Johnson&Johnson,20224
+Hungary,2021-05-14,Moderna,400402
+Hungary,2021-05-14,Oxford/AstraZeneca,756076
+Hungary,2021-05-14,Pfizer/BioNTech,2909481
+Hungary,2021-05-14,Sinopharm/Beijing,1515513
+Hungary,2021-05-14,Sputnik V,1609566
+Hungary,2021-05-21,Johnson&Johnson,48840
+Hungary,2021-05-21,Moderna,487077
+Hungary,2021-05-21,Oxford/AstraZeneca,780614
+Hungary,2021-05-21,Pfizer/BioNTech,3309053
+Hungary,2021-05-21,Sinopharm/Beijing,1556829
+Hungary,2021-05-21,Sputnik V,1632758
+Hungary,2021-05-28,Johnson&Johnson,61253
+Hungary,2021-05-28,Moderna,522677
+Hungary,2021-05-28,Oxford/AstraZeneca,809727
+Hungary,2021-05-28,Pfizer/BioNTech,3562970
+Hungary,2021-05-28,Sinopharm/Beijing,1852676
+Hungary,2021-05-28,Sputnik V,1694187
+Hungary,2021-06-04,Johnson&Johnson,74656
+Hungary,2021-06-04,Moderna,543091
+Hungary,2021-06-04,Oxford/AstraZeneca,923626
+Hungary,2021-06-04,Pfizer/BioNTech,3749177
+Hungary,2021-06-04,Sinopharm/Beijing,1932634
+Hungary,2021-06-04,Sputnik V,1746818
+Hungary,2021-06-11,Johnson&Johnson,84534
+Hungary,2021-06-11,Moderna,588126
+Hungary,2021-06-11,Oxford/AstraZeneca,974668
+Hungary,2021-06-11,Pfizer/BioNTech,3838246
+Hungary,2021-06-11,Sinopharm/Beijing,1988148
+Hungary,2021-06-11,Sputnik V,1768262
+Hungary,2021-06-18,Johnson&Johnson,91904
+Hungary,2021-06-18,Moderna,619992
+Hungary,2021-06-18,Oxford/AstraZeneca,1027690
+Hungary,2021-06-18,Pfizer/BioNTech,3957616
+Hungary,2021-06-18,Sinopharm/Beijing,2018784
+Hungary,2021-06-18,Sputnik V,1778061
+Hungary,2021-06-25,Johnson&Johnson,96881
+Hungary,2021-06-25,Moderna,650048
+Hungary,2021-06-25,Oxford/AstraZeneca,1066788
+Hungary,2021-06-25,Pfizer/BioNTech,4214281
+Hungary,2021-06-25,Sinopharm/Beijing,2035373
+Hungary,2021-06-25,Sputnik V,1783131
+Hungary,2021-07-02,Johnson&Johnson,99609
+Hungary,2021-07-02,Moderna,663308
+Hungary,2021-07-02,Oxford/AstraZeneca,1164012
+Hungary,2021-07-02,Pfizer/BioNTech,4286386
+Hungary,2021-07-02,Sinopharm/Beijing,2046334
+Hungary,2021-07-02,Sputnik V,1786904
+Hungary,2021-07-09,Johnson&Johnson,104340
+Hungary,2021-07-09,Moderna,671489
+Hungary,2021-07-09,Oxford/AstraZeneca,1194044
+Hungary,2021-07-09,Pfizer/BioNTech,4368674
+Hungary,2021-07-09,Sinopharm/Beijing,2055481
+Hungary,2021-07-09,Sputnik V,1789966
+Hungary,2021-07-16,Johnson&Johnson,110168
+Hungary,2021-07-16,Moderna,675312
+Hungary,2021-07-16,Oxford/AstraZeneca,1209269
+Hungary,2021-07-16,Pfizer/BioNTech,4441576
+Hungary,2021-07-16,Sinopharm/Beijing,2061652
+Hungary,2021-07-16,Sputnik V,1791822
+Hungary,2021-07-23,Johnson&Johnson,116247
+Hungary,2021-07-23,Moderna,676977
+Hungary,2021-07-23,Oxford/AstraZeneca,1213585
+Hungary,2021-07-23,Pfizer/BioNTech,4489027
+Hungary,2021-07-23,Sinopharm/Beijing,2066542
+Hungary,2021-07-23,Sputnik V,1793351
+Hungary,2021-07-30,Johnson&Johnson,122677
+Hungary,2021-07-30,Moderna,677801
+Hungary,2021-07-30,Oxford/AstraZeneca,1238032
+Hungary,2021-07-30,Pfizer/BioNTech,4516819
+Hungary,2021-07-30,Sinopharm/Beijing,2070374
+Hungary,2021-07-30,Sputnik V,1794751
+Hungary,2021-08-06,Johnson&Johnson,126106
+Hungary,2021-08-06,Moderna,678515
+Hungary,2021-08-06,Oxford/AstraZeneca,1240937
+Hungary,2021-08-06,Pfizer/BioNTech,4541253
+Hungary,2021-08-06,Sinopharm/Beijing,2073838
+Hungary,2021-08-06,Sputnik V,1795941
+Hungary,2021-08-13,Johnson&Johnson,130196
+Hungary,2021-08-13,Moderna,679814
+Hungary,2021-08-13,Oxford/AstraZeneca,1242642
+Hungary,2021-08-13,Pfizer/BioNTech,4567826
+Hungary,2021-08-13,Sinopharm/Beijing,2077832
+Hungary,2021-08-13,Sputnik V,1797292
+Hungary,2021-08-20,Johnson&Johnson,133170
+Hungary,2021-08-20,Moderna,680580
+Hungary,2021-08-20,Oxford/AstraZeneca,1243011
+Hungary,2021-08-20,Pfizer/BioNTech,4588870
+Hungary,2021-08-20,Sinopharm/Beijing,2081116
+Hungary,2021-08-20,Sputnik V,1798328
+Hungary,2021-08-27,Johnson&Johnson,138548
+Hungary,2021-08-27,Moderna,681311
+Hungary,2021-08-27,Oxford/AstraZeneca,1243436
+Hungary,2021-08-27,Pfizer/BioNTech,4617756
+Hungary,2021-08-27,Sinopharm/Beijing,2085862
+Hungary,2021-08-27,Sputnik V,1799807
+Hungary,2021-09-03,Johnson&Johnson,141524
+Hungary,2021-09-03,Moderna,682131
+Hungary,2021-09-03,Oxford/AstraZeneca,1243873
+Hungary,2021-09-03,Pfizer/BioNTech,4647413
+Hungary,2021-09-03,Sinopharm/Beijing,2090907
+Hungary,2021-09-03,Sputnik V,1801181
+Hungary,2021-09-10,Johnson&Johnson,144847
+Hungary,2021-09-10,Moderna,683167
+Hungary,2021-09-10,Oxford/AstraZeneca,1244162
+Hungary,2021-09-10,Pfizer/BioNTech,4672715
+Hungary,2021-09-10,Sinopharm/Beijing,2094980
+Hungary,2021-09-10,Sputnik V,1802356
+Hungary,2021-09-17,Johnson&Johnson,147966
+Hungary,2021-09-17,Moderna,684048
+Hungary,2021-09-17,Oxford/AstraZeneca,1244427
+Hungary,2021-09-17,Pfizer/BioNTech,4697381
+Hungary,2021-09-17,Sinopharm/Beijing,2098577
+Hungary,2021-09-17,Sputnik V,1803358
+Hungary,2021-09-24,Johnson&Johnson,150839
+Hungary,2021-09-24,Moderna,684920
+Hungary,2021-09-24,Oxford/AstraZeneca,1244626
+Hungary,2021-09-24,Pfizer/BioNTech,4721793
+Hungary,2021-09-24,Sinopharm/Beijing,2102667
+Hungary,2021-09-24,Sputnik V,1804318
+Hungary,2021-10-01,Johnson&Johnson,152904
+Hungary,2021-10-01,Moderna,685669
+Hungary,2021-10-01,Oxford/AstraZeneca,1244798
+Hungary,2021-10-01,Pfizer/BioNTech,4738303
+Hungary,2021-10-01,Sinopharm/Beijing,2106111
+Hungary,2021-10-01,Sputnik V,1804926

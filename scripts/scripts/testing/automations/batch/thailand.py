@@ -1,88 +1,49 @@
-import os
-import time
+import re
+import requests
+import datetime
 import pandas as pd
-from glob import glob
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.common.keys import Keys
-
-
-SOURCE_URL = "https://service.dmsc.moph.go.th/labscovid19/"
+from bs4 import BeautifulSoup
 
 
 def main():
 
-    # Options for Chrome WebDriver
-    caps = DesiredCapabilities().CHROME
-    caps["pageLoadStrategy"] = "none"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
+    }
+    general_url = "https://www3.dmsc.moph.go.th/"
 
-    op = Options()
-    op.add_argument("--disable-notifications")
-    op.add_experimental_option(
-        "prefs",
-        {
-            "download.prompt_for_download": False,
-            "download.directory_upgrade": True,
-            "safebrowsing.enabled": True,
-        },
-    )
+    req = requests.get(general_url, headers=headers)
+    soup = BeautifulSoup(req.content, "html.parser")
 
-    with webdriver.Chrome(desired_capabilities=caps, options=op) as driver:
+    url = soup.find("div", class_="container-fluid").find_all("a")[3].attrs["href"]
 
-        # Setting Chrome to trust downloads
-        driver.command_executor._commands["send_command"] = (
-            "POST",
-            "/session/$sessionId/chromium/send_command",
-        )
-        params = {
-            "cmd": "Page.setDownloadBehavior",
-            "params": {"behavior": "allow", "downloadPath": "tmp"},
-        }
-        command_result = driver.execute("send_command", params)
+    sheet = pd.read_excel(url + "/download", sheet_name="Data", usecols="A,B,C")
 
-        driver.get(SOURCE_URL)
-        time.sleep(10)
-        links = driver.find_elements_by_css_selector(".services a")
-        for link in links:
-            if "Raw Data" in link.text:
-                nextcloud = link.get_attribute("href")
-                break
-        driver.get(nextcloud)
-        time.sleep(5)
+    isdate = []
+    for i in range(len(sheet)):
+        isdate.append(isinstance(sheet.loc[i][0], datetime.datetime))
+    isdate
+    sheet["isdate"] = isdate
+    sheet = sheet.loc[sheet["isdate"] != False]
+    sheet = sheet.loc[sheet["Total"] != 0]
 
-        driver.find_element_by_css_selector(".directDownload a").click()
-        time.sleep(2)
+    sheet["Date"] = pd.to_datetime(sheet["Date"], errors="coerce")
+    sheet["Date"] = sheet["Date"].dt.strftime("%Y-%m-%d")
 
-        # for i in range(5):
-        #     driver.find_element_by_tag_name("html").send_keys(Keys.END)
-        #     time.sleep(1)
-        # for elem in driver.find_elements_by_css_selector(".innernametext"):
-        #     if "testing" in elem.text:
-        #         elem.click()
-        #         break
-        # time.sleep(5)
+    sheet["Total"] = sheet["Total"].astype(int)
 
-    file = glob("tmp/*Thailand*")[0]
-    df = pd.read_excel(file)
-    df.loc[:, "Date"] = pd.to_datetime(df["Date"], errors="coerce")
-    df = df[["Date", "Pos", "Total"]].dropna().sort_values("Date")
-    df["Positive rate"] = (df.Pos.rolling(7).mean() / df.Total.rolling(7).mean()).round(
-        3
-    )
-    df = df.rename(columns={"Total": "Daily change in cumulative total"}).drop(
-        columns="Pos"
-    )
-    df = df[df["Daily change in cumulative total"] > 0]
+    sheet = sheet.drop(columns=["Pos", "isdate"])
+    sheet = sheet.rename(columns={"Total": "Daily change in cumulative total"})
 
-    df.loc[:, "Country"] = "Thailand"
-    df.loc[:, "Source URL"] = SOURCE_URL
-    df.loc[:, "Source label"] = "Ministry of Public Health"
-    df.loc[:, "Units"] = "tests performed"
-    df.loc[:, "Notes"] = pd.NA
+    sheet.loc[:, "Country"] = "Thailand"
+    sheet.loc[:, "Units"] = "tests performed"
+    sheet.loc[:, "Source URL"] = general_url
+    sheet.loc[
+        :, "Source label"
+    ] = "Department of Medical Sciences Ministry of Public Health"
+    sheet.loc[:, "Notes"] = pd.NA
 
-    df.to_csv("automated_sheets/Thailand.csv", index=False)
-    os.remove(file)
+    sheet.to_csv("automated_sheets/Thailand.csv", index=False)
 
 
 if __name__ == "__main__":

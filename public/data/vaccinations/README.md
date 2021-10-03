@@ -36,6 +36,9 @@ The population estimates we use to calculate per-capita metrics are all based on
 * `people_vaccinated_per_hundred`: `people_vaccinated` per 100 people in the total population of the country.
 * `people_fully_vaccinated`: total number of people who received all doses prescribed by the vaccination protocol. If a person receives the first dose of a 2-dose vaccine, this metric stays the same. If they receive the second dose, the metric goes up by 1.
 * `people_fully_vaccinated_per_hundred`: `people_fully_vaccinated` per 100 people in the total population of the country.
+* `total_boosters`: Total number of COVID-19 vaccination booster doses administered (doses
+  administered beyond the number prescribed by the vaccination protocol)
+* `total_boosters_per_hundred`: Total number of COVID-19 vaccination booster doses administered per 100 people in the total population.
 
 Note: for `people_vaccinated` and `people_fully_vaccinated` we are dependent on the necessary data being made available, so we may not be able to make these metrics available for some countries.
 

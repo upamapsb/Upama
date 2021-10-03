@@ -1,63 +1,61 @@
+import json
+
 from datetime import date, timedelta
 
 import pandas as pd
 
+from cowidev.utils.web.scraping import get_soup
 
-URL = "https://opendata.ecdc.europa.eu/covid19/vaccine_tracker/csv/data.csv"
-VACCINES_ONE_DOSE = ["JANSS"]
+
+URL = "https://coronadashboard.government.nl/landelijk/vaccinaties"
 
 
 def main(paths):
+    soup = get_soup(URL)
+    script = soup.find("script", id="__NEXT_DATA__")
+    data = json.loads(script.string)
 
-    df = pd.read_csv(
-        URL, usecols=["YearWeekISO", "FirstDose", "SecondDose", "Region", "Vaccine"]
+    doses = (
+        pd.DataFrame.from_records(data["props"]["pageProps"]["selectedNlData"]["vaccine_administered_total"]["values"])
+        .rename(columns={"date_unix": "date", "estimated": "total_vaccinations"})
+        .drop(columns=["reported", "date_of_insertion_unix"])
     )
+    doses["date"] = pd.to_datetime(doses.date, unit="s").dt.date.astype(str)
 
-    df = df[df.Region == "NL"]
-
-    df = df.rename(
-        columns={
-            "YearWeekISO": "date",
-            "FirstDose": "people_vaccinated",
-            "SecondDose": "people_fully_vaccinated",
-            "Region": "location",
-        }
+    coverage = (
+        pd.DataFrame.from_records(data["props"]["pageProps"]["selectedNlData"]["vaccine_coverage"]["values"])
+        .rename(
+            columns={
+                "date_end_unix": "date",
+                "fully_vaccinated": "people_fully_vaccinated",
+                "partially_or_fully_vaccinated": "people_vaccinated",
+            }
+        )
+        .drop(columns=["date_of_insertion_unix", "partially_vaccinated", "date_start_unix"])
     )
+    coverage["date"] = pd.to_datetime(coverage.date, unit="s").dt.date.astype(str)
 
-    # Calculate metrics
-    df = df.assign(total_vaccinations=df.people_vaccinated + df.people_fully_vaccinated)
-    df.loc[
-        df.Vaccine.isin(VACCINES_ONE_DOSE), "people_fully_vaccinated"
-    ] = df.people_vaccinated
-    df = df.drop(columns="Vaccine").groupby("date").sum().cumsum().reset_index()
-
-    # Convert week numbers to dates (Sunday of each week)
-    # For the current week, the date is set to yesterday.
-    df = df[df.date.str[:4] == "2021"]
-    df["week_number"] = df.date.str[-2:].astype(int)
-    df["date"] = pd.to_datetime("2021-01-03")
-    df["date"] = (df.date + df.week_number * pd.DateOffset(days=7)).dt.date
-    df.loc[df.date >= date.today(), "date"] = date.today() - timedelta(days=1)
-
-    df = df.drop(columns="week_number")
-    df = df.assign(
-        location="Netherlands",
-        source_url="https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea",
+    (
+        pd.merge(doses, coverage, on="date", how="outer", validate="one_to_one")
+        .sort_values("date")
+        .assign(
+            location="Netherlands",
+            source_url="https://coronadashboard.government.nl/landelijk/vaccinaties",
+        )
+        .pipe(enrich_vaccine_name)
+        .to_csv(paths.tmp_vax_out("Netherlands"), index=False)
     )
-    df = df.pipe(enrich_vaccine_name)
-    df.to_csv(paths.tmp_vax_out("Netherlands"), index=False)
 
 
 def enrich_vaccine_name(df: pd.DataFrame) -> pd.DataFrame:
     def _enrich_vaccine_name(dt: str) -> str:
-        # See timeline in:
-        if dt < date(2021, 1, 18):
+        if dt < "2021-01-18":
             return "Pfizer/BioNTech"
-        elif date(2021, 1, 18) <= dt < date(2021, 2, 10):
+        elif "2021-01-18" <= dt < "2021-02-10":
             return "Moderna, Pfizer/BioNTech"
-        elif date(2021, 2, 10) <= dt < date(2021, 4, 21):
+        elif "2021-02-10" <= dt < "2021-04-21":
             return "Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-        elif date(2021, 4, 21) <= dt:
+        elif "2021-04-21" <= dt:
             return "Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
 
     return df.assign(vaccine=df.date.apply(_enrich_vaccine_name))

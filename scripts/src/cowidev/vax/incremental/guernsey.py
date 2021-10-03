@@ -1,10 +1,8 @@
-from datetime import datetime, timedelta
-
 import pandas as pd
 
-from cowidev.vax.utils.utils import get_soup
+from cowidev.utils.clean import extract_clean_date
+from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.dates import extract_clean_date
 
 
 class Guernsey:
@@ -35,17 +33,13 @@ class Guernsey:
         return enrich_data(ds, "location", self.location)
 
     def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(
-            ds, "vaccine", "Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-        )
+        return enrich_data(ds, "vaccine", "Moderna, Oxford/AstraZeneca, Pfizer/BioNTech")
 
     def pipe_source(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "source_url", self.source_url)
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
-        )
+        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
 
     def to_csv(self, paths):
         """Generalized."""

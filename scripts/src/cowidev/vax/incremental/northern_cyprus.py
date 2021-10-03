@@ -3,9 +3,9 @@ import re
 from bs4 import BeautifulSoup
 import pandas as pd
 
+from cowidev.utils.clean import clean_date
+from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.dates import clean_date
-from cowidev.vax.utils.utils import get_soup
 
 
 def read(source: str) -> pd.Series:
@@ -25,6 +25,7 @@ def parse_data(soup: BeautifulSoup) -> pd.Series:
             "total_vaccinations": int(numbers[0]["data-count"]),
             "people_vaccinated": int(numbers[1]["data-count"]),
             "people_fully_vaccinated": int(numbers[2]["data-count"]),
+            "total_boosters": int(numbers[3]["data-count"]),
             "date": date,
         }
     )
@@ -47,7 +48,7 @@ def pipeline(ds: pd.Series, source: str) -> pd.Series:
 
 
 def main(paths):
-    source = "https://asibilgisistemi.com/"
+    source = "https://asi.saglik.gov.ct.tr/"
     data = read(source).pipe(pipeline, source)
     increment(
         paths=paths,
@@ -55,6 +56,7 @@ def main(paths):
         total_vaccinations=data["total_vaccinations"],
         people_vaccinated=data["people_vaccinated"],
         people_fully_vaccinated=data["people_fully_vaccinated"],
+        total_boosters=data["total_boosters"],
         date=data["date"],
         source_url=data["source_url"],
         vaccine=data["vaccine"],

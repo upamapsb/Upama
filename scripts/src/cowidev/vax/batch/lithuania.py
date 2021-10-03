@@ -3,111 +3,115 @@ import json
 import requests
 import pandas as pd
 
-from cowidev.vax.utils.files import export_metadata
+from cowidev.vax.utils.utils import make_monotonic
 
 
-def main(paths):
+class Lithuania:
+    location: str = "Lithuania"
+    source_url_ref: str = "https://experience.arcgis.com/experience/cab84dcfe0464c2a8050a78f817924ca/page/page_3/"
+    vaccine_mapping = {
+        "AstraZeneca": "Oxford/AstraZeneca",
+        "Johnson & Johnson": "Johnson&Johnson",
+        "Moderna": "Moderna",
+        "Pfizer-BioNTech": "Pfizer/BioNTech",
+    }
 
-    DATA_URL = (
-        "https://services3.arcgis.com/MF53hRPmwfLccHCj/arcgis/rest/services/"
-        "covid_vaccinations_by_drug_name_new/FeatureServer/0/query"
-    )
-    PARAMS = {
+    source_url_coverage: str = "https://services3.arcgis.com/MF53hRPmwfLccHCj/arcgis/rest/services/covid_vaccinations_chart_new/FeatureServer/0/query"
+    query_params_coverage: dict = {
         "f": "json",
-        "where": "municipality_code='00'",
+        "where": "municipality_code='00' AND vaccination_state<>'01dalinai'",
         "returnGeometry": False,
         "spatialRel": "esriSpatialRelIntersects",
-        "outFields": "date,vaccine_name,vaccination_state,vaccinated_cum",
+        "outFields": "date,vaccination_state,all_cum",
         "resultOffset": 0,
         "resultRecordCount": 32000,
         "resultType": "standard",
     }
-    res = requests.get(DATA_URL, params=PARAMS)
 
-    data = [elem["attributes"] for elem in json.loads(res.content)["features"]]
-
-    df = pd.DataFrame.from_records(data)
-
-    df["date"] = pd.to_datetime(df["date"], unit="ms")
-
-    # Correction for vaccinations wrongly attributed to early December 2020
-    df.loc[df.date < "2020-12-27", "date"] = pd.to_datetime("2020-12-27")
-
-    # Reshape data
-    df = df[(df.vaccination_state != "Dalinai") & (df.vaccinated_cum > 0)].copy()
-    df.loc[df.vaccination_state == "Visi", "dose_number"] = 1
-    df.loc[df.vaccination_state == "Pilnai", "dose_number"] = 2
-    df = df.drop(columns="vaccination_state")
-
-    # Data by vaccine
-    vaccine_mapping = {
-        "Pfizer-BioNTech": "Pfizer/BioNTech",
-        "Moderna": "Moderna",
-        "AstraZeneca": "Oxford/AstraZeneca",
-        "Johnson & Johnson": "Johnson&Johnson",
+    source_url_doses: str = "https://services3.arcgis.com/MF53hRPmwfLccHCj/arcgis/rest/services/covid_vaccinations_by_drug_name_new/FeatureServer/0/query"
+    query_params_doses: dict = {
+        "f": "json",
+        "where": "municipality_code='00'",
+        "returnGeometry": False,
+        "spatialRel": "esriSpatialRelIntersects",
+        "outFields": "date,vaccines_used_cum,vaccine_name",
+        "resultOffset": 0,
+        "resultRecordCount": 32000,
+        "resultType": "standard",
     }
-    vaccines_wrong = set(df["vaccine_name"].unique()).difference(vaccine_mapping)
-    if vaccines_wrong:
-        raise ValueError(f"Missing vaccines: {vaccines_wrong}")
-    # assert set(df["vaccine_name"].unique()) == set(vaccine_mapping.keys())
-    df = df.replace(vaccine_mapping)
-    vax = (
-        df.groupby(["date", "vaccine_name"], as_index=False)["vaccinated_cum"]
-        .sum()
-        .sort_values("date")
-        .rename(
-            columns={"vaccine_name": "vaccine", "vaccinated_cum": "total_vaccinations"}
+
+    def read(self, url, params):
+        res = requests.get(url, params=params)
+        if res.ok:
+            data = [elem["attributes"] for elem in json.loads(res.content)["features"]]
+            return pd.DataFrame.from_records(data)
+        raise ValueError("Source not valid/available!")
+
+    def pipe_parse_dates(self, df: pd.DataFrame) -> pd.DataFrame:
+        df["date"] = pd.to_datetime(df["date"], unit="ms").dt.date.astype(str)
+        return df
+
+    def pipe_clean_doses(self, df: pd.DataFrame) -> pd.DataFrame:
+        self.vaccine_start_dates = (
+            df[(df.vaccines_used_cum > 0) & (df.vaccine_name != "visos")]
+            .replace(self.vaccine_mapping)
+            .groupby("vaccine_name", as_index=False)
+            .min()
+            .drop(columns="vaccines_used_cum")
         )
-    )
-    vax["location"] = "Lithuania"
-    vax.to_csv(paths.tmp_vax_out_man("Lithuania"), index=False)
-    export_metadata(vax, "Ministry of Health", DATA_URL, paths.tmp_vax_metadata_man)
-
-    # Unpivot
-    df = (
-        df.groupby(["date", "dose_number", "vaccine_name"], as_index=False)
-        .sum()
-        .pivot(
-            index=["date", "vaccine_name"],
-            columns="dose_number",
-            values="vaccinated_cum",
+        return (
+            df[(df.vaccines_used_cum > 0) & (df.vaccine_name == "visos")]
+            .drop(columns="vaccine_name")
+            .rename(columns={"vaccines_used_cum": "total_vaccinations"})
         )
-        .fillna(0)
-        .reset_index()
-        .rename(columns={1: "people_vaccinated", 2: "people_fully_vaccinated"})
-        .sort_values("date")
-    )
 
-    # Total vaccinations
-    df = df.assign(total_vaccinations=df.people_vaccinated + df.people_fully_vaccinated)
-
-    # Single shot
-    msk = df.vaccine_name == "Johnson & Johnson"
-    df.loc[msk, "people_fully_vaccinated"] = df.loc[msk, "people_vaccinated"]
-
-    # Group by date
-    df = (
-        df.groupby("date")
-        .agg(
-            {
-                "people_fully_vaccinated": sum,
-                "people_vaccinated": sum,
-                "total_vaccinations": sum,
-                "vaccine_name": lambda x: ", ".join(sorted(x)),
-            }
+    def pipe_clean_coverage(self, df: pd.DataFrame) -> pd.DataFrame:
+        df = (
+            df.pivot(index="date", columns="vaccination_state", values="all_cum")
+            .reset_index()
+            .rename(
+                columns={
+                    "00visos": "people_vaccinated",
+                    "02pilnai": "people_fully_vaccinated",
+                    "03pakartotinai": "total_boosters",
+                }
+            )
         )
-        .rename(columns={"vaccine_name": "vaccine"})
-        .reset_index()
-    )
-    df = df.replace(0, pd.NA)
+        return df[df.people_vaccinated > 0]
 
-    df.loc[:, "location"] = "Lithuania"
-    df.loc[
-        :, "source_url"
-    ] = "https://experience.arcgis.com/experience/cab84dcfe0464c2a8050a78f817924ca/page/page_3/"
+    def _find_vaccines(self, date):
+        vaccines = self.vaccine_start_dates.loc[self.vaccine_start_dates.date <= date, "vaccine_name"].values
+        return ", ".join(sorted(vaccines))
 
-    df.to_csv(paths.tmp_vax_out("Lithuania"), index=False)
+    def pipe_add_vaccines(self, df: pd.DataFrame) -> pd.DataFrame:
+        df["vaccine"] = df.date.apply(self._find_vaccines)
+        return df
+
+    def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
+        return df.assign(
+            location=self.location,
+            source_url=self.source_url_ref,
+        )
+
+    def export(self, paths):
+        coverage = (
+            self.read(self.source_url_coverage, self.query_params_coverage)
+            .pipe(self.pipe_parse_dates)
+            .pipe(self.pipe_clean_coverage)
+        )
+        doses = (
+            self.read(self.source_url_doses, self.query_params_doses)
+            .pipe(self.pipe_parse_dates)
+            .pipe(self.pipe_clean_doses)
+        )
+        df = (
+            pd.merge(coverage, doses, how="inner", on="date")
+            .pipe(self.pipe_add_vaccines)
+            .pipe(self.pipe_metadata)
+            .pipe(make_monotonic)
+        )
+        df.to_csv(paths.tmp_vax_out(self.location), index=False)
 
 
-if __name__ == "__main__":
-    main()
+def main(paths):
+    Lithuania().export(paths)

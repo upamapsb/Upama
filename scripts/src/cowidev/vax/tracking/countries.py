@@ -1,9 +1,9 @@
 import os
 from datetime import datetime
-from matplotlib import use
 
 import pandas as pd
 from cowidev.vax.tracking.vaccines import vaccines_comparison_with_who
+from cowidev.utils.utils import get_project_dir
 
 
 CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -68,19 +68,20 @@ def country_updates_summary(
     if not path_vaccinations:
         path_vaccinations = os.path.abspath(
             os.path.join(
-                CURRENT_DIR,
-                "../../../../../../public/data/vaccinations/vaccinations.csv",
+                get_project_dir(),
+                "public",
+                "data",
+                "vaccinations",
+                "vaccinations.csv",
             )
         )
     if not path_locations:
         path_locations = os.path.abspath(
-            os.path.join(
-                CURRENT_DIR, "../../../../../../public/data/vaccinations/locations.csv"
-            )
+            os.path.join(get_project_dir(), "public", "data", "vaccinations", "locations.csv")
         )
     if not path_automation_state:
         path_automation_state = os.path.abspath(
-            os.path.join(CURRENT_DIR, "../../../automation_state.csv")
+            os.path.join(get_project_dir(), "scripts", "output", "vaccinations", "automation_state.csv")
         )
     columns_output = [
         "location",
@@ -117,9 +118,7 @@ def country_updates_summary(
         df = df.merge(df_who, left_on="iso_code", right_on="ISO3", how="left")
         columns_output += ["reporting_to_WHO", "location_WHO"]
     # Additional fields
-    num_observation_days = (
-        datetime.now() - pd.to_datetime(df.first_observation_date)
-    ).dt.days + 1
+    num_observation_days = (datetime.now() - pd.to_datetime(df.first_observation_date)).dt.days + 1
     num_updates_per_observation_day = df.counts / num_observation_days
 
     df = df.assign(
@@ -183,21 +182,29 @@ def country_updates_summary(
             "experience.arcgis.com/experience/cab84dcfe0464c2a8050a78f817924ca",
             "gtmvigilanciacovid.shinyapps",
             "belta.by",
+            "fohm.se",
+            "moh.",
+            "vaccines.ncdc.ge",
+            "opendata.swiss",
         ]
         if "facebook." in x.lower():
             return "Facebook"
         elif "twitter." in x.lower():
             return "Twitter"
-        elif "github." in x.lower():
+        elif "github." in x.lower() or "githubusercontent" in x.lower():
             return "GitHub"
         elif any(gov in x.lower() for gov in govs):
             return "Govern/Official"
-        elif ".who.int" in x.lower():
+        elif (".who.int" in x.lower()) or ("who.maps.arcgis.com" in x.lower()):
             return "WHO"
         elif ".pacificdata.org" in x.lower():
             return "SPC"
         elif "ecdc.europa." in x.lower():
             return "ECDC"
+        elif "paho.org" in x.lower():
+            return "PAHO"
+        elif "africacdc.org" in x.lower():
+            return "Africa CDC"
         else:
             return "Others"
 
@@ -236,20 +243,16 @@ def countries_missing(
     """
     if not path_population:
         path_population = os.path.abspath(
-            os.path.join(CURRENT_DIR, "../../../../../input/un/population_2020.csv")
+            os.path.join(get_project_dir(), "scripts", "input", "un", "population_2020.csv")
         )
     if not path_locations:
         path_locations = os.path.abspath(
-            os.path.join(
-                CURRENT_DIR, "../../../../../../public/data/vaccinations/locations.csv"
-            )
+            os.path.join(get_project_dir(), "public", "data", "vaccinations", "locations.csv")
         )
     df_loc = pd.read_csv(path_locations, usecols=["location"])
     df_pop = pd.read_csv(path_population)
     df_pop = df_pop[df_pop.iso_code.apply(lambda x: isinstance(x, str) and len(x) == 3)]
-    df_mis = df_pop.loc[
-        ~df_pop["entity"].isin(df_loc["location"]), ["entity", "population"]
-    ]
+    df_mis = df_pop.loc[~df_pop["entity"].isin(df_loc["location"]), ["entity", "population"]]
     # Sort
     if not ascending:
         df_mis = df_mis.sort_values(by="population", ascending=False)

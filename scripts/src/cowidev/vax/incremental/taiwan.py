@@ -3,9 +3,9 @@ import re
 import pandas as pd
 import tabula
 
-from cowidev.vax.utils.utils import get_soup
-from cowidev.vax.utils.incremental import clean_count, enrich_data, increment
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_count, clean_date
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 # New vaccine "Medigen" soon:
@@ -13,7 +13,9 @@ from cowidev.vax.utils.dates import clean_date
 # https://www.cdc.gov.tw/En/Bulletin/Detail/SEd8rAKMzywG_b92N6z8nA?typeid=158
 vaccines_mapping = {
     "AstraZeneca": "Oxford/AstraZeneca",
+    "高端": "Medigen",
     "Moderna": "Moderna",
+    "BioNTech": "Pfizer/BioNTech",
 }
 
 
@@ -110,9 +112,7 @@ class Taiwan:
         return enrich_data(ds, "source_url", self.source_data_url)
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds.pipe(self.pipe_metrics).pipe(self.pipe_location).pipe(self.pipe_source)
-        )
+        return ds.pipe(self.pipe_metrics).pipe(self.pipe_location).pipe(self.pipe_source)
 
     def to_csv(self, paths):
         data = self.read().pipe(self.pipeline)

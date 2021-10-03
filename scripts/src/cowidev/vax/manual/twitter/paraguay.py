@@ -2,20 +2,14 @@ import re
 
 import pandas as pd
 
+from cowidev.utils.clean import clean_count, clean_date
 from cowidev.vax.manual.twitter.base import TwitterCollectorBase
-from cowidev.vax.utils.dates import clean_date
-from cowidev.vax.utils.utils import clean_count
 
 
 class Paraguay(TwitterCollectorBase):
     def __init__(self, api, paths=None, **kwargs):
         super().__init__(
-            api=api,
-            username="msaludpy",
-            location="Paraguay",
-            add_metrics_nan=True,
-            paths=paths,
-            **kwargs
+            api=api, username="msaludpy", location="Paraguay", add_metrics_nan=True, paths=paths, **kwargs
         )
 
     def _propose_df(self):
@@ -48,9 +42,7 @@ class Paraguay(TwitterCollectorBase):
                         "people_fully_vaccinated": people_fully_vaccinated,
                         "text": tweet.full_text,
                         "source_url": 1,  # pan.build_post_url(tweet.id),
-                        "media_url": tweet.extended_entities["media"][0][
-                            "media_url_https"
-                        ],
+                        "media_url": tweet.extended_entities["media"][0]["media_url_https"],
                     }
                 )
         df = pd.DataFrame(data)

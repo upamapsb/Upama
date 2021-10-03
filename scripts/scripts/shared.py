@@ -22,11 +22,11 @@ zero_day = datetime.strptime(ZERO_DAY, "%Y-%m-%d")
 # =========
 
 
-def _find_closest_year_row(df, year=2020):
+def _find_closest_year_row(df, year=2021):
     """Returns the row which is closest to the year specified (in either direction)"""
     df = df.copy()
     df["year"] = df["year"].sort_values(ascending=True)
-    return df.loc[df["year"].map(lambda x: abs(x - 2020)).idxmin()]
+    return df.loc[df["year"].map(lambda x: abs(x - year)).idxmin()]
 
 
 # ============
@@ -34,19 +34,14 @@ def _find_closest_year_row(df, year=2020):
 # ============
 
 
-def load_population(year=2020):
+def load_population(year=2021):
     df = pd.read_csv(
         POPULATION_CSV_PATH,
         keep_default_na=False,
         usecols=["entity", "year", "population"],
     )
     return (
-        pd.DataFrame(
-            [
-                _find_closest_year_row(df_group, year)
-                for loc, df_group in df.groupby("entity")
-            ]
-        )
+        pd.DataFrame([_find_closest_year_row(df_group, year) for loc, df_group in df.groupby("entity")])
         .dropna()
         .rename(columns={"entity": "location", "year": "population_year"})
     )
@@ -62,9 +57,7 @@ def load_owid_continents():
     )
 
 
-locations_by_continent = (
-    load_owid_continents().groupby("continent")["location"].apply(list).to_dict()
-)
+locations_by_continent = load_owid_continents().groupby("continent")["location"].apply(list).to_dict()
 
 
 def load_wb_income_groups():
@@ -88,9 +81,7 @@ def load_eu_country_names():
     return df["location"].tolist()
 
 
-locations_by_wb_income_group = (
-    load_wb_income_groups().groupby("income_group")["location"].apply(list).to_dict()
-)
+locations_by_wb_income_group = load_wb_income_groups().groupby("income_group")["location"].apply(list).to_dict()
 
 
 # ==============
@@ -123,20 +114,13 @@ aggregates_spec = {
     "World": {"include": None, "exclude": None},
     "World excl. China": {"exclude": ["China"]},
     "World excl. China and South Korea": {"exclude": ["China", "South Korea"]},
-    "World excl. China, South Korea, Japan and Singapore": {
-        "exclude": ["China", "South Korea", "Japan", "Singapore"]
-    },
+    "World excl. China, South Korea, Japan and Singapore": {"exclude": ["China", "South Korea", "Japan", "Singapore"]},
     # European Union
     "European Union": {"include": load_eu_country_names()},
     # OWID continents
-    **{
-        continent: {"include": locations, "exclude": None}
-        for continent, locations in locations_by_continent.items()
-    },
+    **{continent: {"include": locations, "exclude": None} for continent, locations in locations_by_continent.items()},
     # Asia without China
-    "Asia excl. China": {
-        "include": list(set(locations_by_continent["Asia"]) - set(["China"]))
-    },
+    "Asia excl. China": {"include": list(set(locations_by_continent["Asia"]) - set(["China"]))},
     # World Bank income groups
     **{
         income_group: {"include": locations, "exclude": None}
@@ -160,10 +144,7 @@ def inject_owid_aggregates(df):
     return pd.concat(
         [
             df,
-            *[
-                _sum_aggregate(df, name, **params)
-                for name, params in aggregates_spec.items()
-            ],
+            *[_sum_aggregate(df, name, **params) for name, params in aggregates_spec.items()],
         ],
         sort=True,
         ignore_index=True,
@@ -283,13 +264,9 @@ def _date_diff(a, b, positive_only=False):
 
 
 def _days_since(df, spec):
-    ref_date = pd.to_datetime(
-        _get_date_of_threshold(df, spec["value_col"], spec["value_threshold"])
-    )
+    ref_date = pd.to_datetime(_get_date_of_threshold(df, spec["value_col"], spec["value_threshold"]))
     return (
-        pd.to_datetime(df["date"])
-        .map(lambda date: _date_diff(date, ref_date, spec["positive_only"]))
-        .astype("Int64")
+        pd.to_datetime(df["date"]).map(lambda date: _date_diff(date, ref_date, spec["positive_only"])).astype("Int64")
     )
 
 
@@ -321,9 +298,7 @@ def inject_cfr(df):
     df["cfr"] = cfr_series.round(decimals=3)
     df["cfr_100_cases"] = df.apply(_apply_row_cfr_100, axis=1)
 
-    shifted_cases = (
-        df.sort_values("date").groupby("location")["new_cases_7_day_avg_right"].shift(9)
-    )
+    shifted_cases = df.sort_values("date").groupby("location")["new_cases_7_day_avg_right"].shift(9)
     df["cfr_short_term"] = (
         df["new_deaths_7_day_avg_right"]
         .div(shifted_cases)
@@ -333,9 +308,7 @@ def inject_cfr(df):
         .round(4)
     )
     df.loc[
-        (df.cfr_short_term < 0)
-        | (df.cfr_short_term > 10)
-        | (df.date.astype(str) < "2020-09-01"),
+        (df.cfr_short_term < 0) | (df.cfr_short_term > 10) | (df.date.astype(str) < "2020-09-01"),
         "cfr_short_term",
     ] = pd.NA
 
@@ -634,9 +607,7 @@ def existsin(l1, l2):
 def standard_export(df, output_path, grapher_name):
     # Grapher
     df_grapher = df.copy()
-    df_grapher["date"] = pd.to_datetime(df_grapher["date"]).map(
-        lambda date: (date - zero_day).days
-    )
+    df_grapher["date"] = pd.to_datetime(df_grapher["date"]).map(lambda date: (date - zero_day).days)
     df_grapher = (
         df_grapher[GRAPHER_COL_NAMES.keys()]
         .rename(columns=GRAPHER_COL_NAMES)

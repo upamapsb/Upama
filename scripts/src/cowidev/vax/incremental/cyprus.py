@@ -2,9 +2,9 @@ import re
 
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.utils import get_soup
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_count, clean_date
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 def read(source: str) -> pd.Series:
@@ -38,9 +38,7 @@ def enrich_location(ds: pd.Series) -> pd.Series:
 
 
 def enrich_vaccine(ds: pd.Series) -> pd.Series:
-    return enrich_data(
-        ds, "vaccine", "Pfizer/BioNTech, Oxford/AstraZeneca, Moderna, Johnson&Johnson"
-    )
+    return enrich_data(ds, "vaccine", "Pfizer/BioNTech, Oxford/AstraZeneca, Moderna, Johnson&Johnson")
 
 
 def pipeline(ds: pd.Series) -> pd.Series:

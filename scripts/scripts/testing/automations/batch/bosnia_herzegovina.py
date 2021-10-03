@@ -4,6 +4,8 @@ from datetime import datetime
 import pandas as pd
 from bs4 import BeautifulSoup
 
+from utils import make_monotonic
+
 
 class BosniaHerzegovina:
     def __init__(self):
@@ -43,9 +45,7 @@ class BosniaHerzegovina:
         return value
 
     def _parse_date(self, elem):
-        return datetime.strptime(elem.find("p").text.strip(), "%d.%m.%Y.").strftime(
-            "%Y-%m-%d"
-        )
+        return datetime.strptime(elem.find("p").text.strip(), "%d.%m.%Y.").strftime("%Y-%m-%d")
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.assign(
@@ -57,10 +57,7 @@ class BosniaHerzegovina:
             }
         ).sort_values("Date")
         df.loc[:, "Cumulative total"] = (
-            df.loc[:, "Cumulative total"]
-            .astype(str)
-            .str.replace(r"\s|\*", "", regex=True)
-            .astype(int)
+            df.loc[:, "Cumulative total"].astype(str).str.replace(r"\s|\*", "", regex=True).astype(int)
         )
         df = df.pipe(self._remove_typo)
         if not (df.Date.value_counts() == 1).all():
@@ -72,11 +69,12 @@ class BosniaHerzegovina:
             ds = abs(df.loc[df.Date == "2021-01-08", "Cumulative total"] - 535439)
             id_remove = ds.idxmax()
             df = df.drop(id_remove)
+        df = df[df.Date != "2021-08-23"]
         return df
 
     def to_csv(self):
         output_path = f"automated_sheets/{self.location}.csv"
-        df = self.read().pipe(self.pipeline)
+        df = self.read().pipe(self.pipeline).pipe(make_monotonic)
         df.to_csv(output_path, index=False)
 
 

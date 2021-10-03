@@ -1,11 +1,10 @@
 import argparse
 import os
 import sys
-from functools import reduce
 import pandas as pd
 import numpy as np
 import pytz
-from datetime import datetime, timedelta
+from datetime import datetime
 from termcolor import colored
 
 CURRENT_DIR = os.path.dirname(__file__)
@@ -15,7 +14,6 @@ import megafile
 from shared import (
     load_population,
     load_owid_continents,
-    inject_total_daily_cols,
     inject_owid_aggregates,
     inject_per_million,
     inject_days_since,
@@ -45,9 +43,9 @@ WARNING = colored("[Warning]", "yellow")
 DATASET_NAME = "COVID-19 - Johns Hopkins University"
 
 LARGE_DATA_CORRECTIONS = [
-    ("Turkey", "2020-12-10", "cases"),
-    ("France", "2021-05-20", "cases"),
     ("Ecuador", "2021-07-20", "deaths"),
+    ("France", "2021-05-20", "cases"),
+    ("Turkey", "2020-12-10", "cases"),
 ]
 
 
@@ -56,10 +54,7 @@ def print_err(*args, **kwargs):
 
 
 def download_csv():
-    files = [
-        "time_series_covid19_confirmed_global.csv",
-        "time_series_covid19_deaths_global.csv",
-    ]
+    files = ["time_series_covid19_confirmed_global.csv", "time_series_covid19_deaths_global.csv"]
     for file in files:
         print(file)
         os.system(
@@ -80,28 +75,14 @@ def get_metric(metric, region):
         sys.exit(1)
 
     # Relabel as 'International'
-    df.loc[
-        df["Country/Region"].isin(
-            [
-                "Diamond Princess",
-                "MS Zaandam",
-            ]
-        ),
-        "Country/Region",
-    ] = "International"
+    df.loc[df["Country/Region"].isin(["Diamond Princess", "MS Zaandam"]), "Country/Region"] = "International"
 
     # Relabel Hong Kong to its own time series
     df.loc[df["Province/State"] == "Hong Kong", "Country/Region"] = "Hong Kong"
 
-    national = (
-        df.drop(columns="Province/State")
-        .groupby("Country/Region", as_index=False)
-        .sum()
-    )
+    national = df.drop(columns="Province/State").groupby("Country/Region", as_index=False).sum()
 
-    df = (
-        national.copy()
-    )  # df = pd.concat([national, subnational]).reset_index(drop=True)
+    df = national.copy()  # df = pd.concat([national, subnational]).reset_index(drop=True)
     df = df.melt(id_vars="Country/Region", var_name="date", value_name=metric)
     df.loc[:, "date"] = pd.to_datetime(df["date"], format="%m/%d/%y").dt.date
     df = df.sort_values("date")
@@ -116,18 +97,14 @@ def get_metric(metric, region):
     df = df.merge(cutoff, on="Country/Region", how="left")
     df = df[(df.date >= df.cutoff) | (df.cutoff.isna())].drop(columns="cutoff")
 
-    df.loc[:, metric.replace("total_", "new_")] = df[metric] - df.groupby(
-        "Country/Region"
-    )[metric].shift(1)
+    df.loc[:, metric.replace("total_", "new_")] = df[metric] - df.groupby("Country/Region")[metric].shift(1)
     return df
 
 
 def load_data():
     global_cases = get_metric("confirmed", "global")
     global_deaths = get_metric("deaths", "global")
-    return pd.merge(
-        global_cases, global_deaths, on=["date", "Country/Region"], how="outer"
-    )
+    return pd.merge(global_cases, global_deaths, on=["date", "Country/Region"], how="outer")
 
 
 def load_locations():
@@ -170,9 +147,7 @@ def check_data_correctness(df_merged):
     )
     if len(pop_entity_diff) > 0:
         # this is not an error, so don't increment errors variable
-        print(
-            "\n" + WARNING + " These entities were not found in the population dataset:"
-        )
+        print("\n" + WARNING + " These entities were not found in the population dataset:")
         print(pop_entity_diff)
         print()
         formatted_msg = ", ".join(f"`{entity}`" for entity in pop_entity_diff)
@@ -187,77 +162,12 @@ def check_data_correctness(df_merged):
 
 def discard_rows(df):
     for ldc in LARGE_DATA_CORRECTIONS:
-        df.loc[
-            (df.location == ldc[0]) & (df.date.astype(str) == ldc[1]), f"new_{ldc[2]}"
-        ] = np.nan
-    return df
-
-
-def reinstate_rows(df):
-    for dc in DATA_CORRECTIONS:
-        df.loc[
-            (df["location"] == dc["location"]) & (df["date"].astype(str) == dc["date"]),
-            dc["metric"],
-        ] = dc["official_value"]
-
-        for agg in dc["aggregates"]:
-            correction = dc["official_value"] - dc["smoothed_value"]
-            original = df.loc[
-                (df["location"] == agg) & (df["date"].astype(str) == dc["date"]),
-                dc["metric"],
-            ].item()
-            df.loc[
-                (df["location"] == agg) & (df["date"].astype(str) == dc["date"]),
-                dc["metric"],
-            ] = (
-                original + correction
-            )
-    return df
-
-
-def patch_ireland(df: pd.DataFrame) -> pd.DataFrame:
-    # This is temporary patch implemented on May 27, 2021. Due to the cyberattack against Ireland's
-    # IT systems in early May, case and death counts haven't been publicly updated since May 15,
-    # leading to a series of 0-case and 0-death days in JHU data. However the WHO seems to be
-    # receiving the data directly from the government — we therefore patch the series with WHO data
-
-    may_15 = pd.to_datetime("2021-05-15").date()
-    may_15_cases = df.loc[
-        (df.location == "Ireland") & (df.date == may_15), "new_cases"
-    ].item()
-
-    if may_15_cases == 0:
-
-        who_data = (
-            pd.read_csv("https://covid19.who.int/WHO-COVID-19-global-data.csv")
-            .drop(columns=["Country_code", "WHO_region"])
-            .rename(
-                columns={
-                    "Date_reported": "date",
-                    "Country": "location",
-                    "New_cases": "new_cases",
-                    "Cumulative_cases": "total_cases",
-                    "New_deaths": "new_deaths",
-                    "Cumulative_deaths": "total_deaths",
-                }
-            )
-        )
-        who_data["date"] = pd.to_datetime(who_data.date).dt.date
-
-        patch_data = who_data[
-            (who_data.location == "Ireland") & (who_data.date >= may_15)
-        ]
-        jhu_data = df[(df.location != "Ireland") | (df.date < may_15)]
-        df = pd.concat([jhu_data, patch_data]).reset_index(drop=True)
-
+        df.loc[(df.location == ldc[0]) & (df.date.astype(str) == ldc[1]), f"new_{ldc[2]}"] = np.nan
     return df
 
 
 def load_standardized(df):
-    df = df[
-        ["date", "location", "new_cases", "new_deaths", "total_cases", "total_deaths"]
-    ]
-    # df = patch_ireland(df)
+    df = df[["date", "location", "new_cases", "new_deaths", "total_cases", "total_deaths"]]
     df = discard_rows(df)
     df = inject_owid_aggregates(df)
     df = inject_weekly_growth(df)
@@ -295,6 +205,90 @@ def export(df_merged):
     return standard_export(load_standardized(df_merged), OUTPUT_PATH, DATASET_NAME)
 
 
+def clean_global_subnational(metric):
+    url = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_{metric}_global.csv"
+    metric = "cases" if metric == "confirmed" else "deaths"
+
+    df = (
+        pd.read_csv(url, na_values="")
+        .drop(columns=["Lat", "Long"])
+        .dropna(subset=["Province/State"])
+        .melt(id_vars=["Country/Region", "Province/State"], var_name="date", value_name=f"total_{metric}")
+        .rename(columns={"Country/Region": "location1", "Province/State": "location2"})
+    )
+    df["date"] = pd.to_datetime(df.date).dt.date.astype(str)
+    df = df.sort_values(["location1", "location2", "date"])
+    df[f"new_{metric}"] = df[f"total_{metric}"] - df.groupby(["location1", "location2"])[f"total_{metric}"].shift(1)
+    df[f"new_{metric}_smoothed"] = (
+        df.groupby(["location1", "location2"]).rolling(7)[f"new_{metric}"].mean().droplevel(level=[0, 1]).round(2)
+    )
+    df["location3"] = pd.NA
+    return df
+
+
+def clean_us_subnational(metric):
+    url = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_{metric}_US.csv"
+    metric = "cases" if metric == "confirmed" else "deaths"
+
+    df = (
+        pd.read_csv(url)
+        .drop(
+            columns=[
+                "UID",
+                "iso2",
+                "iso3",
+                "code3",
+                "FIPS",
+                "Country_Region",
+                "Lat",
+                "Long_",
+                "Combined_Key",
+                "Population",
+            ],
+            errors="ignore",
+        )
+        .melt(id_vars=["Province_State", "Admin2"], var_name="date", value_name=f"total_{metric}")
+        .rename(columns={"Province_State": "location2", "Admin2": "location3"})
+    )
+    df["date"] = pd.to_datetime(df.date).dt.date.astype(str)
+    df = df.sort_values(["location2", "location3", "date"])
+    df[f"new_{metric}"] = df[f"total_{metric}"] - df.groupby(["location2", "location3"])[f"total_{metric}"].shift(1)
+    df[f"new_{metric}_smoothed"] = (
+        df.groupby(["location2", "location3"]).rolling(7)[f"new_{metric}"].mean().droplevel(level=[0, 1]).round(2)
+    )
+    df["location1"] = "United States"
+    return df
+
+
+def create_subnational():
+    global_cases = clean_global_subnational("confirmed")
+    global_deaths = clean_global_subnational("deaths")
+    us_cases = clean_us_subnational("confirmed")
+    us_deaths = clean_us_subnational("deaths")
+
+    df = pd.concat(
+        [
+            pd.merge(global_cases, global_deaths, on=["location1", "location2", "location3", "date"], how="outer"),
+            pd.merge(us_cases, us_deaths, on=["location1", "location2", "location3", "date"], how="outer"),
+        ]
+    ).sort_values(["location1", "location2", "location3", "date"])[
+        [
+            "location1",
+            "location2",
+            "location3",
+            "date",
+            "total_cases",
+            "new_cases",
+            "new_cases_smoothed",
+            "total_deaths",
+            "new_deaths",
+            "new_deaths_smoothed",
+        ]
+    ]
+    df = df[df.total_cases > 0]
+    df.to_csv(os.path.join(OUTPUT_PATH, "subnational_cases_deaths.zip"), index=False, compression="zip")
+
+
 def main(skip_download=False):
 
     if not skip_download:
@@ -310,10 +304,7 @@ def main(skip_download=False):
         sys.exit(1)
 
     if export(df_merged):
-        print(
-            "Successfully exported CSVs to %s\n"
-            % colored(os.path.abspath(OUTPUT_PATH), "magenta")
-        )
+        print("Successfully exported CSVs to %s\n" % colored(os.path.abspath(OUTPUT_PATH), "magenta"))
     else:
         print_err("JHU export failed.\n")
         sys.exit(1)
@@ -324,13 +315,12 @@ def main(skip_download=False):
 
     send_success(channel="corona-data-updates", title="Updated JHU GitHub exports")
 
+    print("Generating subnational file…")
+    create_subnational()
+
 
 def update_db():
-    time_str = (
-        datetime.now()
-        .astimezone(pytz.timezone("Europe/London"))
-        .strftime("%-d %B, %H:%M")
-    )
+    time_str = datetime.now().astimezone(pytz.timezone("Europe/London")).strftime("%-d %B, %H:%M")
     source_name = f"Johns Hopkins University CSSE COVID-19 Data – Last updated {time_str} (London time)"
     import_dataset(
         dataset_name=DATASET_NAME,

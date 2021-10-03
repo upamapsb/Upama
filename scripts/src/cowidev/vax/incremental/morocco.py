@@ -1,82 +1,59 @@
 import re
 
-import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
+from cowidev.utils.clean.dates import localdate
+from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.dates import localdate
 
 
-def read(source: str) -> pd.Series:
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:86.0) Gecko/20100101 Firefox/86.0",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Encoding": "gzip, deflate",
-        "Connection": "keep-alive",
-        "Upgrade-Insecure-Requests": "1",
-        "Pragma": "no-cache",
-        "Cache-Control": "no-cache",
-    }
-    soup = BeautifulSoup(requests.get(source, headers=headers).content, "html.parser")
-    return parse_data(soup)
+class Morocco:
 
+    location: str = "Morocco"
+    source_url: str = "http://www.covidmaroc.ma/pages/Accueilfr.aspx"
 
-def parse_data(soup: BeautifulSoup) -> pd.Series:
+    def read(self) -> pd.Series:
+        soup = get_soup(self.source_url)
+        return self._parse_data(soup)
 
-    data = pd.Series(dtype="int")
+    def _parse_data(self, soup: BeautifulSoup) -> pd.Series:
+        data = pd.Series(dtype="int")
+        spans = soup.find("table").find_all("span")
+        data["people_vaccinated"] = int(re.sub(r"[^\d]", "", spans[-3].text))
+        data["people_fully_vaccinated"] = int(re.sub(r"[^\d]", "", spans[-2].text))
+        data["total_vaccinations"] = data["people_vaccinated"] + data["people_fully_vaccinated"]
+        return data
 
-    spans = soup.find("table").find_all("span")
+    def pipe_date(self, ds: pd.Series) -> pd.Series:
+        date = localdate("Africa/Casablanca")
+        return enrich_data(ds, "date", date)
 
-    data["people_vaccinated"] = int(re.sub(r"[^\d]", "", spans[-3].text))
-    data["people_fully_vaccinated"] = int(re.sub(r"[^\d]", "", spans[-2].text))
-    data["total_vaccinations"] = (
-        data["people_vaccinated"] + data["people_fully_vaccinated"]
-    )
+    def pipe_location(self, ds: pd.Series) -> pd.Series:
+        return enrich_data(ds, "location", self.location)
 
-    return data
+    def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
+        return enrich_data(ds, "vaccine", "Oxford/AstraZeneca, Sinopharm/Beijing")
 
+    def pipe_source(self, ds: pd.Series) -> pd.Series:
+        return enrich_data(ds, "source_url", self.source_url)
 
-def enrich_date(ds: pd.Series) -> pd.Series:
-    date = localdate("Africa/Casablanca")
-    return enrich_data(ds, "date", date)
+    def pipeline(self, ds: pd.Series) -> pd.Series:
+        return ds.pipe(self.pipe_date).pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
 
-
-def enrich_location(ds: pd.Series) -> pd.Series:
-    return enrich_data(ds, "location", "Morocco")
-
-
-def enrich_vaccine(ds: pd.Series) -> pd.Series:
-    return enrich_data(ds, "vaccine", "Oxford/AstraZeneca, Sinopharm/Beijing")
-
-
-def enrich_source(ds: pd.Series, source: str) -> pd.Series:
-    return enrich_data(ds, "source_url", source)
-
-
-def pipeline(ds: pd.Series, source: str) -> pd.Series:
-    return (
-        ds.pipe(enrich_date)
-        .pipe(enrich_location)
-        .pipe(enrich_vaccine)
-        .pipe(enrich_source, source)
-    )
+    def export(self, paths):
+        data = self.read().pipe(self.pipeline)
+        increment(
+            paths=paths,
+            location=data["location"],
+            total_vaccinations=data["total_vaccinations"],
+            people_vaccinated=data["people_vaccinated"],
+            people_fully_vaccinated=data["people_fully_vaccinated"],
+            date=data["date"],
+            source_url=data["source_url"],
+            vaccine=data["vaccine"],
+        )
 
 
 def main(paths):
-    source = "http://www.covidmaroc.ma/pages/Accueilfr.aspx"
-    data = read(source).pipe(pipeline, source)
-    increment(
-        paths=paths,
-        location=data["location"],
-        total_vaccinations=data["total_vaccinations"],
-        people_vaccinated=data["people_vaccinated"],
-        people_fully_vaccinated=data["people_fully_vaccinated"],
-        date=data["date"],
-        source_url=data["source_url"],
-        vaccine=data["vaccine"],
-    )
-
-
-if __name__ == "__main__":
-    main()
+    Morocco().export(paths)

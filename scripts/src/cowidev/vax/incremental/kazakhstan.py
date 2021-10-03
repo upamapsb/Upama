@@ -1,11 +1,9 @@
-from datetime import datetime
-
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from cowidev.vax.utils.incremental import clean_count, increment, enrich_data
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_count, clean_date
+from cowidev.vax.utils.incremental import increment, enrich_data
 
 
 def read(source: str) -> pd.Series:
@@ -26,9 +24,7 @@ def read(source: str) -> pd.Series:
 
 def parse_vaccinations(driver: webdriver.Chrome) -> tuple:
     people_vaccinated = clean_count(driver.find_element_by_id("vaccinated_1").text)
-    people_fully_vaccinated = clean_count(
-        driver.find_element_by_id("vaccinated_2").text
-    )
+    people_fully_vaccinated = clean_count(driver.find_element_by_id("vaccinated_2").text)
     return people_vaccinated, people_fully_vaccinated
 
 
@@ -43,7 +39,7 @@ def enrich_location(ds: pd.Series):
 
 
 def enrich_vaccine(ds: pd.Series):
-    return enrich_data(ds, "vaccine", "QazVac, Sinopharm/HayatVax, Sputnik V")
+    return enrich_data(ds, "vaccine", "QazVac, Sinopharm/Beijing, Sputnik V")
 
 
 def add_totals(ds: pd.Series):

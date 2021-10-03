@@ -3,8 +3,8 @@ import json
 import requests
 import pandas as pd
 
+from cowidev.utils.clean.dates import localdate
 from cowidev.vax.utils.incremental import enrich_data, increment
-from cowidev.vax.utils.dates import localdate
 
 
 def read(source: str) -> pd.Series:
@@ -24,9 +24,9 @@ def read(source: str) -> pd.Series:
     }
     data = '{"version":"1.0.0","queries":[{"Query":{"Commands":[{"SemanticQueryDataShapeCommand":{"Query":{"Version":2,"From":[{"Name":"m","Entity":"Medway","Type":0}],"Select":[{"Column":{"Expression":{"SourceRef":{"Source":"m"}},"Property":"Dose schedule"},"Name":"Medway.Dose schedule"},{"Aggregation":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"m"}},"Property":"Date of vaccination"}},"Function":5},"Name":"CountNonNull(Medway.Date of vaccination)"}],"Where":[{"Condition":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"m"}},"Property":"Dose schedule"}}],"Values":[[{"Literal":{"Value":"\'First dose\'"}}],[{"Literal":{"Value":"\'Second dose\'"}}]]}}}],"OrderBy":[{"Direction":2,"Expression":{"Aggregation":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"m"}},"Property":"Date of vaccination"}},"Function":5}}}]},"Binding":{"Primary":{"Groupings":[{"Projections":[0,1]}]},"DataReduction":{"DataVolume":4,"Primary":{"Window":{"Count":1000}}},"Version":1}}}]},"CacheKey":"{\\"Commands\\":[{\\"SemanticQueryDataShapeCommand\\":{\\"Query\\":{\\"Version\\":2,\\"From\\":[{\\"Name\\":\\"m\\",\\"Entity\\":\\"Medway\\",\\"Type\\":0}],\\"Select\\":[{\\"Column\\":{\\"Expression\\":{\\"SourceRef\\":{\\"Source\\":\\"m\\"}},\\"Property\\":\\"Dose schedule\\"},\\"Name\\":\\"Medway.Dose schedule\\"},{\\"Aggregation\\":{\\"Expression\\":{\\"Column\\":{\\"Expression\\":{\\"SourceRef\\":{\\"Source\\":\\"m\\"}},\\"Property\\":\\"Date of vaccination\\"}},\\"Function\\":5},\\"Name\\":\\"CountNonNull(Medway.Date of vaccination)\\"}],\\"Where\\":[{\\"Condition\\":{\\"In\\":{\\"Expressions\\":[{\\"Column\\":{\\"Expression\\":{\\"SourceRef\\":{\\"Source\\":\\"m\\"}},\\"Property\\":\\"Dose schedule\\"}}],\\"Values\\":[[{\\"Literal\\":{\\"Value\\":\\"\'First dose\'\\"}}],[{\\"Literal\\":{\\"Value\\":\\"\'Second dose\'\\"}}]]}}}],\\"OrderBy\\":[{\\"Direction\\":2,\\"Expression\\":{\\"Aggregation\\":{\\"Expression\\":{\\"Column\\":{\\"Expression\\":{\\"SourceRef\\":{\\"Source\\":\\"m\\"}},\\"Property\\":\\"Date of vaccination\\"}},\\"Function\\":5}}}]},\\"Binding\\":{\\"Primary\\":{\\"Groupings\\":[{\\"Projections\\":[0,1]}]},\\"DataReduction\\":{\\"DataVolume\\":4,\\"Primary\\":{\\"Window\\":{\\"Count\\":1000}}},\\"Version\\":1}}}]}","QueryId":"","ApplicationContext":{"DatasetId":"819a1554-706f-4e7e-9f7d-ec4bf4a353e2","Sources":[{"ReportId":"a1d3f3f4-2b99-4dda-82af-e751394400c5"}]}}],"cancelQueries":[],"modelId":1616759}'  # noqa: E501
 
-    df = json.loads(requests.post(source, headers=headers, data=data).content)[
-        "results"
-    ][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"]
+    df = json.loads(requests.post(source, headers=headers, data=data).content)["results"][0]["result"]["data"]["dsr"][
+        "DS"
+    ][0]["PH"][0]["DM0"]
     return parse_data(df)
 
 
@@ -38,9 +38,7 @@ def parse_data(df: pd.DataFrame) -> pd.Series:
 
 
 def parse_people_fully_vaccinated(df: dict) -> int:
-    people_fully_vaccinated = [
-        elem["C"][1] for elem in df if elem["C"][0] == "Second dose"
-    ][0]
+    people_fully_vaccinated = [elem["C"][1] for elem in df if elem["C"][0] == "Second dose"][0]
     return people_fully_vaccinated
 
 
@@ -64,7 +62,7 @@ def enrich_location(ds: pd.Series) -> pd.Series:
 
 
 def enrich_vaccine(ds: pd.Series) -> pd.Series:
-    return enrich_data(ds, "vaccine", "Oxford/AstraZeneca, Pfizer/BioNTech")
+    return enrich_data(ds, "vaccine", "Moderna, Oxford/AstraZeneca, Pfizer/BioNTech")
 
 
 def enrich_source(ds: pd.Series) -> pd.Series:
@@ -76,13 +74,7 @@ def enrich_source(ds: pd.Series) -> pd.Series:
 
 
 def pipeline(ds: pd.Series) -> pd.Series:
-    return (
-        ds.pipe(add_totals)
-        .pipe(format_date)
-        .pipe(enrich_location)
-        .pipe(enrich_vaccine)
-        .pipe(enrich_source)
-    )
+    return ds.pipe(add_totals).pipe(format_date).pipe(enrich_location).pipe(enrich_vaccine).pipe(enrich_source)
 
 
 def main(paths):

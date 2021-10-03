@@ -1,44 +1,27 @@
-import requests
-
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.dates import localdate
+from cowidev.utils.clean import clean_count
+from cowidev.utils.clean.dates import localdate
+from cowidev.utils.web import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 def read(source: str) -> pd.Series:
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:86.0) Gecko/20100101 Firefox/86.0",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-        "Upgrade-Insecure-Requests": "1",
-        "Pragma": "no-cache",
-        "Cache-Control": "no-cache",
-    }
-    soup = BeautifulSoup(requests.get(source, headers=headers).content, "html.parser")
+    soup = get_soup(source)
     return parse_data(soup)
 
 
 def parse_data(soup: BeautifulSoup) -> pd.Series:
 
     total_vaccinations = clean_count(soup.find(id="stats").find_all("span")[0].text)
-    people_fully_vaccinated = clean_count(
-        soup.find(id="stats").find_all("span")[1].text
-    )
-    assert total_vaccinations >= people_fully_vaccinated
+    people_fully_vaccinated = clean_count(soup.find(id="stats").find_all("span")[1].text)
 
     data = {
         "total_vaccinations": total_vaccinations,
         "people_fully_vaccinated": people_fully_vaccinated,
     }
     return pd.Series(data=data)
-
-
-def add_totals(ds: pd.Series) -> pd.Series:
-    people_vaccinated = ds["total_vaccinations"] - ds["people_fully_vaccinated"]
-    return enrich_data(ds, "people_vaccinated", people_vaccinated)
 
 
 def format_date(ds: pd.Series) -> pd.Series:
@@ -54,7 +37,7 @@ def enrich_vaccine(ds: pd.Series) -> pd.Series:
     return enrich_data(
         ds,
         "vaccine",
-        "Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sputnik V",
+        "Johnson&Johnson, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sputnik V",
     )
 
 
@@ -63,13 +46,7 @@ def enrich_source(ds: pd.Series) -> pd.Series:
 
 
 def pipeline(ds: pd.Series) -> pd.Series:
-    return (
-        ds.pipe(add_totals)
-        .pipe(format_date)
-        .pipe(enrich_location)
-        .pipe(enrich_vaccine)
-        .pipe(enrich_source)
-    )
+    return ds.pipe(format_date).pipe(enrich_location).pipe(enrich_vaccine).pipe(enrich_source)
 
 
 def main(paths):
@@ -79,7 +56,6 @@ def main(paths):
         paths=paths,
         location=data["location"],
         total_vaccinations=data["total_vaccinations"],
-        people_vaccinated=data["people_vaccinated"],
         people_fully_vaccinated=data["people_fully_vaccinated"],
         date=data["date"],
         source_url=data["source_url"],

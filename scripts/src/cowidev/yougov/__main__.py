@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 
 from cowidev.utils.utils import get_project_dir
+from cowidev.utils.clean.dates import DATE_FORMAT
 
 
 DEBUG = False
@@ -16,7 +17,7 @@ DATASET_NAME = "YouGov-Imperial COVID-19 Behavior Tracker"
 # MIN_RESPONSES: country-date-question observations with less than this
 # many valid responses will be dropped. If "None", no observations will
 # be dropped.
-MIN_RESPONSES = 500
+MIN_RESPONSES = 100
 
 # FREQ: temporal level at which to aggregate the individual survey
 # responses, passed as the `freq` argument to
@@ -54,9 +55,7 @@ class YouGov:
 
     @property
     def output_csv_path_composite(self):
-        return os.path.join(
-            self.output_path, f"{self.dataset_name}, composite variables.csv"
-        )
+        return os.path.join(self.output_path, f"{self.dataset_name}, composite variables.csv")
 
     def _get_source_url_country(self, country, extension):
         return f"{self.source_url}/data/{country}.{extension}"
@@ -85,9 +84,7 @@ class YouGov:
         # Build DataFrame
         df = pd.concat(all_data, axis=0)
         if df.columns.nunique() != df.columns.shape[0]:
-            raise ValueError(
-                "There are one or more duplicate columns, which may cause unexpected errors."
-            )
+            raise ValueError("There are one or more duplicate columns, which may cause unexpected errors.")
         return df
 
     def read_country(self, country):
@@ -155,13 +152,9 @@ class YouGov:
 
 
 def _format_date(df: pd.DataFrame):
-    df.loc[:, "date"] = pd.to_datetime(
-        df.endtime, format="%d/%m/%Y %H:%M", errors="coerce"
-    )
+    df.loc[:, "date"] = pd.to_datetime(df.endtime, format="%d/%m/%Y %H:%M", errors="coerce")
     mask = df.date.isnull()
-    df.loc[mask, "date"] = pd.to_datetime(
-        df[mask]["date"], format="%Y-%m-%d %H:%M:%S", errors="coerce"
-    )
+    df.loc[mask, "date"] = pd.to_datetime(df[mask]["date"], format="%Y-%m-%d %H:%M:%S", errors="coerce")
     return df
 
 
@@ -171,9 +164,7 @@ def _subset_and_rename_columns(df):
     Note: we do not use `df.rename(columns={...})` because for some columns we
         derive multiple variables.
     """
-    assert MAPPING.keep.isin(
-        [True, False]
-    ).all(), 'All values in "keep" column of `MAPPING` must be True or False.'
+    assert MAPPING.keep.isin([True, False]).all(), 'All values in "keep" column of `MAPPING` must be True or False.'
     assert (
         MAPPING["code_name"].duplicated().sum() == 0
     ), "All rows in the `code_name` field of mapping.csv must be unique."
@@ -187,24 +178,16 @@ def _subset_and_rename_columns(df):
 def _preprocess_cols(df):
     for row in MAPPING[MAPPING.preprocess.notnull()].itertuples():
         if row.code_name in df.columns:
-            df.loc[:, row.code_name] = df[row.code_name].replace(
-                MAPPED_VALUES[row.preprocess]
-            )
+            df.loc[:, row.code_name] = df[row.code_name].replace(MAPPED_VALUES[row.preprocess])
             uniq_values = set(MAPPED_VALUES[row.preprocess].values())
             assert (
-                df.loc[:, row.code_name]
-                .drop_duplicates()
-                .dropna()
-                .isin(uniq_values)
-                .all()
+                df.loc[:, row.code_name].drop_duplicates().dropna().isin(uniq_values).all()
             ), f"One or more non-NaN values in {row.code_name} are not in {uniq_values}"
     return df
 
 
 def _derive_cols(df):
-    derived_variables_to_keep = (
-        MAPPING[MAPPING["derived"] & MAPPING["keep"]].code_name.unique().tolist()
-    )
+    derived_variables_to_keep = MAPPING[MAPPING["derived"] & MAPPING["keep"]].code_name.unique().tolist()
     if "covid_vaccinated_or_willing" in derived_variables_to_keep:
         # constructs the covid_vaccinated_or_willing variable
         # pd.crosstab(df['vac'].fillna(-1), df['vac_1'].fillna(-1))
@@ -272,13 +255,9 @@ def _standardize_entities(df):
 def _aggregate(df):
     s_period = df["date"].dt.to_period(FREQ)
     if FREQ == "M":
-        df.loc[:, "date_mid"] = s_period.dt.start_time.dt.date + datetime.timedelta(
-            days=14
-        )
+        df.loc[:, "date_mid"] = s_period.dt.start_time.dt.date + datetime.timedelta(days=14)
     else:
-        df.loc[:, "date_mid"] = (
-            s_period.dt.start_time + (s_period.dt.end_time - s_period.dt.start_time) / 2
-        ).dt.date
+        df.loc[:, "date_mid"] = (s_period.dt.start_time + (s_period.dt.end_time - s_period.dt.start_time) / 2).dt.date
     today = datetime.datetime.utcnow().date()
     if df["date_mid"].max() > today:
         df.loc[:, "date_mid"] = df["date_mid"].replace({df["date_mid"].max(): today})
@@ -336,7 +315,7 @@ def _aggregate(df):
 
     # constructs date variable for internal Grapher usage.
     df_agg.loc[:, "date_internal_use"] = (
-        df_agg["date"] - datetime.datetime.strptime(ZERO_DAY, "%Y-%m-%d").date()
+        df_agg["date"] - datetime.datetime.strptime(ZERO_DAY, DATE_FORMAT).date()
     ).dt.days
     df_agg.drop("date", axis=1, inplace=True)
 
@@ -347,9 +326,7 @@ def _create_composite_cols(df):
     ffill_limit = 7
     vac_var_id = 145610
     try:
-        res = requests.get(
-            f"https://ourworldindata.org/grapher/data/variables/{vac_var_id}.json"
-        )
+        res = requests.get(f"https://ourworldindata.org/grapher/data/variables/{vac_var_id}.json")
         assert res.ok
         vac_data = json.loads(res.content)
         var_name = vac_data["variables"][f"{vac_var_id}"]["name"]
@@ -367,9 +344,7 @@ def _create_composite_cols(df):
             }
         ).sort_values(["entity", "date"], ascending=True)
         date_range = list(range(df_vac["date"].min(), df_vac["date"].max() + 1))
-        df_vac[df_vac["entity"] == "United States"].set_index("date").reindex(
-            date_range
-        )
+        df_vac[df_vac["entity"] == "United States"].set_index("date").reindex(date_range)
         df_vac = (
             df_vac.groupby("entity")
             .apply(lambda gp: gp.set_index("date").reindex(date_range))
@@ -377,20 +352,12 @@ def _create_composite_cols(df):
             .reset_index()
             .sort_values(["entity", "date"])
         )
-        df_vac[var_name] = (
-            df_vac.groupby("entity")[var_name]
-            .apply(lambda gp: gp.ffill(limit=ffill_limit))
-            .dropna()
-        )
+        df_vac[var_name] = df_vac.groupby("entity")[var_name].apply(lambda gp: gp.ffill(limit=ffill_limit)).dropna()
         df_vac.dropna(subset=[var_name], inplace=True)
 
         vac_entities = df_vac["entity"].unique()
-        yougov_entities_not_found = [
-            ent for ent in df["entity"].drop_duplicates() if ent not in vac_entities
-        ]
-        assert len(yougov_entities_not_found) < (
-            df["entity"].drop_duplicates().shape[0] * 0.1
-        ), (
+        yougov_entities_not_found = [ent for ent in df["entity"].drop_duplicates() if ent not in vac_entities]
+        assert len(yougov_entities_not_found) < (df["entity"].drop_duplicates().shape[0] * 0.1), (
             "Expected nearly all YouGov entities to be in vaccination data, but "
             "failed to find >10% of YouGov entities in the vaccination data. "
             f"Entities not found: {yougov_entities_not_found}"
@@ -421,16 +388,13 @@ def _create_composite_cols(df):
         # converts willingness to get vaccinated variables to a percentage of the
         # overall population, instead of percentage of the unvaccinated population.
         df_temp["willingness_covid_vaccinate_this_week_pct_pop"] = (
-            (100 - df_temp[var_name])
-            * (df_temp["willingness_covid_vaccinate_this_week"] / 100)
+            (100 - df_temp[var_name]) * (df_temp["willingness_covid_vaccinate_this_week"] / 100)
         ).round(2)
         df_temp["unwillingness_covid_vaccinate_this_week_pct_pop"] = (
-            (100 - df_temp[var_name])
-            * (df_temp["unwillingness_covid_vaccinate_this_week"] / 100)
+            (100 - df_temp[var_name]) * (df_temp["unwillingness_covid_vaccinate_this_week"] / 100)
         ).round(2)
         df_temp["uncertain_covid_vaccinate_this_week_pct_pop"] = (
-            (100 - df_temp[var_name])
-            * (df_temp["uncertain_covid_vaccinate_this_week"] / 100)
+            (100 - df_temp[var_name]) * (df_temp["uncertain_covid_vaccinate_this_week"] / 100)
         ).round(2)
 
         cols = [
@@ -442,32 +406,20 @@ def _create_composite_cols(df):
 
         assert all(
             df_temp[cols].sum(axis=1, min_count=len(cols)).dropna().round(1) == 100
-        ), (
-            f"Expected {cols} to sum to *nearly* 100 for every entity-date "
-            "observation, prior to rounding adjustment."
-        )
+        ), f"Expected {cols} to sum to *nearly* 100 for every entity-date observation, prior to rounding adjustment."
 
         # adjusts one variable to ensure sum of all cols equals exactly
         # 100. Otherwise, rounding errors may lead the sum to be
         # slightly off (e.g. 99.99).
-        df_temp[f"{cols[-1]}_adjusted"] = (100 - df_temp[cols[:-1]].sum(axis=1)).round(
-            2
-        )
+        df_temp[f"{cols[-1]}_adjusted"] = (100 - df_temp[cols[:-1]].sum(axis=1)).round(2)
         assert all((df_temp[cols[-1]] - df_temp[f"{cols[-1]}_adjusted"]).abs() < 0.1), (
             f"Expected rounding adjustment of {cols[-1]} to be minor (< 0.1), "
             "but adjustment was larger than this for one or more entity-date "
             "observations."
         )
         assert all(
-            df_temp[cols[:-1] + [f"{cols[-1]}_adjusted"]]
-            .sum(axis=1, min_count=len(cols))
-            .dropna()
-            .round(2)
-            == 100
-        ), (
-            f"Expected {cols} to sum to exactly 100 for every entity-date "
-            "observation, after rounding adjustment."
-        )
+            df_temp[cols[:-1] + [f"{cols[-1]}_adjusted"]].sum(axis=1, min_count=len(cols)).dropna().round(2) == 100
+        ), f"Expected {cols} to sum to exactly 100 for every entity-date observation, after rounding adjustment."
         df_temp[cols[-1]] = df_temp[f"{cols[-1]}_adjusted"]
 
         df_temp = df_temp[

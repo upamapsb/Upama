@@ -5,7 +5,7 @@ df <- page %>%
     html_node("#content-primary table") %>%
     html_table() %>%
     data.table()
-df[, Weekly := as.integer(str_replace_all(`NukleinsyrapåvisningGenomförda test`, "\\s", ""))]
+df[, Weekly := as.integer(str_replace_all(`Nukleinsyrapåvisning Genomförda test`, "\\s", ""))]
 
 df <- df[str_detect(Vecka, "[vV]ecka")]
 df[, Vecka := as.integer(str_replace(Vecka, "[vV]ecka ", ""))]

@@ -11,7 +11,7 @@ class Belgium:
         return pd.read_csv(self.source_url, usecols=["DATE", "DOSE", "COUNT"])
 
     def pipe_dose_check(self, df: pd.DataFrame) -> pd.DataFrame:
-        doses_wrong = set(df.DOSE).difference(["A", "B", "C"])
+        doses_wrong = set(df.DOSE).difference(["A", "B", "C", "E"])
         if doses_wrong:
             raise ValueError(f"Invalid dose type {doses_wrong}")
         return df
@@ -38,14 +38,16 @@ class Belgium:
             total_vaccinations=df.A + df.B + df.C,
             people_vaccinated=df.A + df.C,
             people_fully_vaccinated=df.B + df.C,
+            total_boosters=df.E,
         )
-        return df.drop(columns=["A", "B", "C"])
+        return df.drop(columns=["A", "B", "C", "E"])
 
     def pipe_cumsum(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(
             total_vaccinations=df.total_vaccinations.cumsum().astype(int),
             people_vaccinated=df.people_vaccinated.cumsum().astype(int),
             people_fully_vaccinated=df.people_fully_vaccinated.cumsum().astype(int),
+            total_boosters=df.total_boosters.cumsum().astype(int),
         )
 
     def pipe_vaccine_name(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -78,11 +80,7 @@ class Belgium:
         )
 
     def export(self, paths):
-        (
-            self.read()
-            .pipe(self.pipeline)
-            .to_csv(paths.tmp_vax_out(self.location), index=False)
-        )
+        (self.read().pipe(self.pipeline).to_csv(paths.tmp_vax_out(self.location), index=False))
 
 
 def main(paths):

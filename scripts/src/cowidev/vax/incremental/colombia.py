@@ -2,8 +2,8 @@ import re
 
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_count, clean_date
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 class Colombia:
@@ -47,9 +47,7 @@ class Colombia:
                 "date": date_str,
                 "total_vaccinations": total_vaccinations,
                 "people_fully_vaccinated": people_fully_vaccinated,
-                "people_vaccinated": total_vaccinations
-                - people_fully_vaccinated
-                + unique_doses,
+                "people_vaccinated": total_vaccinations - people_fully_vaccinated + unique_doses,
             }
         )
 
@@ -57,17 +55,13 @@ class Colombia:
         return enrich_data(ds, "location", "Colombia")
 
     def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(
-            ds, "vaccine", "Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac"
-        )
+        return enrich_data(ds, "vaccine", "Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac")
 
     def pipe_source(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "source_url", self.source_url)
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
-        )
+        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
 
     def to_csv(self, paths):
         data = self.read()

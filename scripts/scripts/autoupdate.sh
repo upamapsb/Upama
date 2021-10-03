@@ -91,13 +91,11 @@ UPDATED_TIME=$(stat $OXCGRT_CSV_PATH -c %Y)
 
 if [ $(expr $CURRENT_TIME - $UPDATED_TIME) -gt $UPDATE_INTERVAL_SECONDS ]; then
   # Download CSV
-  # run_python 'import oxcgrt; oxcgrt.download_csv()'
   python -m cowidev.oxcgrt etl
   # If there are any unstaged changes in the repo, then the
   # CSV has changed, and we need to run the update script.
   if has_changed $OXCGRT_CSV_PATH; then
     echo "Generating OxCGRT export..."
-    # run_python 'import oxcgrt; oxcgrt.export_grapher()'
     python -m cowidev.oxcgrt grapher-file
     git add .
     git commit -m "Automated OxCGRT update"
@@ -174,6 +172,24 @@ fi
 # The script itself contains a check against the database
 # to make sure it doesn't run unnecessarily.
 run_python 'import hosp; hosp.update_db()'
+
+# =====================================================================
+# UK subnational data
+
+hour=$(date +%H)
+if [ $hour == 17 ] ; then
+  # Download CSV
+  echo "Generating UK subnational export..."
+  run_python 'import uk_nations; uk_nations.generate_dataset()'
+  git add .
+  git commit -m "Automated UK subnational update"
+  git push
+fi
+
+# Always run the database update.
+# The script itself contains a check against the database
+# to make sure it doesn't run unnecessarily.
+run_python 'import uk_nations; uk_nations.update_db()'
 
 # =====================================================================
 # Google Mobility

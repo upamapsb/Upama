@@ -5,7 +5,8 @@ from urllib.error import HTTPError
 
 import pandas as pd
 
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_date
+
 
 vaccine_mapping = {
     "Pfizer": "Pfizer/BioNTech",
@@ -47,18 +48,12 @@ def parse_data(last_update: str, max_iter: int = 10):
 
 
 def _parse_ds_data(df: pd.DataFrame, source: str) -> pd.Series:
-    df.loc[
-        ~df.index.isin(["Sanidad Exterior"]), "Fecha de la última vacuna registrada (2)"
-    ].dropna().max()
+    df.loc[~df.index.isin(["Sanidad Exterior"]), "Fecha de la última vacuna registrada (2)"].dropna().max()
     return pd.Series(
         data={
             "total_vaccinations": df.loc["Totales", "Dosis administradas (2)"].item(),
-            "people_vaccinated": df.loc[
-                "Totales", "Nº Personas con al menos 1 dosis"
-            ].item(),
-            "people_fully_vaccinated": df.loc[
-                "Totales", "Nº Personas vacunadas(pauta completada)"
-            ].item(),
+            "people_vaccinated": df.loc["Totales", "Nº Personas con al menos 1 dosis"].item(),
+            "people_fully_vaccinated": df.loc["Totales", "Nº Personas vacunadas(pauta completada)"].item(),
             "date": clean_date(
                 df.loc[
                     ~df.index.isin(["Sanidad Exterior"]),
@@ -75,7 +70,7 @@ def _parse_ds_data(df: pd.DataFrame, source: str) -> pd.Series:
 
 def _get_source_url(dt_str):
     return (
-        f"https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/documentos/"
+        "https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/documentos/"
         f"Informe_Comunicacion_{dt_str}.ods"
     )
 
@@ -91,13 +86,7 @@ def _get_vaccine_names(df: pd.DataFrame, translate: bool = False):
             ]
         )
     else:
-        return sorted(
-            [
-                re.search(regex_vaccines, col).group(1)
-                for col in df.columns
-                if re.match(regex_vaccines, col)
-            ]
-        )
+        return sorted([re.search(regex_vaccines, col).group(1) for col in df.columns if re.match(regex_vaccines, col)])
 
 
 def _check_vaccine_names(df: pd.DataFrame):

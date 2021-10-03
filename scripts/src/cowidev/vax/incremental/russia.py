@@ -1,26 +1,14 @@
 import re
-import requests
 
-from bs4 import BeautifulSoup
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_count, clean_date
+from cowidev.utils.web import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 def read(source: str) -> pd.Series:
-
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:86.0) Gecko/20100101 Firefox/86.0",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Language": "fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-        "Upgrade-Insecure-Requests": "1",
-        "Pragma": "no-cache",
-        "Cache-Control": "no-cache",
-    }
-    soup = BeautifulSoup(requests.get(source, headers=headers).content, "html.parser")
+    soup = get_soup(source)
 
     text = soup.find("div", id="data").find("p").text
 
@@ -38,16 +26,18 @@ def read(source: str) -> pd.Series:
     ).group(1)
     people_fully_vaccinated = clean_count(people_fully_vaccinated)
 
-    total_vaccinations = re.search(
-        r"([\d\s]+) шт\. - всего прививок сделано", text
-    ).group(1)
+    total_vaccinations = re.search(r"([\d\s]+) шт\. - всего прививок сделано", text).group(1)
     total_vaccinations = clean_count(total_vaccinations)
+
+    total_boosters = re.search(r"([\d\s]+) чел\. - прошли ревакцинацию", text).group(1)
+    total_boosters = clean_count(total_boosters)
 
     return pd.Series(
         {
             "total_vaccinations": total_vaccinations,
             "people_vaccinated": people_vaccinated,
             "people_fully_vaccinated": people_fully_vaccinated,
+            "total_boosters": total_boosters,
             "date": date,
         }
     )
@@ -75,9 +65,10 @@ def main(paths):
     increment(
         paths=paths,
         location=data["location"],
-        total_vaccinations=int(data["total_vaccinations"]),
-        people_vaccinated=int(data["people_vaccinated"]),
-        people_fully_vaccinated=int(data["people_fully_vaccinated"]),
+        total_vaccinations=data["total_vaccinations"],
+        people_vaccinated=data["people_vaccinated"],
+        people_fully_vaccinated=data["people_fully_vaccinated"],
+        total_boosters=data["total_boosters"],
         date=data["date"],
         source_url=data["source_url"],
         vaccine=data["vaccine"],

@@ -2,7 +2,7 @@ url <- "https://www.moh.gov.sg/covid-19/statistics"
 
 page <- read_html(url)
 
-date <- page %>% html_nodes("h4") %>%
+date <- page %>% html_nodes("h3") %>%
     html_text() %>%
     str_subset("Tested") %>%
     str_extract("as .. [^)]+") %>%
@@ -11,7 +11,7 @@ date <- page %>% html_nodes("h4") %>%
     dmy()
 
 count <- page %>%
-    html_nodes("#ContentPlaceHolder_contentPlaceholder_C029_Col00 td") %>%
+    html_nodes("#ContentPlaceHolder_contentPlaceholder_C030_Col00 td") %>%
     html_text() %>%
     tail(1) %>%
     str_replace_all("[^\\d]", "") %>%

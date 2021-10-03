@@ -4,8 +4,8 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-from cowidev.vax.utils.utils import get_soup, get_headers
-from cowidev.vax.utils.who import VACCINES_WHO_MAPPING
+from cowidev.utils.web.scraping import get_soup, get_headers
+from cowidev.vax.utils.orgs import WHO_VACCINES
 
 
 CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -68,9 +68,7 @@ class TrackVaccinesClient:
             return False
         return True
 
-    def vaccines_approved(
-        self, location: str = None, original_names: bool = False
-    ) -> list:
+    def vaccines_approved(self, location: str = None, original_names: bool = False) -> list:
         """Get list of approved vaccines in a country (or all if None specified).
 
         Args:
@@ -91,9 +89,7 @@ class TrackVaccinesClient:
             soup = get_soup(self.all_vaccines_url)
             return self._parse_vaccines_all(soup, original_names)
 
-    def _parse_vaccines_location(
-        self, soup: BeautifulSoup, original_names: bool = False
-    ):
+    def _parse_vaccines_location(self, soup: BeautifulSoup, original_names: bool = False):
         content = soup.find(class_="card-grid alignwide")
         vaccines_html = content.find_all(class_="card__title has-text-align-center")
         vaccines = [e.find("span").text for e in vaccines_html]
@@ -115,9 +111,7 @@ def map_vaccine(vaccine):
     return vaccine
 
 
-def vaccines_tracked(
-    path_locations: str = None, location: str = None, as_list: bool = False
-) -> pd.DataFrame:
+def vaccines_tracked(path_locations: str = None, location: str = None, as_list: bool = False) -> pd.DataFrame:
     """Get tracked vaccines for tracked countries.
 
     Args:
@@ -131,9 +125,7 @@ def vaccines_tracked(
     """
     if not path_locations:
         path_locations = os.path.abspath(
-            os.path.join(
-                CURRENT_DIR, "../../../../../../public/data/vaccinations/locations.csv"
-            )
+            os.path.join(CURRENT_DIR, "../../../../../../public/data/vaccinations/locations.csv")
         )
     df = pd.read_csv(path_locations, usecols=["vaccines", "location"])
     df = df.assign(vaccines=df.vaccines.apply(lambda x: set(x.split(", "))))
@@ -146,9 +138,7 @@ def vaccines_tracked(
     return df
 
 
-def vaccines_approved(
-    path_locations: str = None, verbose: bool = False
-) -> pd.DataFrame:
+def vaccines_approved(path_locations: str = None, verbose: bool = False) -> pd.DataFrame:
     """Get approved vaccines for tracked countries.
 
     This may take between 2-3 minutes.
@@ -164,9 +154,7 @@ def vaccines_approved(
         print("This may take from 2 to 3 minutes...")
     if not path_locations:
         path_locations = os.path.abspath(
-            os.path.join(
-                CURRENT_DIR, "../../../../../../public/data/vaccinations/locations.csv"
-            )
+            os.path.join(CURRENT_DIR, "../../../../../../public/data/vaccinations/locations.csv")
         )
     df = pd.read_csv(path_locations, usecols=["location"])
     client = TrackVaccinesClient()
@@ -202,28 +190,18 @@ def vaccines_missing(aggregated: bool = False, verbose: bool = False):
         vax_tracked = vaccines_tracked()
         vax_approved = vaccines_approved(verbose=True)
         # Build result dataframe
-        df = vax_tracked.merge(
-            vax_approved, on="location", suffixes=("_tracked", "_approved")
-        )
+        df = vax_tracked.merge(vax_approved, on="location", suffixes=("_tracked", "_approved"))
         df = df[df.vaccines_tracked != df.vaccines_approved].dropna()
         df = df.assign(
             unapproved=(
                 df.apply(
-                    lambda x: [
-                        xx
-                        for xx in x["vaccines_tracked"]
-                        if xx not in x["vaccines_approved"]
-                    ],
+                    lambda x: [xx for xx in x["vaccines_tracked"] if xx not in x["vaccines_approved"]],
                     axis=1,
                 )
             ),
             untracked=(
                 df.apply(
-                    lambda x: [
-                        xx
-                        for xx in x["vaccines_approved"]
-                        if xx not in x["vaccines_tracked"]
-                    ],
+                    lambda x: [xx for xx in x["vaccines_approved"] if xx not in x["vaccines_tracked"]],
                     axis=1,
                 )
             ),
@@ -232,9 +210,7 @@ def vaccines_missing(aggregated: bool = False, verbose: bool = False):
             num_unapproved=df.unapproved.apply(len),
             num_untracked=df.untracked.apply(len),
         )
-        df = df[
-            ["location", "unapproved", "num_unapproved", "untracked", "num_untracked"]
-        ]
+        df = df[["location", "unapproved", "num_unapproved", "untracked", "num_untracked"]]
         df = df.sort_values(by="num_untracked", ascending=False)
         return df
 
@@ -244,9 +220,7 @@ def vaccines_comparison_with_who():
     url = "https://covid19.who.int/who-data/vaccination-metadata.csv"
     df_who = pd.read_csv(url)
     vaccines_used_who = df_who.groupby("ISO3").apply(
-        lambda x: set(
-            VACCINES_WHO_MAPPING[xx] for xx in x[~x.START_DATE.isnull()].VACCINE_NAME
-        )
+        lambda x: set(WHO_VACCINES[xx] for xx in x[~x.START_DATE.isnull()].VACCINE_NAME)
     )
     vaccines_used_who.name = "vaccines_used_who"
 
@@ -254,24 +228,16 @@ def vaccines_comparison_with_who():
     url = "https://github.com/owid/covid-19-data/raw/master/public/data/vaccinations/locations.csv"
     df_owid = pd.read_csv(url)
     vaccines_used_owid = df_owid.assign(
-        vaccines_used_owid=(
-            df_owid.vaccines.apply(lambda x: set(xx.strip() for xx in x.split(", ")))
-        )
+        vaccines_used_owid=(df_owid.vaccines.apply(lambda x: set(xx.strip() for xx in x.split(", "))))
     )[["iso_code", "location", "vaccines_used_owid"]].set_index("iso_code")
 
     # Merge
-    vaccines_used = vaccines_used_owid.merge(
-        vaccines_used_who, right_index=True, left_index=True
-    )
+    vaccines_used = vaccines_used_owid.merge(vaccines_used_who, right_index=True, left_index=True)
 
     # Obtain differences
     vaccines_used = vaccines_used.assign(
-        missing_in_who=vaccines_used.apply(
-            lambda x: x.vaccines_used_owid.difference(x.vaccines_used_who), axis=1
-        ),
-        missing_in_owid=vaccines_used.apply(
-            lambda x: x.vaccines_used_who.difference(x.vaccines_used_owid), axis=1
-        ),
+        missing_in_who=vaccines_used.apply(lambda x: x.vaccines_used_owid.difference(x.vaccines_used_who), axis=1),
+        missing_in_owid=vaccines_used.apply(lambda x: x.vaccines_used_who.difference(x.vaccines_used_owid), axis=1),
     )
 
     return vaccines_used

@@ -1,82 +1,100 @@
 import re
-import requests
 
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.utils import get_soup
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_count, clean_date
+from cowidev.utils.web import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 class Singapore:
     def __init__(self) -> None:
         self.location = "Singapore"
-        self.source_url = "https://www.moh.gov.sg/covid-19/vaccination"
+        self.feed_url = "https://www.moh.gov.sg/feeds/news-highlights"
+
+    def find_article(self) -> str:
+        soup = get_soup(self.feed_url)
+        for link in soup.find_all("item"):
+            elements = link.children
+            for elem in elements:
+                if "local-covid-19-situation" in elem:
+                    return elem
 
     def read(self) -> pd.Series:
+        self.source_url = self.find_article()
         soup = get_soup(self.source_url)
-        return self._parse_data(soup)
+        return pd.Series(data=self.parse_text(soup))
 
-    def _parse_data(self, soup: BeautifulSoup) -> pd.Series:
-        data = pd.Series(
-            {
-                "date": self._parse_date(soup),
-                "total_vaccinations": self._parse_metric(
-                    soup, "Total Doses Administered"
-                ),
-                "people_vaccinated": self._parse_metric(
-                    soup, "Received at least First Dose"
-                ),
-                "people_fully_vaccinated": self._parse_metric(
-                    soup, "Completed Full Vaccination Regimen"
-                ),
-            }
+    def parse_text(self, soup: BeautifulSoup) -> pd.Series:
+        # Summary figures
+        date, share_fully_vaccinated, share_vaccinated = self._parse_text_summary(soup)
+        # National figures
+        national_doses, national_boosters, national_people_vaccinated = self._parse_text_national(soup)
+        # WHO
+        who_doses, who_people_vaccinated = self._parse_text_who(soup)
+        # Combine
+        total_vaccinations = national_doses + who_doses
+        people_vaccinated = national_people_vaccinated + who_people_vaccinated
+        people_fully_vaccinated = round(people_vaccinated * (share_fully_vaccinated / share_vaccinated))
+
+        return {
+            "date": date,
+            "total_vaccinations": total_vaccinations,
+            "people_vaccinated": people_vaccinated,
+            "people_fully_vaccinated": people_fully_vaccinated,
+            "total_boosters": national_boosters,
+        }
+
+    def _parse_text_summary(self, soup):
+        preamble = (
+            r"As of ([\d]+ [A-Za-z]+ 20\d{2}), (\d+)% of our population has completed their full regimen/"
+            r" received two doses of COVID-19 vaccines, and (\d+)% has received at least one dose\."
         )
-        return data
+        data = re.search(preamble, soup.text).groups()
+        date = clean_date(data[0], fmt="%d %B %Y", lang="en")
+        share_fully_vaccinated = clean_count(data[1])
+        share_vaccinated = clean_count(data[2])
+        return date, share_fully_vaccinated, share_vaccinated
 
-    def _parse_date(self, soup: BeautifulSoup) -> str:
-        for h3 in soup.find_all("h3"):
-            if "Vaccination Data" in h3.text:
-                break
-        date = re.search(r"as of (\d+ \w+ \d+)", h3.text).group(1)
-        date = str(pd.to_datetime(date).date())
-        return date
-
-    def _parse_metric(self, soup: BeautifulSoup, description: str) -> int:
-        value = (
-            soup.find("strong", string=description)
-            .parent.parent.parent.parent.find_all("tr")[-1]
-            .text
+    def _parse_text_national(self, soup):
+        national_program = (
+            r"We have administered a total of ([\d,]+) doses of COVID-19 vaccines under the national vaccination"
+            r" programme \(Pfizer-BioNTech Comirnaty and Moderna\).*"
+            r"In total, ([\d,]+) individuals have received at least one dose of vaccine under the national vaccination"
+            r" programme,.*\. ([\d,]+) individuals have received their booster shots"
         )
-        return clean_count(value)
+        data = re.search(national_program, soup.text).groups()
+        national_doses = clean_count(data[0])
+        national_people_vaccinated = clean_count(data[1])
+        national_boosters = clean_count(data[2])
+        return national_doses, national_boosters, national_people_vaccinated
+
+    def _parse_text_who(self, soup):
+        who_eul = (
+            r"In addition, ([\d,]+) doses of other vaccines recognised in the World Health Organization.s Emergency"
+            r" Use Listing \(WHO EUL\) have been administered, covering ([\d,]+) individuals\."
+        )
+        data = re.search(who_eul, soup.text).groups()
+        who_doses = clean_count(data[0])
+        who_people_vaccinated = clean_count(data[1])
+        return who_doses, who_people_vaccinated
 
     def pipe_location(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "location", "Singapore")
 
     def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(ds, "vaccine", "Moderna, Pfizer/BioNTech")
+        return enrich_data(ds, "vaccine", "Moderna, Pfizer/BioNTech, Sinovac")
 
     def pipe_source(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "source_url", self.source_url)
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds.pipe(self.pipe_location).pipe(self.pipe_source).pipe(self.pipe_vaccine)
-        )
+        return ds.pipe(self.pipe_location).pipe(self.pipe_source).pipe(self.pipe_vaccine)
 
     def to_csv(self, paths):
-        data = self.read().pipe(self.pipeline)
-        increment(
-            paths=paths,
-            location=data["location"],
-            total_vaccinations=data["total_vaccinations"],
-            people_vaccinated=data["people_vaccinated"],
-            people_fully_vaccinated=data["people_fully_vaccinated"],
-            date=data["date"],
-            source_url=data["source_url"],
-            vaccine=data["vaccine"],
-        )
+        data = self.read().pipe(self.pipeline).to_dict()
+        increment(paths=paths, **data)
 
 
 def main(paths):

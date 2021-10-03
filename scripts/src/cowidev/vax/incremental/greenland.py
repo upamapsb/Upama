@@ -1,103 +1,68 @@
+import datetime
+
 import pandas as pd
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.dates import clean_date
-
-
-def read(source: str) -> pd.Series:
-    return connect_parse_data(source)
+from cowidev.utils.clean import clean_count, extract_clean_date
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
-def connect_parse_data(source: str) -> pd.Series:
-    op = Options()
-    op.add_argument("--headless")
+class Greenland:
+    location: str = "Greenland"
+    source_url: str = "https://corona.nun.gl"
+    regex = {"date": r".*Nutarterneqarpoq: (\d+. [a-zA-Z]+202\d)"}
 
-    with webdriver.Chrome(options=op) as driver:
-        driver.implicitly_wait(20)
-        driver.get(source)
-        # Get date
-        date = parse_date(driver)
-        # Get and load iframe
-        source_iframe = parse_iframe_url(driver)
-        driver.get(source_iframe)
-        # Sanity check
-        _sanity_checks(driver)
-        # Get doses
-        dose_1, dose_2 = parse_doses(driver)
-    return pd.Series(
-        {"people_vaccinated": dose_1, "people_fully_vaccinated": dose_2, "date": date}
-    )
+    def read(self) -> pd.Series:
+        soup = get_soup(self.source_url)
+        data = self._parse_data(soup)
+        return pd.Series(data=data)
 
+    def _parse_data(self, soup) -> dict:
+        return {**self._parse_data_metrics(soup), **self._parse_data_date(soup)}
 
-def parse_iframe_url(driver: webdriver.Chrome) -> str:
-    iframe_url = driver.find_element_by_class_name("vaccine").get_attribute("src")
-    return iframe_url
+    def _parse_data_metrics(self, soup) -> dict:
+        counters = soup.find_all(class_="text-brand-blue")
+        dose_1 = clean_count(counters[1].text)
+        dose_2 = clean_count(counters[2].text)
+        if dose_1 < dose_2:
+            raise ValueError("dose_1 cannot be higher than dose_2")
+        return {"people_vaccinated": dose_1, "people_fully_vaccinated": dose_2}
 
+    def _parse_data_date(self, soup) -> dict:
+        date = soup.find(class_="text-gray-500").text
+        date = date.strip() + str(datetime.date.today().year)
+        date = extract_clean_date(date, self.regex["date"], "%d. %B%Y", lang="en")
+        return {"date": date}
 
-def parse_doses(driver: webdriver.Chrome) -> tuple:
-    doses = driver.find_element_by_class_name(
-        "igc-graph-group"
-    ).find_elements_by_tag_name("text")
-    dose_1, dose_2 = [clean_count(dose.text) for dose in doses]
-    return dose_1, dose_2
+    def pipe_source(self, ds: pd.Series) -> pd.Series:
+        return enrich_data(ds, "source_url", self.source_url)
 
+    def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
+        return enrich_data(ds, "vaccine", "Moderna")
 
-def parse_date(driver: webdriver.Chrome) -> str:
-    text = driver.find_element_by_class_name("content").text
-    return clean_date(text, "Opdateret: %d. %B %Y", "da")
+    def pipe_location(self, ds: pd.Series) -> pd.Series:
+        return enrich_data(ds, "location", self.location)
 
+    def pipe_metrics(self, ds: pd.Series) -> pd.Series:
+        total_vaccinations = ds["people_vaccinated"] + ds["people_fully_vaccinated"]
+        return enrich_data(ds, "total_vaccinations", total_vaccinations)
 
-def _sanity_checks(driver: webdriver.Chrome):
-    elems = driver.find_elements_by_class_name("igc-legend-label")
-    labels = [e.text for e in elems]
-    if labels[0] != "Fået 1. vaccine" or labels[1] != "Modtaget 2. vaccine*":
-        raise Exception(
-            "First graph structure has changed. Consider manually checking the axis labels in the browser."
+    def pipeline(self, ds: pd.Series) -> pd.Series:
+        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source).pipe(self.pipe_metrics)
+
+    def export(self, paths):
+        data = self.read().pipe(self.pipeline)
+        increment(
+            paths=paths,
+            location=data["location"],
+            total_vaccinations=data["total_vaccinations"],
+            people_vaccinated=data["people_vaccinated"],
+            people_fully_vaccinated=data["people_fully_vaccinated"],
+            date=data["date"],
+            source_url=data["source_url"],
+            vaccine=data["vaccine"],
         )
 
 
-def enrich_source(ds: pd.Series, source: str) -> pd.Series:
-    return enrich_data(ds, "source_url", source)
-
-
-def enrich_vaccine(ds: pd.Series) -> pd.Series:
-    return enrich_data(ds, "vaccine", "Moderna")
-
-
-def enrich_location(ds: pd.Series) -> pd.Series:
-    return enrich_data(ds, "location", "Greenland")
-
-
-def add_totals(ds: pd.Series) -> pd.Series:
-    total_vaccinations = ds["people_vaccinated"] + ds["people_fully_vaccinated"]
-    return enrich_data(ds, "total_vaccinations", total_vaccinations)
-
-
-def pipeline(ds: pd.Series, source: str) -> pd.Series:
-    return (
-        ds.pipe(enrich_location)
-        .pipe(enrich_vaccine)
-        .pipe(enrich_source, source)
-        .pipe(add_totals)
-    )
-
-
 def main(paths):
-    source = "https://corona.nun.gl/emner/statistik/antal_vaccinerede"
-    data = read(source).pipe(pipeline, source)
-    increment(
-        paths=paths,
-        location=data["location"],
-        total_vaccinations=data["total_vaccinations"],
-        people_vaccinated=data["people_vaccinated"],
-        people_fully_vaccinated=data["people_fully_vaccinated"],
-        date=data["date"],
-        source_url=data["source_url"],
-        vaccine=data["vaccine"],
-    )
-
-
-if __name__ == "__main__":
-    main()
+    Greenland().export(paths)

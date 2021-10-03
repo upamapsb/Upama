@@ -1,81 +1,74 @@
 import re
-import requests
 
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.dates import localdate
+from cowidev.utils.clean import clean_count
+from cowidev.utils.clean.dates import localdate
+from cowidev.utils.web import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
-def read(source: str) -> pd.Series:
-    soup = BeautifulSoup(requests.get(source).content, "html.parser")
-    data = parse_data(soup)
-    return enrich_data(data, "source_url", source)
+class CaymanIslands:
+    location: str = "Cayman Islands"
+    source_url: str = "https://www.exploregov.ky/coronavirus-statistics"
+    regex: dict = {
+        "people_vaccinated": r"([\d,]+) \(.*\) have had at least one dose of a COVID-19 vaccine",
+        "people_fully_vaccinated": r"([\d,]+) \(.*\) have completed the two-dose course",
+    }
 
+    def read(self) -> pd.Series:
+        soup = get_soup(self.source_url)
+        data = self._parse_data(soup)
+        return pd.Series(data=data)
 
-def parse_data(soup: BeautifulSoup) -> pd.Series:
-    regex_1 = r"([\d,]+) C(ovid|OVID)-19 vaccinations has been given in total in the Cayman Islands"
-    regex_1 = (
-        r"([\d,]+) C(ovid|OVID)-19 vaccinations given in total in the Cayman Islands"
-    )
-    total_vaccinations = clean_count(re.search(regex_1, soup.text).group(1))
-
-    # regex_2 = (
-    #     r"Of these, ([\d,]+) \((?:[\d,]+)% of (?:[a-zA-Z0-9,]+)\) have had at least one dose"
-    # )
-    # assert total_vaccinations >= people_vaccinated
-    # people_fully_vaccinated = total_vaccinations - people_vaccinated
-    regex_2 = (
-        r"Of these,? ([\d,]+) \((?:[\d,]+)% of (?:an estimated )?([\d,]+)\) (?:have )?had at least one dose of a "
-        r"C(?:ovid|OVID)-19 vaccine and ([\d,]+) \(([\d,]+)%\) (have )?completed the two-dose course"
-    )
-
-    matches = re.search(regex_2, soup.text)
-    people_vaccinated = clean_count(matches.group(1))
-    population = clean_count(matches.group(2))
-    people_fully_vaccinated = clean_count(matches.group(3))
-
-    return pd.Series(
-        {
+    def _parse_data(self, soup: BeautifulSoup) -> pd.Series:
+        people_vaccinated = self._parse_metric(soup, "people_vaccinated")
+        people_fully_vaccinated = self._parse_metric(soup, "people_fully_vaccinated")
+        total_vaccinations = people_vaccinated + people_fully_vaccinated
+        return {
             "total_vaccinations": total_vaccinations,
             "people_vaccinated": people_vaccinated,
             "people_fully_vaccinated": people_fully_vaccinated,
         }
-    )
 
+    def _parse_metric(self, soup, metric_name):
+        return clean_count(
+            re.search(
+                self.regex[metric_name],
+                soup.text,
+            ).group(1)
+        )
 
-def set_date(ds: pd.Series) -> pd.Series:
-    date = localdate("America/Cayman")
-    return enrich_data(ds, "date", date)
+    def pipe_date(self, ds: pd.Series) -> pd.Series:
+        date = localdate("America/Cayman")
+        return enrich_data(ds, "date", date)
 
+    def pipe_source(self, ds: pd.Series) -> pd.Series:
+        return enrich_data(ds, "source_url", self.source_url)
 
-def enrich_location(ds: pd.Series) -> pd.Series:
-    return enrich_data(ds, "location", "Cayman Islands")
+    def pipe_location(self, ds: pd.Series) -> pd.Series:
+        return enrich_data(ds, "location", self.location)
 
+    def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
+        return enrich_data(ds, "vaccine", "Oxford/AstraZeneca, Pfizer/BioNTech")
 
-def enrich_vaccine(ds: pd.Series) -> pd.Series:
-    return enrich_data(ds, "vaccine", "Oxford/AstraZeneca, Pfizer/BioNTech")
+    def pipeline(self, ds: pd.Series) -> pd.Series:
+        return ds.pipe(self.pipe_date).pipe(self.pipe_location).pipe(self.pipe_source).pipe(self.pipe_vaccine)
 
-
-def pipeline(ds: pd.Series) -> pd.Series:
-    return ds.pipe(set_date).pipe(enrich_location).pipe(enrich_vaccine)
+    def export(self, paths):
+        data = self.read().pipe(self.pipeline)
+        increment(
+            paths=paths,
+            location=data["location"],
+            total_vaccinations=data["total_vaccinations"],
+            people_vaccinated=data["people_vaccinated"],
+            people_fully_vaccinated=data["people_fully_vaccinated"],
+            date=data["date"],
+            source_url=data["source_url"],
+            vaccine=data["vaccine"],
+        )
 
 
 def main(paths):
-    source = "https://www.exploregov.ky/coronavirus-statistics"
-    data = read(source).pipe(pipeline)
-    increment(
-        paths=paths,
-        location=data["location"],
-        total_vaccinations=data["total_vaccinations"],
-        people_vaccinated=data["people_vaccinated"],
-        people_fully_vaccinated=data["people_fully_vaccinated"],
-        date=data["date"],
-        source_url=data["source_url"],
-        vaccine=data["vaccine"],
-    )
-
-
-if __name__ == "__main__":
-    main()
+    CaymanIslands().export(paths)

@@ -5,8 +5,9 @@ import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.dates import localdate
+from cowidev.utils.clean import clean_count
+from cowidev.utils.clean.dates import localdate
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 def read(source: str) -> pd.Series:
@@ -22,30 +23,24 @@ def connect_parse_data(source: str) -> pd.Series:
         time.sleep(5)
 
         total_vaccinations = clean_count(driver.find_element_by_id("counter1").text)
-        people_vaccinated_share = driver.find_element_by_id("counter4").text
-        assert "One dose" in people_vaccinated_share
-        people_fully_vaccinated_share = driver.find_element_by_id("counter4a").text
-        assert "Two doses" in people_fully_vaccinated_share
+        # people_vaccinated_share = driver.find_element_by_id("counter4").text
+        # assert "One dose" in people_vaccinated_share
+        # people_fully_vaccinated_share = driver.find_element_by_id("counter4a").text
+        # assert "Two doses" in people_fully_vaccinated_share
 
     # This logic is only valid as long as Qatar *exclusively* uses 2-dose vaccines
-    people_vaccinated_share = float(
-        re.search(r"[\d.]+", people_vaccinated_share).group(0)
-    )
-    people_fully_vaccinated_share = float(
-        re.search(r"[\d.]+", people_fully_vaccinated_share).group(0)
-    )
-    vaccinated_proportion = people_vaccinated_share / (
-        people_vaccinated_share + people_fully_vaccinated_share
-    )
-    people_vaccinated = round(total_vaccinations * vaccinated_proportion)
-    people_fully_vaccinated = total_vaccinations - people_vaccinated
+    # people_vaccinated_share = float(re.search(r"[\d.]+", people_vaccinated_share).group(0))
+    # people_fully_vaccinated_share = float(re.search(r"[\d.]+", people_fully_vaccinated_share).group(0))
+    # vaccinated_proportion = people_vaccinated_share / (people_vaccinated_share + people_fully_vaccinated_share)
+    # people_vaccinated = round(total_vaccinations * vaccinated_proportion)
+    # people_fully_vaccinated = total_vaccinations - people_vaccinated
 
     date = localdate("Asia/Qatar")
 
     data = {
         "total_vaccinations": total_vaccinations,
-        "people_vaccinated": people_vaccinated,
-        "people_fully_vaccinated": people_fully_vaccinated,
+        # "people_vaccinated": people_vaccinated,
+        # "people_fully_vaccinated": people_fully_vaccinated,
         "date": date,
     }
     return pd.Series(data=data)
@@ -74,8 +69,8 @@ def main(paths):
         paths=paths,
         location=data["location"],
         total_vaccinations=data["total_vaccinations"],
-        people_vaccinated=data["people_vaccinated"],
-        people_fully_vaccinated=data["people_fully_vaccinated"],
+        # people_vaccinated=data["people_vaccinated"],
+        # people_fully_vaccinated=data["people_fully_vaccinated"],
         date=data["date"],
         source_url=data["source_url"],
         vaccine=data["vaccine"],

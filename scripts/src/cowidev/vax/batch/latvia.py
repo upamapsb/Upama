@@ -1,6 +1,5 @@
 import pandas as pd
 
-from cowidev.vax.utils.utils import get_soup
 from cowidev.vax.utils.files import export_metadata
 
 
@@ -19,17 +18,13 @@ one_dose_vaccines = ["Johnson&Johnson"]
 class Latvia:
     def __init__(self):
         self.location = "Latvia"
-        self.source_url = "https://data.gov.lv/dati/eng/dataset/covid19-vakcinacijas"
+        self.source_page = "https://data.gov.lv/dati/eng/dataset/covid19-vakcinacijas"
+        self.source_url_1 = "https://data.gov.lv/dati/datastore/dump/51725018-49f3-40d1-9280-2b13219e026f"
+        self.source_url_2 = "https://data.gov.lv/dati/datastore/dump/9320d913-a4a2-4172-b521-73e58c2cfe83"
 
-    def _get_file_link(self):
-        soup = get_soup(self.source_url)
-        file_url = soup.find_all("a", class_="resource-url-analytics")[-1]["href"]
-        return file_url
-
-    def read(self):
-        link = self._get_file_link()
-        df = pd.read_excel(
-            link,
+    def _read_one(self, url: str):
+        return pd.read_csv(
+            url,
             usecols=[
                 "Vakcinācijas datums",
                 "Vakcinēto personu skaits",
@@ -37,9 +32,12 @@ class Latvia:
                 "Preparāts",
             ],
         )
-        return df
+
+    def read(self):
+        return pd.concat([self._read_one(self.source_url_1), self._read_one(self.source_url_2)], ignore_index=True)
 
     def pipe_base(self, df: pd.DataFrame) -> pd.DataFrame:
+        df["Vakcinācijas datums"] = df["Vakcinācijas datums"].str.slice(0, 10)
         df["vaccine"] = df["Preparāts"].str.strip()
         vaccines_wrong = set(df["vaccine"].unique()).difference(vaccine_mapping)
         if vaccines_wrong:
@@ -47,9 +45,7 @@ class Latvia:
         return (
             df.replace(vaccine_mapping)
             .drop(columns=["Preparāts"])
-            .replace(
-                {"1.pote": "people_vaccinated", "2.pote": "people_fully_vaccinated"}
-            )
+            .replace({"1.pote": "people_vaccinated", "2.pote": "people_fully_vaccinated"})
         )
 
     def pipe_pivot(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -68,12 +64,8 @@ class Latvia:
         )
 
     def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
-        df["total_vaccinations"] = df["people_vaccinated"].fillna(0) + df[
-            "people_fully_vaccinated"
-        ].fillna(0)
-        df.loc[
-            df["vaccine"].isin(one_dose_vaccines), "people_fully_vaccinated"
-        ] = df.people_vaccinated
+        df["total_vaccinations"] = df["people_vaccinated"].fillna(0) + df["people_fully_vaccinated"].fillna(0)
+        df.loc[df["vaccine"].isin(one_dose_vaccines), "people_fully_vaccinated"] = df.people_vaccinated
         return df
 
     def pipe_aggregate(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -97,7 +89,7 @@ class Latvia:
         return df
 
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(location=self.location, source_url=self.source_url)
+        return df.assign(location=self.location, source_url=self.source_page)
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
@@ -132,35 +124,31 @@ class Latvia:
             .sort_values("date")
         )
         df = df.assign(
-            total_vaccinations=df.groupby("vaccine", as_index=False)[
-                "total_vaccinations"
-            ].cumsum(),
+            total_vaccinations=df.groupby("vaccine", as_index=False)["total_vaccinations"].cumsum(),
             location=self.location,
-        )[["location", "date", "vaccine", "total_vaccinations"]].sort_values(
-            ["date", "vaccine"]
-        )
+        )[["location", "date", "vaccine", "total_vaccinations"]].sort_values(["date", "vaccine"])
         return df
 
-    def to_csv(self, paths):
+    def export(self, paths):
         df = self.read()
         df_base = df.pipe(self.pipe_base)
+
         # Main data
-        df_base.pipe(self.pipeline).to_csv(
-            paths.tmp_vax_out(self.location), index=False
-        )
+        df_base.pipe(self.pipeline).to_csv(paths.tmp_vax_out(self.location), index=False)
+
         # Manufacturer data
         df_man = df_base.pipe(self.pipeline_manufacturer)
         df_man.to_csv(paths.tmp_vax_out_man(self.location), index=False)
         export_metadata(
             df_man,
             "National Health Service",
-            self.source_url,
+            self.source_page,
             paths.tmp_vax_metadata_man,
         )
 
 
 def main(paths):
-    Latvia().to_csv(paths)
+    Latvia().export(paths)
 
 
 if __name__ == "__main__":

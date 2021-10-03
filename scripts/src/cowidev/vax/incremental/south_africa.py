@@ -3,9 +3,10 @@ import re
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.dates import localdate
-from cowidev.vax.utils.utils import get_soup
+from cowidev.utils.clean import clean_count
+from cowidev.utils.clean.dates import localdate
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 class SouthAfrica:
@@ -27,9 +28,9 @@ class SouthAfrica:
 
     def _parse_total_vaccinations(self, soup: BeautifulSoup) -> str:
         return clean_count(
-            soup.find(
-                class_="counter-box-content", string=re.compile("Vaccines Administered")
-            ).parent.find(class_="display-counter")["data-value"]
+            soup.find(class_="counter-box-content", string=re.compile("Vaccines Administered")).parent.find(
+                class_="display-counter"
+            )["data-value"]
         )
 
     def pipe_location(self, ds: pd.Series) -> pd.Series:
@@ -42,9 +43,7 @@ class SouthAfrica:
         return enrich_data(ds, "source_url", self.source_url)
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
-        )
+        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
 
     def to_csv(self, paths):
         data = self.read().pipe(self.pipeline)

@@ -10,6 +10,8 @@ WMD sources some of its data from HMD, but we use the data from HMD directly. We
 
 See here for a [full list of source information (i.e., HMD or WMD) country by country](https://ourworldindata.org/excess-mortality-covid#source-information-country-by-country).
 
+We source our baseline of projected deaths in 2020 from WMD.
+
 We calculate the number of weekly deaths for the United Kingdom by summing the weekly deaths from England & Wales, Scotland, and Northern Ireland.
 
 For a more detailed description of the HMD data, including week date definitions, the coverage (of individuals, locations, and time), whether dates are for death occurrence or registration, the original national source information, and important caveats, [see the HMD metadata file](https://www.mortality.org/Public/STMF_DOC/STMFmetadata.pdf).
@@ -20,34 +22,49 @@ For a more detailed description of the WMD data, including original source infor
 
 Stored in [`excess_mortality.csv`](https://github.com/owid/covid-19-data/blob/master/public/data/excess_mortality/excess_mortality.csv).
 
-As of 20 February 2021, the data columns are:
+As of 28 September 2021, the data columns are:
 
 - `location`: name of the country or region
-- `date`: date on which a month or week ended in 2020 and 2021 only (week dates according to [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date)). These dates do not apply to other years, such as "deaths_2019_all_ages"; instead, the deaths data across years is organized according to the week or month number in the year — see the "time" and "time_unit" columns below.
-- `p_scores_all_ages`: P-scores for all ages; see note below for the definition of the P-score and how we calculate it
-- `p_scores_15_64`: P-scores for ages 15–64
-- `p_scores_65_74`: P-scores for ages 65–74
-- `p_scores_75_84`: P-scores for ages 75–84
-- `p_scores_85plus`: P-scores for ages 85 and above
-- `deaths_2021_all_ages`: number of weekly or monthly deaths from all causes for all ages in 2021
-- `deaths_2020_all_ages`: number of weekly or monthly deaths from all causes for all ages in 2020
-- `avg_deaths_2015_2019`: average number of weekly or monthly deaths from all causes for all ages over the years 2015–2019
-- `deaths_2019_all_ages`: number of weekly or monthly deaths from all causes for all ages in 2019
-- `deaths_2018_all_ages`: number of weekly or monthly deaths from all causes for all ages in 2018
-- `deaths_2017_all_ages`: number of weekly or monthly deaths from all causes for all ages in 2017
-- `deaths_2016_all_ages`: number of weekly or monthly deaths from all causes for all ages in 2016
-- `deaths_2015_all_ages`: number of weekly or monthly deaths from all causes for all ages in 2015
-- `deaths_2014_all_ages`: number of weekly or monthly deaths from all causes for all ages in 2014
-- `deaths_2013_all_ages`: number of weekly or monthly deaths from all causes for all ages in 2013
-- `deaths_2012_all_ages`: number of weekly or monthly deaths from all causes for all ages in 2012
-- `deaths_2011_all_ages`: number of weekly or monthly deaths from all causes for all ages in 2011
-- `deaths_2010_all_ages`: number of weekly or monthly deaths from all causes for all ages in 2010
+- `date`: date on which a reporting week or month ended in 2020 and 2021 only (week dates according to [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date)). These dates do not apply to other years, such as "deaths_2019_all_ages"; instead, the deaths data across years is organized according to the week or month number in that year — see the "time" and "time_unit" columns below.
+- `p_proj_all_ages`: P-scores using projected baseline for all ages; see note below for the definition of the P-score, how we calculate it, and changes implemented on 20 September 2021.
+- `p_proj_0_14`: P-scores using projected baseline for ages 0–14
+- `p_proj_15_64`: P-scores using projected baseline for ages 15–64
+- `p_proj_65_74`: P-scores using projected baseline for ages 65–74
+- `p_proj_75_84`: P-scores using projected baseline for ages 75–84
+- `p_proj_85p`: P-scores using projected baseline for ages 85 and above
+- `p_avg_all_ages`: P-scores using 5-year average baseline for all ages
+- `p_avg_0_14`: P-scores using 5-year average baseline for ages 0–14
+- `p_avg_15_64`: P-scores using 5-year average baseline for ages 15–64
+- `p_avg_65_74`: P-scores using 5-year average baseline for ages 65–74
+- `p_avg_75_84`: P-scores using 5-year average baseline for ages 75–84
+- `p_avg_85p`: P-scores using 5-year average baseline for ages 85 and above
+- `deaths_2021_all_ages`: reported number of weekly or monthly deaths from all causes for all ages in 2021
+- `deaths_2020_all_ages`: reported number of weekly or monthly deaths from all causes for all ages in 2020
+- `projected_deaths_2020_all_ages`: projected number of weekly or monthly deaths from all causes for all ages for 2020
+- `average_deaths_2015_2019_all_ages`: average number of weekly or monthly deaths from all causes for all ages over the years 2015–2019
+- `deaths_2019_all_ages`: reported number of weekly or monthly deaths from all causes for all ages in 2019
+- `deaths_2018_all_ages`: reported number of weekly or monthly deaths from all causes for all ages in 2018
+- `deaths_2017_all_ages`: reported number of weekly or monthly deaths from all causes for all ages in 2017
+- `deaths_2016_all_ages`: reported number of weekly or monthly deaths from all causes for all ages in 2016
+- `deaths_2015_all_ages`: reported number of weekly or monthly deaths from all causes for all ages in 2015
+- `deaths_2014_all_ages`: reported number of weekly or monthly deaths from all causes for all ages in 2014
+- `deaths_2013_all_ages`: reported number of weekly or monthly deaths from all causes for all ages in 2013
+- `deaths_2012_all_ages`: reported number of weekly or monthly deaths from all causes for all ages in 2012
+- `deaths_2011_all_ages`: reported number of weekly or monthly deaths from all causes for all ages in 2011
+- `deaths_2010_all_ages`: reported number of weekly or monthly deaths from all causes for all ages in 2010
 - `time`: week or month number in the year
 - `time_unit`: denotes whether the “time” column values are weekly or monthly
+- `excess_proj_all_ages`: number of excess deaths; calculated as reported deaths minus projected deaths
+- `cum_excess_proj_all_ages`: cumulative number of excess deaths; cumulated starting 1 January 2020
+- `cum_excess_per_million_proj_all_ages`: cumulative number of excess deaths per million people in the population; cumulated starting 1 January 2020
+- `cum_proj_deaths_all_ages`: cumulative number of projected deaths; cumulated starting 1 January 2020
+- `cum_p_proj_all_ages`: cumulative P-scores using projected baseline for all ages
 
 ## How P-scores are defined and calculated
 
-We used the raw weekly or monthly death data from HMD and WMD to calculate P-scores. The P-score is the percentage difference between the number of weekly or monthly deaths in 2020–2021 and the average number of deaths in the same period over the years 2015–2019 (though for a small minority of countries only data from 2016 or 2017 to 2019 are available). For Week 53 2020, which ended on 3 January 2021, we compare the number of deaths to the average deaths in Week 52 over the years 2015–2019, because only one previous year (2015) had a Week 53.
+As of 20 September 2021, we calculate P-scores using the reported deaths data from HMD and WMD and the projected deaths for 2020 from WMD, as an estimate of expected deaths. The P-score is the percentage difference between the reported number of weekly or monthly deaths in 2020–2021 and the projected number of deaths for the same period based on previous years.
+
+Before 20 September 2021, we calculated P-scores using a different estimate of expected deaths: the five-year average from 2015–2019. We made this change because using the five-year average has an important limitation — it does not account for year-to-year trends in mortality and thus can misestimate excess mortality. The WMD projection we now use, on the other hand, does not suffer from this limitation because it accounts for these year-to-year trends.
 
 ## Important points about the data
 

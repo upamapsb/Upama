@@ -7,42 +7,38 @@ from cowidev.vax.utils.files import export_metadata
 
 
 class Germany:
-    def __init__(
-        self,
-        source_url: str,
-        source_url_ref: str,
-        location: str,
-        columns_rename: dict = None,
-        vaccine_mapping: dict = None,
-    ):
-        self.source_url = source_url
-        self.source_url_ref = source_url_ref
-        self.location = location
-        self.columns_rename = columns_rename
-        self.vaccine_mapping = vaccine_mapping
-        self.regex_doses_colnames = r"dosen_([a-zA-Z]*)_kumulativ"
+    source_url: str = "https://impfdashboard.de/static/data/germany_vaccinations_timeseries_v2.tsv"
+    source_url_ref: str = "https://impfdashboard.de/"
+    location: str = "Germany"
+    columns_rename: str = {
+        "dosen_kumulativ": "total_vaccinations",
+        "personen_erst_kumulativ": "people_vaccinated",
+        "personen_voll_kumulativ": "people_fully_vaccinated",
+        "dosen_dritt_kumulativ": "total_boosters",
+    }
+    vaccine_mapping: str = {
+        "dosen_biontech_kumulativ": "Pfizer/BioNTech",
+        "dosen_moderna_kumulativ": "Moderna",
+        "dosen_astra_kumulativ": "Oxford/AstraZeneca",
+        "dosen_johnson_kumulativ": "Johnson&Johnson",
+    }
+    regex_doses_colnames: str = r"dosen_([a-zA-Z]*)_kumulativ"
 
     def read(self):
         return pd.read_csv(self.source_url, sep="\t")
 
     def _check_vaccines(self, df: pd.DataFrame):
         """Get vaccine columns mapped to Vaccine names."""
-        EXCLUDE = ["kbv", "dim", "erst", "zweit"]
+        EXCLUDE = ["kbv", "dim", "erst", "zweit", "dritt"]
 
         def _is_vaccine_column(column_name: str):
             if re.search(self.regex_doses_colnames, column_name):
-                if (
-                    re.search(self.regex_doses_colnames, column_name).group(1)
-                    not in EXCLUDE
-                ):
+                if re.search(self.regex_doses_colnames, column_name).group(1) not in EXCLUDE:
                     return True
             return False
 
         for column_name in df.columns:
-            if (
-                _is_vaccine_column(column_name)
-                and column_name not in self.vaccine_mapping
-            ):
+            if _is_vaccine_column(column_name) and column_name not in self.vaccine_mapping:
                 raise ValueError(f"Found unknown vaccine: {column_name}")
         return df
 
@@ -68,17 +64,11 @@ class Germany:
 
     def _vaccine_start_dates(self, df: pd.DataFrame):
         date2vax = sorted(
-            (
-                (df.loc[df[vaccine] > 0, "date"].min(), vaccine)
-                for vaccine in self.vaccine_mapping.values()
-            ),
+            ((df.loc[df[vaccine] > 0, "date"].min(), vaccine) for vaccine in self.vaccine_mapping.values()),
             key=lambda x: x[0],
             reverse=True,
         )
-        return [
-            (date2vax[i][0], ", ".join(sorted(v[1] for v in date2vax[i:])))
-            for i in range(len(date2vax))
-        ]
+        return [(date2vax[i][0], ", ".join(sorted(v[1] for v in date2vax[i:]))) for i in range(len(date2vax))]
 
     def enrich_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
         vax_date_mapping = self._vaccine_start_dates(df)
@@ -101,15 +91,12 @@ class Germany:
                 "total_vaccinations",
                 "people_vaccinated",
                 "people_fully_vaccinated",
+                "total_boosters",
             ]
         ]
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        return (
-            df.pipe(self.enrich_source)
-            .pipe(self.enrich_vaccine)
-            .pipe(self.select_output_columns)
-        )
+        return df.pipe(self.enrich_source).pipe(self.enrich_vaccine).pipe(self.select_output_columns)
 
     def melt_manufacturers(self, df: pd.DataFrame) -> pd.DataFrame:
         id_vars = ["date", "location"]
@@ -128,28 +115,11 @@ class Germany:
         # Export manufacturer data
         df = df_base.pipe(self.pipeline_manufacturer)
         df.to_csv(paths.tmp_vax_out_man(self.location), index=False)
-        export_metadata(
-            df, "Robert Koch Institut", self.source_url_ref, paths.tmp_vax_metadata_man
-        )
+        export_metadata(df, "Robert Koch Institut", self.source_url_ref, paths.tmp_vax_metadata_man)
 
 
 def main(paths):
-    Germany(
-        source_url="https://impfdashboard.de/static/data/germany_vaccinations_timeseries_v2.tsv",
-        source_url_ref="https://impfdashboard.de/",
-        location="Germany",
-        columns_rename={
-            "dosen_kumulativ": "total_vaccinations",
-            "personen_erst_kumulativ": "people_vaccinated",
-            "personen_voll_kumulativ": "people_fully_vaccinated",
-        },
-        vaccine_mapping={
-            "dosen_biontech_kumulativ": "Pfizer/BioNTech",
-            "dosen_moderna_kumulativ": "Moderna",
-            "dosen_astrazeneca_kumulativ": "Oxford/AstraZeneca",
-            "dosen_johnson_kumulativ": "Johnson&Johnson",
-        },
-    ).to_csv(paths)
+    Germany().to_csv(paths)
 
 
 if __name__ == "__main__":

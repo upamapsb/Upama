@@ -1,10 +1,9 @@
-import re
-
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.utils import get_soup
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_count
+from cowidev.utils.clean.dates import localdate
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 def read(source: str) -> pd.Series:
@@ -14,17 +13,19 @@ def read(source: str) -> pd.Series:
 def connect_parse_data(source: str) -> pd.Series:
 
     soup = get_soup(source)
-    people_vaccinated = soup.find_all(class_="repart-stlucia")[0].text
-    people_vaccinated = clean_count(people_vaccinated)
 
-    people_fully_vaccinated = soup.find_all(class_="repart-stlucia")[1].text
-    people_fully_vaccinated = clean_count(people_fully_vaccinated)
+    az_dose1 = clean_count(soup.find_all(class_="yellow")[0].text)
+    az_dose2 = clean_count(soup.find_all(class_="yellow")[1].text)
+    assert az_dose1 >= az_dose2
+    pfizer_dose1 = clean_count(soup.find_all(class_="yellow")[2].text)
+    pfizer_dose2 = clean_count(soup.find_all(class_="yellow")[3].text)
+    assert pfizer_dose1 >= pfizer_dose2
 
+    people_vaccinated = az_dose1 + pfizer_dose1
+    people_fully_vaccinated = az_dose2 + pfizer_dose2
     total_vaccinations = people_vaccinated + people_fully_vaccinated
 
-    date = soup.find(class_="h2-blue").text
-    date = re.search(r"\w+ +\d+, +202\d", date).group(0)
-    date = str(pd.to_datetime(date).date())
+    date = localdate("America/St_Lucia")
 
     data = {
         "total_vaccinations": total_vaccinations,
@@ -40,7 +41,7 @@ def enrich_location(ds: pd.Series) -> pd.Series:
 
 
 def enrich_vaccine(ds: pd.Series) -> pd.Series:
-    return enrich_data(ds, "vaccine", "Oxford/AstraZeneca")
+    return enrich_data(ds, "vaccine", "Oxford/AstraZeneca, Pfizer/BioNTech")
 
 
 def enrich_source(ds: pd.Series) -> pd.Series:

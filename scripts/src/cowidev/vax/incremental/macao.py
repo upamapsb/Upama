@@ -1,13 +1,14 @@
 import re
-from datetime import datetime
 import os
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from cowidev.vax.utils.utils import get_soup
-from cowidev.vax.utils.incremental import clean_count
-from cowidev.vax.utils.dates import clean_date
+from cowidev.utils.clean import clean_count, clean_date
+from cowidev.utils.web.scraping import get_soup
 
 
 def parse_date(elem) -> str:
@@ -42,9 +43,7 @@ def parse_vaccinations(elem) -> dict:
     if people_vaccinated:
         metrics["people_vaccinated"] = clean_count(people_vaccinated.group(1))
     if people_fully_vaccinated:
-        metrics["people_fully_vaccinated"] = clean_count(
-            people_fully_vaccinated.group(1)
-        )
+        metrics["people_fully_vaccinated"] = clean_count(people_fully_vaccinated.group(1))
     return metrics
 
 
@@ -94,7 +93,7 @@ def read(source: str, last_update: str, num_pages_limit: int = 10):
             if any([record["date"] <= last_update for record in records_sub]):
                 # print("Dates exceding!  ", str([record["date"] for record in records_sub]))
                 break
-    if len(records) > 0:
+    if pd.Series([r.get("total_vaccinations") for r in records]).notnull().any():
         records = [record for record in records if record["date"] >= last_update]
         if len(records) > 0:
             return postprocess(pd.DataFrame(records))

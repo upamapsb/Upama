@@ -1,11 +1,22 @@
+import os
+
 import pandas as pd
 
 from cowidev.vax.utils.gsheets import VaccinationGSheet
 from cowidev.vax.process import process_location
 from cowidev.vax.cmd.utils import get_logger, print_eoe
+from pandas.core.base import DataError
+from pandas.errors import ParserError
 
 
 logger = get_logger()
+
+
+def read_csv(filepath):
+    try:
+        return pd.read_csv(filepath)
+    except:
+        raise ParserError(f"Error tokenizing data from file {filepath}")
 
 
 def main_process_data(
@@ -26,10 +37,18 @@ def main_process_data(
     logger.info("Getting data from output...")
     automated = gsheet.automated_countries
     filepaths_auto = [paths.tmp_vax_out(country) for country in automated]
-    df_auto_list = [pd.read_csv(filepath) for filepath in filepaths_auto]
+    df_auto_list = [read_csv(filepath) for filepath in filepaths_auto]
 
     # Concatenate
     vax = df_manual_list + df_auto_list
+
+    # Check that no location is present in both manual and automated data
+    manual_locations = set([df.location[0] for df in df_manual_list])
+    auto_locations = os.listdir(os.path.join(paths.tmp_vax_out_dir, "main_data"))
+    auto_locations = set([loc.replace(".csv", "") for loc in auto_locations])
+    common_locations = auto_locations.intersection(manual_locations)
+    if len(common_locations) > 0:
+        raise DataError(f"The following locations have data in both output/main_data and GSheet: {common_locations}")
 
     # vax = [v for v in vax if v.location.iloc[0] == "Pakistan"]  # DEBUG
     # Process locations

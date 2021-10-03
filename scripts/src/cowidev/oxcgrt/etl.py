@@ -6,9 +6,7 @@ class OxCGRTETL:
         self.source_url = "https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_latest.csv"
 
     def extract(self):
-        return pd.read_csv(
-            self.source_url,
-        )
+        return pd.read_csv(self.source_url, low_memory=False)
 
     def transform(self, df: pd.DataFrame) -> pd.DataFrame:
         return df

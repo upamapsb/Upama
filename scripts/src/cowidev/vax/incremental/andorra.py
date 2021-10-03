@@ -2,9 +2,9 @@ import re
 
 import pandas as pd
 
-from cowidev.vax.utils.incremental import enrich_data, increment, clean_count
-from cowidev.vax.utils.utils import get_soup
-from cowidev.vax.utils.dates import extract_clean_date
+from cowidev.utils.clean import clean_count, extract_clean_date
+from cowidev.utils.web.scraping import get_soup
+from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 class Andorra:
@@ -38,11 +38,7 @@ class Andorra:
 
     def parse_date(self, soup):
         date_str = extract_clean_date(
-            soup.text,
-            r"Actualització (\d{1,2} de [a-zA-Z]+)",
-            "%d de %B",
-            replace_year=2021,
-            lang="ca"
+            soup.text, r"Actualització (\d{1,2} de [a-zA-Z]+)", "%d de %B", replace_year=2021, lang="ca"
         )
         return date_str
 
@@ -56,9 +52,7 @@ class Andorra:
         return enrich_data(ds, "source_url", self.source_url)
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return (
-            ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
-        )
+        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
 
     def export(self, paths):
         """Generalized."""

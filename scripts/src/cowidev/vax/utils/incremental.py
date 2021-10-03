@@ -10,12 +10,6 @@ import requests
 GH_LINK = "https://github.com/owid/covid-19-data/raw/master/public/data/vaccinations/country_data"
 
 
-def clean_count(count):
-    count = re.sub(r"[^0-9]", "", count)
-    count = int(count)
-    return count
-
-
 def enrich_data(ds: pd.Series, row, value) -> pd.Series:
     return ds.append(pd.Series({row: value}))
 
@@ -44,11 +38,8 @@ def increment(
         people_fully_vaccinated=people_fully_vaccinated,
         total_boosters=total_boosters,
     )
+    _from_gh_to_scripts(paths, location)
     filepath_automated = paths.tmp_vax_out(location)
-    filepath_public = f"{GH_LINK}/{location}.csv".replace(" ", "%20")
-    # Move from public to output folder
-    if not os.path.isfile(filepath_automated) and requests.get(filepath_public).ok:
-        pd.read_csv(filepath_public).to_csv(filepath_automated, index=False)
     # Update file in output/
     if os.path.isfile(filepath_automated):
         df = _increment(
@@ -92,6 +83,14 @@ def increment(
     # print(f"NEW: {total_vaccinations} doses on {date}")
 
 
+def _from_gh_to_scripts(paths, location):
+    filepath_automated = paths.tmp_vax_out(location)
+    filepath_public = f"{GH_LINK}/{location}.csv".replace(" ", "%20")
+    # Move from public to output folder
+    if not os.path.isfile(filepath_automated) and requests.get(filepath_public).ok:
+        pd.read_csv(filepath_public).to_csv(filepath_automated, index=False)
+
+
 def _check_fields(
     location,
     source_url,
@@ -106,19 +105,13 @@ def _check_fields(
     # Check location, vaccine, source_url
     if not isinstance(location, str):
         type_wrong = type(location).__name__
-        raise TypeError(
-            f"Check `location` type! Should be a str, found {type_wrong}. Value was {location}"
-        )
+        raise TypeError(f"Check `location` type! Should be a str, found {type_wrong}. Value was {location}")
     if not isinstance(vaccine, str):
         type_wrong = type(vaccine).__name__
-        raise TypeError(
-            f"Check `vaccine` type! Should be a str, found {type_wrong}. Value was {vaccine}"
-        )
+        raise TypeError(f"Check `vaccine` type! Should be a str, found {type_wrong}. Value was {vaccine}")
     if not isinstance(source_url, str):
         type_wrong = type(source_url).__name__
-        raise TypeError(
-            f"Check `source_url` type! Should be a str, found {type_wrong}. Value was {source_url}"
-        )
+        raise TypeError(f"Check `source_url` type! Should be a str, found {type_wrong}. Value was {source_url}")
 
     # Check metrics
     if not isinstance(total_vaccinations, numbers.Number):
@@ -131,25 +124,17 @@ def _check_fields(
         raise TypeError(
             f"Check `total_boosters` type! Should be numeric, found {type_wrong}. Value was {total_boosters}"
         )
-    if not (
-        isinstance(people_vaccinated, numbers.Number) or pd.isnull(people_vaccinated)
-    ):
+    if not (isinstance(people_vaccinated, numbers.Number) or pd.isnull(people_vaccinated)):
         type_wrong = type(people_vaccinated).__name__
         raise TypeError(
             f"Check `people_vaccinated` type! Should be numeric, found {type_wrong}. Value was {people_vaccinated}"
         )
-    if not (
-        isinstance(people_partly_vaccinated, numbers.Number)
-        or pd.isnull(people_partly_vaccinated)
-    ):
+    if not (isinstance(people_partly_vaccinated, numbers.Number) or pd.isnull(people_partly_vaccinated)):
         type_wrong = type(people_partly_vaccinated).__name__
         raise TypeError(
             f"Check `people_vaccinated` type! Should be numeric, found {type_wrong}. Value was {people_vaccinated}"
         )
-    if not (
-        isinstance(people_fully_vaccinated, numbers.Number)
-        or pd.isnull(people_fully_vaccinated)
-    ):
+    if not (isinstance(people_fully_vaccinated, numbers.Number) or pd.isnull(people_fully_vaccinated)):
         type_wrong = type(people_fully_vaccinated).__name__
         raise TypeError(
             f"Check `people_fully_vaccinated` type! Should be numeric, found {type_wrong}. Value was "
@@ -158,16 +143,9 @@ def _check_fields(
     # Check date
     if not isinstance(date, str):
         type_wrong = type(date).__name__
-        raise TypeError(
-            f"Check `date` type! Should be numeric, found {type_wrong}. Value was {date}"
-        )
-    if not (
-        re.match(r"\d{4}-\d{2}-\d{2}", date)
-        and date <= str(datetime.date.today() + datetime.timedelta(days=1))
-    ):
-        raise ValueError(
-            f"Check `date`. It either does not match format YYYY-MM-DD or exceeds todays'date: {date}"
-        )
+        raise TypeError(f"Check `date` type! Should be numeric, found {type_wrong}. Value was {date}")
+    if not (re.match(r"\d{4}-\d{2}-\d{2}", date) and date <= str(datetime.date.today() + datetime.timedelta(days=1))):
+        raise ValueError(f"Check `date`. It either does not match format YYYY-MM-DD or exceeds todays'date: {date}")
 
 
 def _increment(
@@ -183,19 +161,14 @@ def _increment(
     total_boosters=None,
 ):
     prev = pd.read_csv(filepath)
-    if (
-        total_vaccinations <= prev["total_vaccinations"].max()
-        or date < prev["date"].max()
-    ):
+    if total_vaccinations <= prev["total_vaccinations"].max() or date < prev["date"].max():
         df = prev.copy()
     elif date == prev["date"].max():
         df = prev.copy()
         df.loc[df["date"] == date, "total_vaccinations"] = total_vaccinations
         df.loc[df["date"] == date, "people_vaccinated"] = people_vaccinated
         if people_partly_vaccinated is not None:
-            df.loc[
-                df["date"] == date, "people_partly_vaccinated"
-            ] = people_partly_vaccinated
+            df.loc[df["date"] == date, "people_partly_vaccinated"] = people_partly_vaccinated
         df.loc[df["date"] == date, "people_fully_vaccinated"] = people_fully_vaccinated
         df.loc[df["date"] == date, "total_boosters"] = total_boosters
         df.loc[df["date"] == date, "source_url"] = source_url

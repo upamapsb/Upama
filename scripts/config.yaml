@@ -7,9 +7,10 @@ pipeline:
     countries:
     njobs: -2
     skip_countries:
+      - Andorra
       - Gabon
+      - Morocco # Government data doesn't differentiate 1- and 2-dose vaccines so we use WHO instead
       - North Macedonia
-      - Northern Cyprus
       - South Africa
   process-data:
     skip_complete:
@@ -17,7 +18,7 @@ pipeline:
     skip_monotonic_check:
     skip_anomaly_check:
       Australia:
-        - date: 2021-05-24
+        - date: 2021-05-23
           metrics: people_vaccinated
       Bahrain:
         - date: 2021-03-06
@@ -30,6 +31,9 @@ pipeline:
           metrics: 
            - total_vaccinations
            - people_vaccinated
+      Luxembourg:
+        - date: 2021-09-16
+          metrics: people_fully_vaccinated
       Nigeria:
         - date: 2021-06-15
           metrics: people_fully_vaccinated
