@@ -23,10 +23,14 @@ def read(source: str) -> pd.Series:
         if block.find("p").text == "ΣΥΝΟΛΟ 2ης ΔΟΣΗΣ":
             people_fully_vaccinated = clean_count(block.find_all("p")[1].text)
 
+        if block.find("p").text == "ΣΥΝΟΛΟ 3ης ΔΟΣΗΣ":
+            total_boosters = clean_count(block.find_all("p")[1].text)
+
     data = {
         "total_vaccinations": total_vaccinations,
         "people_vaccinated": people_vaccinated,
         "people_fully_vaccinated": people_fully_vaccinated,
+        "total_boosters": total_boosters,
         "date": date,
         "source_url": source,
     }
@@ -54,6 +58,7 @@ def main(paths):
         total_vaccinations=data["total_vaccinations"],
         people_vaccinated=data["people_vaccinated"],
         people_fully_vaccinated=data["people_fully_vaccinated"],
+        total_boosters=data["total_boosters"],
         date=data["date"],
         source_url=data["source_url"],
         vaccine=data["vaccine"],
