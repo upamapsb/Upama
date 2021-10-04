@@ -90,14 +90,15 @@ class Switzerland:
 
         return df.assign(vaccine=df.date.astype(str).apply(_enrich_vaccine))
 
-    def pipeline(self, df: pd.DataFrame, country_code: str) -> pd.DataFrame:
+    def pipeline(self, df: pd.DataFrame, location: str) -> pd.DataFrame:
+        geo_region = _get_geo_region(location)
         return (
-            df.pipe(self.pipe_filter_country, country_code)
+            df.pipe(self.pipe_filter_country, geo_region)
             .pipe(self.pipe_pivot)
             .pipe(self.pipe_rename_columns)
             .pipe(self.pipe_fix_metrics)
             .pipe(self.pipe_translate_country_code)
-            .pipe(self.pipe_source, country_code)
+            .pipe(self.pipe_source, geo_region)
             .pipe(self.pipe_vaccine)[
                 [
                     "location",
@@ -147,7 +148,7 @@ class Switzerland:
         ).reset_index()
 
     def pipe_age_date(self, df):
-        return df.assign(date=clean_date_series(df.date.apply(lambda x: datetime.strptime(str(x) + "+0", "%Y%W+%w"))))
+        return df.assign(date=clean_date_series(df.date.apply(lambda x: datetime.strptime(str(x) + "+0", "%G%V+%w"))))
 
     def pipe_age_location(self, df, location):
         return df.assign(location=location)
@@ -179,12 +180,7 @@ class Switzerland:
         ]
 
     def pipeline_age(self, df, location):
-        if location == "Switzerland":
-            geo_region = "CH"
-        elif location == "Liechtenstein":
-            geo_region = "FL"
-        else:
-            raise ValueError("Only Switzerland or Liechtenstein are accepted values for `location`.")
+        geo_region = _get_geo_region(location)
 
         df_ = df.copy()
         return (
@@ -204,7 +200,7 @@ class Switzerland:
 
         # Main data
         for location in locations:
-            df.pipe(self.pipeline, country_code="CH").to_csv(paths.tmp_vax_out(location), index=False)
+            df.pipe(self.pipeline, location).to_csv(paths.tmp_vax_out(location), index=False)
 
         # Manufacturer
         df_manuf = df_manuf.pipe(self.pipeline_manufacturer)
@@ -230,3 +226,12 @@ class Switzerland:
 
 def main(paths):
     Switzerland().to_csv(paths)
+
+
+def _get_geo_region(location):
+    if location == "Switzerland":
+        return "CH"
+    elif location == "Liechtenstein":
+        return "FL"
+    else:
+        raise ValueError("Only Switzerland or Liechtenstein are accepted values for `location`.")

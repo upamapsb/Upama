@@ -11,6 +11,7 @@ from shutil import copyfile
 import pandas as pd
 from pandas.api.types import is_numeric_dtype
 
+from cowidev.utils.utils import pd_series_diff_values
 from cowidev.utils.clean import clean_date
 from cowidev.vax.cmd.utils import get_logger
 from cowidev.vax.utils.checks import VACCINES_ACCEPTED
@@ -116,7 +117,12 @@ class DatasetGenerator:
         )
 
         if len(df_metadata) != len(df_vax):
-            raise ValueError("Missmatch between vaccination data and metadata!")
+            loc_miss = pd_series_diff_values(df_metadata.location, df_vax.location)
+            a = df_metadata[df_metadata.location.isin(loc_miss)]
+            b = df_vax[df_vax.location.isin(loc_miss)]
+            print("metadata\n", a)
+            print("data\n", b)
+            raise ValueError(f"Missmatch between vaccination data and metadata! Unknown location {loc_miss}.")
 
         return (
             df_vax.assign(vaccines=df_vax.vaccine.apply(_pretty_vaccine))  # Keep only last vaccine set
