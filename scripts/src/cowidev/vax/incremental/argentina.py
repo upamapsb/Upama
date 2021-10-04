@@ -52,7 +52,7 @@ class Argentina:
                 f"`segunda_dosis_cantidad` field for one dose vaccines ({self.one_dose_vaccine}) must be 0!"
             )
         vaccines = set(df.vacuna_nombre.replace(self.vaccine_mapping))
-        vaccines.remove("Vacuna COVID Estudios Clínicos")
+        # vaccines.remove("Vacuna COVID Estudios Clínicos")
         vaccines = ", ".join(sorted(vaccines))
         return pd.Series(
             {
