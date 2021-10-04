@@ -1,7 +1,10 @@
+from datetime import datetime
+
 import pandas as pd
 
 from cowidev.vax.utils.files import export_metadata
-from cowidev.utils.web import request_json
+from cowidev.utils.web import request_json, get_soup
+from cowidev.utils.clean import clean_date_series
 
 
 class Switzerland:
@@ -11,7 +14,20 @@ class Switzerland:
     def read(self):
         doses_url, people_url, manufacturer_url = self._get_file_url()
         df, df_manufacturer = self._parse_data(doses_url, people_url, manufacturer_url)
-        return df, df_manufacturer
+        df_age = self.read_age()
+        return df, df_manufacturer, df_age
+
+    def read_age(self):
+        soup = get_soup(self.source_url)
+        url = self._parse_age_link(soup)
+        return pd.read_csv(url)
+
+    def _parse_age_link(self, soup):
+        elems = soup.find_all(class_="resource-item")
+        elem = list(
+            filter(lambda x: (x.a.get("title") == "COVID19VaccPersons_AKL10_w_v2") & (x.small.text == "CSV"), elems)
+        )[0]
+        return elem.find(class_="btn").get("href")
 
     def _get_file_url(self) -> str:
         response = request_json("https://www.covid19.admin.ch/api/data/context")
@@ -108,21 +124,108 @@ class Switzerland:
             .replace(vaccine_mapping)
         )
 
+    def pipe_age_filter_region(self, df, geo_region):
+        # Only Switzerland
+        return df[(df.geoRegion == geo_region) & (df.age_group_type == "age_group_AKL10")]
+
+    def pipe_age_checks(self, df):
+        # Check population per age group is unique
+        if not (df.groupby("altersklasse_covid19").pop.nunique() == 1).all():
+            raise ValueError("Different `pop` values for same `alterklasse_covid19` value!")
+        # Check type
+        type_wrong = set(df.type_variant).difference(["altersklasse_covid19"])
+        if type_wrong:
+            raise ValueError(f"Invalid `type_variant` value: {type_wrong}")
+        # Date+Age group uniqueness
+        if not (df.groupby(["date", "altersklasse_covid19"]).type.value_counts() == 1).all():
+            raise ValueError("Some dates and age groups have multiple entries for same metric!")
+        return df
+
+    def pipe_age_pivot(self, df):
+        return df.pivot(
+            index=["date", "altersklasse_covid19"], columns=["type"], values="per100PersonsTotal"
+        ).reset_index()
+
+    def pipe_age_date(self, df):
+        return df.assign(date=clean_date_series(df.date.apply(lambda x: datetime.strptime(str(x) + "+0", "%Y%W+%w"))))
+
+    def pipe_age_location(self, df, location):
+        return df.assign(location=location)
+
+    def pipe_age_rename_columns(self, df):
+        return df.rename(
+            columns={
+                "altersklasse_covid19": "age_group",
+                "COVID19AtLeastOneDosePersons": "people_vaccinated_per_hundred",
+                "COVID19FullyVaccPersons": "people_fully_vaccinated_per_hundred",
+            }
+        )
+
+    def pipe_age_groups(self, df):
+        regex = r"(\d{1,2})+?(?: - (\d{1,2}))?"
+        df[["age_group_min", "age_group_max"]] = df.age_group.str.extract(regex)
+        return df
+
+    def pipe_age_select_cols(self, df):
+        return df[
+            [
+                "location",
+                "date",
+                "age_group_min",
+                "age_group_max",
+                "people_vaccinated_per_hundred",
+                "people_fully_vaccinated_per_hundred",
+            ]
+        ]
+
+    def pipeline_age(self, df, location):
+        if location == "Switzerland":
+            geo_region = "CH"
+        elif location == "Liechtenstein":
+            geo_region = "FL"
+        else:
+            raise ValueError("Only Switzerland or Liechtenstein are accepted values for `location`.")
+
+        df_ = df.copy()
+        return (
+            df_.pipe(self.pipe_age_filter_region, geo_region)
+            .pipe(self.pipe_age_checks)
+            .pipe(self.pipe_age_pivot)
+            .pipe(self.pipe_age_date)
+            .pipe(self.pipe_age_location, location)
+            .pipe(self.pipe_age_rename_columns)
+            .pipe(self.pipe_age_groups)
+            .pipe(self.pipe_age_select_cols)
+        )
+
     def to_csv(self, paths):
-        vaccine_data, manufacturer_data = self.read()
+        locations = ["Switzerland", "Liechtenstein"]
+        df, df_manuf, df_age = self.read()
 
-        vaccine_data.pipe(self.pipeline, country_code="CH").to_csv(paths.tmp_vax_out("Switzerland"), index=False)
+        # Main data
+        for location in locations:
+            df.pipe(self.pipeline, country_code="CH").to_csv(paths.tmp_vax_out(location), index=False)
 
-        vaccine_data.pipe(self.pipeline, country_code="FL").to_csv(paths.tmp_vax_out("Liechtenstein"), index=False)
-
-        df_man = manufacturer_data.pipe(self.pipeline_manufacturer)
-        df_man.to_csv(paths.tmp_vax_out_man("Switzerland"), index=False)
+        # Manufacturer
+        df_manuf = df_manuf.pipe(self.pipeline_manufacturer)
+        df_manuf.to_csv(paths.tmp_vax_out_man("Switzerland"), index=False)
         export_metadata(
-            df_man,
+            df_manuf,
             "Federal Office of Public Health",
             self.source_url,
             paths.tmp_vax_metadata_man,
         )
+
+        # Age
+        for location in locations:
+            df_age_ = df_age.pipe(self.pipeline_age, location)
+            df_age_.to_csv(paths.tmp_vax_out_by_age_group(location), index=False)
+            export_metadata(
+                df_age_,
+                "Federal Office of Public Health",
+                self.source_url,
+                paths.tmp_vax_metadata_age,
+            )
 
 
 def main(paths):
