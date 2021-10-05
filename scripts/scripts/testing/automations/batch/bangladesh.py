@@ -21,20 +21,16 @@ def main():
     ).dropna()
     df = df[df["Daily change in cumulative total"] != 0]
 
-    df.loc[:, "Daily change in cumulative total"] = df[
-        "Daily change in cumulative total"
-    ].astype(int)
+    df.loc[:, "Daily change in cumulative total"] = df["Daily change in cumulative total"].astype(int)
     df.loc[:, "Country"] = "Bangladesh"
     df.loc[:, "Units"] = "tests performed"
-    df.loc[:, "Testing type"] = "PCR only"
     df.loc[:, "Source label"] = "Government of Bangladesh"
     df.loc[:, "Source URL"] = "https://covid19bd.idare.io/"
     df.loc[:, "Notes"] = pd.NA
 
     # Manual fix for error in data
     df.loc[
-        (pd.to_datetime(df["Date"]) == pd.to_datetime("2020-03-16"))
-        & (df["Daily change in cumulative total"] == 39),
+        (pd.to_datetime(df["Date"]) == pd.to_datetime("2020-03-16")) & (df["Daily change in cumulative total"] == 39),
         "Date",
     ] = "2020-03-17"
 

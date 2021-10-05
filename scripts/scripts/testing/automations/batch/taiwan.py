@@ -18,9 +18,7 @@ def pipeline(df: pd.DataFrame, location: str) -> pd.DataFrame:
         }
     )
     # Date
-    date_str = df.Date.apply(
-        lambda x: datetime.strptime(x, "%Y/%m/%d").strftime("%Y-%m-%d")
-    )
+    date_str = df.Date.apply(lambda x: datetime.strptime(x, "%Y/%m/%d").strftime("%Y-%m-%d"))
     # Add columns
     df = df.assign(
         **{
@@ -29,7 +27,6 @@ def pipeline(df: pd.DataFrame, location: str) -> pd.DataFrame:
             "Units": "people tested",
             "Source URL": "https://data.cdc.gov.tw/en/dataset/daily-cases-suspected-sars-cov-2-infection_tested",
             "Source label": "Taiwan CDC Open Data Portal",
-            "Testing type": "PCR only",
             "Notes": pd.NA,
         }
     )
@@ -42,7 +39,6 @@ def pipeline(df: pd.DataFrame, location: str) -> pd.DataFrame:
             "Units",
             "Source URL",
             "Source label",
-            "Testing type",
         ]
     ].sort_values("Date")
 

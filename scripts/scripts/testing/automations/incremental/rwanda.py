@@ -4,7 +4,9 @@ import datetime
 import pandas as pd
 
 
-SOURCE_URL = "https://gis.rbc.gov.rw/server/rest/services/Hosted/service_b580a3db9319449e82045881f1667b01/FeatureServer/0/query"
+SOURCE_URL = (
+    "https://gis.rbc.gov.rw/server/rest/services/Hosted/service_b580a3db9319449e82045881f1667b01/FeatureServer/0/query"
+)
 
 
 def rwanda_get_tests_snapshot():
@@ -44,7 +46,6 @@ def main():
                 "Cumulative total": tests_cumul,
                 "Source URL": SOURCE_URL,
                 "Source label": "Rwanda Ministry of Health",
-                "Testing type": "PCR only",
                 "Units": "samples tested",
                 "Notes": pd.NA,
             }

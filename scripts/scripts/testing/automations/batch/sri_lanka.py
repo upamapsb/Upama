@@ -59,7 +59,6 @@ def main() -> None:
     df = df.sort_values("Date")
     df["Country"] = COUNTRY
     df["Units"] = UNITS
-    df["Testing type"] = TESTING_TYPE
     df["Source URL"] = SOURCE_URL
     df["Source label"] = SOURCE_LABEL
     df["Notes"] = ""
@@ -68,7 +67,6 @@ def main() -> None:
         [
             "Country",
             "Units",
-            "Testing type",
             "Date",
             "Daily change in cumulative total",
             "Source URL",
@@ -84,16 +82,11 @@ def get_data() -> pd.DataFrame:
     assert res.ok
     json_data = json.loads(res.text)
     df = pd.DataFrame(json_data["data"]["daily_pcr_testing_data"])
-    df = df.rename(
-        columns={"pcr_count": "Daily change in cumulative total", "date": "Date"}
-    )
-    df["Daily change in cumulative total"] = df[
-        "Daily change in cumulative total"
-    ].astype(int)
+    df = df.rename(columns={"pcr_count": "Daily change in cumulative total", "date": "Date"})
+    df["Daily change in cumulative total"] = df["Daily change in cumulative total"].astype(int)
     df = df[df["Daily change in cumulative total"] > 0]
     assert (
-        json_data["data"]["total_pcr_testing_count"]
-        == df["Daily change in cumulative total"].sum()
+        json_data["data"]["total_pcr_testing_count"] == df["Daily change in cumulative total"].sum()
     ), "Sum of daily changes does not equal cumulative total."
     return df
 
@@ -104,8 +97,7 @@ def sanity_checks(df: pd.DataFrame) -> None:
     df_cp = df.copy()
     df_cp["Cumulative total"] = df_cp["Daily change in cumulative total"].cumsum()
     assert (
-        df_cp["Cumulative total"].iloc[1:]
-        >= df_cp["Cumulative total"].shift(1).iloc[1:]
+        df_cp["Cumulative total"].iloc[1:] >= df_cp["Cumulative total"].shift(1).iloc[1:]
     ).all(), "On one or more dates, `Cumulative total` is greater on date t-1."
     # cross-checks a sample of scraped figures against the expected result.
     assert len(official_cumulative_totals) > 0

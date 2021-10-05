@@ -19,7 +19,6 @@ def main() -> None:
     df.sort_values("Date", inplace=True)
     df["Country"] = COUNTRY
     df["Units"] = UNITS
-    df["Testing type"] = TESTING_TYPE
     df["Source URL"] = SOURCE_URL
     df["Source label"] = SOURCE_LABEL
     df["Notes"] = ""
@@ -28,7 +27,6 @@ def main() -> None:
         [
             "Country",
             "Units",
-            "Testing type",
             "Date",
             "Daily change in cumulative total",
             "Source URL",
@@ -58,8 +56,7 @@ def sanity_checks(df: pd.DataFrame) -> None:
     df_cp = df.copy()
     df_cp["Cumulative total"] = df_cp["Daily change in cumulative total"].cumsum()
     assert (
-        df_cp["Cumulative total"].iloc[1:]
-        >= df_cp["Cumulative total"].shift(1).iloc[1:]
+        df_cp["Cumulative total"].iloc[1:] >= df_cp["Cumulative total"].shift(1).iloc[1:]
     ).all(), "On one or more dates, `Cumulative total` is greater on date t-1."
     return None
 

@@ -33,6 +33,5 @@ df[, Units := "people tested"]
 df[, `Source URL` := "https://datos.covid-19.conacyt.mx/#DownZCSV"]
 df[, `Source label` := "Health Secretary"]
 df[, Notes := NA_character_]
-df[, `Testing type` := "PCR only"]
 
 fwrite(df, "automated_sheets/Mexico.csv")

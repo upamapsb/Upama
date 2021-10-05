@@ -33,7 +33,6 @@ def main() -> None:
     df = df.sort_values("Date")
     df["Country"] = COUNTRY
     df["Units"] = UNITS
-    df["Testing type"] = TESTING_TYPE
     df["Source URL"] = SOURCE_URL
     df["Source label"] = SOURCE_LABEL
     df["Notes"] = pd.NA
@@ -41,7 +40,6 @@ def main() -> None:
         [
             "Country",
             "Units",
-            "Testing type",
             "Date",
             "Cumulative total",
             "Source URL",

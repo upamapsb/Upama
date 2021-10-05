@@ -25,6 +25,5 @@ df[, Units := "tests performed"]
 df[, `Source URL` := url]
 df[, `Source label` := "Statens Serum Institut"]
 df[, Notes := NA_character_]
-df[, `Testing type` := "PCR only"]
 
 fwrite(df, "automated_sheets/Denmark.csv")

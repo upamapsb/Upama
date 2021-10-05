@@ -6,9 +6,7 @@ import pandas as pd
 class Israel:
     def __init__(self):
         self.location = "Israel"
-        self.source_url = (
-            "https://datadashboardapi.health.gov.il/api/queries/testResultsPerDate"
-        )
+        self.source_url = "https://datadashboardapi.health.gov.il/api/queries/testResultsPerDate"
 
     def read(self):
         df = pd.read_json(self.source_url)[["date", "amount"]]
@@ -29,7 +27,6 @@ class Israel:
                 "Source label": "Israel Ministry of Health",
                 "Source URL": self.source_url,
                 "Notes": pd.NA,
-                "Testing type": "PCR only",
             }
         )
         return df

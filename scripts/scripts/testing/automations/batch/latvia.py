@@ -33,7 +33,6 @@ class Latvia:
                 "Source URL": self.source_url_ref,
                 "Source label": self.source_label,
                 "Notes": self.notes,
-                "Testing type": self.testing_type,
             }
         )
 

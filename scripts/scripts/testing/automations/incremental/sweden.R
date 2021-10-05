@@ -34,7 +34,6 @@ df[, Country := "Sweden"]
 df[, Units := "tests performed"]
 df[, `Source label` := "Swedish Public Health Agency"]
 df[, Notes := NA]
-df[, `Testing type` := "PCR only"]
 df[, `Cumulative total` := NA_integer_]
 
 existing <- fread("automated_sheets/Sweden.csv")

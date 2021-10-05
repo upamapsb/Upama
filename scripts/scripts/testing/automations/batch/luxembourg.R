@@ -20,7 +20,6 @@ df <- df[, .SD[1], `Cumulative total`]
 
 df[, Country := "Luxembourg"]
 df[, Units := "tests performed"]
-df[, `Testing type` := "PCR only"]
 df[, `Source label` := "Luxembourg Ministry of Health"]
 df[, `Source URL` := url]
 df[, Notes := NA_character_]

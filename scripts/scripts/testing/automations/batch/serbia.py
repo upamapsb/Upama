@@ -40,7 +40,6 @@ class Serbia:
                 "Source label": self.source_label,
                 "Source URL": self.source_url_ref,
                 "Notes": self.notes,
-                "Testing type": self.testing_type,
             }
         )
 

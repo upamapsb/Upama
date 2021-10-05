@@ -29,11 +29,7 @@ def libya_get_tests_snapshot():
     assert tests_today_str is not None, "Failed to find daily change testing figure."
     tests_today = int(re.sub(r"[\s,]*", "", tests_today_str))
     # retrieves the date that the data was updated.
-    span = (
-        soup.find("div", {"class": "wptb-table-container-matrix"})
-        .find("td")
-        .find("strong")
-    )
+    span = soup.find("div", {"class": "wptb-table-container-matrix"}).find("td").find("strong")
     assert span is not None, "Failed to find span containing the date."
     regex_res = re.search(r"\d.*2021", span.text)[0]
     date = str(dateparser.parse(regex_res, languages=["ar"]).date())
@@ -54,7 +50,6 @@ def main():
                 "Daily change in cumulative total": tests_today,
                 "Source URL": SOURCE_URL,
                 "Source label": "Libya National Centre for Disease Control",
-                "Testing type": "PCR only",
                 "Units": "samples tested",
                 "Notes": pd.NA,
             }

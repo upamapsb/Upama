@@ -61,12 +61,9 @@ def main() -> None:
         df = get_data()
         i += 1
     assert df is not None, f"Failed to retrieve testing data after {i} tries."
-    df["Source URL"] = df["Source URL"].apply(
-        lambda x: SOURCE_URL if pd.isnull(x) else x
-    )
+    df["Source URL"] = df["Source URL"].apply(lambda x: SOURCE_URL if pd.isnull(x) else x)
     df["Country"] = COUNTRY
     df["Units"] = UNITS
-    df["Testing type"] = TESTING_TYPE
     df["Source label"] = SOURCE_LABEL
     df["Notes"] = ""
     sanity_checks(df)
@@ -74,7 +71,6 @@ def main() -> None:
         [
             "Country",
             "Units",
-            "Testing type",
             "Date",
             SERIES_TYPE,
             "Source URL",
@@ -119,20 +115,14 @@ def get_data() -> pd.DataFrame:
         # subsets browser logs to websocket responses received and then
         # finds websocket response containing the testing time series.
         events = [json.loads(entry["message"])["message"] for entry in browser_log]
-        ws_events_recv = [
-            e for e in events if e["method"] == "Network.webSocketFrameReceived"
-        ]
+        ws_events_recv = [e for e in events if e["method"] == "Network.webSocketFrameReceived"]
         found_testing_data = False
         while not found_testing_data and ws_events_recv:
             e = ws_events_recv.pop(0)
             resp_data = json.loads(e["params"]["response"]["payloadData"])
             try:
-                data_matrix = resp_data["result"]["qLayout"][0]["value"]["qHyperCube"][
-                    "qDataPages"
-                ][0]["qMatrix"]
-                component_id = resp_data["result"]["qLayout"][0]["value"]["qInfo"][
-                    "qId"
-                ]
+                data_matrix = resp_data["result"]["qLayout"][0]["value"]["qHyperCube"]["qDataPages"][0]["qMatrix"]
+                component_id = resp_data["result"]["qLayout"][0]["value"]["qInfo"]["qId"]
                 if component_id == COMPONENT_ID:
                     found_testing_data = True
             except:
@@ -152,17 +142,10 @@ def get_data() -> pd.DataFrame:
             }
             df.append(row)
         df = pd.DataFrame(df)
-        df["Date"] = pd.to_datetime(df["Date"], format="%d.%m.%Y").dt.strftime(
-            "%Y-%m-%d"
-        )
+        df["Date"] = pd.to_datetime(df["Date"], format="%d.%m.%Y").dt.strftime("%Y-%m-%d")
         df["Cumulative total"] = df["Cumulative total"].astype(float)
-        df["Daily change in cumulative total"] = df[
-            "Daily change in cumulative total"
-        ].astype(float)
-        df = df[
-            (df["Daily change in cumulative total"] > 0)
-            | df["Daily change in cumulative total"].isnull()
-        ]
+        df["Daily change in cumulative total"] = df["Daily change in cumulative total"].astype(float)
+        df = df[(df["Daily change in cumulative total"] > 0) | df["Daily change in cumulative total"].isnull()]
         df["Source URL"] = None
         df = df[["Date", SERIES_TYPE, "Source URL"]]
         if len(hardcoded_data) > 0:
@@ -171,9 +154,7 @@ def get_data() -> pd.DataFrame:
             df = df[~df["Date"].isin(hardcoded_dates)]
             # appends hardcoded rows to df
             df_hardcoded = pd.DataFrame(hardcoded_data)
-            df = pd.concat([df, df_hardcoded], axis=0, sort=False).reset_index(
-                drop=True
-            )
+            df = pd.concat([df, df_hardcoded], axis=0, sort=False).reset_index(drop=True)
         df.sort_values("Date", inplace=True)
         df.dropna(subset=["Date", SERIES_TYPE], how="any", inplace=True)
         df[SERIES_TYPE] = df[SERIES_TYPE].astype(int)
@@ -193,26 +174,19 @@ def sanity_checks(df: pd.DataFrame) -> None:
         datetime.datetime.utcnow() + datetime.timedelta(days=1)
     )
     # checks that there are no duplicate dates
-    assert (
-        df_temp["Date"].duplicated().sum() == 0
-    ), "One or more rows share the same date."
+    assert df_temp["Date"].duplicated().sum() == 0, "One or more rows share the same date."
     if "Cumulative total" not in df_temp.columns:
-        df_temp["Cumulative total"] = df_temp[
-            "Daily change in cumulative total"
-        ].cumsum()
+        df_temp["Cumulative total"] = df_temp["Daily change in cumulative total"].cumsum()
     # checks that the cumulative number of tests on date t is always greater than the figure for t-1:
     assert (
-        df_temp["Cumulative total"].iloc[1:]
-        >= df_temp["Cumulative total"].shift(1).iloc[1:]
+        df_temp["Cumulative total"].iloc[1:] >= df_temp["Cumulative total"].shift(1).iloc[1:]
     ).all(), "On one or more dates, `Cumulative total` is greater on date t-1."
     # df.iloc[1:][df['Cumulative total'].iloc[1:] < df['Cumulative total'].shift(1).iloc[1:]]
     # cross-checks a sample of scraped figures against the expected result.
     assert len(sample_official_data) > 0
     for dt, d in sample_official_data:
         val = df_temp.loc[df_temp["Date"] == dt, SERIES_TYPE].squeeze().sum()
-        assert (
-            val == d[SERIES_TYPE]
-        ), f"scraped value ({val:,d}) != official value ({d[SERIES_TYPE]:,d}) on {dt}"
+        assert val == d[SERIES_TYPE], f"scraped value ({val:,d}) != official value ({d[SERIES_TYPE]:,d}) on {dt}"
     return None
 
 

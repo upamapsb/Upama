@@ -19,12 +19,9 @@ def main():
 
     df["Country"] = "Portugal"
     df["Units"] = "tests performed"
-    df[
-        "Source URL"
-    ] = "https://covid19.min-saude.pt/ponto-de-situacao-atual-em-portugal/"
+    df["Source URL"] = "https://covid19.min-saude.pt/ponto-de-situacao-atual-em-portugal/"
     df["Source label"] = "Ministry of Health"
     df["Notes"] = pd.NA
-    df["Testing type"] = "includes non-PCR"
 
     df.to_csv("automated_sheets/Portugal.csv", index=False)
 
