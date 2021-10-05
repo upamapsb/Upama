@@ -943,7 +943,7 @@ EXCLUDE_LOCATIONS, EXCLUDE_ISOS = get_excluded_locations()
 
 def get_num_countries_by_iso(iso_code_colname, csv_filepath=None, df=None):
     if df is None:
-        df = pd.read_csv(csv_filepath)
+        df = pd.read_csv(csv_filepath, low_memory=False)
     codes = [code for code in df[iso_code_colname].dropna().unique() if code not in EXCLUDE_ISOS]
     return len(codes)
 
@@ -955,7 +955,7 @@ def get_num_countries_by_location(csv_filepath, location_colname, low_memory=Tru
 
 
 def get_num_countries_jhu(csv_filepath):
-    df = pd.read_csv(csv_filepath)
+    df = pd.read_csv(csv_filepath, low_memory=False)
     columns = df.columns
     return len(columns[~columns.isin(EXCLUDE_LOCATIONS)]) - 1
 
