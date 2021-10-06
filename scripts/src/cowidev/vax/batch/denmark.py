@@ -27,6 +27,7 @@ class Denmark:
             "Janssen COVID-19 vaccine": "Johnson&Johnson",
             "Moderna Covid-19 Vaccine": "Moderna",
             "Moderna/Spikevax Covid-19 Vacc.": "Moderna",
+            "Moderna/Spikevax Covid-19 0,5 ml": "Moderna",
             "Pfizer BioNTech Covid-19 vacc": "Pfizer/BioNTech",
         }
         self.regions_accepted = {
