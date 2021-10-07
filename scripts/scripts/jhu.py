@@ -43,8 +43,11 @@ WARNING = colored("[Warning]", "yellow")
 DATASET_NAME = "COVID-19 - Johns Hopkins University"
 
 LARGE_DATA_CORRECTIONS = [
+    ("Brazil", "2021-09-18", "cases"),
+    ("Ecuador", "2020-09-07", "deaths"),
     ("Ecuador", "2021-07-20", "deaths"),
     ("France", "2021-05-20", "cases"),
+    ("Mexico", "2021-06-01", "deaths"),
     ("Turkey", "2020-12-10", "cases"),
 ]
 
