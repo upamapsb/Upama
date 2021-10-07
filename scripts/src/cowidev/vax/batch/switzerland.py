@@ -5,6 +5,7 @@ import pandas as pd
 from cowidev.vax.utils.files import export_metadata
 from cowidev.utils.web import request_json, get_soup
 from cowidev.utils.clean import clean_date_series
+from cowidev.vax.utils.checks import validate_vaccines
 
 
 class Switzerland:
@@ -38,6 +39,9 @@ class Switzerland:
         return doses_url, people_url, manufacturer_url
 
     def _parse_data(self, doses_url, people_url, manufacturer_url):
+        print(doses_url)
+        print(people_url)
+        print(manufacturer_url)
         doses = pd.read_csv(
             doses_url,
             usecols=["geoRegion", "date", "sumTotal", "type"],
@@ -116,8 +120,9 @@ class Switzerland:
         vaccine_mapping = {
             "pfizer_biontech": "Pfizer/BioNTech",
             "moderna": "Moderna",
+            "johnson_johnson": "Johnson&Johnson",
         }
-        assert set(df["vaccine"].unique()) == set(vaccine_mapping.keys())
+        validate_vaccines(df, vaccine_mapping)
         return (
             df.rename(columns={"sumTotal": "total_vaccinations"})[df.geoRegion == "CH"]
             .drop(columns="geoRegion")

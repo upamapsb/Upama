@@ -228,3 +228,12 @@ class CountryChecker:
         self.check_location()
         # Metrics checks
         self.check_metrics()
+
+
+def validate_vaccines(df, vaccines_accepted, vaccines_raw=None):
+    if vaccines_raw != None:
+        vaccines_wrong = set(vaccines_raw).difference(vaccines_accepted)
+    else:
+        vaccines_wrong = set(df["vaccine"].unique()).difference(vaccines_accepted)
+    if vaccines_wrong:
+        raise ValueError(f"Missing vaccines: {vaccines_wrong}")
