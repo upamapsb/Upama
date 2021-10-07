@@ -174,8 +174,11 @@ class CountryChecker:
     def _check_metrics_inequalities(self, df: pd.DataFrame):
         if ("total_vaccinations" in df.columns) and ("people_vaccinated" in df.columns):
             df_ = df[["people_vaccinated", "total_vaccinations"]].dropna().copy()
-            if (df_["total_vaccinations"] < df_["people_vaccinated"]).any():
-                raise ValueError(f"{self.location} -- total_vaccinations can't be < people_vaccinated!")
+            msk = df_["total_vaccinations"] < df_["people_vaccinated"]
+            if (msk).any():
+                raise ValueError(
+                    f"{self.location} -- total_vaccinations can't be < people_vaccinated!\n{df.loc[msk[msk].index]}"
+                )
         if ("total_vaccinations" in df.columns) and ("people_fully_vaccinated" in df.columns):
             df_ = df[["people_fully_vaccinated", "total_vaccinations"]].dropna().copy()
             if (df_["total_vaccinations"] < df_["people_fully_vaccinated"]).any():
