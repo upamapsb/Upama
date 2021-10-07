@@ -31,7 +31,7 @@ class EquatorialGuinea:
         total_vaccinations = clean_count(df.loc["Total dosis administradas", "Totales"])
         # Get people_fully_vaccinated from text
         regex = (
-            r"De los ([\d\.]+) vacunados un total de ([\d\.]+)\s?\([\d,]+%\) ya (han recibido la 2ª dosis|tienen la"
+            r"De los ([\d\.]+) vacunados,? un total de ([\d\.]+)\s?\([\d,]+%\) ya (han recibido la 2ª dosis|tienen la"
             r" pauta completa)"
         )
         match = re.search(regex, soup.text)
