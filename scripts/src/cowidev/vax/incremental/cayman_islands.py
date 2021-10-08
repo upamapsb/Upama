@@ -14,7 +14,7 @@ class CaymanIslands:
     source_url: str = "https://www.exploregov.ky/coronavirus-statistics"
     regex: dict = {
         "total_vaccinations": (
-            r"To date, there have been ([\d,]+) COVID-19 vaccinations given in total in the Cayman Islands\."
+            r"To date, there have been ([\d,]+) C(?:OVID|ovid)-19 vaccinations given in total in the Cayman Islands\."
         ),
         "people_vaccinated": r"([\d,]+) \(.*\) have had at least one dose of a COVID-19 vaccine",
         "people_fully_vaccinated": r"([\d,]+) \(.*\) have completed the two(?:\s|\-)dose course",
