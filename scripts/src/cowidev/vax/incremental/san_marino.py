@@ -19,13 +19,13 @@ def parse_data(soup: BeautifulSoup) -> pd.Series:
             chart_data = str(script)
             break
     people_fully_vaccinated = parse_people_fully_vaccinated(chart_data)
-    people_vaccinated = parse_people_vaccinated(chart_data)
-    if people_vaccinated < people_fully_vaccinated:
-        people_vaccinated = people_fully_vaccinated
+    # people_vaccinated = parse_people_vaccinated(chart_data)
+    # if people_vaccinated < people_fully_vaccinated:
+    #     people_vaccinated = people_fully_vaccinated
     return pd.Series(
         data={
             "date": parse_date(chart_data),
-            "people_vaccinated": people_vaccinated,
+            # "people_vaccinated": people_vaccinated,
             "people_fully_vaccinated": people_fully_vaccinated,
             "total_vaccinations": parse_total_vaccinations(chart_data),
         }
@@ -43,7 +43,7 @@ def parse_people_vaccinated(df: pd.DataFrame) -> int:
 
 
 def parse_people_fully_vaccinated(df: pd.DataFrame) -> int:
-    people_fully_vaccinated = re.search(r"([\d,. ]+) [Vv]accinazioni Seconda Dose", df).group(1)
+    people_fully_vaccinated = re.search(r"([\d,. ]+) [Vv]accinazioni Seconda Dose e Dose Unica", df).group(1)
     return clean_count(people_fully_vaccinated)
 
 
@@ -75,7 +75,7 @@ def main(paths):
         paths=paths,
         location=data["location"],
         total_vaccinations=data["total_vaccinations"],
-        people_vaccinated=data["people_vaccinated"],
+        # people_vaccinated=data["people_vaccinated"],
         people_fully_vaccinated=data["people_fully_vaccinated"],
         date=data["date"],
         source_url=data["source_url"],
