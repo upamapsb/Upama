@@ -19,13 +19,14 @@ class Spain:
         "Janssen": "Johnson&Johnson",
     }
     _date_field_raw: str = "Fecha de la última vacuna registrada (2)"
+    _max_days_back: int = 20
 
     def read(self, last_update: str) -> pd.Series:
         return self._parse_data(last_update)
 
     def _parse_data(self, last_update: str):
         records = []
-        for days in range(10):
+        for days in range(self._max_days_back):
             date_it = clean_date(datetime.now() - timedelta(days=days))
             # print(date_it)
             # print(f"{date_it} > {last_update}?")
@@ -43,31 +44,33 @@ class Spain:
             else:
                 # print("End!")
                 break
-            # print(max_iter)
         if len(records) > 0:
             return pd.DataFrame(records)
-        # print("No data being added to Spain")
+        print("No data being added to Spain")
         return None
 
     def _parse_ds_data(self, df: pd.DataFrame, source: str) -> pd.Series:
         df.loc[~df.index.isin(["Sanidad Exterior"]), self._date_field_raw].dropna().max()
-        return pd.Series(
-            data={
-                "total_vaccinations": df.loc["Totales", "Dosis administradas (2)"].item(),
-                "people_vaccinated": df.loc["Totales", "Nº Personas con al menos 1 dosis"].item(),
-                "people_fully_vaccinated": df.loc["Totales", "Nº Personas vacunadas(pauta completada)"].item(),
-                "date": clean_date(
-                    df.loc[
-                        ~df.index.isin(["Sanidad Exterior"]),
-                        "Fecha de la última vacuna registrada (2)",
-                    ]
-                    .dropna()
-                    .max()
-                ),
-                "source_url": source,
-                "vaccine": ", ".join(self._get_vaccine_names(df, translate=True)),
-            }
-        )
+        data = {
+            "total_vaccinations": df.loc["Totales", "Dosis administradas (2)"].item(),
+            "people_vaccinated": df.loc["Totales", "Nº Personas con al menos 1 dosis"].item(),
+            "people_fully_vaccinated": df.loc["Totales", "Nº Personas vacunadas(pauta completada)"].item(),
+            "date": clean_date(
+                df.loc[
+                    ~df.index.isin(["Sanidad Exterior"]),
+                    "Fecha de la última vacuna registrada (2)",
+                ]
+                .dropna()
+                .max()
+            ),
+            "source_url": source,
+            "vaccine": ", ".join(self._get_vaccine_names(df, translate=True)),
+        }
+        col_boosters = "Nº Personas con dosis adicional"
+        if col_boosters in df.columns:
+            # print("EEE")
+            data["total_boosters"] = df.loc["Totales", col_boosters].item()
+        return pd.Series(data=data)
 
     def _get_source_url(self, dt_str):
         return (
@@ -104,18 +107,6 @@ class Spain:
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.pipe(self.pipe_location)
-
-    def merge_with_current_data(df: pd.DataFrame, filepath: str) -> pd.DataFrame:
-        col_ints = ["total_vaccinations", "people_vaccinated", "people_fully_vaccinated"]
-        # Load current data
-        if os.path.isfile(filepath):
-            df_current = pd.read_csv(filepath)
-            # Merge
-            df_current = df_current[~df_current.date.isin(df.date)]
-            df = pd.concat([df, df_current]).sort_values(by="date")[df_current.columns]
-            # Int values
-        df[col_ints] = df[col_ints].astype("Int64").fillna(pd.NA)
-        return df
 
     def export(self, paths):
         output_file = paths.tmp_vax_out(self.location)
