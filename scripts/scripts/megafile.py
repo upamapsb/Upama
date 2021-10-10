@@ -498,6 +498,17 @@ internal_files_columns = {
             "people_fully_vaccinated_per_hundred",
             "people_partly_vaccinated",
             "people_partly_vaccinated_per_hundred",
+        ],
+        "dropna": "any",
+    },
+    "vaccinations-bydose-booster": {
+        "columns": [
+            "location",
+            "date",
+            "people_fully_vaccinated",
+            "people_fully_vaccinated_per_hundred",
+            "people_partly_vaccinated",
+            "people_partly_vaccinated_per_hundred",
             "people_fully_vaccinated_no_booster",
             "people_fully_vaccinated_no_booster_per_hundred",
             "total_boosters",
@@ -754,8 +765,11 @@ def create_internal(df):
 
     # Add partly vaccinated
     df = df.pipe(add_partially_vaccinated)
+    # Add boosters
     df = df.pipe(add_fully_vaccinated_no_boosters)
+    df = df.pipe(fillna_boosters_till_valid)
 
+    df.to_csv("/Users/lucasrodes/repos/covid-19-data/scripts/scripts/vaccinations/notebooks/internal.csv", index=False)
     # Export
     for name, config in internal_files_columns.items():
         output_path = os.path.join(dir_path, f"megafile--{name}.json")
@@ -793,6 +807,14 @@ def add_fully_vaccinated_no_boosters(df):
             df.people_fully_vaccinated_per_hundred - df.total_boosters_per_hundred.fillna(0)
         ),
     )
+
+
+def fillna_boosters_till_valid(df):
+    # Fill NaNs in total_boosters (only up to first valid value)
+    df = df.sort_values(["location", "date"])
+    msk = df.groupby(["location"]).total_boosters.ffill().isna()
+    df.loc[msk, ["total_boosters", "total_boosters_per_hundred"]] = 0
+    return df
 
 
 def generate_megafile():
