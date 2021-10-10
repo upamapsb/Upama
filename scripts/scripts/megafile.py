@@ -498,6 +498,10 @@ internal_files_columns = {
             "people_fully_vaccinated_per_hundred",
             "people_partly_vaccinated",
             "people_partly_vaccinated_per_hundred",
+            "people_fully_vaccinated_no_booster",
+            "people_fully_vaccinated_no_booster_per_hundred",
+            "total_boosters",
+            "total_boosters_per_hundred",
         ],
         "dropna": "any",
     },
@@ -749,6 +753,20 @@ def create_internal(df):
     ] = pd.NA
 
     # Add partly vaccinated
+    df = df.pipe(add_partially_vaccinated)
+    df = df.pipe(add_fully_vaccinated_no_boosters)
+
+    # Export
+    for name, config in internal_files_columns.items():
+        output_path = os.path.join(dir_path, f"megafile--{name}.json")
+        value_columns = list(set(config["columns"]) - set(non_value_columns))
+        df_output = df[config["columns"]].dropna(subset=value_columns, how=config["dropna"])
+        df_output = annotator.add_annotations(df_output, name)
+        df_to_columnar_json(df_output, output_path)
+
+
+def add_partially_vaccinated(df):
+    # Countries that already have partially vaxxed metric
     df_a = df[df.location.isin(COUNTRIES_WITH_PARTLY_VAX_METRIC)]
     for filename in country_vax_data_partly:
         if not os.path.isfile(filename):
@@ -765,14 +783,16 @@ def create_internal(df):
     df.loc[df.location == "United States", "people_partly_vaccinated_per_hundred"] = (
         df["people_partly_vaccinated"] / 336324782 * 100
     )
+    return df
 
-    # Export
-    for name, config in internal_files_columns.items():
-        output_path = os.path.join(dir_path, f"megafile--{name}.json")
-        value_columns = list(set(config["columns"]) - set(non_value_columns))
-        df_output = df[config["columns"]].dropna(subset=value_columns, how=config["dropna"])
-        df_output = annotator.add_annotations(df_output, name)
-        df_to_columnar_json(df_output, output_path)
+
+def add_fully_vaccinated_no_boosters(df):
+    return df.assign(
+        people_fully_vaccinated_no_booster=df.people_fully_vaccinated - df.total_boosters.fillna(0),
+        people_fully_vaccinated_no_booster_per_hundred=(
+            df.people_fully_vaccinated_per_hundred - df.total_boosters_per_hundred.fillna(0)
+        ),
+    )
 
 
 def generate_megafile():
