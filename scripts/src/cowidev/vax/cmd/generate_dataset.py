@@ -68,7 +68,14 @@ class DatasetGenerator:
                 "excluded_locs": ["England", "Northern Ireland", "Scotland", "Wales"],
                 "included_locs": None,
             },
-            "European Union": {"excluded_locs": None, "included_locs": eu_countries},
+            "European Union": {
+                "excluded_locs": None,
+                "included_locs": eu_countries,
+            },
+            "World excl. China": {
+                "excluded_locs": ["China"],
+                "included_locs": None,
+            },
         }
         for continent in [
             "Asia",
@@ -251,7 +258,11 @@ class DatasetGenerator:
         # Get data
         df_subnational = pd.read_csv(self.inputs.population_sub, usecols=["location", "population"])
         pop = self.get_population(df_subnational)
-        df = df.merge(pop, on="location")
+        df = df.merge(pop, on="location", validate="many_to_one", how="left")
+        if df.population.isna().any():
+            missing_locs = df[df.population.isna()].location.unique()
+            raise ValueError(f"Missing population data for {missing_locs}")
+
         # Get covered countries
         locations = df.location.unique()
         ncountries = df_subnational.location.tolist() + list(self.aggregates.keys())
@@ -277,9 +288,9 @@ class DatasetGenerator:
         # Sanity checks
         df_to_check = df[-df.location.isin(skip_countries)]
         if not (df_to_check.total_vaccinations.dropna() >= 0).all():
-            raise ValueError(" Negative values found! Check values in `total_vaccinations`.")
+            raise ValueError("Negative values found! Check values in `total_vaccinations`.")
         if not (df_to_check.new_vaccinations_smoothed.dropna() >= 0).all():
-            raise ValueError(" Negative values found! Check values in `new_vaccinations_smoothed`.")
+            raise ValueError("Negative values found! Check values in `new_vaccinations_smoothed`.")
         if not (df_to_check.new_vaccinations_smoothed_per_million.dropna() <= 120000).all():
             raise ValueError(" Huge values found! Check values in `new_vaccinations_smoothed_per_million`.")
         return df
