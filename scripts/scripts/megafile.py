@@ -501,16 +501,12 @@ internal_files_columns = {
         ],
         "dropna": "any",
     },
-    "vaccinations-bydose-booster": {
+    "vaccinations-boosters": {
         "columns": [
             "location",
             "date",
-            "people_fully_vaccinated",
-            "people_fully_vaccinated_per_hundred",
-            "people_partly_vaccinated",
-            "people_partly_vaccinated_per_hundred",
-            "people_fully_vaccinated_no_booster",
-            "people_fully_vaccinated_no_booster_per_hundred",
+            "total_vaccinations_no_boosters",
+            "total_vaccinations_no_boosters_per_hundred",
             "total_boosters",
             "total_boosters_per_hundred",
         ],
@@ -765,8 +761,8 @@ def create_internal(df):
 
     # Add partly vaccinated
     df = df.pipe(add_partially_vaccinated)
-    # Add boosters
-    df = df.pipe(add_fully_vaccinated_no_boosters)
+    # Add total vaccinations without boosters
+    df = df.pipe(add_total_vaccinations_no_boosters)
     df = df.pipe(fillna_boosters_till_valid)
 
     # Export
@@ -804,6 +800,15 @@ def add_fully_vaccinated_no_boosters(df):
         people_fully_vaccinated_no_booster=df.people_fully_vaccinated - df.total_boosters.fillna(0),
         people_fully_vaccinated_no_booster_per_hundred=(
             df.people_fully_vaccinated_per_hundred - df.total_boosters_per_hundred.fillna(0)
+        ),
+    )
+
+
+def add_total_vaccinations_no_boosters(df):
+    return df.assign(
+        total_vaccinations_no_boosters=df.total_vaccinations - df.total_boosters.fillna(0),
+        total_vaccinations_no_boosters_per_hundred=(
+            df.total_vaccinations_per_hundred - df.total_boosters_per_hundred.fillna(0)
         ),
     )
 
