@@ -769,7 +769,6 @@ def create_internal(df):
     df = df.pipe(add_fully_vaccinated_no_boosters)
     df = df.pipe(fillna_boosters_till_valid)
 
-    df.to_csv("/Users/lucasrodes/repos/covid-19-data/scripts/scripts/vaccinations/notebooks/internal.csv", index=False)
     # Export
     for name, config in internal_files_columns.items():
         output_path = os.path.join(dir_path, f"megafile--{name}.json")
