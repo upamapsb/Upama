@@ -6,27 +6,21 @@ def read(source: str) -> pd.DataFrame:
 
 
 def parse_data(source: str) -> pd.DataFrame:
-    df = pd.read_json(source)[["StatisticsDate", "VaccinationStatus", "TotalCount"]]
+    df = pd.read_json(source)
     df = (
-        df.pivot(
-            index="StatisticsDate", columns="VaccinationStatus", values="TotalCount"
-        )
+        df[["StatisticsDate", "MeasurementType", "TotalCount"]]
+        .pivot(index="StatisticsDate", columns="MeasurementType", values="TotalCount")
         .reset_index()
         .rename(
             columns={
-                "Completed": "people_fully_vaccinated",
-                "InProgress": "people_vaccinated",
                 "StatisticsDate": "date",
+                "DosesAdministered": "total_vaccinations",
+                "FullyVaccinated": "people_fully_vaccinated",
+                "Vaccinated": "people_vaccinated",
             }
         )
     )
-    return df
-
-
-def add_totals(df: pd.DataFrame) -> pd.DataFrame:
-    return df.assign(
-        total_vaccinations=df.people_fully_vaccinated + df.people_vaccinated
-    )
+    return df[["date", "people_fully_vaccinated", "people_vaccinated", "total_vaccinations"]]
 
 
 def enrich_location(df: pd.DataFrame) -> pd.DataFrame:
@@ -54,16 +48,11 @@ def enrich_source(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def pipeline(df: pd.DataFrame) -> pd.DataFrame:
-    return (
-        df.pipe(add_totals)
-        .pipe(enrich_location)
-        .pipe(enrich_vaccine_name)
-        .pipe(enrich_source)
-    )
+    return df.pipe(enrich_location).pipe(enrich_vaccine_name).pipe(enrich_source)
 
 
 def main(paths):
-    source = "https://opendata.digilugu.ee/opendata_covid19_vaccination_total.json"
+    source = "https://opendata.digilugu.ee/covid19/vaccination/v2/opendata_covid19_vaccination_total.json"
     destination = paths.tmp_vax_out("Estonia")
     read(source).pipe(pipeline).to_csv(destination, index=False)
 
