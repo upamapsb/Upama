@@ -16,7 +16,7 @@ class Cuba:
         self.regex = {
             "title": r"Al cierre del (\d{1,2}(?:ro)? de [a-z]+) se acumulan en el país ([\d ]+) dosis administradas",
             "people_vaccinated": r"al menos una dosis [^\.]+, ([\d ]+) personas",
-            "people_fully_vaccinated": r"y tercera dosis ([\d ]+) personas",
+            "people_fully_vaccinated": r"Tienen esquema de vacunación completo ([\d ]+) personas",
         }
 
     def read(self) -> pd.Series:
