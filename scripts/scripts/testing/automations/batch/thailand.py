@@ -1,49 +1,26 @@
-import re
-import requests
-import datetime
 import pandas as pd
-from bs4 import BeautifulSoup
 
 
 def main():
 
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
-    }
-    general_url = "https://www3.dmsc.moph.go.th/"
+    file_url = "https://data.go.th/dataset/9f6d900f-f648-451f-8df4-89c676fce1c4/resource/0092046c-db85-4608-b519-ce8af099315e/download"
+    general_url = "https://data.go.th/dataset/covid-19-testing-data"
 
-    req = requests.get(general_url, headers=headers)
-    soup = BeautifulSoup(req.content, "html.parser")
+    df = pd.read_csv(file_url, usecols=["Date", "Total Testing"])
 
-    url = soup.find("div", class_="container-fluid").find_all("a")[3].attrs["href"]
+    df["Date"] = pd.to_datetime(df.Date, format="%d/%m/%Y", errors="coerce")
 
-    sheet = pd.read_excel(url + "/download", sheet_name="Data", usecols="A,B,C")
+    df = df.dropna(subset=["Date"]).rename(columns={"Total Testing": "Daily change in cumulative total"})
 
-    isdate = []
-    for i in range(len(sheet)):
-        isdate.append(isinstance(sheet.loc[i][0], datetime.datetime))
-    isdate
-    sheet["isdate"] = isdate
-    sheet = sheet.loc[sheet["isdate"] != False]
-    sheet = sheet.loc[sheet["Total"] != 0]
+    df.loc[:, "Country"] = "Thailand"
+    df.loc[:, "Units"] = "tests performed"
+    df.loc[:, "Source URL"] = general_url
+    df.loc[:, "Source label"] = "Department of Medical Sciences Ministry of Public Health"
+    df.loc[:, "Notes"] = pd.NA
 
-    sheet["Date"] = pd.to_datetime(sheet["Date"], errors="coerce")
-    sheet["Date"] = sheet["Date"].dt.strftime("%Y-%m-%d")
+    df = df[df["Daily change in cumulative total"] > 0]
 
-    sheet["Total"] = sheet["Total"].astype(int)
-
-    sheet = sheet.drop(columns=["Pos", "isdate"])
-    sheet = sheet.rename(columns={"Total": "Daily change in cumulative total"})
-
-    sheet.loc[:, "Country"] = "Thailand"
-    sheet.loc[:, "Units"] = "tests performed"
-    sheet.loc[:, "Source URL"] = general_url
-    sheet.loc[
-        :, "Source label"
-    ] = "Department of Medical Sciences Ministry of Public Health"
-    sheet.loc[:, "Notes"] = pd.NA
-
-    sheet.to_csv("automated_sheets/Thailand.csv", index=False)
+    df.to_csv("automated_sheets/Thailand.csv", index=False)
 
 
 if __name__ == "__main__":
