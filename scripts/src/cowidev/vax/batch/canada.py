@@ -1,6 +1,7 @@
 import pandas as pd
 
 from cowidev.utils.web import request_json
+from cowidev.vax.utils.utils import make_monotonic
 
 
 class Canada:
@@ -57,6 +58,7 @@ class Canada:
             .pipe(self.pipe_people_vaccinated)
             .pipe(self.pipe_metadata)
             .pipe(self.pipe_total_boosters)
+            .pipe(make_monotonic)
             .sort_values("date")
         )
         return df
