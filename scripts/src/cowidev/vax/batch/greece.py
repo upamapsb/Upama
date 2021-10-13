@@ -1,43 +1,34 @@
-from functools import reduce
+import requests
+
 import pandas as pd
 
 from cowidev.utils.clean import clean_date_series
-from cowidev.utils.web import request_json
 
 
 class Greece:
-    def __init__(self, source_url: str, source_url_ref: str, location: str):
-        """Constructor.
-
-        Args:
-            source_url (str): Source data url
-            source_url_ref (str): Source data reference url
-            location (str): Location name
-        """
+    def __init__(self, source_url: str, source_url_ref: str, location: str, token: str):
         self.source_url = source_url
         self.source_url_ref = source_url_ref
         self.location = location
+        self.token = token
 
     def read(self) -> pd.DataFrame:
-        data = request_json(self.source_url)
-        return self.parse_data(data)
-
-    def parse_data(self, data: dict):
-        metrics_mapping = {
-            "Συνολικοί ολοκληρωμένοι εμβολιασμοί": "people_fully_vaccinated",
-            "Συνολικοί εμβολιασμοί": "total_vaccinations",
-            "Συνολικοί εμβολιασμοί με τουλάχιστον 1 δόση": "people_vaccinated",
-        }
-        dfs = [
-            pd.DataFrame.from_records(d["data"]).rename(
+        data = requests.get(self.source_url, headers={"Authorization": f"Token {self.token}"}).json()
+        df = pd.DataFrame.from_records(data)
+        return (
+            df.rename(
                 columns={
-                    "x": "date",
-                    "y": metrics_mapping[d["label"]],
+                    "referencedate": "date",
+                    "totaldistinctpersons": "people_vaccinated",
+                    "totaldose2": "people_fully_vaccinated",
+                    "totaldose3": "total_boosters",
+                    "totalvaccinations": "total_vaccinations",
                 }
-            )
-            for d in data
-        ]
-        return reduce(lambda left, right: pd.merge(left, right, on=["date"], how="inner"), dfs)
+            )[["people_vaccinated", "people_fully_vaccinated", "total_boosters", "total_vaccinations", "date"]]
+            .groupby("date")
+            .sum()
+            .reset_index()
+        )
 
     def pipe_date(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(date=clean_date_series(df.date, "%Y-%m-%dT%H:%M:%S"))
@@ -61,38 +52,20 @@ class Greece:
 
         return df.assign(vaccine=df.date.apply(_enrich_vaccine_name))
 
-    def pipe_select_output_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df[
-            [
-                "date",
-                "location",
-                "vaccine",
-                "source_url",
-                "total_vaccinations",
-                "people_vaccinated",
-                "people_fully_vaccinated",
-            ]
-        ]
-
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        return (
-            df.pipe(self.pipe_date)
-            .pipe(self.pipe_metadata)
-            .pipe(self.pipe_vaccine)
-            .pipe(self.pipe_select_output_columns)
-        )
+        return df.pipe(self.pipe_metadata).pipe(self.pipe_vaccine).pipe(self.pipe_date)
 
     def to_csv(self, paths):
-        """Generalized."""
         df = self.read().pipe(self.pipeline)
         df.to_csv(paths.tmp_vax_out(self.location), index=False)
 
 
 def main(paths):
     Greece(
-        source_url="https://www.data.gov.gr/api/v1/summary/mdg_emvolio?date_from=2020-12-28",
+        source_url="https://www.data.gov.gr/api/v1/query/mdg_emvolio?date_from=2020-12-28",
         source_url_ref="https://www.data.gov.gr/datasets/mdg_emvolio/",
         location="Greece",
+        token="b1ef5949bebace574a0d7e58b5cdf4018353121e",
     ).to_csv(paths)
 
 

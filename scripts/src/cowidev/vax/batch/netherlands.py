@@ -1,7 +1,5 @@
 import json
 
-from datetime import date, timedelta
-
 import pandas as pd
 
 from cowidev.utils.web.scraping import get_soup
@@ -35,7 +33,7 @@ def main(paths):
     )
     coverage["date"] = pd.to_datetime(coverage.date, unit="s").dt.date.astype(str)
 
-    (
+    df = (
         pd.merge(doses, coverage, on="date", how="outer", validate="one_to_one")
         .sort_values("date")
         .assign(
@@ -43,8 +41,15 @@ def main(paths):
             source_url="https://coronadashboard.government.nl/landelijk/vaccinaties",
         )
         .pipe(enrich_vaccine_name)
-        .to_csv(paths.tmp_vax_out("Netherlands"), index=False)
     )
+
+    df = df[
+        (df.total_vaccinations >= df.people_vaccinated)
+        | (df.total_vaccinations.isna())
+        | (df.people_vaccinated.isna())
+    ]
+
+    df.to_csv(paths.tmp_vax_out("Netherlands"), index=False)
 
 
 def enrich_vaccine_name(df: pd.DataFrame) -> pd.DataFrame:

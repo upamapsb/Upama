@@ -11,6 +11,9 @@ vaccine_mapping = {
     "Spikevax": "Moderna",
     "Vaxzevria": "Oxford/AstraZeneca",
     "COVID-19 Vaccine Janssen": "Johnson&Johnson",
+    "Covishield(ChAdOx1_nCoV-19)": "Oxford/AstraZeneca",
+    "BBIBP-CorV(Sinopharm)": "Sinopharm/Beijing",
+    "CoronaVac(Sinovac)": "Sinovac",
 }
 one_dose_vaccines = ["Johnson&Johnson"]
 
