@@ -1,5 +1,4 @@
 import os
-
 import pandas as pd
 
 
@@ -10,20 +9,21 @@ class Latvia:
     source_url: str = "https://data.gov.lv/dati/dataset/f01ada0a-2e77-4a82-8ba2-09cf0cf90db3/resource/d499d2f0-b1ea-4ba2-9600-2c701b03bd4a/download/covid_19_izmeklejumi_rezultati.csv"
     source_url_ref: str = "https://data.gov.lv/dati/eng/dataset/covid-19"
     notes: str = "Collected from the Latvian Open Data Portal"
-    testing_type: str = "PCR only"
-    rename_columns: dict = {"Datums": "Date", "TestuSkaits": "Daily change in cumulative total"}
+    rename_columns: dict = {
+        "Datums": "Date",
+        "TestuSkaits": "Daily change in cumulative total",
+    }
 
     def read(self) -> pd.DataFrame:
-        return pd.read_csv(self.source_url, usecols=["Datums", "TestuSkaits"], parse_dates=["Datums"], sep=";")
+        return pd.read_csv(self.source_url, usecols=["Datums", "TestuSkaits"], sep=";")
 
     def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.rename(columns=self.rename_columns)
 
     def pipe_date(self, df: pd.DataFrame) -> pd.DataFrame:
-        # df <- df[, .SD[1], Date] # TODO: Was in original R code, not sure what it was doing
-        df = df.dropna(subset=["Date"])
-        df = df.groupby("Date", as_index=False).head(1)
-        return df.assign(Date=df.Date.dt.strftime("%Y-%m-%d")).sort_values("Date")
+        df["Date"] = df["Date"].str[:-1]
+        df["Date"] = df["Date"].str.replace(".", "-", regex=True)
+        return df
 
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(
@@ -40,8 +40,9 @@ class Latvia:
         return df.pipe(self.pipe_rename_columns).pipe(self.pipe_date).pipe(self.pipe_metadata)
 
     def export(self):
+        output_path = f"automated_sheets/{self.location}.csv"
         df = self.read().pipe(self.pipeline)
-        df.to_csv(os.path.join("automated_sheets", f"{self.location}2.csv"), index=False)
+        df.to_csv(output_path, index=False)
 
 
 def main():
