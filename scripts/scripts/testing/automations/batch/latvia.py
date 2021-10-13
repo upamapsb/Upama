@@ -21,14 +21,9 @@ class Latvia:
         return df.rename(columns=self.rename_columns)
 
     def pipe_date(self, df: pd.DataFrame) -> pd.DataFrame:
-        # df <- df[, .SD[1], Date] # TODO: Was in original R code, not sure what it was doing
-        df = df.dropna(subset=["Date"])
-        df = df.groupby("Date", as_index=False).head(1)
-
         df["Date"] = df["Date"].str[:-1]
         df["Date"] = df["Date"].str.replace(".", "-", regex=True)
-
-        return df.assign(Date=df.Date.dt.strftime("%Y-%m-%d")).sort_values("Date")
+        return df
 
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(
@@ -45,8 +40,9 @@ class Latvia:
         return df.pipe(self.pipe_rename_columns).pipe(self.pipe_date).pipe(self.pipe_metadata)
 
     def export(self):
+        output_path = f"automated_sheets/{self.location}.csv"
         df = self.read().pipe(self.pipeline)
-        df.to_csv(os.path.join("automated_sheets", f"{self.location}2.csv"), index=False)
+        df.to_csv(output_path, index=False)
 
 
 def main():
