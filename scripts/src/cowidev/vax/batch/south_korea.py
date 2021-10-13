@@ -33,13 +33,13 @@ class SouthKorea:
         # if df.shape[1] != 10:
         #     raise ValueError("Number of columns has changed!")
         columns_lv = dict()
-        columns_lv[0] = {"일반 접종", "일자", "전체 누적", "추가 접종"}     
+        columns_lv[0] = {"일반 접종", "일자", "전체 누적", "추가 접종"}
         columns_lv[1] = {"모더나 누적", "아스트라제네카 누적", "얀센 누적", "화이자 누적"}
-        columns_lv[2] = {"", "1차", "1차(완료)", "완료", "완료\n(AZ-PF교차미포함)", "완료\n(AZ-PF교차포함)","추가"}
+        columns_lv[2] = {"", "1차", "1차(완료)", "완료", "완료\n(AZ-PF교차미포함)", "완료\n(AZ-PF교차포함)", "추가"}
 
-        columns_lv_wrong = {i : df.columns.levels[i].difference(k) for i, k in columns_lv.items()}
+        columns_lv_wrong = {i: df.columns.levels[i].difference(k) for i, k in columns_lv.items()}
 
-        for lv,diff in columns_lv_wrong.items():
+        for lv, diff in columns_lv_wrong.items():
             if any(diff):
                 raise ValueError(f"Unknown columns in level {lv}: {diff}")
         return df
@@ -48,23 +48,23 @@ class SouthKorea:
         return pd.DataFrame(
             {
                 "date": df.loc[:, "일자"],
-                "people_vaccinated": df.loc[:, ("전체 누적","", "1차")],
-                "people_fully_vaccinated": df.loc[:, ("전체 누적","", "완료")],
-                "total_boosters":df.loc[:, ("전체 누적","", "추가")],
-                "janssen": df.loc[:, ("일반 접종","얀센 누적", "1차(완료)")],
+                "people_vaccinated": df.loc[:, ("전체 누적", "", "1차")],
+                "people_fully_vaccinated": df.loc[:, ("전체 누적", "", "완료")],
+                "total_boosters": df.loc[:, ("전체 누적", "", "추가")],
+                "janssen": df.loc[:, ("일반 접종", "얀센 누적", "1차(완료)")],
             }
         )
 
     def pipe_extract_manufacturer(self, df: pd.DataFrame) -> pd.DataFrame:
         data = {"date": df.loc[:, "일자"]}
         for vax_og, vax_new in self.vaccines_mapping.items():
-            regular = df.loc[:,("일반 접종", vax_og)].sum(axis=1)
-            booster = df.loc[:,("추가 접종")].get(vax_og)
+            regular = df.loc[:, ("일반 접종", vax_og)].sum(axis=1)
+            booster = df.loc[:, ("추가 접종")].get(vax_og)
             data[vax_new] = regular + (0 if booster is None else booster)
         return pd.DataFrame(data)
 
     def pipe_melt_manufacturer(self, df: pd.DataFrame) -> pd.DataFrame:
-        return pd.DataFrame(df.melt(id_vars="date", var_name="vaccine", value_name="total_vaccinations")) 
+        return pd.DataFrame(df.melt(id_vars="date", var_name="vaccine", value_name="total_vaccinations"))
 
     def pipe_source(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(source_url=self.source_url_ref)
@@ -73,7 +73,12 @@ class SouthKorea:
         return df.assign(location=self.location)
 
     def pipe_total_vaccinations(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(total_vaccinations=df["people_vaccinated"] + df["people_fully_vaccinated"] - df["janssen"] + df["total_boosters"] )
+        return df.assign(
+            total_vaccinations=df["people_vaccinated"]
+            + df["people_fully_vaccinated"]
+            - df["janssen"]
+            + df["total_boosters"]
+        )
 
     def pipe_date(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(date=clean_date_series(df.date))
@@ -108,7 +113,7 @@ class SouthKorea:
                     "total_vaccinations",
                     "people_vaccinated",
                     "people_fully_vaccinated",
-                    "total_boosters"
+                    "total_boosters",
                 ]
             ]
             .sort_values("date")
