@@ -37,7 +37,7 @@ class SouthKorea:
         columns_lv[1] = {"모더나 누적", "아스트라제네카 누적", "얀센 누적", "화이자 누적"}
         columns_lv[2] = {"", "1차", "1차(완료)", "완료", "완료\n(AZ-PF교차미포함)", "완료\n(AZ-PF교차포함)","추가"}
 
-        columns_lv_wrong = {i : SouthKorea().read().columns.levels[i].difference(k) for i, k in columns_lv.items()}
+        columns_lv_wrong = {i : df.columns.levels[i].difference(k) for i, k in columns_lv.items()}
 
         for lv,diff in columns_lv_wrong.items():
             if any(diff):
