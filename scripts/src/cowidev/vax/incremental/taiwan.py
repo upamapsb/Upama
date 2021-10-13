@@ -48,7 +48,9 @@ class Taiwan:
         return data
 
     def _parse_pdf_link(self, soup) -> str:
-        a = soup.find(class_="download").find("a")
+        for a in soup.find(class_="download").find_all("a"):
+            if "疫苗接種統計資料" in a["title"]:
+                break
         url_pdf = f"{self.source_url}{a['href']}"
         for i in range(10):
             soup = get_soup(url_pdf)
