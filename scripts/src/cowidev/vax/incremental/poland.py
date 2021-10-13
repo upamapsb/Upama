@@ -11,7 +11,7 @@ from cowidev.vax.utils.files import load_query
 class Poland:
     location: str = "Poland"
     source_url: str = (
-        "https://services-eu1.arcgis.com/zk7YlClTgerl62BY/ArcGIS/rest/services/global_szczepienia_actual_widok3/"
+        "https://services-eu1.arcgis.com/zk7YlClTgerl62BY/ArcGIS/rest/services/widok_global_szczepienia_actual/"
         "FeatureServer/0/query"
     )
     source_url_ref: str = "https://www.gov.pl/web/szczepimysie/raport-szczepien-przeciwko-covid-19"
