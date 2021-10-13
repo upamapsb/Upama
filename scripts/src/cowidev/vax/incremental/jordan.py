@@ -1,4 +1,5 @@
 import re
+import time
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -27,6 +28,7 @@ class Jordan:
         with get_driver(headless=True) as driver:
             # Main page
             driver.get(self._get_iframe_url())
+            time.sleep(5)
 
             data_blocks = WebDriverWait(driver, 30).until(
                 EC.visibility_of_all_elements_located((By.CLASS_NAME, "card"))
