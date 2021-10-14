@@ -317,11 +317,32 @@ def add_singapore(df):
     return pd.concat([df, singapore])
 
 
+def add_serbia(df):
+    print("Downloading Serbia data…")
+
+    url = "https://raw.githubusercontent.com/aleksandar-jovicic/COVID19-Serbia/master/timeseries.csv"
+    serbia = (
+        pd.read_csv(url, usecols=["ts", "hospitalized", "ventilated"])
+        .rename(
+            columns={"ts": "date", "hospitalized": "Daily hospital occupancy", "ventilated": "Daily ICU occupancy"}
+        )
+        .melt(id_vars="date", var_name="indicator", value_name="value")
+        .assign(
+            entity="Serbia",
+            iso_code="SRB",
+            population=6908224,
+        )
+    )
+    serbia["date"] = serbia.date.str.slice(0, 10)
+    return pd.concat([df, serbia])
+
+
 def add_countries(df):
-    df = add_singapore(df)
     df = add_algeria(df)
     df = add_canada(df)
     df = add_israel(df)
+    df = add_serbia(df)
+    df = add_singapore(df)
     df = add_switzerland(df)
     df = add_uk(df)
     df = add_united_states(df)
