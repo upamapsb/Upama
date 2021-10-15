@@ -9,6 +9,7 @@ class Canada:
     source_url: str = "https://api.covid19tracker.ca/reports"
     source_url_ref: str = "https://covid19tracker.ca/vaccinationtracker.html"
     source_url_boosters: str = "https://api.covid19tracker.ca/vaccines/reports/latest"
+    df_boosters: pd.DataFrame = None
 
     def read(self) -> pd.DataFrame:
         data = request_json(self.source_url)
@@ -46,6 +47,7 @@ class Canada:
         )
 
     def pipe_total_boosters(self, df: pd.DataFrame):
+        df = df.merge(self.df_boosters, how="left", on="date")
         dt, v = self._get_boosters_data()
         df.loc[df.date == dt, "total_boosters"] = v
         return df
@@ -57,15 +59,18 @@ class Canada:
             .pipe(self.pipe_total_boosters)
             .pipe(self.pipe_people_vaccinated)
             .pipe(self.pipe_metadata)
-            .pipe(self.pipe_total_boosters)
-            .pipe(make_monotonic)
             .sort_values("date")
         )
         return df
 
     def export(self, paths):
         destination = paths.tmp_vax_out(self.location)
+        self.df_boosters = self._load_current_df(paths)
         self.read().pipe(self.pipeline).to_csv(destination, index=False)
+
+    def _load_current_df(self, paths):
+        df = pd.read_csv(paths.tmp_vax_out(self.location))
+        return df[["date", "total_boosters"]]
 
 
 def main(paths):
