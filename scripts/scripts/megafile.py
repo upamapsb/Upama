@@ -763,7 +763,7 @@ def create_internal(df):
     df = df.pipe(add_partially_vaccinated)
     # Add total vaccinations without boosters
     df = df.pipe(add_total_vaccinations_no_boosters)
-    df = df.pipe(fillna_boosters_till_valid)
+    # df = df.pipe(fillna_boosters_till_valid)
 
     # Export
     for name, config in internal_files_columns.items():
