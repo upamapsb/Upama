@@ -1,5 +1,3 @@
-import re
-
 import pandas as pd
 
 
@@ -10,98 +8,105 @@ vaccine_mapping = {
     "Janssen": "Johnson&Johnson",
 }
 
+one_dose_vaccines = ["Janssen"]
+
 
 def read(source: str) -> pd.DataFrame:
-    return pd.read_csv(source, sep=";")
-
-
-def filter_country(df: pd.DataFrame) -> pd.DataFrame:
-    return df[df["Name"] == "Österreich"]
-
-
-def select_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
-    return df[columns]
-
-
-def rename_columns(df: pd.DataFrame, columns: dict) -> pd.DataFrame:
-    return df.rename(columns=columns)
-
-
-def format_date(df: pd.DataFrame) -> pd.DataFrame:
-    return df.assign(date=df.date.str.slice(0, 10))
+    return pd.read_csv(
+        source, sep=";", usecols=["date", "state_name", "vaccine", "dose_number", "doses_administered_cumulative"]
+    )
 
 
 def filter_rows(df: pd.DataFrame) -> pd.DataFrame:
-    return df[df.total_vaccinations >= df.people_vaccinated]
+    return df[(df["state_name"] == "Österreich") & (df.vaccine != "Other")].drop(columns="state_name")
 
 
-def _get_vaccine_names(df: pd.DataFrame, translate: bool = False):
-    ignore_fields = ["", "Pro"]
-    regex_vaccines = r"EingetrageneImpfungen([a-zA-Z]*).*"
-    vaccine_names = sorted(
-        set(
-            re.search(regex_vaccines, col).group(1)
-            for col in df.columns
-            if re.match(regex_vaccines, col)
-        )
-    )
-    vaccine_names = [vax for vax in vaccine_names if vax not in ignore_fields]
-    if translate:
-        return sorted([vaccine_mapping[v] for v in vaccine_names])
-    else:
-        return sorted(vaccine_names)
-
-
-def _check_vaccine_names(df: pd.DataFrame) -> pd.DataFrame:
-    vaccine_names = _get_vaccine_names(df)
+def check_vaccine_names(df: pd.DataFrame) -> pd.DataFrame:
+    vaccine_names = set(df.vaccine)
     unknown_vaccines = set(vaccine_names).difference(vaccine_mapping.keys())
     if unknown_vaccines:
         raise ValueError("Found unknown vaccines: {}".format(unknown_vaccines))
     return df
 
 
+def format_date(df: pd.DataFrame) -> pd.DataFrame:
+    return df.assign(date=df.date.str.slice(0, 10))
+
+
+def reshape(df: pd.DataFrame) -> pd.DataFrame:
+    return df.pivot(
+        index=["date", "vaccine"], columns="dose_number", values="doses_administered_cumulative"
+    ).reset_index()
+
+
+def calculate_metrics(df: pd.DataFrame) -> pd.DataFrame:
+    assert [*df.columns] == ["date", "vaccine", 1, 2, 3], "Wrong list of columns! Maybe a 4th dose was added?"
+
+    # Total vaccinations
+    df.loc[:, "total_vaccinations"] = df[1] + df[2] + df[3]
+
+    # People vaccinated
+    df.loc[:, "people_vaccinated"] = df[1]
+
+    # People fully vaccinated
+    df.loc[df.vaccine.isin(one_dose_vaccines), "people_fully_vaccinated"] = df[1]
+    df.loc[-df.vaccine.isin(one_dose_vaccines), "people_fully_vaccinated"] = df[2]
+
+    # Total boosters
+    df.loc[df.vaccine.isin(one_dose_vaccines), "total_boosters"] = df[2] + df[3]
+    df.loc[-df.vaccine.isin(one_dose_vaccines), "total_boosters"] = df[3]
+
+    return (
+        df[
+            [
+                "date",
+                "people_vaccinated",
+                "people_fully_vaccinated",
+                "total_vaccinations",
+                "total_boosters",
+            ]
+        ]
+        .groupby("date", as_index=False)
+        .sum()
+    )
+
+
 def enrich_columns(df: pd.DataFrame) -> pd.DataFrame:
-    df = df.assign(
+    return df.assign(
         location="Austria",
         source_url="https://info.gesundheitsministerium.gv.at/opendata/",
     )
-    df = df.assign(vaccine="Moderna, Oxford/AstraZeneca, Pfizer/BioNTech")
-    df.loc[
-        df.date > "2021-03-23", "vaccine"
-    ] = "Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
+
+
+def enrich_vaccines(df: pd.DataFrame) -> pd.DataFrame:
+    def _make_list(date: str) -> str:
+        vax_list = ["Pfizer/BioNTech"]
+        if date >= "2021-01-15":
+            vax_list.append("Moderna")
+        if date >= "2021-02-08":
+            vax_list.append("Oxford/AstraZeneca")
+        if date >= "2021-03-15":
+            vax_list.append("Johnson&Johnson")
+        return ", ".join(sorted(vax_list))
+
+    df["vaccine"] = df.date.apply(_make_list)
     return df
 
 
 def pipeline(df: pd.DataFrame) -> pd.DataFrame:
     return (
-        df.pipe(filter_country)
-        .pipe(_check_vaccine_names)
-        .pipe(
-            select_columns,
-            columns=[
-                "Datum",
-                "Teilgeimpfte",
-                "Vollimmunisierte",
-                "EingetrageneImpfungen",
-            ],
-        )
-        .pipe(
-            rename_columns,
-            columns={
-                "Datum": "date",
-                "Teilgeimpfte": "people_vaccinated",
-                "Vollimmunisierte": "people_fully_vaccinated",
-                "EingetrageneImpfungen": "total_vaccinations",
-            },
-        )
-        .pipe(filter_rows)
+        df.pipe(filter_rows)
+        .pipe(check_vaccine_names)
         .pipe(format_date)
+        .pipe(reshape)
+        .pipe(calculate_metrics)
         .pipe(enrich_columns)
+        .pipe(enrich_vaccines)
         .sort_values("date")
     )
 
 
 def main(paths):
-    source = "https://info.gesundheitsministerium.gv.at/data/timeline-eimpfpass.csv"
+    source = "https://info.gesundheitsministerium.gv.at/data/COVID19_vaccination_doses_timeline.csv"
     destination = paths.tmp_vax_out("Austria")
     read(source).pipe(pipeline).to_csv(destination, index=False)
