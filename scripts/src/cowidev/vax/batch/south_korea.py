@@ -7,7 +7,7 @@ from cowidev.utils.web.download import read_xlsx_from_url
 class SouthKorea:
     def __init__(self):
         self.location = "South Korea"
-        self.source_url = "https://ncv.kdca.go.kr/vaccineStatusFileDownload.es"
+        self.source_url = "https://ncv.kdca.go.kr/filepath/boardDownload.es?bid=9999&list_no=9999&seq=1"
         self.source_url_ref = "https://ncv.kdca.go.kr/"
         self.vaccines_mapping = {
             "모더나 누적": "Moderna",
