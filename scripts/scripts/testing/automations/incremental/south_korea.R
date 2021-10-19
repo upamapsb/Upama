@@ -9,7 +9,7 @@ count <- page %>%
     as.integer()
 
 date <- page %>%
-    html_node(".m_inspect_status h3 em") %>%
+    html_node(".m_patient_status h3 em") %>%
     html_text() %>%
     str_extract(" on [A-Za-z]+ \\d+, 202\\d") %>%
     str_replace(" on ", "") %>%
