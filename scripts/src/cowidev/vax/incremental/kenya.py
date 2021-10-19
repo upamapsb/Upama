@@ -47,7 +47,7 @@ class Kenya:
         return text
 
     def _parse_date(self, pdf_text: str):
-        regex = r"vaccine doses dispensed as at saturday ([0-9a-z]+, [a-z]+ 202\d)"
+        regex = r"vaccine doses dispensed as at [a-z]+ ([0-9a-z]+, [a-z]+ 202\d)"
         date_str = re.search(regex, pdf_text).group(1)
         date = str(pd.to_datetime(date_str).date())
         return date
