@@ -10,16 +10,18 @@ pbcopy < source_table.html
 open $url
 python ../megafile.py
 
-# General data update (+mortality)
-​python ../excessmortality.py
-python ../megafile.py
+# Update excess mortality data & megafile
+source ../../venv/bin/activate
+python3 -m cowidev.excess_mortality etl
+python3 ../../scripts/megafile.py
+deactivate
 ​
-# Git push
+# Push to git
 git add automated_sheets/*
 git add automations/*
 git add ../../grapher/*
 git add ../../../public/data/*
 git add source_table.html
 git add grapher_annotations.txt
-git commit -m 'data(test): update'
-​git push origin master
+git commit -m 'data(testing+xm): update'
+git push origin master
