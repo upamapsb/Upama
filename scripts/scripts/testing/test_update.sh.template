@@ -8,6 +8,7 @@ git pull origin master
 url=$(python -c "import json; print(json.load(open('testing_dataset_config.json', 'r'))['owid_cloud_table_post'])")
 pbcopy < source_table.html
 open $url
+python ../megafile.py
 
 # General data update (+mortality)
 ​python ../excessmortality.py
@@ -20,5 +21,5 @@ git add ../../grapher/*
 git add ../../../public/data/*
 git add source_table.html
 git add grapher_annotations.txt
-git commit -m 'data(test,xm): Update'
+git commit -m 'data(test): update'
 ​git push origin master
