@@ -964,7 +964,7 @@ def generate_megafile():
     generate_readme()
 
     # Export timestamp
-    export_timestamp(timestamp_filename)
+    # export_timestamp(timestamp_filename)
 
     print("All done!")
 
@@ -1071,9 +1071,10 @@ def get_placeholder():
 
 def generate_readme():
     placeholders = get_placeholder()
-    with open(README_TMP, "r") as fr:
-        s = fr.read().format(**placeholders)
-        with open(README_FILE, "w") as fw:
+    with open(README_TMP, "r", encoding="utf-8") as fr:
+        s = fr.read()
+        s = s.format(**placeholders)
+        with open(README_FILE, "w", encoding="utf-8") as fw:
             fw.write(s)
 
 
