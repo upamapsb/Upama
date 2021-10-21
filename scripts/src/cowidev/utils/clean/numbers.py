@@ -70,7 +70,7 @@ class NumericCleaner:
 
     def clean_verbose_number(self, num_as_str):
         number_dict = self._match_numeric_words(num_as_str)
-        print(number_dict)
+        # print(number_dict)
         number = self._build_number(number_dict)
         return number
 
