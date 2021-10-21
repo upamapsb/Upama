@@ -13,7 +13,7 @@ class China:
     source_url: str = "http://www.nhc.gov.cn/xcs/yqjzqk/list_gzbd.shtml"
     regex: dict = {
         "date": r"截至(20\d{2})年(\d{1,2})月(\d{1,2})日",
-        "total_vaccinations": "([\d\.]+)万剂次。",
+        "total_vaccinations": "([\d\.]+万)剂次。",
     }
 
     def read(self, last_update: str):
@@ -35,7 +35,7 @@ class China:
         elem = driver.find_element_by_id("xw_box")
         return {
             "date": extract_clean_date(elem.text, self.regex["date"], "%Y %m %d"),
-            "total_vaccinations": clean_count(re.search(self.regex["total_vaccinations"], elem.text).group(1)) * 1000,
+            "total_vaccinations": clean_count(re.search(self.regex["total_vaccinations"], elem.text).group(1)),
             "source_url": url,
         }
 
