@@ -60,7 +60,7 @@ class Thailand:
         return sorted(links, key=lambda x: x["date"], reverse=True)
 
     def _parse_date_from_link_title(self, title):
-        match = re.search(r"สรุปวัคซีน ประจำวันที่ (\d+) .* (25\d\d)", title).group(1, 2)
+        match = re.search(r".*สรุปวัคซีน ประจำวันที่\s+(\d+) .* (25\d\d)", title).group(1, 2)
         year = int(match[1]) - self._year_difference_conversion
         return clean_date(f"{year}-{self._current_month}-{match[0]}", "%Y-%m-%d")
 
