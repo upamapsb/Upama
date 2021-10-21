@@ -50,17 +50,13 @@ class Uzbekistan:
         return clean_date(dt, "%d.%m.%Y")
 
     def _parse_data(self, elem):
+        match_1 = re.search(self.regex["total_vaccinations_people_vaccinated"], elem.text)
+        match_2 = re.search(self.regex["people_fully_vaccinated"], elem.text)
         return {
             "date": self._parse_date(elem),
-            "total_vaccinations": clean_count(
-                re.search(self.regex["total_vaccinations_people_vaccinated"], elem.text).group(1)
-            ),
-            "people_vaccinated": clean_count(
-                re.search(self.regex["total_vaccinations_people_vaccinated"], elem.text).group(2)
-            ),
-            "people_fully_vaccinated": clean_count(
-                re.search(self.regex["people_fully_vaccinated"], elem.text).group(1)
-            ),
+            "total_vaccinations": clean_count(match_1.group(1)),
+            "people_vaccinated": clean_count(match_1.group(2)),
+            "people_fully_vaccinated": clean_count(match_2.group(1)) if match_2 else None,
         }
 
     def pipe_metadata(self, df):
