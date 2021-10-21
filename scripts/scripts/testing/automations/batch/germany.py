@@ -8,7 +8,7 @@ import requests
 def read_xlsx_from_url(url, **kwargs):
     headers = {"User-Agent": "Mozilla/5.0 (X11; Linux i686)"}
     response = requests.get(url, headers=headers)
-    with tempfile.NamedTemporaryFile() as tmp:
+    with tempfile.NamedTemporaryFile(mode="w+", delete=False) as tmp:
         with open(tmp.name, "wb") as f:
             f.write(response.content)
         df = pd.read_excel(tmp.name, **kwargs)
@@ -31,9 +31,7 @@ class Germany:
         df = df.assign(
             **{
                 "Date": df.Kalenderwoche.apply(
-                    lambda x: datetime.strptime(x + " +0", "%V/%G +%w").strftime(
-                        "%Y-%m-%d"
-                    )
+                    lambda x: datetime.strptime(x + " +0", "%V/%G +%w").strftime("%Y-%m-%d")
                 ),
                 "Cumulative total": df["Anzahl Testungen"].cumsum(),
                 "Positive rate": (df["Positivenanteil (%)"] / 100).round(3),
