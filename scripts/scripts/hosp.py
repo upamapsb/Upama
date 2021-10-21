@@ -36,10 +36,6 @@ def download_data():
     return df
 
 
-def standardize_entities(df):
-    return df
-
-
 def undo_per_100k(df):
     df = pd.merge(df, POPULATION, on="entity", how="left")
     assert df[df.population.isna()].shape[0] == 0, "Country missing from population file"
@@ -317,18 +313,40 @@ def add_singapore(df):
     return pd.concat([df, singapore])
 
 
+def add_serbia(df):
+    print("Downloading Serbia data…")
+
+    url = "https://raw.githubusercontent.com/aleksandar-jovicic/COVID19-Serbia/master/timeseries.csv"
+    serbia = (
+        pd.read_csv(url, usecols=["ts", "hospitalized", "ventilated"])
+        .rename(
+            columns={"ts": "date", "hospitalized": "Daily hospital occupancy", "ventilated": "Daily ICU occupancy"}
+        )
+        .melt(id_vars="date", var_name="indicator", value_name="value")
+        .assign(
+            entity="Serbia",
+            iso_code="SRB",
+            population=6908224,
+        )
+    )
+    serbia["date"] = serbia.date.str.slice(0, 10)
+    return pd.concat([df, serbia])
+
+
 def add_countries(df):
-    df = add_singapore(df)
     df = add_algeria(df)
     df = add_canada(df)
     df = add_israel(df)
+    df = add_serbia(df)
+    df = add_singapore(df)
     df = add_switzerland(df)
     df = add_uk(df)
     df = add_united_states(df)
-    return df
+    return df.dropna(subset=["value"])
 
 
 def add_per_million(df):
+    print("Adding per-capita metrics…")
     per_million = df.copy()
     per_million.loc[:, "value"] = per_million["value"].div(per_million["population"]).mul(1000000)
     per_million.loc[:, "indicator"] = per_million["indicator"] + " per million"
@@ -337,11 +355,13 @@ def add_per_million(df):
 
 
 def owid_format(df):
+    print("Reshaping to OWID format…")
     df.loc[:, "value"] = df["value"].round(3)
     df = df.drop(columns="iso_code")
 
     # Data cleaning
     df = df[-df["indicator"].str.contains("Weekly new plot admissions")]
+    df["date"] = df.date.astype(str).str.slice(0, 10)
     df = df.groupby(["entity", "date", "indicator"], as_index=False).max()
 
     df = df.pivot_table(index=["entity", "date"], columns="indicator").value.reset_index()
@@ -350,6 +370,7 @@ def owid_format(df):
 
 
 def date_to_owid_year(df):
+    print("Converting dates to grapher years…")
     df.loc[:, "date"] = (pd.to_datetime(df.date, format="%Y-%m-%d") - datetime(2020, 1, 21)).dt.days
     df = df.rename(columns={"date": "Year"})
     return df
@@ -357,7 +378,6 @@ def date_to_owid_year(df):
 
 def generate_dataset():
     df = download_data()
-    df = standardize_entities(df)
     df = undo_per_100k(df)
     df = week_to_date(df)
     df = add_countries(df)

@@ -14,9 +14,10 @@ class Hungary:
         self.location = "Hungary"
         self._num_max_pages = 10
         self.regex = {
-            "title": r"\d+ [millió]+ \d+ [ezer]+ a beoltott, \d+ az új fertőzött",
+            "title": r"\d+ [millió]+ \d+ [ezer]+ a beoltott, [\d\s]+ az új fertőzött",
             "metrics": (
-                r"A beoltottak száma ([\d ]+), közülük ([\d ]+) fő már a második oltását is megkapta, ([\d ]+) ezren"
+                r"A beoltottak száma ([\d ]+), közülük ([\d ]+) fő már a második oltását is megkapta,"
+                r" ([\d\s(millió)(ezren)]+)"
                 r" pedig már a harmadik oltást is felvették"
             ),
         }
@@ -35,6 +36,7 @@ class Hungary:
 
     def parse_data(self, soup: BeautifulSoup, last_update: str) -> tuple:
         elems = self.get_elements(soup)
+        print(elems)
         records = []
         for elem in elems:
             # print(elem["date"], elem)
@@ -43,6 +45,8 @@ class Hungary:
                 "source_url": elem["link"],
                 **self.parse_data_news_page(soup),
             }
+            print("----")
+            print(record)
             if record["date"] > last_update:
                 # print(record, "added")
                 records.append(record)
@@ -72,7 +76,7 @@ class Hungary:
 
         people_vaccinated = clean_count(match.group(1))
         people_fully_vaccinated = clean_count(match.group(2))
-        total_boosters = 1000 * clean_count(match.group(3))
+        total_boosters = clean_count(match.group(3))
 
         return {
             "people_vaccinated": people_vaccinated,

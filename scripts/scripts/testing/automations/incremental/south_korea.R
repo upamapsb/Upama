@@ -3,14 +3,13 @@ url <- "http://ncov.mohw.go.kr/en/"
 page <- read_html(url)
 
 count <- page %>%
-    html_nodes(".misil_r span") %>%
+    html_node(".misil_r span") %>%
     html_text() %>%
     str_replace_all("[^\\d]", "") %>%
     as.integer()
-count <- count[2]
 
 date <- page %>%
-    html_node(".m_inspect_status h3 em") %>%
+    html_node(".m_patient_status h3 em") %>%
     html_text() %>%
     str_extract(" on [A-Za-z]+ \\d+, 202\\d") %>%
     str_replace(" on ", "") %>%

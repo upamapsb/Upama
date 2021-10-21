@@ -39,6 +39,8 @@ setorder(df, Date)
 
 df[, Date := ymd(Date)]
 stopifnot(sum(is.na(df$Date)) == 0)
+df <- df[, .SD[.N], `Cumulative total`]
+
 df[, Country := "Philippines"]
 df[, Units := "people tested"]
 df[, `Source URL` := url]

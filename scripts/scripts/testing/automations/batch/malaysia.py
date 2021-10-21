@@ -40,7 +40,7 @@ class Malaysia:
 
     def export(self):
         df = self.read().pipe(self.pipeline)
-        df.to_csv(os.path.join("automated_sheets", f"{self.location}2.csv"), index=False)
+        df.to_csv(os.path.join("automated_sheets", f"{self.location}.csv"), index=False)
 
 
 def main():

@@ -763,13 +763,15 @@ def create_internal(df):
     df = df.pipe(add_partially_vaccinated)
     # Add total vaccinations without boosters
     df = df.pipe(add_total_vaccinations_no_boosters)
-    df = df.pipe(fillna_boosters_till_valid)
 
     # Export
     for name, config in internal_files_columns.items():
         output_path = os.path.join(dir_path, f"megafile--{name}.json")
         value_columns = list(set(config["columns"]) - set(non_value_columns))
-        df_output = df[config["columns"]].dropna(subset=value_columns, how=config["dropna"])
+        df_output = df[config["columns"]]
+        if name == "vaccinations-boosters":
+            df_output = df_output.copy().pipe(fillna_boosters_till_valid)
+        df_output = df_output.dropna(subset=value_columns, how=config["dropna"])
         df_output = annotator.add_annotations(df_output, name)
         df_to_columnar_json(df_output, output_path)
 
