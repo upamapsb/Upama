@@ -19,6 +19,10 @@ class NumericCleaner:
             ],
             "factor": 1e6,
         },
+        "ten_thousand": {
+            "words": ["万"],
+            "factor": 1e4,
+        },
         "thousand": {
             "words": ["thousand", "ezren", "mil", "duizend", "mila", "mille", "tausend"],
             "factor": 1e3,
@@ -26,7 +30,7 @@ class NumericCleaner:
         "hundred": {"words": ["hundred", "cien", "cent", "hundert", "honderd", "cem", "cento"], "factor": 1e2},
         "one": {"words": [""], "factor": 1},
     }
-    regex_number_verbose_template: str = "(?:(?P<{}>\d+)\s?(?:{}))?"
+    regex_number_verbose_template: str = "(?:(?P<{}>\d+(?:\.\d+)?)\s?(?:{}))?"
     regex_number_not_verbose: str = r"\d+((.\d+)+)?"
     regex_number_not_verbose_correct: str = r"\d+((.\d{3})+)?"
 
@@ -46,7 +50,7 @@ class NumericCleaner:
     def _build_number(self, numbers):
         value = 0
         for k, v in numbers.items():
-            value += int(v) * self.numeric_words[k]["factor"]
+            value += float(v) * self.numeric_words[k]["factor"]
         return int(value)
 
     def _to_str(self, num_as_str):
@@ -66,6 +70,7 @@ class NumericCleaner:
 
     def clean_verbose_number(self, num_as_str):
         number_dict = self._match_numeric_words(num_as_str)
+        print(number_dict)
         number = self._build_number(number_dict)
         return number
 

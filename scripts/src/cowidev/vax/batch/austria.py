@@ -17,11 +17,11 @@ class Austria:
         return pd.read_csv(
             self.source_url,
             sep=";",
-            usecols=["date", "state", "vaccine", "dose_number", "doses_administered_cumulative"],
+            usecols=["date", "state_name", "vaccine", "dose_number", "doses_administered_cumulative"],
         )
 
     def pipe_filter_rows(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df[(df["state"] == "Österreich") & (df.vaccine != "Other")].drop(columns="state")
+        return df[(df["state_name"] == "Österreich") & (df.vaccine != "Other")].drop(columns="state_name")
 
     def pipe_check_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
         vaccine_names = set(df.vaccine)

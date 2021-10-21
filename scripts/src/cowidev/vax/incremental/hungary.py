@@ -16,7 +16,7 @@ class Hungary:
         self.regex = {
             "title": r"\d+ [millió]+ \d+ [ezer]+ a beoltott, [\d\s]+ az új fertőzött",
             "metrics": (
-                r"A beoltottak száma ([\d ]+), közülük ([\d ]+) fő már a második oltását is megkapta,"
+                r"A beoltottak száma ([\d\s]+)(?: fő)?, közülük ([\d\s]+) fő már a második oltását is megkapta,"
                 r" ([\d\s(millió)(ezren)]+)"
                 r" pedig már a harmadik oltást is felvették"
             ),
@@ -36,17 +36,17 @@ class Hungary:
 
     def parse_data(self, soup: BeautifulSoup, last_update: str) -> tuple:
         elems = self.get_elements(soup)
-        print(elems)
+        # print(elems)
         records = []
         for elem in elems:
-            # print(elem["date"], elem)
+            # print(elem)
             soup = get_soup(elem["link"])
             record = {
                 "source_url": elem["link"],
                 **self.parse_data_news_page(soup),
             }
-            print("----")
-            print(record)
+            # print("----")
+            # print(record)
             if record["date"] > last_update:
                 # print(record, "added")
                 records.append(record)
