@@ -1,4 +1,4 @@
-date <- Sys.Date() - 1
+date <- Sys.Date() - 2
 
 url <- sprintf(
     "https://geovision.uned.ac.cr/oges/archivos_covid/%s/%s_CSV_GENERAL.csv",
