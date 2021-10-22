@@ -13,9 +13,7 @@ class Peru:
         self.source_url_age = (
             "https://github.com/jmcastagnetto/covid-19-peru-vacunas/raw/main/datos/vacunas_covid_rangoedad_owid.csv"
         )
-        self.source_url_ref = (
-            "https://www.datosabiertos.gob.pe/dataset/vacunaci%C3%B3n-contra-covid-19-ministerio-de-salud-minsa"
-        )
+        self.source_url_ref = "https://www.datosabiertos.gob.pe/dataset/vacunacion"
         self.vaccine_mapping = {
             "SINOPHARM": "Sinopharm/Beijing",
             "PFIZER": "Pfizer/BioNTech",
