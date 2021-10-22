@@ -39,17 +39,18 @@ class Switzerland:
         return doses_url, people_url, manufacturer_url
 
     def _parse_data(self, doses_url, people_url, manufacturer_url):
-        print(doses_url)
-        print(people_url)
-        print(manufacturer_url)
+        # print(doses_url)
+        # print(people_url)
+        # print(manufacturer_url)
         doses = pd.read_csv(
             doses_url,
             usecols=["geoRegion", "date", "sumTotal", "type"],
         )
         people = pd.read_csv(
             people_url,
-            usecols=["geoRegion", "date", "sumTotal", "type"],
+            usecols=["geoRegion", "date", "sumTotal", "type", "age_group"],
         )
+        people = people[people.age_group == "total_population"].drop(columns=["age_group"])
         manufacturer = pd.read_csv(
             manufacturer_url,
             usecols=["date", "geoRegion", "vaccine", "sumTotal"],
@@ -57,17 +58,21 @@ class Switzerland:
         return pd.concat([doses, people], ignore_index=True), manufacturer
 
     def pipe_filter_country(self, df: pd.DataFrame, country_code: str) -> pd.DataFrame:
-        return df[df.geoRegion == country_code]
+        return df[df.geoRegion == country_code].drop(columns=["geoRegion"])
+
+    def pipe_unique_rows(self, df: pd.DataFrame):
+        # Checks
+        a = df.groupby(["date", "type"]).count().reset_index()
+        if not a[a.sumTotal > 1].empty:
+            raise ValueError("Duplicated rows in either `people` or `doses` dataframes!")
+        return df
 
     def pipe_pivot(self, df: pd.DataFrame) -> pd.DataFrame:
-        return (
-            df.pivot(index=["geoRegion", "date"], columns="type", values="sumTotal").reset_index().sort_values("date")
-        )
+        return df.pivot(index=["date"], columns="type", values="sumTotal").reset_index().sort_values("date")
 
     def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.rename(
             columns={
-                "geoRegion": "location",
                 "COVID19FullyVaccPersons": "people_fully_vaccinated",
                 "COVID19VaccDosesAdministered": "total_vaccinations",
                 "COVID19AtLeastOneDosePersons": "people_vaccinated",
@@ -78,8 +83,8 @@ class Switzerland:
         df.loc[df.total_vaccinations < df.people_vaccinated, "total_vaccinations"] = df.people_vaccinated
         return df
 
-    def pipe_translate_country_code(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(location=df.location.replace({"CH": "Switzerland", "FL": "Liechtenstein"}))
+    def pipe_location(self, df: pd.DataFrame, location: str) -> pd.DataFrame:
+        return df.assign(location=location)
 
     def pipe_source(self, df: pd.DataFrame, country_code: str) -> pd.DataFrame:
         return df.assign(
@@ -98,10 +103,11 @@ class Switzerland:
         geo_region = _get_geo_region(location)
         return (
             df.pipe(self.pipe_filter_country, geo_region)
+            .pipe(self.pipe_unique_rows)
             .pipe(self.pipe_pivot)
             .pipe(self.pipe_rename_columns)
             .pipe(self.pipe_fix_metrics)
-            .pipe(self.pipe_translate_country_code)
+            .pipe(self.pipe_location, location)
             .pipe(self.pipe_source, geo_region)
             .pipe(self.pipe_vaccine)[
                 [
