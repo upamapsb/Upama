@@ -18,7 +18,7 @@ class CaymanIslands:
         ),
         "people_vaccinated": r"([\d,]+) \(.*\) have had at least one dose of a COVID-19 vaccine",
         "people_fully_vaccinated": r"([\d,]+) \(.*\) have completed the two(?:\s|\-)dose course",
-        "total_boosters": r"Additionally, ([\d]+) \([\d]+%\) have had a third or booster dose\.",
+        "total_boosters": r"Additionally, ([\d,]+) \(.*\) have had a third or booster dose\.",
     }
 
     def read(self) -> pd.Series:
