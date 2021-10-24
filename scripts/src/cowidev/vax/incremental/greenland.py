@@ -1,4 +1,5 @@
 import datetime
+import re
 
 import pandas as pd
 
@@ -22,8 +23,8 @@ class Greenland:
 
     def _parse_data_metrics(self, soup) -> dict:
         counters = soup.find_all(class_="text-brand-blue")
-        dose_1 = clean_count(counters[1].text)
-        dose_2 = clean_count(counters[2].text)
+        dose_1 = clean_count(re.search(r"Innuttaasut ([\d\.]+)", counters[1].parent.find_all("dd")[-1].text).group(1))
+        dose_2 = clean_count(re.search(r"Innuttaasut ([\d\.]+)", counters[2].parent.find_all("dd")[-1].text).group(1))
         if dose_1 < dose_2:
             raise ValueError("dose_1 cannot be higher than dose_2")
         return {"people_vaccinated": dose_1, "people_fully_vaccinated": dose_2}

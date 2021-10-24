@@ -57,7 +57,7 @@ class Norway:
             "./antall-personer-vaksiner.csv",
             separators=[";", ","],
             usecols=[
-                "Kategori",
+                "Tid/Dato",
                 "Kumulativt antall personer vaksinert med 1.dose",
                 "Kumulativt antall personer vaksinert med 2.dose",
             ],
@@ -80,7 +80,7 @@ class Norway:
             columns={
                 "Kumulativt antall personer vaksinert med 1.dose": "people_vaccinated",
                 "Kumulativt antall personer vaksinert med 2.dose": "people_fully_vaccinated",
-                "Kategori": "date",
+                "Tid/Dato": "date",
             }
         )
 

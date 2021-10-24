@@ -8,62 +8,64 @@ from cowidev.utils.web import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
 
 
-def read(source: str) -> pd.Series:
-    soup = get_soup(source)
-    return parse_data(soup)
+class Bulgaria:
+    location: str = "Bulgaria"
+    source_url: str = "https://coronavirus.bg/bg/statistika"
 
+    def read(self) -> pd.Series:
+        soup = get_soup(self.source_url)
+        return self._parse_data(soup)
 
-def parse_data(soup: BeautifulSoup) -> pd.Series:
-    table = soup.find("p", string=re.compile("Поставени ваксини по")).parent.find("table")
-    data = pd.read_html(str(table))[0]
-    data = data.droplevel(level=0, axis=1)
-    data = data[data["Област"] == "Общо"]
-    return data.set_index(data.columns[0]).T.squeeze()
+    def _parse_data(self, soup: BeautifulSoup) -> pd.Series:
+        table = soup.find("p", string=re.compile("Поставени ваксини по")).parent.find("table")
+        data = pd.read_html(str(table))[0]
+        data = data.droplevel(level=0, axis=1)
+        data = data[data["Област"] == "Общо"]
+        return data.set_index(data.columns[0]).T.squeeze()
 
+    def pipe_date(self, ds: pd.Series) -> pd.Series:
+        date = localdate("Europe/Sofia")
+        return enrich_data(ds, "date", date)
 
-def enrich_date(ds: pd.Series) -> pd.Series:
-    date = localdate("Europe/Sofia")
-    return enrich_data(ds, "date", date)
+    def pipe_index(self, ds: pd.Series) -> pd.Series:
+        return ds.rename(
+            {
+                "Общ брой лица със завършен ваксинационен цикъл": "people_fully_vaccinated",
+                "Общо поставени дози": "total_vaccinations",
+                "Общ брой лица със завършен ваксинационен курс": "people_fully_vaccinated",
+            }
+        )
 
+    def pipe_location(self, ds: pd.Series) -> pd.Series:
+        return enrich_data(ds, "location", self.location)
 
-def translate_index(ds: pd.Series) -> pd.Series:
-    return ds.rename(
-        {
-            "Общ брой лица със завършен ваксинационен цикъл": "people_fully_vaccinated",
-            "Общо поставени дози": "total_vaccinations",
-        }
-    )
+    def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
+        return enrich_data(ds, "vaccine", "Johnson&Johnson, Oxford/AstraZeneca, Moderna, Pfizer/BioNTech")
 
+    def pipe_source(self, ds: pd.Series) -> pd.Series:
+        return enrich_data(ds, "source_url", "https://coronavirus.bg/bg/statistika")
 
-def enrich_location(ds: pd.Series) -> pd.Series:
-    return enrich_data(ds, "location", "Bulgaria")
+    def pipeline(self, ds: pd.Series) -> pd.Series:
+        return (
+            ds.pipe(self.pipe_index)
+            .pipe(self.pipe_date)
+            .pipe(self.pipe_location)
+            .pipe(self.pipe_vaccine)
+            .pipe(self.pipe_source)
+        )
 
-
-def enrich_vaccine(ds: pd.Series) -> pd.Series:
-    return enrich_data(ds, "vaccine", "Johnson&Johnson, Oxford/AstraZeneca, Moderna, Pfizer/BioNTech")
-
-
-def enrich_source(ds: pd.Series) -> pd.Series:
-    return enrich_data(ds, "source_url", "https://coronavirus.bg/bg/statistika")
-
-
-def pipeline(ds: pd.Series) -> pd.Series:
-    return ds.pipe(translate_index).pipe(enrich_date).pipe(enrich_location).pipe(enrich_vaccine).pipe(enrich_source)
+    def export(self, paths):
+        data = self.read().pipe(self.pipeline)
+        increment(
+            paths=paths,
+            location=data["location"],
+            total_vaccinations=int(data["total_vaccinations"]),
+            people_fully_vaccinated=int(data["people_fully_vaccinated"]),
+            date=data["date"],
+            source_url=data["source_url"],
+            vaccine=data["vaccine"],
+        )
 
 
 def main(paths):
-    source = "https://coronavirus.bg/bg/statistika"
-    data = read(source).pipe(pipeline)
-    increment(
-        paths=paths,
-        location=data["location"],
-        total_vaccinations=int(data["total_vaccinations"]),
-        people_fully_vaccinated=int(data["people_fully_vaccinated"]),
-        date=data["date"],
-        source_url=data["source_url"],
-        vaccine=data["vaccine"],
-    )
-
-
-if __name__ == "__main__":
-    main()
+    Bulgaria().export(paths)

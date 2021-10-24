@@ -13,8 +13,12 @@ class CaymanIslands:
     location: str = "Cayman Islands"
     source_url: str = "https://www.exploregov.ky/coronavirus-statistics"
     regex: dict = {
+        "total_vaccinations": (
+            r"To date, there have been ([\d,]+) C(?:OVID|ovid)-19 vaccinations given in total in the Cayman Islands\."
+        ),
         "people_vaccinated": r"([\d,]+) \(.*\) have had at least one dose of a COVID-19 vaccine",
-        "people_fully_vaccinated": r"([\d,]+) \(.*\) have completed the two-dose course",
+        "people_fully_vaccinated": r"([\d,]+) \(.*\) have completed the two(?:\s|\-)dose course",
+        "total_boosters": r"Additionally, ([\d,]+) \(.*\) have had a third or booster dose\.",
     }
 
     def read(self) -> pd.Series:
@@ -23,13 +27,11 @@ class CaymanIslands:
         return pd.Series(data=data)
 
     def _parse_data(self, soup: BeautifulSoup) -> pd.Series:
-        people_vaccinated = self._parse_metric(soup, "people_vaccinated")
-        people_fully_vaccinated = self._parse_metric(soup, "people_fully_vaccinated")
-        total_vaccinations = people_vaccinated + people_fully_vaccinated
         return {
-            "total_vaccinations": total_vaccinations,
-            "people_vaccinated": people_vaccinated,
-            "people_fully_vaccinated": people_fully_vaccinated,
+            "total_vaccinations": self._parse_metric(soup, "total_vaccinations"),
+            "people_vaccinated": self._parse_metric(soup, "people_vaccinated"),
+            "people_fully_vaccinated": self._parse_metric(soup, "people_fully_vaccinated"),
+            "total_boosters": self._parse_metric(soup, "total_boosters"),
         }
 
     def _parse_metric(self, soup, metric_name):
@@ -64,6 +66,7 @@ class CaymanIslands:
             total_vaccinations=data["total_vaccinations"],
             people_vaccinated=data["people_vaccinated"],
             people_fully_vaccinated=data["people_fully_vaccinated"],
+            total_boosters=data["total_boosters"],
             date=data["date"],
             source_url=data["source_url"],
             vaccine=data["vaccine"],

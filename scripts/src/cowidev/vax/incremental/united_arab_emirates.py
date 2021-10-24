@@ -44,17 +44,20 @@ class UnitedArabEmirates:
     def _parse_people_vaccinated(self, elem, population) -> pd.Series:
         regex = r"Percentage of population who received one dose \(of COVID-19 vaccine\)\s{1,2}([\d\.]+)%"
         share_vaccinated = self._parse_relative_metric(elem, "dose1pct", regex)
-        return round(share_vaccinated * population)
+        return round(share_vaccinated * population) if share_vaccinated else None
 
     def _parse_people_fully_vaccinated(self, elem, population) -> pd.Series:
         regex = r"Percentage of population fully vaccinated \(against COVID-19\)\s{1,2}([\d\.]+)%"
         share_fully_vaccinated = self._parse_relative_metric(elem, "fullyVaccintedpct", regex)
-        return round(share_fully_vaccinated * population)
+        return round(share_fully_vaccinated * population) if share_fully_vaccinated else None
 
     def _parse_relative_metric(self, elem, class_name: str, regex: str):
-        text = elem.find_element_by_class_name(class_name).text
-        metric = float(re.search(regex, text).group(1)) / 100
-        return metric
+        try:
+            text = elem.find_element_by_class_name(class_name).text
+            metric = float(re.search(regex, text).group(1)) / 100
+            return metric
+        except:
+            return None
 
     def _parse_date(self, driver) -> pd.Series:
         text_date = driver.find_element_by_class_name("full_data_set").text
@@ -82,9 +85,9 @@ class UnitedArabEmirates:
         increment(
             paths=paths,
             location=data["location"],
-            total_vaccinations=int(data["total_vaccinations"]),
-            people_vaccinated=int(data["people_vaccinated"]),
-            people_fully_vaccinated=int(data["people_fully_vaccinated"]),
+            total_vaccinations=data["total_vaccinations"],
+            people_vaccinated=data["people_vaccinated"],
+            people_fully_vaccinated=data["people_fully_vaccinated"],
             date=data["date"],
             source_url=data["source_url"],
             vaccine=data["vaccine"],

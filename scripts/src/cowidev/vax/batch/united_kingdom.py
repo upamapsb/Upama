@@ -24,10 +24,8 @@ class UnitedKingdom:
             "date": "date",
             "location": "areaName",
             "areaCode": "areaCode",
-            "people_vaccinated_report": "cumPeopleVaccinatedFirstDoseByPublishDate",
-            "people_vaccinated": "cumPeopleVaccinatedFirstDoseByVaccinationDate",
-            "people_fully_vaccinated_report": "cumPeopleVaccinatedCompleteByPublishDate",
-            "people_fully_vaccinated": "cumPeopleVaccinatedCompleteByVaccinationDate",
+            "people_vaccinated": "cumPeopleVaccinatedFirstDoseByPublishDate",
+            "people_fully_vaccinated": "cumPeopleVaccinatedSecondDoseByPublishDate",
             "total_vaccinations": "cumVaccinesGivenByPublishDate",
             "vaccinations_age": "vaccinationsAgeDemographics",
         }
@@ -42,7 +40,6 @@ class UnitedKingdom:
         return df.assign(**{metric: df[f"{metric}_report"].fillna(df[metric])})
 
     def pipe_fix_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
-        df = df.pipe(self._fix_metric, "people_vaccinated").pipe(self._fix_metric, "people_fully_vaccinated")
         cols = ["people_vaccinated", "people_fully_vaccinated", "total_vaccinations"]
         df = df.sort_values(["location", "date"])
         _tmp = df.groupby("location", as_index=False)[cols].fillna(method="ffill").fillna(0)

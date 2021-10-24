@@ -114,12 +114,9 @@ def main() -> None:
         "If this problem persists, check that the URL "
         f"is working ({DATA_URL})."
     )
-    df.loc[:, "Source URL"] = df["Source URL"].apply(
-        lambda x: SOURCE_URL if pd.isnull(x) else x
-    )
+    df.loc[:, "Source URL"] = df["Source URL"].apply(lambda x: SOURCE_URL if pd.isnull(x) else x)
     df.loc[:, "Country"] = COUNTRY
     df.loc[:, "Units"] = UNITS
-    df.loc[:, "Testing type"] = TESTING_TYPE
     df.loc[:, "Source label"] = SOURCE_LABEL
     df.loc[:, "Notes"] = ""
     sanity_checks(df)
@@ -127,7 +124,6 @@ def main() -> None:
         [
             "Country",
             "Units",
-            "Testing type",
             "Date",
             SERIES_TYPE,
             "Source URL",
@@ -157,11 +153,7 @@ def get_data() -> pd.DataFrame:
         },
         inplace=True,
     )
-    df["Date"] = (
-        df["Date"]
-        .apply(lambda s: datetime.datetime.strptime(s[:10], "%d/%m/%Y"))
-        .dt.strftime("%Y-%m-%d")
-    )
+    df["Date"] = df["Date"].apply(lambda s: datetime.datetime.strptime(s[:10], "%d/%m/%Y")).dt.strftime("%Y-%m-%d")
     # drops duplicate YYYY-MM-DD rows.
     # df[df['Date'].duplicated(keep=False)]  # prints out rows with duplicate YYYY-MM-DD value
     df.sort_values(["Date", SERIES_TYPE], inplace=True)
@@ -195,26 +187,19 @@ def sanity_checks(df: pd.DataFrame) -> None:
         datetime.datetime.utcnow() + datetime.timedelta(days=1)
     )
     # checks that there are no duplicate dates
-    assert (
-        df_temp["Date"].duplicated().sum() == 0
-    ), "One or more rows share the same date."
+    assert df_temp["Date"].duplicated().sum() == 0, "One or more rows share the same date."
     if "Cumulative total" not in df_temp.columns:
-        df_temp["Cumulative total"] = df_temp[
-            "Daily change in cumulative total"
-        ].cumsum()
+        df_temp["Cumulative total"] = df_temp["Daily change in cumulative total"].cumsum()
     # checks that the cumulative number of tests on date t is always greater than the figure for t-1:
     assert (
-        df_temp["Cumulative total"].iloc[1:]
-        >= df_temp["Cumulative total"].shift(1).iloc[1:]
+        df_temp["Cumulative total"].iloc[1:] >= df_temp["Cumulative total"].shift(1).iloc[1:]
     ).all(), "On one or more dates, `Cumulative total` is greater on date t-1."
     # df.iloc[1:][df['Cumulative total'].iloc[1:] < df['Cumulative total'].shift(1).iloc[1:]]
     # cross-checks a sample of scraped figures against the expected result.
     assert len(sample_official_data) > 0
     for dt, d in sample_official_data:
         val = df_temp.loc[df_temp["Date"] == dt, SERIES_TYPE].squeeze().sum()
-        assert (
-            val == d[SERIES_TYPE]
-        ), f"scraped value ({val:,d}) != official value ({d[SERIES_TYPE]:,d}) on {dt}"
+        assert val == d[SERIES_TYPE], f"scraped value ({val:,d}) != official value ({d[SERIES_TYPE]:,d}) on {dt}"
     return None
 
 

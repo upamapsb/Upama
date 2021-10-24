@@ -501,6 +501,17 @@ internal_files_columns = {
         ],
         "dropna": "any",
     },
+    "vaccinations-boosters": {
+        "columns": [
+            "location",
+            "date",
+            "total_vaccinations_no_boosters",
+            "total_vaccinations_no_boosters_per_hundred",
+            "total_boosters",
+            "total_boosters_per_hundred",
+        ],
+        "dropna": "any",
+    },
     "hospital-admissions": {
         "columns": [
             "location",
@@ -749,6 +760,24 @@ def create_internal(df):
     ] = pd.NA
 
     # Add partly vaccinated
+    df = df.pipe(add_partially_vaccinated)
+    # Add total vaccinations without boosters
+    df = df.pipe(add_total_vaccinations_no_boosters)
+
+    # Export
+    for name, config in internal_files_columns.items():
+        output_path = os.path.join(dir_path, f"megafile--{name}.json")
+        value_columns = list(set(config["columns"]) - set(non_value_columns))
+        df_output = df[config["columns"]]
+        if name == "vaccinations-boosters":
+            df_output = df_output.copy().pipe(fillna_boosters_till_valid)
+        df_output = df_output.dropna(subset=value_columns, how=config["dropna"])
+        df_output = annotator.add_annotations(df_output, name)
+        df_to_columnar_json(df_output, output_path)
+
+
+def add_partially_vaccinated(df):
+    # Countries that already have partially vaxxed metric
     df_a = df[df.location.isin(COUNTRIES_WITH_PARTLY_VAX_METRIC)]
     for filename in country_vax_data_partly:
         if not os.path.isfile(filename):
@@ -765,14 +794,33 @@ def create_internal(df):
     df.loc[df.location == "United States", "people_partly_vaccinated_per_hundred"] = (
         df["people_partly_vaccinated"] / 336324782 * 100
     )
+    return df
 
-    # Export
-    for name, config in internal_files_columns.items():
-        output_path = os.path.join(dir_path, f"megafile--{name}.json")
-        value_columns = list(set(config["columns"]) - set(non_value_columns))
-        df_output = df[config["columns"]].dropna(subset=value_columns, how=config["dropna"])
-        df_output = annotator.add_annotations(df_output, name)
-        df_to_columnar_json(df_output, output_path)
+
+def add_fully_vaccinated_no_boosters(df):
+    return df.assign(
+        people_fully_vaccinated_no_booster=df.people_fully_vaccinated - df.total_boosters.fillna(0),
+        people_fully_vaccinated_no_booster_per_hundred=(
+            df.people_fully_vaccinated_per_hundred - df.total_boosters_per_hundred.fillna(0)
+        ),
+    )
+
+
+def add_total_vaccinations_no_boosters(df):
+    return df.assign(
+        total_vaccinations_no_boosters=df.total_vaccinations - df.total_boosters.fillna(0),
+        total_vaccinations_no_boosters_per_hundred=(
+            df.total_vaccinations_per_hundred - df.total_boosters_per_hundred.fillna(0)
+        ),
+    )
+
+
+def fillna_boosters_till_valid(df):
+    # Fill NaNs in total_boosters (only up to first valid value)
+    df = df.sort_values(["location", "date"])
+    msk = df.groupby(["location"]).total_boosters.ffill().isna()
+    df.loc[msk, ["total_boosters", "total_boosters_per_hundred"]] = 0
+    return df
 
 
 def generate_megafile():
@@ -916,7 +964,7 @@ def generate_megafile():
     generate_readme()
 
     # Export timestamp
-    export_timestamp(timestamp_filename)
+    # export_timestamp(timestamp_filename)
 
     print("All done!")
 
@@ -943,7 +991,7 @@ EXCLUDE_LOCATIONS, EXCLUDE_ISOS = get_excluded_locations()
 
 def get_num_countries_by_iso(iso_code_colname, csv_filepath=None, df=None):
     if df is None:
-        df = pd.read_csv(csv_filepath)
+        df = pd.read_csv(csv_filepath, low_memory=False)
     codes = [code for code in df[iso_code_colname].dropna().unique() if code not in EXCLUDE_ISOS]
     return len(codes)
 
@@ -955,7 +1003,7 @@ def get_num_countries_by_location(csv_filepath, location_colname, low_memory=Tru
 
 
 def get_num_countries_jhu(csv_filepath):
-    df = pd.read_csv(csv_filepath)
+    df = pd.read_csv(csv_filepath, low_memory=False)
     columns = df.columns
     return len(columns[~columns.isin(EXCLUDE_LOCATIONS)]) - 1
 
@@ -1023,9 +1071,10 @@ def get_placeholder():
 
 def generate_readme():
     placeholders = get_placeholder()
-    with open(README_TMP, "r") as fr:
-        s = fr.read().format(**placeholders)
-        with open(README_FILE, "w") as fw:
+    with open(README_TMP, "r", encoding="utf-8") as fr:
+        s = fr.read()
+        s = s.format(**placeholders)
+        with open(README_FILE, "w", encoding="utf-8") as fw:
             fw.write(s)
 
 

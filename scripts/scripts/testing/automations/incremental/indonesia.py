@@ -29,7 +29,6 @@ def main():
                     "Date": date,
                     "Country": "Indonesia",
                     "Units": "people tested",
-                    "Testing type": "unclear",
                     "Source URL": url,
                     "Source label": "Emerging infections, Indonesian Ministry of Health",
                 }

@@ -7,7 +7,9 @@ import pandas as pd
 
 class Cuba:
     def __init__(self):
-        self.source_url = "https://raw.githubusercontent.com/covid19cubadata/covid19cubadata.github.io/master/data/covid19-cuba.json"
+        self.source_url = (
+            "https://raw.githubusercontent.com/covid19cubadata/covid19cubadata.github.io/master/data/covid19-cuba.json"
+        )
         self.source_url_ref = "https://covid19cubadata.github.io/#cuba"
         self.location = "Cuba"
 
@@ -24,9 +26,7 @@ class Cuba:
             if "tests_total" in elem:
                 records.append(
                     {
-                        "Date": datetime.strptime(elem["fecha"], "%Y/%m/%d").strftime(
-                            "%Y-%m-%d"
-                        ),
+                        "Date": datetime.strptime(elem["fecha"], "%Y/%m/%d").strftime("%Y-%m-%d"),
                         "Cumulative total": elem["tests_total"],
                     }
                 )
@@ -39,7 +39,6 @@ class Cuba:
                 "Source label": "Ministry of Public Health",
                 "Source URL": self.source_url_ref,
                 "Notes": "Made available on GitHub by covid19cubadata",
-                "Testing type": "PCR only",
                 "Units": "tests performed",
             }
         )

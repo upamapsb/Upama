@@ -174,8 +174,11 @@ class CountryChecker:
     def _check_metrics_inequalities(self, df: pd.DataFrame):
         if ("total_vaccinations" in df.columns) and ("people_vaccinated" in df.columns):
             df_ = df[["people_vaccinated", "total_vaccinations"]].dropna().copy()
-            if (df_["total_vaccinations"] < df_["people_vaccinated"]).any():
-                raise ValueError(f"{self.location} -- total_vaccinations can't be < people_vaccinated!")
+            msk = df_["total_vaccinations"] < df_["people_vaccinated"]
+            if (msk).any():
+                raise ValueError(
+                    f"{self.location} -- total_vaccinations can't be < people_vaccinated!\n{df.loc[msk[msk].index]}"
+                )
         if ("total_vaccinations" in df.columns) and ("people_fully_vaccinated" in df.columns):
             df_ = df[["people_fully_vaccinated", "total_vaccinations"]].dropna().copy()
             if (df_["total_vaccinations"] < df_["people_fully_vaccinated"]).any():
@@ -228,3 +231,12 @@ class CountryChecker:
         self.check_location()
         # Metrics checks
         self.check_metrics()
+
+
+def validate_vaccines(df, vaccines_accepted, vaccines_raw=None):
+    if vaccines_raw != None:
+        vaccines_wrong = set(vaccines_raw).difference(vaccines_accepted)
+    else:
+        vaccines_wrong = set(df["vaccine"].unique()).difference(vaccines_accepted)
+    if vaccines_wrong:
+        raise ValueError(f"Missing vaccines: {vaccines_wrong}")

@@ -38,12 +38,9 @@ hardcoded_data = [
 
 def main() -> None:
     df = get_data()
-    df["Source URL"] = df["Source URL"].apply(
-        lambda x: SOURCE_URL if pd.isnull(x) else x
-    )
+    df["Source URL"] = df["Source URL"].apply(lambda x: SOURCE_URL if pd.isnull(x) else x)
     df["Country"] = COUNTRY
     df["Units"] = UNITS
-    df["Testing type"] = TESTING_TYPE
     df["Source label"] = SOURCE_LABEL
     df["Notes"] = ""
     sanity_checks(df)
@@ -51,7 +48,6 @@ def main() -> None:
         [
             "Country",
             "Units",
-            "Testing type",
             "Date",
             SERIES_TYPE,
             "Source URL",
@@ -67,11 +63,7 @@ def get_data() -> pd.DataFrame:
     res = requests.get(DATA_URL, params=PARAMS)
     json_data = json.loads(res.text)
     df = pd.DataFrame([d["attributes"] for d in json_data["features"]])
-    df[DATE_COL] = (
-        df[DATE_COL]
-        .astype(int)
-        .apply(lambda dt: datetime.datetime.utcfromtimestamp(dt / 1000))
-    )
+    df[DATE_COL] = df[DATE_COL].astype(int).apply(lambda dt: datetime.datetime.utcfromtimestamp(dt / 1000))
     df["Date"] = df[DATE_COL].dt.strftime("%Y-%m-%d")
     # drops duplicate YYYY-MM-DD rows.
     # df[df[DATE_COL].dt.strftime('%Y-%m-%d').duplicated(keep=False)]  # prints out rows with duplicate YYYY-MM-DD value
@@ -109,17 +101,12 @@ def sanity_checks(df: pd.DataFrame) -> None:
         datetime.datetime.utcnow() + datetime.timedelta(days=1)
     )
     # checks that there are no duplicate dates
-    assert (
-        df_temp["Date"].duplicated().sum() == 0
-    ), "One or more rows share the same date."
+    assert df_temp["Date"].duplicated().sum() == 0, "One or more rows share the same date."
     if "Cumulative total" not in df_temp.columns:
-        df_temp["Cumulative total"] = df_temp[
-            "Daily change in cumulative total"
-        ].cumsum()
+        df_temp["Cumulative total"] = df_temp["Daily change in cumulative total"].cumsum()
     # checks that the cumulative number of tests on date t is always greater than the figure for t-1:
     assert (
-        df_temp["Cumulative total"].iloc[1:]
-        >= df_temp["Cumulative total"].shift(1).iloc[1:]
+        df_temp["Cumulative total"].iloc[1:] >= df_temp["Cumulative total"].shift(1).iloc[1:]
     ).all(), "On one or more dates, `Cumulative total` is greater on date t-1."
     # df.iloc[1:][df['Cumulative total'].iloc[1:] < df['Cumulative total'].shift(1).iloc[1:]]
     return None

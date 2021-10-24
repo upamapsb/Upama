@@ -77,6 +77,10 @@ parse_country <- function(sheet_name) {
         )
     }
 
+    if ("Testing type" %in% names(collated)) {
+        stop(sprintf("The `Testing type` column is deprecated. Remove it from the %s data.", sheet_name))
+    }
+    
     stopifnot(length(table(collated$Units)) == 1)
     stopifnot(collated$Units[1] %in% c("people tested", "samples tested", "tests performed", "units unclear"))
 

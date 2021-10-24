@@ -12,6 +12,7 @@ class Malaysia:
             "date": "date",
             "cumul_full": "people_fully_vaccinated",
             "cumul": "total_vaccinations",
+            "cumul_booster": "total_boosters",
         }
         # From https://github.com/CITF-Malaysia/citf-public/tree/main/vaccination
         self._columns_default = [
@@ -27,6 +28,8 @@ class Malaysia:
             "cumul_partial_child",
             "daily_full_child",
             "daily_partial_child",
+            "cumul_booster",
+            "daily_booster",
         ]
         self._vax_2d = {
             "pfizer",
@@ -97,22 +100,12 @@ class Malaysia:
                 "people_vaccinated",
                 "people_fully_vaccinated",
                 "total_vaccinations",
+                "total_boosters",
                 "vaccine",
                 "location",
                 "source_url",
             ]
         ]
-        # return df[
-        #     [
-        #         "location",
-        #         "date",
-        #         "vaccine",
-        #         "source_url",
-        #         "total_vaccinations",
-        #         "people_vaccinated",
-        #         "people_fully_vaccinated",
-        #     ]
-        # ]
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return (

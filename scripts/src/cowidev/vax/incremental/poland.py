@@ -9,17 +9,18 @@ from cowidev.vax.utils.files import load_query
 
 
 class Poland:
-    def __init__(
-        self,
-        source_url: str,
-        source_url_ref: str,
-        location: str,
-        columns_rename: dict = None,
-    ):
-        self.source_url = source_url
-        self.source_url_ref = source_url_ref
-        self.location = location
-        self.columns_rename = columns_rename
+    location: str = "Poland"
+    source_url: str = (
+        "https://services-eu1.arcgis.com/zk7YlClTgerl62BY/ArcGIS/rest/services/widok_global_szczepienia_actual/"
+        "FeatureServer/0/query"
+    )
+    source_url_ref: str = "https://www.gov.pl/web/szczepimysie/raport-szczepien-przeciwko-covid-19"
+    columns_rename: dict = {
+        "SZCZEPIENIA_SUMA": "total_vaccinations",
+        "DAWKA_1_SUMA": "people_vaccinated",
+        "zaszczepieni_finalnie": "people_fully_vaccinated",
+        "Data": "date",
+    }
 
     def read(self) -> pd.Series:
         params = load_query("poland-all", to_str=False)
@@ -55,7 +56,7 @@ class Poland:
             .pipe(self.pipe_source)
         )
 
-    def to_csv(self, paths):
+    def export(self, paths):
         """Generalized."""
         data = self.read().pipe(self.pipeline)
         increment(
@@ -71,20 +72,7 @@ class Poland:
 
 
 def main(paths):
-    Poland(
-        source_url=(
-            "https://services-eu1.arcgis.com/zk7YlClTgerl62BY/ArcGIS/rest/services/global_szczepienia_actual_widok3/"
-            "FeatureServer/0/query"
-        ),
-        source_url_ref="https://www.gov.pl/web/szczepimysie/raport-szczepien-przeciwko-covid-19",
-        location="Poland",
-        columns_rename={
-            "SZCZEPIENIA_SUMA": "total_vaccinations",
-            "DAWKA_1_SUMA": "people_vaccinated",
-            "zaszczepieni_finalnie": "people_fully_vaccinated",
-            "Data": "date",
-        },
-    ).to_csv(paths)
+    Poland().export(paths)
 
 
 if __name__ == "__main__":

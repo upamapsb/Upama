@@ -97,7 +97,7 @@ def main_get_data(
     t_min_1 = round(t_sec_1 / 60, 2)
     # Retry failed modules
     modules_failed = [m["module_name"] for m in modules_execution_results if m["success"] is False]
-    logger.info(f"\n---\n\nRETRIALS ({len(modules_failed)})")
+    logger.info(f"\n---\n\nRETRIES ({len(modules_failed)})")
     modules_execution_results = []
     for module_name in modules_failed:
         modules_execution_results.append(country_data_getter.run(module_name))

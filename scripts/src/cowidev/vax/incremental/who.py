@@ -121,7 +121,7 @@ class WHO:
                     source_url=self.source_url_ref,
                 )
                 country = row["COUNTRY"]
-                logger.info(f"\tvax.incremental.who.{country}: SUCCESS ✅")
+                logger.info(f"\tcowidev.vax.incremental.who.{country}: SUCCESS ✅")
 
     def pipeline(self, df: pd.DataFrame):
         return (

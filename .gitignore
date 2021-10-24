@@ -36,3 +36,15 @@ testing_dataset_config.json
 .tox
 reports
 vax_dataset_config.json
+scripts/vax_dataset_config.json
+
+# Lucas tmp
+scripts/scripts/testing/notebooks
+scripts/scripts/testing/automated_sheets_new
+scripts/scripts/*.ipynb
+scripts/notebooks/Untitled*.ipynb
+scripts/notebooks/readme.ipynb
+
+# Misc (Cam)
+misc/
+scripts/build

@@ -12,7 +12,6 @@ df[, Country := "Italy"]
 df[, `Source URL` := "https://github.com/pcm-dpc/COVID-19/tree/master/dati-andamento-nazionale"]
 df[, `Source label` := "Presidency of the Council of Ministers"]
 df[, Notes := "Made available by the Department of Civil Protection on GitHub"]
-df[, `Testing type` := "PCR only"]
 
 samples <- copy(df)
 samples[, Units := "tests performed"]

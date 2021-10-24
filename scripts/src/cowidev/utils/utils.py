@@ -46,3 +46,8 @@ def xlsx2csv(filename_xlsx: str, filename_csv: str):
             Xlsx2csv(tmp.name, outputencoding="utf-8").convert(filename_csv)
     else:
         Xlsx2csv(filename_xlsx, outputencoding="utf-8").convert(filename_csv)
+
+
+def pd_series_diff_values(a, b):
+    common = set(a) & set(b)
+    return {*set(a[-a.isin(common)]), *set(b[-b.isin(common)])}

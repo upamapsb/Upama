@@ -32,16 +32,12 @@ class Philippines:
             )
             # Metrics
             total_vaccinations = clean_count(spans[8].text)
-            people_partly_vaccinated = clean_count(spans[13].text)
-            people_fully_vaccinated = clean_count(spans[14].text)
-        # Sanity check
-        if abs(total_vaccinations - people_partly_vaccinated - people_fully_vaccinated) > 100:
+            people_fully_vaccinated = clean_count(spans[15].text)
+        if total_vaccinations < people_fully_vaccinated:
             raise ValueError(
-                f"total_vaccinations should equal sum of first and second doses. {total_vaccinations} !="
-                f" {people_fully_vaccinated} + {people_partly_vaccinated}. Note: We actually allow for +100"
-                " difference."
+                "Check values for:\n"
+                f"total_vaccinations\t\t{total_vaccinations}\npeople_fully_vaccinated\t\t{people_fully_vaccinated}"
             )
-
         return {
             "total_vaccinations": total_vaccinations,
             # "people_vaccinated": people_vaccinated,

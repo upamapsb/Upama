@@ -35,9 +35,7 @@ def get_date(soup):
         "novembre": 11,
         "desembre": 12,
     }
-    date_str = soup.find(
-        class_="text-primary tracking-normal text-lg font-bold mb-0"
-    ).text.lower()
+    date_str = soup.find(class_="text-primary tracking-normal text-lg font-bold mb-0").text.lower()
     match = re.search(r"actualització (\d+) d(e |')([a-z]+)", date_str)
     # Get day and month from website
     day = int(match.group(1))
@@ -61,10 +59,7 @@ def get_count(soup):
         int: Count of tests (PCR + TMA)
     """
     tag_id = "capacidtat"  # CHECK ON THIS! It is a typo on their side, correct spelling should be "capacitat"
-    values = [
-        elem.find("span")
-        for elem in soup.find(id=tag_id).find_all("div", class_="text-primary")
-    ]
+    values = [elem.find("span") for elem in soup.find(id=tag_id).find_all("div", class_="text-primary")]
     values = [int(x.text.replace(".", "")) for x in values]
     titles = [x.text.strip() for x in soup.find(id=tag_id).findAll("h3")]
 
@@ -108,7 +103,6 @@ def main():
                     "Date": date,
                     "Country": COUNTRY,
                     "Units": "people tested",
-                    "Testing type": "PCR, TMA",
                     "Source URL": URL,
                     "Source label": SOURCE_LABEL,
                 }

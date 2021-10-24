@@ -33,7 +33,7 @@ def main():
     )
     df = df.fillna(0).sort_values("Date")
 
-    # In February 2021, the governemnt started using PCR to confirm all antigen tests.
+    # In February 2021, the government started using PCR to confirm all antigen tests.
     # For all intents and purposes Slovenia's case definition is therefore now PCR only,
     # even if some people (and we don't know how many) are getting screened and found via antigen
     # before they are confirmed with PCR. It makes sense to stick to PCR only for the
@@ -42,8 +42,7 @@ def main():
     df["cases"] = df.positive_pcr
 
     df["Positive rate"] = (
-        df["cases"].rolling(7).sum()
-        / df["Daily change in cumulative total"].rolling(7).sum()
+        df["cases"].rolling(7).sum() / df["Daily change in cumulative total"].rolling(7).sum()
     ).round(3)
 
     df = df[["Date", "Daily change in cumulative total", "Positive rate"]]

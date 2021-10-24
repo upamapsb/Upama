@@ -33,7 +33,6 @@ class SouthAfrica:
             "Cumulative total": 42,
             "Source label": self.source_label,
             "Source URL": "https://www.nicd.ac.za/novel-coronavirus-update",
-            "Testing type": "PCR only",
             "Notes": pd.NA,
         }
         return df.append(datapoint, ignore_index=True).sort_values("Date")

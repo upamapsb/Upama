@@ -38,6 +38,5 @@ df[, Units := "tests performed"]
 df[, `Source URL` := url]
 df[, `Source label` := "Department of Health"]
 df[, Notes := NA_character_]
-df[, `Testing type` := "unclear"]
 
 fwrite(df, "automated_sheets/Hong Kong.csv")

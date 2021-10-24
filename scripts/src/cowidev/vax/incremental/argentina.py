@@ -33,7 +33,7 @@ class Argentina:
         )
 
     def pipe_vaccine_checks(self, df: pd.DataFrame) -> pd.DataFrame:
-        vaccines_known = {*set(self.vaccine_mapping), "Vacuna COVID Estudios Clínicos"}
+        vaccines_known = {*set(self.vaccine_mapping)}  # , "Vacuna COVID Estudios Clínicos"}
         vaccines_unknown = set(df.vacuna_nombre).difference(vaccines_known)
         if vaccines_unknown:
             raise ValueError(f"Unknown vaccine name(s): {vaccines_unknown}")
@@ -52,7 +52,8 @@ class Argentina:
                 f"`segunda_dosis_cantidad` field for one dose vaccines ({self.one_dose_vaccine}) must be 0!"
             )
         vaccines = set(df.vacuna_nombre.replace(self.vaccine_mapping))
-        vaccines.remove("Vacuna COVID Estudios Clínicos")
+        # vaccines.remove("Vacuna COVID Estudios Clínicos")
+        print(vaccines)
         vaccines = ", ".join(sorted(vaccines))
         return pd.Series(
             {

@@ -41,7 +41,6 @@ df[, Units := "tests performed"]
 df[, `Source URL` := "https://www.covid.is/data"]
 df[, `Source label` := "Government of Iceland"]
 df[, Notes := NA_character_]
-df[, `Testing type` := "PCR only"]
 df[, c("Diagnostic test", "deCODE Genetics screening", "Border screening 1 and 2", "Quarantine- and random screening") := NULL]
 
 old <- fread("input/Iceland_old.csv")

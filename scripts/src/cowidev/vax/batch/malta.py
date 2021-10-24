@@ -1,6 +1,7 @@
 import pandas as pd
 
 from cowidev.utils.clean import clean_date_series
+from cowidev.vax.utils.utils import make_monotonic
 
 
 class Malta:
@@ -60,9 +61,11 @@ class Malta:
         )
 
     def pipe_exclude_data_points(self, df: pd.DataFrame) -> pd.DataFrame:
-        # The data contains an error that creates a negative change in the people_vaccinated series
-        df = df[df.date.astype(str) != "2021-01-24"]
-        return df
+        return df[
+            (df.people_vaccinated >= df.people_fully_vaccinated)
+            | (df.people_vaccinated.isna())
+            | (df.people_fully_vaccinated.isna())
+        ]
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
@@ -73,6 +76,7 @@ class Malta:
             .pipe(self.pipe_metadata)
             .pipe(self.pipe_vaccine)
             .pipe(self.pipe_exclude_data_points)
+            .pipe(make_monotonic)
         )
 
     def export(self, paths):

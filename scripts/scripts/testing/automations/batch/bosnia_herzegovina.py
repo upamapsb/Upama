@@ -60,8 +60,7 @@ class BosniaHerzegovina:
             df.loc[:, "Cumulative total"].astype(str).str.replace(r"\s|\*", "", regex=True).astype(int)
         )
         df = df.pipe(self._remove_typo)
-        if not (df.Date.value_counts() == 1).all():
-            raise ValueError("Some dates have more than one entry!")
+        df = df.drop_duplicates(subset="Date", keep=False)
         return df
 
     def _remove_typo(self, df: pd.DataFrame) -> pd.DataFrame:
