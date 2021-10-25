@@ -39,7 +39,7 @@ class Peru:
         if unknown_vaccines:
             raise ValueError("Found unknown vaccines: {}".format(unknown_vaccines))
         # Check dose number
-        dose_num_wrong = {1, 2}.difference(df.dosis.unique())
+        dose_num_wrong = set(df.dosis).difference({1, 2, 3})
         if dose_num_wrong:
             raise ValueError(f"Invalid dose number. Check field `dosis`: {dose_num_wrong}")
         return df
@@ -53,7 +53,7 @@ class Peru:
             .groupby(["date", "dosis"], as_index=False)
             .sum()
             .pivot(index="date", columns="dosis", values="n_reg")
-            .rename(columns={1: "people_vaccinated", 2: "people_fully_vaccinated"})
+            .rename(columns={1: "people_vaccinated", 2: "people_fully_vaccinated", 3: "total_boosters"})
             .fillna(0)
             .sort_values("date")
             .cumsum()
@@ -61,7 +61,7 @@ class Peru:
         )
 
     def pipe_total_vaccinations(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(total_vaccinations=df.people_vaccinated + df.people_fully_vaccinated)
+        return df.assign(total_vaccinations=df.people_vaccinated + df.people_fully_vaccinated + df.total_boosters)
 
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(
