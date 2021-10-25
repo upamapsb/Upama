@@ -15,6 +15,8 @@ import yaml
 import numpy as np
 import pandas as pd
 
+from cowidev.utils.s3 import upload_to_s3
+
 
 CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
 INPUT_DIR = os.path.abspath(os.path.join(CURRENT_DIR, "..", "input"))
@@ -938,21 +940,28 @@ def generate_megafile():
     create_latest(all_covid)
 
     print("Writing to CSV…")
-
-    all_covid.to_csv(os.path.join(DATA_DIR, "owid-covid-data.csv"), index=False)
+    filename = os.path.join(DATA_DIR, "owid-covid-data.csv")
+    all_covid.to_csv(filename, index=False)
+    print("\tUploading to S3…")
+    upload_to_s3(filename, "public/owid-covid-data.csv", public=True)
 
     print("Writing to XLSX…")
+    filename = os.path.join(DATA_DIR, "owid-covid-data.xlsx")
     all_covid.to_excel(os.path.join(DATA_DIR, "owid-covid-data.xlsx"), index=False, engine="xlsxwriter")
+    print("\tUploading to S3…")
+    upload_to_s3(filename, "public/owid-covid-data.xlsx", public=True)
 
     print("Writing to JSON…")
+    filename = os.path.join(DATA_DIR, "owid-covid-data.json")
     df_to_json(
         all_covid,
         os.path.join(DATA_DIR, "owid-covid-data.json"),
         macro_variables.keys(),
     )
+    print("\tUploading to S3…")
+    upload_to_s3(filename, "public/owid-covid-data.json", public=True)
 
     print("Creating internal files…")
-
     create_internal(all_covid)
 
     # Store the last updated time
