@@ -19,6 +19,8 @@ class Poland:
         "SZCZEPIENIA_SUMA": "total_vaccinations",
         "DAWKA_1_SUMA": "people_vaccinated",
         "zaszczepieni_finalnie": "people_fully_vaccinated",
+        "dawka_3_suma": "dose_3",
+        "dawka_przypominajaca": "total_boosters",
         "Data": "date",
     }
 
@@ -47,6 +49,10 @@ class Poland:
     def pipe_source(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "source_url", self.source_url_ref)
 
+    def pipe_boosters(self, ds: pd.Series) -> pd.Series:
+        ds = enrich_data(ds, "total_boosters", ds[["dose_3", "total_boosters"]].sum())
+        return ds.drop(index=["dose_3"])
+
     def pipeline(self, ds: pd.Series) -> pd.Series:
         return (
             ds.pipe(self.pipe_rename_columns)
@@ -54,6 +60,7 @@ class Poland:
             .pipe(self.pipe_location)
             .pipe(self.pipe_vaccine)
             .pipe(self.pipe_source)
+            .pipe(self.pipe_boosters)
         )
 
     def export(self, paths):
@@ -65,6 +72,7 @@ class Poland:
             total_vaccinations=data["total_vaccinations"],
             people_vaccinated=data["people_vaccinated"],
             people_fully_vaccinated=data["people_fully_vaccinated"],
+            total_boosters=data["total_boosters"],
             date=data["date"],
             source_url=data["source_url"],
             vaccine=data["vaccine"],
