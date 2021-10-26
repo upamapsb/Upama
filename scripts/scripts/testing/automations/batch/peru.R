@@ -1,4 +1,4 @@
-url <- "https://datos.ins.gob.pe/dataset/a219dc7b-bd79-4ba8-b4ce-65120ea3d461/resource/351a1ffd-09fc-4c0b-a9f3-0f70374fcd69/download/pm12octubre2021.zip"
+url <- "https://datos.ins.gob.pe/dataset/a219dc7b-bd79-4ba8-b4ce-65120ea3d461/resource/c68e31c2-6e18-4e00-b153-b302d029320d/download/pm25octubre2021.zip"
 
 process_file <- function(url) {
     filename <- str_extract(url, "[^/]+\\.zip$")
