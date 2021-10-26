@@ -85,13 +85,16 @@ def breakdown_per_vaccine(df: pd.DataFrame) -> pd.DataFrame:
 
 def aggregate_by_date_vaccine(df: pd.DataFrame) -> pd.DataFrame:
     return (
-        df.groupby(by=["datum", "vakcina"])[["prvnich_davek", "druhych_davek"]]
+        df.assign(boosters=df["celkem_davek"] - df["prvnich_davek"] - df["druhych_davek"])
+        .groupby(by=["datum", "vakcina"])[["prvnich_davek", "druhych_davek", "boosters", "celkem_davek"]]
         .sum()
         .reset_index()
         .rename(
             {
                 "prvnich_davek": 1,
                 "druhych_davek": 2,
+                "boosters": "total_boosters",
+                "celkem_davek": "total_vaccinations",
             },
             axis=1,
         )
@@ -103,12 +106,6 @@ def infer_one_dose_vaccines(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def infer_total_vaccinations(df: pd.DataFrame) -> pd.DataFrame:
-    df.loc[df.vakcina.isin(one_dose_vaccines), "total_vaccinations"] = df[1].fillna(0)
-    df.loc[-df.vakcina.isin(one_dose_vaccines), "total_vaccinations"] = df[1].fillna(0) + df[2].fillna(0)
-    return df
-
-
 def aggregate_by_date(df: pd.DataFrame) -> pd.DataFrame:
     return (
         df.groupby(by="datum")
@@ -117,6 +114,7 @@ def aggregate_by_date(df: pd.DataFrame) -> pd.DataFrame:
             people_vaccinated=(1, "sum"),  # 1 means 1st dose
             people_fully_vaccinated=(2, "sum"),
             total_vaccinations=("total_vaccinations", "sum"),
+            total_boosters=("total_boosters", "sum"),
         )
         .reset_index()
     )
@@ -138,6 +136,7 @@ def enrich_cumulated_sums(df: pd.DataFrame) -> pd.DataFrame:
                 "total_vaccinations",
                 "people_vaccinated",
                 "people_fully_vaccinated",
+                "total_boosters",
             ]
         }
     )
@@ -147,7 +146,6 @@ def global_pipeline(df: pd.DataFrame) -> pd.DataFrame:
     return (
         df.pipe(aggregate_by_date_vaccine)
         .pipe(infer_one_dose_vaccines)
-        .pipe(infer_total_vaccinations)
         .pipe(aggregate_by_date)
         .pipe(translate_columns)
         .pipe(format_date)
