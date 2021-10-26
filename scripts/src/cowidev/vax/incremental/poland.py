@@ -50,7 +50,7 @@ class Poland:
         return enrich_data(ds, "source_url", self.source_url_ref)
 
     def pipe_boosters(self, ds: pd.Series) -> pd.Series:
-        ds = enrich_data(ds, "total_boosters", ds[["dose_3", "total_boosters"]].sum())
+        ds["total_boosters"] = ds[["dose_3", "total_boosters"]].sum()
         return ds.drop(index=["dose_3"])
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
@@ -66,6 +66,7 @@ class Poland:
     def export(self, paths):
         """Generalized."""
         data = self.read().pipe(self.pipeline)
+        print(data["total_boosters"])
         increment(
             paths=paths,
             location=data["location"],
