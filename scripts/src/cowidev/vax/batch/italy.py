@@ -90,7 +90,9 @@ class Italy:
     def get_people_fully_vaccinated(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(
             people_fully_vaccinated=lambda x: x.apply(
-                lambda row: row["prima_dose"] if row["vaccine"] in self.one_dose_vaccines else row["seconda_dose"],
+                lambda row: row["prima_dose"] + row["pregressa_infezione"]
+                if row["vaccine"] in self.one_dose_vaccines
+                else row["seconda_dose"],
                 axis=1,
             )
         )
