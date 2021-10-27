@@ -27,6 +27,7 @@ class UnitedKingdom:
             "people_vaccinated": "cumPeopleVaccinatedFirstDoseByPublishDate",
             "people_fully_vaccinated": "cumPeopleVaccinatedSecondDoseByPublishDate",
             "total_vaccinations": "cumVaccinesGivenByPublishDate",
+            "total_boosters": "cumPeopleVaccinatedThirdInjectionByPublishDate",
             "vaccinations_age": "vaccinationsAgeDemographics",
         }
         api = Cov19API(
@@ -40,11 +41,11 @@ class UnitedKingdom:
         return df.assign(**{metric: df[f"{metric}_report"].fillna(df[metric])})
 
     def pipe_fix_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
-        cols = ["people_vaccinated", "people_fully_vaccinated", "total_vaccinations"]
+        cols = ["people_vaccinated", "people_fully_vaccinated", "total_vaccinations", "total_boosters"]
         df = df.sort_values(["location", "date"])
         _tmp = df.groupby("location", as_index=False)[cols].fillna(method="ffill").fillna(0)
         df.loc[_tmp.index, cols] = _tmp
-        df = df.assign(total_vaccinations=df[["total_vaccinations", "people_vaccinated"]].max(axis=1))
+        df = df.assign(total_vaccinations=df[["total_vaccinations", "people_vaccinated", "total_boosters"]].max(axis=1))
         return df
 
     def pipe_aggregate_first_date(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -55,6 +56,7 @@ class UnitedKingdom:
                     "total_vaccinations",
                     "people_vaccinated",
                     "people_fully_vaccinated",
+                    "total_boosters",
                 ],
                 as_index=False,
                 dropna=False,
@@ -88,6 +90,7 @@ class UnitedKingdom:
                 "total_vaccinations",
                 "people_vaccinated",
                 "people_fully_vaccinated",
+                "total_boosters",
             ]
         ]
 
