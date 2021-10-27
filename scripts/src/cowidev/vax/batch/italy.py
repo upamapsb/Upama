@@ -62,9 +62,6 @@ class Italy:
     def translate_vaccine_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.replace({"vaccine": self.vaccine_mapping})
 
-    def pipeline_base(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self._check_vaccines).pipe(self.rename_columns).pipe(self.translate_vaccine_columns)
-
     def get_total_vaccinations(self, df: pd.DataFrame) -> pd.DataFrame:
         # The EMA differentiates between additional doses (aggiuntiva) for immunocompromised people
         # who need it to complete the vaccination cycle (given after 4 weeks), and booster doses for
@@ -77,6 +74,14 @@ class Italy:
             + df.dose_aggiuntiva
             + df.dose_booster,
             total_boosters=df.dose_aggiuntiva + df.dose_booster,
+        )
+
+    def pipeline_base(self, df: pd.DataFrame) -> pd.DataFrame:
+        return (
+            df.pipe(self._check_vaccines)
+            .pipe(self.rename_columns)
+            .pipe(self.translate_vaccine_columns)
+            .pipe(self.get_total_vaccinations)
         )
 
     def get_people_vaccinated(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -129,8 +134,7 @@ class Italy:
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
-            df.pipe(self.get_total_vaccinations)
-            .pipe(self.get_people_vaccinated)
+            df.pipe(self.get_people_vaccinated)
             .pipe(self.get_people_fully_vaccinated)
             .pipe(self.get_final_numbers)
             .pipe(self.enrich_location)
@@ -157,7 +161,7 @@ class Italy:
 
         vaccine_data.pipe(self.pipeline).to_csv(paths.tmp_vax_out(self.location), index=False)
 
-        df_man = vaccine_data.pipe(self.pipeline).pipe(self.pipeline_manufacturer)
+        df_man = vaccine_data.pipe(self.pipeline_manufacturer)
         df_man.to_csv(paths.tmp_vax_out_man(self.location), index=False)
         export_metadata(
             df_man,
