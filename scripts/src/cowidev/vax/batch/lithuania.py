@@ -108,7 +108,7 @@ class Lithuania:
             pd.merge(coverage, doses, how="inner", on="date")
             .pipe(self.pipe_add_vaccines)
             .pipe(self.pipe_metadata)
-            .pipe(make_monotonic)
+            .pipe(make_monotonic, max_removed_rows=20)
         )
         df.to_csv(paths.tmp_vax_out(self.location), index=False)
 
