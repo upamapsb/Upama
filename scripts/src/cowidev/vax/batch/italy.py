@@ -118,10 +118,7 @@ class Italy:
             key=lambda x: x[0],
             reverse=True,
         )
-        return [
-            (date2vax[i][0], ", ".join(sorted([v[1] for v in date2vax[i:]], reverse=True)))
-            for i in range(len(date2vax))
-        ]
+        return [(date2vax[i][0], ", ".join(sorted([v[1] for v in date2vax[i:]]))) for i in range(len(date2vax))]
 
     def enrich_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
         def _enrich_vaccine(date: str) -> str:
