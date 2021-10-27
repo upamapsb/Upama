@@ -15,7 +15,7 @@ COLUMNS = [
     "seconda_dose",
     "pregressa_infezione",
     "dose_aggiuntiva",
-    "dose_booster"
+    "dose_booster",
 ]
 COLUMNS_RENAME = {
     "data_somministrazione": "date",
@@ -63,11 +63,7 @@ class Italy:
         return df.replace({"vaccine": self.vaccine_mapping})
 
     def pipeline_base(self, df: pd.DataFrame) -> pd.DataFrame:
-        return (
-            df.pipe(self._check_vaccines)
-            .pipe(self.rename_columns)
-            .pipe(self.translate_vaccine_columns)
-        )
+        return df.pipe(self._check_vaccines).pipe(self.rename_columns).pipe(self.translate_vaccine_columns)
 
     def get_total_vaccinations(self, df: pd.DataFrame) -> pd.DataFrame:
         # The EMA differentiates between additional doses (aggiuntiva) for immunocompromised people
@@ -89,9 +85,7 @@ class Italy:
     def get_people_fully_vaccinated(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(
             people_fully_vaccinated=lambda x: x.apply(
-                lambda row: row["prima_dose"] + row["pregressa_infezione"]
-                if row["vaccine"] in self.one_dose_vaccines
-                else row["seconda_dose"],
+                lambda row: row["prima_dose"] if row["vaccine"] in self.one_dose_vaccines else row["seconda_dose"],
                 axis=1,
             )
         )
