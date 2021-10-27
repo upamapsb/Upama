@@ -79,6 +79,23 @@ class Romania:
         df.loc[df.date >= "2021-09-28", "people_vaccinated"] = pd.NA
         return df
 
+    def pipe_add_latest_who(self, df: pd.DataFrame) -> pd.DataFrame:
+        who = pd.read_csv(
+            "https://covid19.who.int/who-data/vaccination-data.csv",
+            usecols=["COUNTRY", "DATA_SOURCE", "DATE_UPDATED", "PERSONS_VACCINATED_1PLUS_DOSE"],
+        )
+
+        who = who[(who.COUNTRY == "Romania") & (who.DATA_SOURCE == "REPORTING")]
+        if len(who) == 0:
+            return df
+
+        last_who_report_date = who.DATE_UPDATED.values[0]
+        df.loc[df.date == last_who_report_date, "total_vaccinations"] = pd.NA
+        df.loc[df.date == last_who_report_date, "people_vaccinated"] = who.PERSONS_VACCINATED_1PLUS_DOSE.values[0]
+        df.loc[df.date == last_who_report_date, "people_fully_vaccinated"] = pd.NA
+        df.loc[df.date == last_who_report_date, "source_url"] = "https://covid19.who.int/"
+        return df
+
     def _vaccine_start_dates(self, df: pd.DataFrame):
         date2vax = sorted(
             ((df.loc[df[vaccine] > 0, "date"].min(), vaccine) for vaccine in self.vaccine_mapping.values()),
@@ -112,13 +129,13 @@ class Romania:
         ]
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Could be generalized."""
         return (
             df.pipe(self.pipe_source)
             .pipe(self.pipe_people_fully_vaccinated)
             .pipe(self.pipe_people_vaccinated)
             .pipe(self.pipe_vaccine)
             .pipe(self.pipe_select_output_columns)
+            .pipe(self.pipe_add_latest_who)
             .pipe(make_monotonic)
         )
 
