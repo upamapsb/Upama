@@ -28,7 +28,7 @@ class Singapore:
 
     def parse_text(self, soup: BeautifulSoup) -> pd.Series:
         # Summary figures
-        date, share_fully_vaccinated, share_vaccinated = self._parse_text_summary(soup)
+        date, share_fully_vaccinated, share_vaccinated, _ = self._parse_text_summary(soup)
         # National figures
         national_doses, national_boosters, national_people_vaccinated = self._parse_text_national(soup)
         # WHO
@@ -49,20 +49,22 @@ class Singapore:
     def _parse_text_summary(self, soup):
         preamble = (
             r"As of ([\d]+ [A-Za-z]+ 20\d{2}), (\d+)% of our population has completed their full regimen/"
-            r" received two doses of COVID-19 vaccines, and (\d+)% has received at least one dose\."
+            r" received two doses of COVID-19 vaccines, (\d+)% has received at least one dose,"
+            r" and (\d+)% have received their booster shots\."
         )
         data = re.search(preamble, soup.text).groups()
         date = clean_date(data[0], fmt="%d %B %Y", lang="en")
         share_fully_vaccinated = clean_count(data[1])
         share_vaccinated = clean_count(data[2])
-        return date, share_fully_vaccinated, share_vaccinated
+        share_boosters = clean_count(data[3])
+        return date, share_fully_vaccinated, share_vaccinated, share_boosters
 
     def _parse_text_national(self, soup):
         national_program = (
             r"We have administered a total of ([\d,]+) doses of COVID-19 vaccines under the national vaccination"
             r" programme \(Pfizer-BioNTech Comirnaty and Moderna\).*"
             r"In total, ([\d,]+) individuals have received at least one dose of vaccine under the national vaccination"
-            r" programme,.*\. ([\d,]+) individuals have received their booster shots"
+            r" programme,.* ([\d,]+) (?:individuals )?have (?:received|taken) their booster shots"
         )
         data = re.search(national_program, soup.text).groups()
         national_doses = clean_count(data[0])
