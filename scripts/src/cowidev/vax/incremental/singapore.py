@@ -50,7 +50,7 @@ class Singapore:
         preamble = (
             r"As of ([\d]+ [A-Za-z]+ 20\d{2}), (\d+)% of our population has completed their full regimen/"
             r" received two doses of COVID-19 vaccines, (\d+)% has received at least one dose,"
-            r" and (\d+)% have received their booster shots\."
+            r" and (\d+)% ha(ve|s) received (their )?booster"
         )
         data = re.search(preamble, soup.text).groups()
         date = clean_date(data[0], fmt="%d %B %Y", lang="en")
@@ -61,8 +61,7 @@ class Singapore:
 
     def _parse_text_national(self, soup):
         national_program = (
-            r"We have administered a total of ([\d,]+) doses of COVID-19 vaccines under the national vaccination"
-            r" programme \(Pfizer-BioNTech Comirnaty and Moderna\).*"
+            r"We have administered a total of ([\d,]+) doses of COVID-19 vaccines under the.*"
             r"In total, ([\d,]+) individuals have received at least one dose of vaccine under the national vaccination"
             r" programme,.* ([\d,]+) (?:individuals )?have (?:received|taken) their booster shots"
         )

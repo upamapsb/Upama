@@ -12,7 +12,7 @@ logger = get_logger()
 
 # Sometimes the WHO doesn't yet include a vaccine in a country's metadata
 # while there is evidence that it has been administered in the country
-ADDITIONAL_VACCINES_USED = {}
+ADDITIONAL_VACCINES_USED = {"Cayman Islands": ["Oxford/AstraZeneca"]}
 
 
 class WHO:

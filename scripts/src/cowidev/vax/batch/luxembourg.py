@@ -36,7 +36,7 @@ def correct_time_series(df: pd.DataFrame) -> pd.DataFrame:
             "total_boosters": pd.NA,
             "total_vaccinations": 777109,
             "source_url": [
-                "https://data.public.lu/en/datasets/donnees-covid19/#resource-a3c13d63-6e1d-4bd6-9ba4-2dba5cf9ad5b"
+                "https://data.public.lu/en/datasets/donnees-covid19/#resource-0699455e-03fd-497b-9898-776c6dc786e8"
             ],
         }
     )
@@ -81,7 +81,7 @@ def pipeline(df: pd.DataFrame, source: str) -> pd.DataFrame:
 
 
 def main(paths):
-    source_file = "https://data.public.lu/en/datasets/r/a3c13d63-6e1d-4bd6-9ba4-2dba5cf9ad5b"
+    source_file = "https://data.public.lu/en/datasets/r/0699455e-03fd-497b-9898-776c6dc786e8"
     source_page = "https://data.public.lu/en/datasets/donnees-covid19/#_"
     destination = paths.tmp_vax_out("Luxembourg")
     read(source_file).pipe(pipeline, source_page).to_csv(destination, index=False)
