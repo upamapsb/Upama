@@ -70,9 +70,14 @@ class Romania:
             return sum(v["immunized"] for k, v in x.items() if k in self.vaccines_1d)
 
         people_fully_vaccinated_1d = df.vaccines.apply(_people_fully_vaccinated_1d).cumsum()
-        return df.assign(
+        df = df.assign(
             people_vaccinated=(df.total_vaccinations - df.people_fully_vaccinated + people_fully_vaccinated_1d)
         )
+
+        # Booster doses have started on September 28, 2021. Because of this, the calculation
+        # performed here no longer holds, and people_vaccinated is left blank for now.
+        df.loc[df.date >= "2021-09-28", "people_vaccinated"] = pd.NA
+        return df
 
     def _vaccine_start_dates(self, df: pd.DataFrame):
         date2vax = sorted(
