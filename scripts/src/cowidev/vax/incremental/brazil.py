@@ -4,6 +4,7 @@ import pandas as pd
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 
 from cowidev.utils.clean import clean_count
 from cowidev.utils.clean.dates import localdate
@@ -15,7 +16,7 @@ from cowidev.vax.utils.utils import get_latest_file
 class Brazil:
     def __init__(self) -> None:
         self.location = "Brazil"
-        self.source_url = "https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html"
+        self.source_url = "https://qsprod.saude.gov.br/extensions/DEMAS_C19_Vacina_V2/DEMAS_C19_Vacina_v2.html"
         self._download_path = "/tmp"
 
     def read(self) -> pd.Series:
@@ -36,9 +37,9 @@ class Brazil:
                     people_fully_vaccinated = clean_count(block.find_element_by_class_name("sn-kpi-value").text)
                 elif "Total de Doses Aplicadas" in block_title:
                     total_vaccinations = clean_count(block.find_element_by_class_name("sn-kpi-value").text)
-                elif "Total Doses Adicionais" in block_title:
+                elif "Dose Adicional" in block_title:
                     additional_doses = clean_count(block.find_element_by_class_name("sn-kpi-value").text)
-                elif "Total Doses de Reforço" in block_title:
+                elif "Dose Reforço" in block_title:
                     booster_doses = clean_count(block.find_element_by_class_name("sn-kpi-value").text)
             unique_doses = self._parse_unique_doses(driver)
 
@@ -53,11 +54,10 @@ class Brazil:
         return ds
 
     def _parse_unique_doses(self, driver):
-        time.sleep(10)
-        elem = driver.find_element_by_id("QV1-export")
-        elem.click()
-        elem = elem.find_element_by_class_name("fa-download")
-        elem.click()
+        driver.find_element_by_class_name("sn-kpi").click()
+        for _ in range(30):
+            driver.find_element_by_tag_name("html").send_keys(Keys.DOWN)
+        driver.find_element_by_id("QV1-G13B-menu").click()
         time.sleep(5)
         path = get_latest_file(self._download_path, "xlsx")
         df = pd.read_excel(path)
