@@ -11,7 +11,7 @@ count <- page %>%
 date <- page %>%
     html_node(".m_patient_status h3 em") %>%
     html_text() %>%
-    str_extract(" on [A-Za-z]+ \\d+, 202\\d") %>%
+    str_extract(" on ([A-Za-z]+|\\d+) \\d+, 202\\d") %>%
     str_replace(" on ", "") %>%
     str_replace("Jaunary", "January") %>%
     mdy()
