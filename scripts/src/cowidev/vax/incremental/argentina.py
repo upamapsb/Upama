@@ -25,11 +25,11 @@ class Argentina:
     def read(self) -> pd.DataFrame:
         return pd.read_csv(
             self.source_url,
-            usecols=[
-                "primera_dosis_cantidad",
-                "segunda_dosis_cantidad",
-                "vacuna_nombre",
-            ],
+            # usecols=[
+            #     "primera_dosis_cantidad",
+            #     "segunda_dosis_cantidad",
+            #     "vacuna_nombre",
+            # ],
         )
 
     def pipe_vaccine_checks(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -47,9 +47,10 @@ class Argentina:
         first_shots = df_nd["primera_dosis_cantidad"].sum()
         second_shots = df_nd["segunda_dosis_cantidad"].sum()
 
-        if df_1d["segunda_dosis_cantidad"].sum() != 0:
+        if (df_1d["segunda_dosis_cantidad"] > 2).all():
             raise ValueError(
-                f"`segunda_dosis_cantidad` field for one dose vaccines ({self.one_dose_vaccine}) must be 0!"
+                f"`segunda_dosis_cantidad` field for one dose vaccines ({self.one_dose_vaccine}) must be at most 2 for"
+                " all regions!"
             )
         vaccines = set(df.vacuna_nombre.replace(self.vaccine_mapping))
         # vaccines.remove("Vacuna COVID Estudios Clínicos")
