@@ -135,9 +135,13 @@ python -m cowidev.oxcgrt grapher-db
 echo "Generating US vaccination files..."
 python -m cowidev.vax.us_states etl
 python -m cowidev.vax.us_states grapher-file
-git add .
-git commit -m "data(vax,us-states): update"
-git push
+if has_changed './public/data/vaccinations/us_state_vaccinations.csv'; then
+  git add .
+  git commit -m "data(vax,us-states): update"
+  git push
+else
+  echo "US vaccination export is up to date"
+fi
 # =====================================================================
 # Swedish Public Health Agency
 
