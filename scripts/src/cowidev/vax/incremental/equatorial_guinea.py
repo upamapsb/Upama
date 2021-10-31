@@ -22,7 +22,7 @@ class EquatorialGuinea:
         )
 
     def parse_metrics(self, soup):
-        dfs = pd.read_html(self.source_url)
+        dfs = pd.read_html(self.source_url, converters={"Totales": lambda x: str(x)})
         df = dfs[0].rename(columns={"Unnamed: 0": "metric"}).set_index("metric")
         people_vaccinated = clean_count(df.loc["Total Vacunados 1ª dosis", "Totales"])
         total_vaccinations = clean_count(df.loc["Total dosis administradas", "Totales"])
