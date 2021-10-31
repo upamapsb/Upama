@@ -182,7 +182,7 @@ fi
 # Always run the database update.
 # The script itself contains a check against the database
 # to make sure it doesn't run unnecessarily.
-run_python 'import hosp; hosp.update_db()'
+python -m cowidev.hosp grapher-db
 
 # =====================================================================
 # UK subnational data
