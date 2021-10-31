@@ -50,7 +50,7 @@ class Singapore:
         preamble = (
             r"As of ([\d]+ [A-Za-z]+ 20\d{2}), (\d+)% of our population has completed their full regimen/"
             r" received two doses of COVID-19 vaccines, (\d+)% has received at least one dose,"
-            r" and (\d+)% ha(ve|s) received (their )?booster"
+            r" and (\d+)% ha(?:ve|s) received (?:their )?booster(?:s)?"
         )
         data = re.search(preamble, soup.text).groups()
         date = clean_date(data[0], fmt="%d %B %Y", lang="en")
