@@ -4,7 +4,7 @@ import re
 from glob import glob
 import datetime
 
-SKIP = ["benin", "cambodia", "kazakhstan"]
+SKIP = ["benin", "cambodia", "kazakhstan", "bangladesh"]
 
 execution_mode = sys.argv[1]
 scripts_path = "automations/incremental/*.py" if execution_mode == "quick" else "automations/*/*.py"
