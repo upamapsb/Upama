@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import requests
 
-from scripts.src.cowidev.vax.utils.files import export_metadata
+from cowidev.vax.utils.files import export_metadata
 
 
 class Ukraine:
