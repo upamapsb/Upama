@@ -25,8 +25,9 @@ class Bolivia:
         return ds
 
     def _parse_date(self):
+        print(self.source_url)
         soup = get_soup(self.source_url)
-        return extract_clean_date(soup.text, "Reporte (?:V|v)acunación (\d\d\-\d\d\-20\d\d)", "%d-%m-%Y")
+        return extract_clean_date(soup.text, "Reporte (?:(?:V|v)acunación|COVID\-19) (\d\d\-\d\d\-20\d\d)", "%d-%m-%Y")
 
     # def _parse_links_pdfs(self, soup) -> list:
     #     elems = soup.findAll("a", text=re.compile("Reporte-de-vacunas-.*"))
