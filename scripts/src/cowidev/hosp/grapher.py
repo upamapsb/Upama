@@ -6,7 +6,7 @@ from cowidev.grapher.db.base import GrapherBaseUpdater
 from cowidev.utils.utils import time_str_grapher, get_filename, export_timestamp
 from cowidev.utils.clean.dates import DATE_FORMAT
 
-ZERO_DAY = "2020-01-01"
+ZERO_DAY = "2020-01-21"
 zero_day = datetime.strptime(ZERO_DAY, DATE_FORMAT)
 
 URL_VACCINE = "https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_vaccines_full.csv"
