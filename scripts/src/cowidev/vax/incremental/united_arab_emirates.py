@@ -64,6 +64,11 @@ class UnitedArabEmirates:
         regex_date = r"Time period: 29 January 2020 - (\d{2} [a-zA-Z]+ 202\d)"
         return extract_clean_date(text_date, regex_date, "%d %B %Y", lang="en")
 
+    def pipe_calculate_boosters(self, ds: pd.Series) -> pd.Series:
+        return enrich_data(
+            ds, "total_boosters", ds.total_vaccinations - ds.people_vaccinated - ds.people_fully_vaccinated
+        )
+
     def pipe_location(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "location", self.location)
 
@@ -78,7 +83,12 @@ class UnitedArabEmirates:
         return enrich_data(ds, "source_url", self.source_url)
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
+        return (
+            ds.pipe(self.pipe_calculate_boosters)
+            .pipe(self.pipe_location)
+            .pipe(self.pipe_vaccine)
+            .pipe(self.pipe_source)
+        )
 
     def export(self, paths):
         data = self.read().pipe(self.pipeline)
@@ -88,6 +98,7 @@ class UnitedArabEmirates:
             total_vaccinations=data["total_vaccinations"],
             people_vaccinated=data["people_vaccinated"],
             people_fully_vaccinated=data["people_fully_vaccinated"],
+            total_boosters=data["total_boosters"],
             date=data["date"],
             source_url=data["source_url"],
             vaccine=data["vaccine"],
