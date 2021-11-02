@@ -37,4 +37,7 @@ pipeline:
       Nigeria:
         - date: 2021-06-15
           metrics: people_fully_vaccinated
+      United States:
+        - date: 2020-12-16
+          metrics: people_vaccinated
   generate-dataset:
