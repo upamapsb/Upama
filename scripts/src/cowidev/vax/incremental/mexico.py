@@ -47,7 +47,6 @@ class Mexico:
                     re.search(r"corte de informaci.n al (\d+ \w+ 202\d)", page_text).group(1),
                     fmt="%d %B %Y",
                     lang="es",
-                    minus_days=1,
                 )
 
             elif "Personas vacunadas reportadas" in page_text:
