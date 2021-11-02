@@ -1,6 +1,6 @@
 import pandas as pd
 
-from cowidev.utils.clean import extract_clean_date
+from cowidev.utils.clean import extract_clean_date, clean_count
 from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
 
@@ -20,14 +20,16 @@ class Guernsey:
         tables = soup.find_all("table")
         ds = pd.read_html(str(tables[0]))[0].squeeze()
         # Rename, add/remove columns
-        ds = ds.rename({"Total doses": "total_vaccinations"})
-        ds["date"] = extract_clean_date(
-            text=str(soup.text),
-            regex=self._regex_date,
-            date_format="%d %B %Y",
-            lang="en",
+        return pd.Series(
+            {
+                "date": extract_clean_date(
+                    text=str(soup.text), regex=self._regex_date, date_format="%d %B %Y", lang="en"
+                ),
+                "total_vaccinations": clean_count(
+                    ds.loc[ds[0] == "Total doses", 1].values[0],
+                ),
+            }
         )
-        return ds.loc[["date", "total_vaccinations"]]
 
     def pipe_location(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "location", self.location)
