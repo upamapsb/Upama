@@ -77,6 +77,9 @@ class Lithuania:
                 }
             )
         )
+        # 02pilnai actually includes only people fully vaccinated *without* boosters
+        # People who get boosters are transferred from 02pilnai to 03pakartotinai
+        df["people_fully_vaccinated"] = df.people_fully_vaccinated + df.total_boosters
         return df[df.people_vaccinated > 0]
 
     def _find_vaccines(self, date):
