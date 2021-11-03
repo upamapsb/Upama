@@ -17,34 +17,27 @@ class CostaRica:
         return self._parse_data(soup)
 
     def _parse_data(self, soup: BeautifulSoup) -> pd.Series:
-        total_vaccinations = self._parse_total_vaccinations(soup)
-        people_vaccinated, people_fully_vaccinated = self._parse_people_vaccinated(soup)
-        assert people_vaccinated >= people_fully_vaccinated
-        assert total_vaccinations >= people_vaccinated
+        total_vaccinations, people_vaccinated, people_fully_vaccinated, total_boosters = self._parse_table(soup)
+        assert total_vaccinations >= people_vaccinated >= people_fully_vaccinated
+        assert total_vaccinations >= total_boosters
 
         data = {
             "total_vaccinations": total_vaccinations,
             "people_vaccinated": people_vaccinated,
             "people_fully_vaccinated": people_fully_vaccinated,
+            "total_boosters": total_boosters,
             "date": self._parse_date(soup),
         }
         return pd.Series(data=data)
 
-    def _parse_total_vaccinations(self, soup):
-        r = "Total de dosis aplicadas"
-        elems = soup.find_all(class_="counter")
-        if r in elems[0].parent.text:
-            return clean_count(elems[0])
-        raise ValueError("`total_vaccinations` not found!")
-
-    def _parse_people_vaccinated(self, soup):
-        elem = soup.find("h4", string="Primera dosis").parent
-        text = elem.find(class_="cifra1 bg3").text
-        people_vaccinated = clean_count(text)
-        elem = soup.find("h4", string="Segunda dosis").parent
-        text = elem.find(class_="cifra1 bg4").text
-        people_fully_vaccinated = clean_count(text)
-        return people_vaccinated, people_fully_vaccinated
+    def _parse_table(self, soup):
+        df = pd.read_html(str(soup.find("table", id="content-table3")))[0]
+        df = df[df["Región"] == "Total"]
+        total_vaccinations = clean_count(df["Total dosis"].item())
+        people_vaccinated = clean_count(df["Dosis 1"].item())
+        people_fully_vaccinated = clean_count(df["Dosis 2"].item())
+        total_boosters = clean_count(df["Dosis 3"].item())
+        return total_vaccinations, people_vaccinated, people_fully_vaccinated, total_boosters
 
     def _parse_date(self, soup):
         date = soup.find(class_="actualiza").text
@@ -72,6 +65,7 @@ class CostaRica:
             total_vaccinations=data["total_vaccinations"],
             people_vaccinated=data["people_vaccinated"],
             people_fully_vaccinated=data["people_fully_vaccinated"],
+            total_boosters=data["total_boosters"],
             date=data["date"],
             source_url=data["source_url"],
             vaccine=data["vaccine"],
