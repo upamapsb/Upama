@@ -15,10 +15,7 @@ class HospETL:
         dfs = []
         for source in sources:
             module = importlib.import_module(source)
-            try:
-                df = module.main()
-            except:
-                print(f"Skipped {source}!")
+            df = module.main()
             dfs.append(df)
         df = pd.concat(dfs)
         df = df.dropna(subset=["value"])
