@@ -86,9 +86,6 @@ def get_jhu():
             .dropna()
         )
 
-        # Exclude entities from megafile
-        tmp = tmp[tmp.location != "2020 Summer Olympics athletes & staff"]
-
         if jhu_var[:7] == "weekly_":
             tmp[jhu_var] = tmp[jhu_var].div(7).round(3)
             tmp = tmp.rename(
@@ -103,7 +100,6 @@ def get_jhu():
         else:
             tmp[jhu_var] = tmp[jhu_var].round(3)
         data_frames.append(tmp)
-    print()
 
     # Outer join between all files
     jhu = reduce(
@@ -830,52 +826,27 @@ def fillna_boosters_till_valid(df):
 
 def generate_megafile():
 
-    print("\nFetching JHU dataset…")
+    print("Fetching JHU dataset…")
     jhu = get_jhu()
 
-    print("\nFetching reproduction rate…")
+    print("Fetching reproduction rate…")
     reprod = get_reprod()
 
-    location_mismatch = set(reprod.location).difference(set(jhu.location))
-    for loc in location_mismatch:
-        print(f"<!> Location '{loc}' has reproduction rates but is absent from JHU data")
-
-    print("\nFetching hospital dataset…")
+    print("Fetching hospital dataset…")
     hosp = get_hosp()
 
-    location_mismatch = set(hosp.location).difference(set(jhu.location))
-    for loc in location_mismatch:
-        print(f"<!> Location '{loc}' has hospital data but is absent from JHU data")
-
-    print("\nFetching testing dataset…")
+    print("Fetching testing dataset…")
     testing = get_testing()
 
-    location_mismatch = set(testing.location).difference(set(jhu.location))
-    for loc in location_mismatch:
-        print(f"<!> Location '{loc}' has testing data but is absent from JHU data")
-
-    print("\nFetching vaccination dataset…")
+    print("Fetching vaccination dataset…")
     vax = get_vax()
-    vax = vax[
-        -vax.location.isin(
-            [
-                "England",
-                "Northern Ireland",
-                "Scotland",
-                "Wales",
-                "High income",
-                "Upper middle income",
-                "Lower middle income",
-                "Low income",
-            ]
-        )
-    ]
+    vax = vax[-vax.location.isin(["England", "Northern Ireland", "Scotland", "Wales"])]
 
-    print("\nFetching OxCGRT dataset…")
+    print("Fetching OxCGRT dataset…")
     cgrt = get_cgrt()
 
     all_covid = (
-        jhu.merge(reprod, on=["date", "location"], how="left")
+        jhu.merge(reprod, on=["date", "location"], how="outer")
         .merge(hosp, on=["date", "location"], how="outer")
         .merge(testing, on=["date", "location"], how="outer")
         .merge(vax, on=["date", "location"], how="outer")
@@ -885,6 +856,10 @@ def generate_megafile():
 
     # Remove today's datapoint
     all_covid = all_covid[all_covid["date"] < str(date.today())]
+
+    # Exclude some entities from megafile
+    excluded = ["Summer Olympics 2020"]
+    all_covid = all_covid[-all_covid.location.isin(excluded)]
 
     # Add ISO codes
     print("Adding ISO codes…")
@@ -945,13 +920,11 @@ def generate_megafile():
     print("Writing to CSV…")
     filename = os.path.join(DATA_DIR, "owid-covid-data.csv")
     all_covid.to_csv(filename, index=False)
-    print("\tUploading to S3…")
     upload_to_s3(filename, "public/owid-covid-data.csv", public=True)
 
     print("Writing to XLSX…")
     filename = os.path.join(DATA_DIR, "owid-covid-data.xlsx")
     all_covid.to_excel(os.path.join(DATA_DIR, "owid-covid-data.xlsx"), index=False, engine="xlsxwriter")
-    print("\tUploading to S3…")
     upload_to_s3(filename, "public/owid-covid-data.xlsx", public=True)
 
     print("Writing to JSON…")
@@ -961,7 +934,6 @@ def generate_megafile():
         os.path.join(DATA_DIR, "owid-covid-data.json"),
         macro_variables.keys(),
     )
-    print("\tUploading to S3…")
     upload_to_s3(filename, "public/owid-covid-data.json", public=True)
 
     print("Creating internal files…")

@@ -144,9 +144,7 @@ def check_data_correctness(df_merged):
     # Check for missing population figures
     df_pop = load_population()
     pop_entity_diff = (
-        set(df_uniq["location"])
-        - set(df_pop["location"])
-        - set(["International", "2020 Summer Olympics athletes & staff"])
+        set(df_uniq["location"]) - set(df_pop["location"]) - set(["International", "Summer Olympics 2020"])
     )
     if len(pop_entity_diff) > 0:
         # this is not an error, so don't increment errors variable

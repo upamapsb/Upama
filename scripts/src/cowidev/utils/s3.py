@@ -26,6 +26,7 @@ def upload_to_s3(
         bucket_name (str): Name of the S3 bucket. Defaults to "covid-19".
         public (bool): Set to True to expose the file to the public (read only). Defaults to False.
     """
+    print("& uploading to S3…")
     # Checks
     if type(filename) is not type(relative_path):
         raise TypeError("`filename` and `relative_path` should be of the same type")

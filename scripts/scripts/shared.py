@@ -628,6 +628,10 @@ def standard_export(df, output_path, grapher_name):
                 "Asia",
                 "Oceania",
                 "European Union",
+                "High income",
+                "Upper middle income",
+                "Lower middle income",
+                "Low income",
             ]
         )
     )
