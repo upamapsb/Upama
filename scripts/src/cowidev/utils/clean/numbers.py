@@ -75,7 +75,7 @@ class NumericCleaner:
         return number
 
     def run(self, num_as_str):
-        num = self._to_str(num_as_str)
+        num = self._to_str(num_as_str).strip()
         if self._is_verbose(num):
             num = self.clean_verbose_number(num)
         elif self._is_not_verbose_and_incorrect(num):
