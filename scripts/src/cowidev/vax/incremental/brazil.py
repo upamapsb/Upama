@@ -41,7 +41,13 @@ class Brazil:
                     additional_doses = clean_count(block.find_element_by_class_name("sn-kpi-value").text)
                 elif "Dose Reforço" in block_title:
                     booster_doses = clean_count(block.find_element_by_class_name("sn-kpi-value").text)
-            unique_doses = self._parse_unique_doses(driver)
+
+            # unique_doses = self._parse_unique_doses(driver)
+            # All download buttons on the dashboard have stopped working as of November 1, 2021
+            # Unique doses are now estimated as a fixed rate of all administered doses
+            # This ratio is updated weekly, based on the chart "Doses Aplicadas por Laboratorio"
+            unique_doses_ratio = 0.017
+            unique_doses = round(total_vaccinations * unique_doses_ratio)
 
         ds = pd.Series(
             {
