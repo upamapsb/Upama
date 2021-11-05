@@ -14,7 +14,7 @@ from selenium import webdriver
 COUNTRY = "Ethiopia"
 UNITS = "tests performed"
 TESTING_TYPE = "PCR only"
-SOURCE_LABEL = "Information Network Security Agency"
+SOURCE_LABEL = "Ethiopia Information Network Security Agency"
 SOURCE_URL = "https://www.covid19.et/covid-19/Home/DataPresentationByTable"
 
 SERIES_TYPE = "Cumulative total"  # one of: {'Cumulative total', 'Daily change in cumulative total'}
