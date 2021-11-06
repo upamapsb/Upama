@@ -948,7 +948,7 @@ def generate_megafile():
     generate_readme()
 
     # Export timestamp
-    # export_timestamp(timestamp_filename)
+    export_timestamp(timestamp_filename)
 
     print("All done!")
 
