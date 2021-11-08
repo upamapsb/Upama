@@ -27,3 +27,23 @@ def make_monotonic(df: pd.DataFrame, max_removed_rows=10) -> pd.DataFrame:
             raise Exception(f"More than {max_removed_rows} rows removed by make_monotonic() - check the data.")
 
     return df
+
+
+def build_vaccine_timeline(df: pd.DataFrame, vaccine_timeline: dict) -> pd.DataFrame:
+    """
+    vaccine_timeline: dictionary of "vaccine" -> "start_date"
+    Example: {
+        "Pfizer/BioNTech": "2021-02-24",
+        "Sinovac": "2021-03-03",
+        "Oxford/AstraZeneca": "2021-05-03",
+        "CanSino": "2021-05-09",
+        "Sinopharm": "2021-09-18",
+    }
+    """
+
+    def _build_vaccine_row(date, vaccine_timeline: dict):
+        vaccines = [k for k, v in vaccine_timeline.items() if v <= date]
+        return ", ".join(sorted(list(set(vaccines))))
+
+    df["vaccine"] = df.date.apply(_build_vaccine_row, vaccine_timeline=vaccine_timeline)
+    return df
