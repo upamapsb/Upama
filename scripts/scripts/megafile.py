@@ -15,7 +15,7 @@ import yaml
 import numpy as np
 import pandas as pd
 
-from cowidev.utils.s3 import upload_to_s3
+from cowidev.utils.s3 import upload_to_s3, df_to_s3
 
 
 CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -419,10 +419,19 @@ def create_latest(df):
     latest = latest.sort_values("location").rename(columns={"date": "last_updated_date"})
 
     print("Writing latest version…")
+    # CSV
     latest.to_csv(os.path.join(DATA_DIR, "latest/owid-covid-latest.csv"), index=False)
-    latest.to_excel(os.path.join(DATA_DIR, "latest/owid-covid-latest.xlsx"), index=False)
+    upload_to_s3(
+        os.path.join(DATA_DIR, "latest/owid-covid-latest.csv"), "public/latest/owid-covid-latest.csv", public=True
+    )
+    # XLSX
+    df_to_s3(latest, "public/latest/owid-covid-latest.xlsx", public=True, extension="xlsx")
+    # JSON
     latest.dropna(subset=["iso_code"]).set_index("iso_code").to_json(
         os.path.join(DATA_DIR, "latest/owid-covid-latest.json"), orient="index"
+    )
+    upload_to_s3(
+        os.path.join(DATA_DIR, "latest/owid-covid-latest.json"), "public/latest/owid-covid-latest.json", public=True
     )
 
 
@@ -914,7 +923,8 @@ def generate_megafile():
     # Check that we only have 1 unique row for each location/date pair
     assert all_covid.drop_duplicates(subset=["location", "date"]).shape == all_covid.shape
 
-    # Create light versions of complete dataset with only the latest data point
+    # # Create light versions of complete dataset with only the latest data point
+    print("Writing latest…")
     create_latest(all_covid)
 
     print("Writing to CSV…")
@@ -923,9 +933,10 @@ def generate_megafile():
     upload_to_s3(filename, "public/owid-covid-data.csv", public=True)
 
     print("Writing to XLSX…")
-    filename = os.path.join(DATA_DIR, "owid-covid-data.xlsx")
-    all_covid.to_excel(os.path.join(DATA_DIR, "owid-covid-data.xlsx"), index=False, engine="xlsxwriter")
-    upload_to_s3(filename, "public/owid-covid-data.xlsx", public=True)
+    # filename = os.path.join(DATA_DIR, "owid-covid-data.xlsx")
+    # all_covid.to_excel(os.path.join(DATA_DIR, "owid-covid-data.xlsx"), index=False, engine="xlsxwriter")
+    # upload_to_s3(filename, "public/owid-covid-data.xlsx", public=True)
+    df_to_s3(all_covid, "public/owid-covid-data.xlsx", public=True, extension="xlsx")
 
     print("Writing to JSON…")
     filename = os.path.join(DATA_DIR, "owid-covid-data.json")

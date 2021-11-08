@@ -2,16 +2,36 @@
 https://github.com/owid/walden/blob/master/owid/walden/owid_cache.py
 """
 
-
+import os
+import tempfile
 from os import path
 from typing import Optional, Type, Union
 import logging
 
+import pandas as pd
 import boto3
 from botocore.exceptions import ClientError
 
 
 SPACES_ENDPOINT = "https://nyc3.digitaloceanspaces.com"
+
+
+def df_to_s3(
+    df: pd.DataFrame,
+    relative_path: Union[str, list],
+    bucket_name: str = "covid-19",
+    public: bool = False,
+    extension: str = "csv",
+) -> Optional[str]:
+    with tempfile.TemporaryDirectory() as f:
+        output_path = os.path.join(f, f"file.{extension}")
+        if extension == "csv":
+            df.to_csv(output_path, index=False)
+        elif extension == "xlsx":
+            df.to_excel(output_path, index=False, engine="xlsxwriter")
+        else:
+            raise ValueError(f"Unknown extension {extension}. Only use csv or xlsx!")
+        upload_to_s3(output_path, relative_path, bucket_name, public)
 
 
 def upload_to_s3(
@@ -26,7 +46,7 @@ def upload_to_s3(
         bucket_name (str): Name of the S3 bucket. Defaults to "covid-19".
         public (bool): Set to True to expose the file to the public (read only). Defaults to False.
     """
-    print("& uploading to S3…")
+    print("Uploading to S3…")
     # Checks
     if type(filename) is not type(relative_path):
         raise TypeError("`filename` and `relative_path` should be of the same type")
