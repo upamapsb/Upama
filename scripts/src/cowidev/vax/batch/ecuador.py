@@ -17,6 +17,7 @@ class Ecuador:
         """
         self.source_url_ref = "https://github.com/andrab/ecuacovid"
         self.source_url = f"{self.source_url_ref}/raw/master/datos_crudos/vacunometro/fabricantes.csv"
+        self.source_url_boosters = f"{self.source_url_ref}/raw/master/datos_crudos/vacunas/vacunas.csv"
         self.location = "Ecuador"
         self.columns_rename = {
             "fabricante": "vaccine",
@@ -32,8 +33,8 @@ class Ecuador:
             "CanSino": "CanSino",
         }
 
-    def read(self) -> pd.DataFrame:
-        return pd.read_csv(self.source_url)
+    def read(self, source_url: str) -> pd.DataFrame:
+        return pd.read_csv(source_url)
 
     def pipe_check_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         n_columns = df.shape[1]
@@ -53,13 +54,11 @@ class Ecuador:
             raise ValueError(f"Unknown vaccine(s) {vaccines_wrong}")
         return df.assign(vaccine=df.vaccine.replace(self.vaccine_mapping))
 
-    def pipe_date(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(date=clean_date_series(df.date, "%d/%m/%Y"))
+    def pipe_date(self, df: pd.DataFrame, date_var: str) -> pd.DataFrame:
+        return df.assign(date=clean_date_series(df[date_var], "%d/%m/%Y"))
 
     def pipe_check_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
         x = df.groupby("vaccine").sum()
-        if not (x["total_vaccinations"] == x[["people_vaccinated", "people_fully_vaccinated"]].sum(axis=1)).all():
-            raise ValueError(f"`total_vaccinations = people_vaccinated + people_fully_vaccinated` not valid!")
         vax_1d = x.index.intersection(VACCINES_ONE_DOSE)
         if not (x.loc[vax_1d, "people_vaccinated"] == 0).all():
             raise ValueError(
@@ -78,10 +77,13 @@ class Ecuador:
             df.pipe(self.pipe_check_columns)
             .pipe(self.pipe_column_rename)
             .pipe(self.pipe_vaccines)
-            .pipe(self.pipe_date)
+            .pipe(self.pipe_date, "date")
             .pipe(self.pipe_check_metrics)
             .pipe(self.pipe_aggregate_zonas)
         )
+
+    def pipeline_boosters(self, df: pd.DataFrame) -> pd.DataFrame:
+        return df.pipe(self.pipe_date, "fecha")[["date", "refuerzo"]].rename(columns={"refuerzo": "total_boosters"})
 
     def pipeline_manufacturer(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df[["date", "vaccine", "total_vaccinations"]]
@@ -109,10 +111,7 @@ class Ecuador:
     def pipe_single_shot_correction(self, df: pd.DataFrame, df_single) -> pd.DataFrame:
         # Single shot correction
         single_shots = df.merge(df_single, on="date", how="left")["single_shots"]
-        df = df.assign(
-            people_vaccinated=df.people_vaccinated + single_shots.fillna(0),
-            # total_vaccinations=df.total_vaccinations + single_shots.fillna(0),
-        )
+        df["people_vaccinated"] = (df.people_vaccinated + single_shots.fillna(0)).astype(int)
         return df
 
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -139,8 +138,9 @@ class Ecuador:
         return df
 
     def to_csv(self, paths):
-        """Generalized."""
-        df = self.read().pipe(self.pipeline_base)
+
+        df = self.read(self.source_url).pipe(self.pipeline_base)
+
         # Manufacturer
         df_man = df.pipe(self.pipeline_manufacturer)
         df_man.to_csv(paths.tmp_vax_out_man(self.location), index=False)
@@ -150,9 +150,13 @@ class Ecuador:
             self.source_url_ref,
             paths.tmp_vax_metadata_man,
         )
+
         # Main data
         df = df.pipe(self.pipeline)
-        df.to_csv(paths.tmp_vax_out(self.location), index=False)
+        boosters = self.read(self.source_url_boosters).pipe(self.pipeline_boosters)
+        df.merge(boosters, on="date", how="left", validate="one_to_one").to_csv(
+            paths.tmp_vax_out(self.location), index=False
+        )
 
 
 def main(paths):
