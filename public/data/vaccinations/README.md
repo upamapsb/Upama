@@ -22,7 +22,7 @@ Stored in [`vaccinations.csv`](vaccinations.csv) and [`vaccinations.json`](vacci
 
 This dataset includes some subnational locations (England, Northern Ireland, Scotland, Wales, Northern Cyprus…) and international aggregates (World, continents, European Union…). They can be identified by their `iso_code` that starts with `OWID_`.
 
-The population estimates we use to calculate per-capita metrics are all based on the last revision of the [United Nations World Population Prospects](https://population.un.org/wpp/). The exact values can be viewed [here](https://github.com/owid/covid-19-data/blob/master/scripts/input/un/population_2020.csv). Population estimates for a few subnational locations are taken from national reports, and are stored [here](https://github.com/owid/covid-19-data/blob/master/scripts/input/owid/subnational_population_2020.csv).
+The population estimates we use to calculate per-capita metrics are based on the last revision of the [United Nations World Population Prospects](https://population.un.org/wpp/). The exact values can be viewed [here](https://github.com/owid/covid-19-data/blob/master/scripts/input/un/population_2020.csv). In a few cases, we use other sources (see column `source` in the population file) when the figures provided by the UN differ substantially from reliable and more recent national estimates. Population estimates for a few subnational locations are taken from national reports, and are stored [here](https://github.com/owid/covid-19-data/blob/master/scripts/input/owid/subnational_population_2020.csv).
 
 * `location`: name of the country (or region within a country).
 * `iso_code`: ISO 3166-1 alpha-3 – three-letter country codes.
