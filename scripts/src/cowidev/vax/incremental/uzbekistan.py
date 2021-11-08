@@ -25,19 +25,15 @@ class Uzbekistan:
             elems = self._get_elems(driver)
             for elem in elems:
                 data_ = self._parse_data(elem)
-                data.append(data_)
+                if data_:
+                    data.append(data_)
         df = pd.DataFrame(data)
         return df[df.date > last_update]
 
     def _click_detail_buttons(self, driver):
-        pattern = re.compile(r"^Айни кунгача мамлакатимизда жами [\d,]+")
-        elems = driver.find_elements_by_tag_name("p")
-        # Get button element
-        for e in elems:
-            if pattern.match(e.text):
-                a = e.find_element_by_xpath("../..")
-                but = a.find_element_by_tag_name("button")
-                but.click()
+        buttons = driver.find_element_by_id("accordionExample").find_elements_by_tag_name("button")
+        for btn in buttons:
+            btn.click()
 
     def _get_elems(self, driver):
         # Get elements
@@ -52,12 +48,15 @@ class Uzbekistan:
     def _parse_data(self, elem):
         match_1 = re.search(self.regex["total_vaccinations_people_vaccinated"], elem.text)
         match_2 = re.search(self.regex["people_fully_vaccinated"], elem.text)
-        return {
-            "date": self._parse_date(elem),
-            "total_vaccinations": clean_count(match_1.group(1)),
-            "people_vaccinated": clean_count(match_1.group(2)),
-            "people_fully_vaccinated": clean_count(match_2.group(1)) if match_2 else None,
-        }
+        if match_1 is None:
+            return None
+        else:
+            return {
+                "date": self._parse_date(elem),
+                "total_vaccinations": clean_count(match_1.group(1)),
+                "people_vaccinated": clean_count(match_1.group(2)),
+                "people_fully_vaccinated": clean_count(match_2.group(1)) if match_2 else None,
+            }
 
     def pipe_metadata(self, df):
         return df.assign(
