@@ -197,7 +197,9 @@ If you are interested in the individual files that make up the complete dataset,
 
 ## Stable URLs
 
-The `/public` path of this repository is hosted at `https://covid.ourworldindata.org/`. For example, you can access the CSV for the complete dataset at `https://covid.ourworldindata.org/data/owid-covid-data.csv`.
+The `/public` path of this repository is hosted at `https://covid.ourworldindata.org/`. For example, you can access the
+CSV for the complete dataset at `https://covid.ourworldindata.org/data/owid-covid-data.csv` or the CSV with latest data
+at `https://covid.ourworldindata.org/data/latest/owid-covid-latest.csv`.
 
 We have the goal to keep all stable URLs working, even when we have to restructure this repository. If you need regular updates, please consider using the `covid.ourworldindata.org` URLs rather than pointing to GitHub.
 
