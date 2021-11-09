@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import PyPDF2
 from pdfreader import SimplePDFViewer
 
-from cowidev.utils.clean import clean_date
+from cowidev.utils.clean import clean_date, clean_count
 from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
 
@@ -34,12 +34,14 @@ def parse_data(source_pdf: str):
             total_vaccinations,
             people_vaccinated,
             people_fully_vaccinated,
+            total_boosters,
         ) = parse_vaccinations(tf.name)
         date = parse_date(tf.name)
     return {
         "total_vaccinations": total_vaccinations,
         "people_vaccinated": people_vaccinated,
         "people_fully_vaccinated": people_fully_vaccinated,
+        "total_boosters": total_boosters,
         "date": date,
     }
 
@@ -62,20 +64,24 @@ def parse_vaccinations(filename):
         viewer.render()
     # Get list with strings
     strs = viewer.canvas.strings
-    # Get indices
-    idx_total_vax = strs.index("ümumi sayı")
-    idx_dose_1 = strs.index("1-ci mərhələ üzrə ")
-    idx_dose_2 = strs.index("2-ci mərhələ üzrə ")
-    # Get metrics
-    total_vaccinations = max([int(s) for s in strs[idx_total_vax:idx_dose_1] if s.isnumeric()])
-    dose_1 = max([int(s) for s in strs[idx_dose_1:idx_dose_2] if s.isnumeric()])
-    dose_2 = max([int(s) for s in strs[idx_dose_2:] if s.isnumeric()])
+    # Infer figures
+    numbers = []
+    for str in strs:
+        try:
+            numbers.append(clean_count(str))
+        except:
+            pass
+    numbers.sort()
+    total_vaccinations = numbers[-1]
+    people_vaccinated = numbers[-2]
+    people_fully_vaccinated = numbers[-3]
+    total_boosters = numbers[-4]
     # Sanity check
-    if dose_1 + dose_2 != total_vaccinations:
+    if people_vaccinated + people_fully_vaccinated + total_boosters != total_vaccinations:
         raise ValueError(
-            f"Apparently, dose_1 + dose_2 != total_vaccinations ({dose_1} + {dose_2} != {total_vaccinations})"
+            f"people_vaccinated + people_fully_vaccinated + total_boosters != total_vaccinations ({people_vaccinated} + {people_fully_vaccinated} + {total_boosters} != {total_vaccinations})"
         )
-    return total_vaccinations, dose_1, dose_2
+    return total_vaccinations, people_vaccinated, people_fully_vaccinated, total_boosters
 
 
 def enrich_location(ds: pd.Series) -> pd.Series:
@@ -103,6 +109,7 @@ def main(paths):
         total_vaccinations=data["total_vaccinations"],
         people_vaccinated=data["people_vaccinated"],
         people_fully_vaccinated=data["people_fully_vaccinated"],
+        total_boosters=data["total_boosters"],
         date=data["date"],
         source_url=data["source_url"],
         vaccine=data["vaccine"],
