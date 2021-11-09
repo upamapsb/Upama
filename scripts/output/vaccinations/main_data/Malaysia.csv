@@ -1,258 +1,259 @@
 date,people_vaccinated,people_fully_vaccinated,total_vaccinations,total_boosters,vaccine,location,source_url
 2021-02-24,61,2,63,0,Pfizer/BioNTech,Malaysia,https://github.com/CITF-Malaysia/citf-public
 2021-02-25,1198,4,1202,0,Pfizer/BioNTech,Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-02-26,5214,7,5221,0,Pfizer/BioNTech,Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-02-27,11850,12,11862,0,Pfizer/BioNTech,Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-02-28,18505,17,18522,0,Pfizer/BioNTech,Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-01,33817,23,33840,0,Pfizer/BioNTech,Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-02,55465,28,55493,0,Pfizer/BioNTech,Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-03,77968,34,78002,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-04,97400,46,97446,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-05,111727,53,111780,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-06,127471,56,127527,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-07,139923,61,139984,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-08,166981,75,167056,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-09,196931,133,197064,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-10,225527,144,225671,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-11,252003,146,252149,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-12,277914,148,278062,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-13,294871,150,295021,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-14,305144,154,305298,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-15,325193,157,325350,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-16,350424,163,350587,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-17,371180,225,371405,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-18,388389,1011,389400,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-19,399053,4788,403841,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-20,406732,10823,417555,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-21,416426,16609,433035,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-22,426124,30993,457117,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-23,434370,51643,486013,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-24,440639,74204,514843,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-25,447022,93305,540327,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-26,450942,106016,556958,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-27,452646,120286,572932,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-28,456292,133003,589295,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-29,464090,160138,624228,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-30,475525,189149,664674,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-03-31,485430,216398,701828,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-01,501204,242698,743902,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-02,508779,265315,774094,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-03,511414,279843,791257,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-04,517332,288919,806251,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-05,526530,307975,834505,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-06,537469,329344,866813,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-07,550145,347437,897582,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-08,562164,362086,924250,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-09,569377,376333,945710,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-10,575003,386250,961253,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-11,587421,396849,984270,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-12,612737,410611,1023348,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-13,629479,418242,1047721,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-14,650396,425906,1076302,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-15,668377,434939,1103316,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-16,683965,438834,1122799,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-17,692522,439931,1132453,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-18,698562,443641,1142203,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-19,723119,452034,1175153,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-20,745170,463160,1208330,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-21,760913,474912,1235825,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-22,775287,489919,1265206,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-23,787411,496514,1283925,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-24,795355,499851,1295206,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-25,804456,505533,1309989,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-26,825698,514344,1340042,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-27,848436,526120,1374556,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-28,874729,539176,1413905,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-29,881160,545191,1426351,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-04-30,898882,553995,1452877,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-01,901781,556545,1458326,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-02,909370,564586,1473956,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-03,933822,591028,1524850,0,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-04,963835,610558,1574393,0,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-05,995707,633302,1629009,0,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-06,1032525,651923,1684448,0,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-07,1064655,667203,1731858,0,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-08,1083296,675560,1758856,0,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-09,1108992,682076,1791067,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-10,1145576,706633,1852208,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-11,1176014,724905,1900918,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-12,1186265,732651,1918915,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-13,1186377,732660,1919036,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-14,1186437,732669,1919105,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-15,1196720,733267,1929986,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-16,1206691,733599,1940289,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-17,1238934,761550,2000483,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-18,1284446,793683,2078128,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-19,1334377,827390,2161766,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-20,1393357,849100,2242456,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-21,1435402,867688,2303089,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-22,1478394,870975,2349368,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-23,1516276,879295,2395570,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-24,1585642,905008,2490649,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-25,1655122,935505,2590626,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-26,1675451,937386,2612836,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-27,1734052,986464,2720515,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-28,1780767,1013674,2794440,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-29,1831671,1028544,2860214,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-30,1869952,1052665,2922616,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-05-31,1937286,1081010,3018295,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-01,2012422,1105118,3117539,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-02,2109039,1114906,3223944,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-03,2219856,1122704,3342559,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-04,2305877,1127603,3433479,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-05,2377690,1128980,3506668,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-06,2458430,1130575,3589003,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-07,2518934,1135627,3654559,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-08,2626866,1181447,3808311,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-09,2742641,1221620,3964259,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-10,2855899,1268516,4124412,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-11,2951427,1298524,4249948,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-12,3054082,1332262,4386341,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-13,3158410,1358988,4517395,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-14,3305248,1414322,4719566,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-15,3470986,1469873,4940855,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-16,3675721,1478078,5153794,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-17,3859392,1521973,5381360,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-18,4011375,1554351,5565721,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-19,4146078,1590257,5736329,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-20,4267144,1614265,5881403,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-21,4457137,1668956,6126085,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-22,4654864,1729278,6384133,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-23,4838526,1808496,6647012,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-24,5020101,1902114,6922204,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-25,5173317,1969625,7142931,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-26,5314025,2025257,7339270,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-27,5425094,2090651,7515733,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-28,5591074,2134201,7725262,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-29,5748538,2218723,7967247,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-06-30,5921368,2314436,8235790,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-01,6103935,2400060,8503979,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-02,6273148,2469956,8743087,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-03,6417162,2548205,8965350,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-04,6551457,2628011,9179451,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-05,6756943,2747635,9504561,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-06,6972873,2884670,9857526,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-07,7190512,3058781,10249276,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-08,7419033,3216989,10636004,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-09,7638392,3344999,10983373,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-10,7857153,3459886,11317021,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-11,8050517,3561238,11611737,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-12,8320566,3721772,12042320,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-13,8587136,3890575,12477693,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-14,8880411,4051637,12932030,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-15,9196103,4210267,13406352,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-16,9478029,4342256,13820266,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-17,9740897,4472162,14213040,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-18,9991706,4574847,14566534,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-19,10277583,4727367,15004931,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-20,10484766,4829178,15313924,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-21,10771610,4997382,15768971,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-22,11112824,5171886,16284689,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-23,11425372,5334456,16759806,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-24,11719265,5470305,17189547,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-25,12009986,5593757,17603720,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-26,12350453,5787007,18137437,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-27,12714764,5990356,18705097,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-28,13087667,6194906,19282546,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-29,13448229,6410586,19858788,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-30,13778922,6611093,20389988,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-07-31,14112802,6815683,20928455,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-01,14421453,6998642,21420063,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-02,14656774,7247389,21904131,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-03,14910352,7495266,22405586,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-04,15151697,7764878,22916540,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-05,15385923,8063863,23449745,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-06,15589359,8326140,23915456,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-07,15792249,8569884,24362088,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-08,15962783,8806424,24769159,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-09,16164173,9087411,25251531,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-10,16339594,9286190,25625729,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-11,16582137,9556948,26139026,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-12,16799041,9886309,26685289,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-13,16983038,10193519,27176492,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-14,17162496,10479251,27641679,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-15,17319172,10757054,28076155,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-16,17508507,11087715,28596149,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-17,17705761,11433314,29138993,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-18,17910554,11793034,29703497,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-19,18105392,12140151,30245446,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-20,18276337,12476902,30753138,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-21,18449930,12798046,31247860,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-22,18599325,13108189,31707395,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-23,18760154,13360746,32120780,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-24,18928264,13633561,32561701,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-25,19102676,13904298,33006849,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-26,19274560,14166542,33439693,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-27,19432178,14380774,33810396,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-28,19599965,14587383,34177862,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-29,19760381,14761755,34504963,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-30,19958621,14954325,34891473,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-08-31,20089266,15109678,35174929,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-01,20290927,15335230,35599382,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-02,20488654,15539431,35997686,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-03,20648975,15737780,36350737,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-04,20802157,15922032,36680795,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-05,20953595,16089714,36992872,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-06,21097993,16286045,37330634,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-07,21243146,16489465,37676703,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-08,21382647,16698451,38022929,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-09,21530566,16902767,38370938,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-10,21654540,17096637,38682545,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-11,21757349,17282766,38963953,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-12,21846316,17446111,39210353,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-13,21927130,17615700,39456686,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-14,22009981,17801323,39719492,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-15,22086980,17995219,39986879,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-16,22155640,18144632,40201904,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-17,22239283,18320461,40457925,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-18,22321683,18492438,40707773,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-19,22389958,18660096,40940655,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-20,22492955,18866378,41247351,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-21,22623160,19011592,41519049,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-22,22753229,19220903,41853324,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-23,22892747,19424668,42194455,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-24,23016246,19589495,42481575,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-25,23137659,19743524,42754686,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-26,23259631,19901613,43032913,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-27,23435219,20059480,43365320,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-28,23609725,20226391,43704162,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-29,23806565,20380523,44053753,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-09-30,23980115,20551128,44394053,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-01,24085369,20691045,44637630,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-02,24179099,20819764,44858311,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-03,24278048,20935996,45072713,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-04,24407905,21039335,45304494,96,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-05,24534123,21145666,45534948,120,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-06,24650641,21246771,45750127,144,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-07,24761125,21339620,45951460,209,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-08,24837431,21445051,46131809,555,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-09,24878353,21552888,46279345,555,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-10,24911329,21654291,46412894,555,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-11,24966467,21793042,46604994,555,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-12,25024588,21949756,46818067,563,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-13,25078257,22108018,47028525,592,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-14,25121467,22274505,47236189,654,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-15,25159028,22409198,47406978,879,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-16,25175343,22523893,47537338,920,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-17,25192902,22643981,47673868,977,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-18,25224900,22814986,47875947,1203,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-19,25240247,22935844,48011326,1235,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-20,25269711,23151203,48255412,1739,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-21,25301262,23338993,48473838,2397,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-22,25329057,23455534,48616820,3056,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-23,25340720,23552744,48725340,3292,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-24,25351618,23660711,48843562,3519,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-25,25375145,23803140,49008740,4040,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-26,25397347,23940533,49167834,4566,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-27,25415887,24065177,49320672,15480,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-28,25434992,24181861,49480475,40747,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-29,25450403,24263134,49599322,63595,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-30,25457194,24312894,49666379,74642,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-10-31,25458771,24314852,49670479,75230,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-11-01,25468319,24370906,49778714,118380,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-11-02,25478104,24427048,49900017,174507,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-11-03,25486637,24468925,50012743,237289,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-11-04,25489652,24486799,50053511,257397,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-11-05,25495278,24516512,50135122,303840,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-11-06,25499715,24529440,50176681,328260,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
-2021-11-07,25502897,24542347,50213960,349626,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-02-26,5215,7,5222,0,Pfizer/BioNTech,Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-02-27,11852,11,11863,0,Pfizer/BioNTech,Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-02-28,18507,16,18523,0,Pfizer/BioNTech,Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-01,33821,22,33843,0,Pfizer/BioNTech,Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-02,55470,27,55497,0,Pfizer/BioNTech,Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-03,77976,33,78009,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-04,97408,45,97453,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-05,111735,52,111787,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-06,127479,55,127534,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-07,139933,60,139993,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-08,166992,74,167066,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-09,196943,132,197075,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-10,225543,143,225686,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-11,252019,145,252164,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-12,277933,147,278080,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-13,294894,149,295043,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-14,305169,153,305322,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-15,325224,156,325380,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-16,350459,162,350621,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-17,371215,224,371439,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-18,388425,1010,389435,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-19,399089,4788,403877,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-20,406768,10824,417592,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-21,416462,16610,433072,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-22,426160,30997,457157,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-23,434410,51650,486060,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-24,440679,74219,514898,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-25,447066,93324,540390,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-26,450988,106037,557025,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-27,452692,120309,573001,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-28,456339,133029,589368,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-29,464148,160168,624316,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-30,475594,189185,664779,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-03-31,485499,216436,701935,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-01,501276,242740,744016,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-02,508851,265360,774211,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-03,511487,279890,791377,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-04,517405,288968,806373,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-05,526603,308025,834628,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-06,537543,329397,866940,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-07,550219,347499,897718,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-08,562239,362151,924390,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-09,569452,376403,945855,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-10,575078,386321,961399,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-11,587499,396923,984422,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-12,612818,410690,1023508,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-13,629562,418324,1047886,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-14,650481,425990,1076471,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-15,668470,435032,1103502,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-16,684057,438927,1122984,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-17,692614,440024,1132638,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-18,698655,443734,1142389,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-19,723216,452138,1175354,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-20,745267,463281,1208548,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-21,761012,475034,1236046,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-22,775386,490042,1265428,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-23,787510,496637,1284147,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-24,795454,499974,1295428,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-25,804555,505658,1310213,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-26,825800,514471,1340271,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-27,848540,526248,1374788,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-28,874834,539305,1414139,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-29,881269,545320,1426589,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-04-30,898994,554126,1453120,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-01,901893,556676,1458569,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-02,909482,564718,1474200,0,"Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-03,933934,591174,1525108,0,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-04,963947,610707,1574654,0,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-05,995820,633460,1629280,0,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-06,1032639,652088,1684727,0,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-07,1064770,667381,1732151,0,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-08,1083412,675739,1759151,0,"Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-09,1109110,682255,1791364,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-10,1145690,706823,1852512,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-11,1176128,725102,1901229,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-12,1186379,732848,1919226,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-13,1186491,732857,1919347,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-14,1186551,732866,1919416,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-15,1196834,733464,1930297,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-16,1206805,733796,1940600,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-17,1239048,761749,2000796,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-18,1284559,793882,2078440,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-19,1334491,827591,2162081,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-20,1393469,849308,2242776,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-21,1435513,867904,2303416,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-22,1478506,871191,2349696,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-23,1516388,879511,2395898,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-24,1585757,905225,2490981,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-25,1655239,935722,2590960,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-26,1675568,937603,2613170,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-27,1734172,986684,2720855,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-28,1780888,1013897,2794784,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-29,1831793,1028768,2860560,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-30,1870074,1052891,2922964,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-05-31,1937408,1081235,3018642,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-01,2012546,1105344,3117889,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-02,2109165,1115133,3224297,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-03,2219987,1122933,3342919,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-04,2306015,1127833,3433847,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-05,2377828,1129210,3507036,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-06,2458573,1130805,3589376,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-07,2519078,1135858,3654934,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-08,2627013,1181680,3808691,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-09,2742794,1221853,3964645,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-10,2856057,1268753,4124807,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-11,2951588,1298761,4250346,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-12,3054247,1332501,4386745,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-13,3158578,1359229,4517804,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-14,3305426,1414569,4719991,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-15,3471174,1470124,4941294,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-16,3675921,1478329,5154245,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-17,3859600,1522226,5381821,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-18,4011590,1554605,5566190,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-19,4146298,1590512,5736804,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-20,4267368,1614520,5881882,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-21,4457363,1669212,6126567,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-22,4655099,1729535,6384625,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-23,4838769,1808760,6647519,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-24,5020346,1902392,6922727,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-25,5173561,1969908,7143458,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-26,5314271,2025541,7339800,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-27,5425341,2090939,7516268,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-28,5591324,2134490,7725801,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-29,5748789,2219014,7967789,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-06-30,5921620,2314732,8236338,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-01,6104194,2400359,8504537,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-02,6273408,2470262,8743653,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-03,6417426,2548516,8965925,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-04,6551722,2628329,9180034,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-05,6757212,2747967,9505162,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-06,6973144,2885025,9858152,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-07,7190785,3059151,10249919,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-08,7419306,3217367,10636655,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-09,7638669,3345390,10984041,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-10,7857433,3460281,11317696,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-11,8050802,3561644,11612428,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-12,8320855,3722192,12043029,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-13,8587431,3891009,12478422,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-14,8880712,4052095,12932789,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-15,9196408,4210728,13407118,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-16,9478337,4342721,13821039,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-17,9741206,4472629,14213816,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-18,9992015,4575320,14567316,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-19,10277895,4727847,15005723,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-20,10485082,4829661,15314723,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-21,10771929,4997870,15769778,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-22,11113145,5172380,16285504,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-23,11425696,5334953,16760627,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-24,11719592,5470805,17190374,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-25,12010315,5594260,17604552,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-26,12350784,5787515,18138276,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-27,12715097,5990869,18705943,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-28,13088000,6195428,19283401,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-29,13448566,6411114,19859653,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-30,13779278,6611627,20390878,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-07-31,14113179,6816225,20929374,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-01,14421834,6999189,21420991,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-02,14657162,7247940,21905070,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-03,14910745,7495824,22406537,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-04,15152100,7765442,22917507,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-05,15386339,8064434,23450732,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-06,15589782,8326719,23916458,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-07,15792681,8570468,24363104,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-08,15963232,8807009,24770193,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-09,16164624,9087999,25252570,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-10,16340046,9286781,25626772,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-11,16583240,9557546,26140727,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-12,16800149,9886910,26686998,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-13,16984154,10194124,27178213,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-14,17163627,10479862,27643421,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-15,17320313,10757670,28077912,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-16,17509658,11088333,28597918,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-17,17706932,11433940,29140790,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-18,17911758,11793663,29705330,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-19,18107221,12140784,30247908,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-20,18278192,12477553,30755644,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-21,18451886,12798719,31250489,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-22,18601311,13108866,31710058,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-23,18762349,13361703,32123932,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-24,18930482,13634522,32564880,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-25,19104906,13905270,33010051,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-26,19276811,14167526,33442927,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-27,19435043,14381768,33814251,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-28,19602837,14588392,34181739,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-29,19763290,14762773,34508886,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-30,19961546,14955351,34895420,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-08-31,20092191,15110709,35178881,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-01,20294546,15336264,35604031,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-02,20492377,15540470,36002444,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-03,20652728,15738830,36355536,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-04,20805916,15923101,36685617,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-05,20957366,16090791,36997713,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-06,21101790,16287127,37335506,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-07,21246966,16490556,37681607,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-08,21386477,16699574,38027875,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-09,21534416,16903928,38375942,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-10,21659005,17097839,38688205,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-11,21761817,17284034,38969682,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-12,21850796,17447411,39216126,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-13,21931619,17617202,39462670,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-14,22014500,17802871,39725552,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-15,22091604,17996818,39993095,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-16,22160269,18146807,40208701,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-17,22243943,18322705,40464822,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-18,22326354,18494692,40714691,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-19,22394639,18662360,40947593,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-20,22497658,18868705,41254374,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-21,22627886,19013986,41526162,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-22,22757989,19224006,41861180,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-23,22897523,19427798,42202354,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-24,23021025,19592659,42489511,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-25,23142439,19746704,42762639,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-26,23264436,19904808,43040906,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-27,23440204,20062705,43373523,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-28,23614830,20229663,43712532,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-29,23811816,20384704,44063178,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-09-30,23985528,20555332,44403663,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-01,24090792,20695263,44647264,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-02,24184555,20824596,44868593,0,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-03,24283575,20940841,45083081,2,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-04,24413503,21044188,45314941,98,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-05,24539807,21150530,45545498,128,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-06,24656407,21251660,45760761,152,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-07,24767106,21344516,45962316,217,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-08,24843437,21449973,46142716,563,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-09,24884381,21557832,46290296,563,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-10,24917405,21659249,46423907,563,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-11,24972579,21798030,46616073,563,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-12,25030797,21954769,46829268,571,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-13,25084525,22113168,47039922,600,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-14,25127778,22279777,47247786,697,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-15,25165357,22414505,47418635,928,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-16,25181681,22529212,47549066,1019,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-17,25199277,22649331,47685749,1162,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-18,25231370,22820516,47888130,1415,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-19,25246720,22941420,48023560,1449,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-20,25276215,23157026,48267944,1976,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-21,25307846,23344989,48486721,2733,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-22,25335657,23461777,48630029,3455,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-23,25347318,23559072,48738733,3792,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-24,25358250,23667183,48857141,4027,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-25,25381844,23809710,49022498,4562,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-26,25404148,23947608,49182214,5103,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-27,25422693,24072437,49335248,16023,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-28,25441838,24189640,49495631,41333,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-29,25457255,24270955,49614562,64217,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-30,25464046,24320765,49681730,75325,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-10-31,25465673,24322935,49686133,75955,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-11-01,25475225,24379062,49794451,119112,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-11-02,25485013,24435287,49915853,175252,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-11-03,25493554,24477346,50028814,238080,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-11-04,25496569,24495304,50069676,258198,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-11-05,25502201,24525081,50151440,304724,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-11-06,25506640,24538032,50193092,329212,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-11-07,25509827,24551108,50230679,350713,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
+2021-11-08,25516370,24594695,50337394,407593,"CanSino, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac",Malaysia,https://github.com/CITF-Malaysia/citf-public
