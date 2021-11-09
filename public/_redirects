@@ -23,3 +23,8 @@
 /data/owid-covid-data.csv https://covid-19.nyc3.digitaloceanspaces.com/public/owid-covid-data.csv 200
 /data/owid-covid-data.xlsx https://covid-19.nyc3.digitaloceanspaces.com/public/owid-covid-data.xlsx 200
 /data/owid-covid-data.json https://covid-19.nyc3.digitaloceanspaces.com/public/owid-covid-data.json 200
+
+# Latest datasets in S3
+/data/latest/owid-covid-latest.csv https://covid-19.nyc3.digitaloceanspaces.com/public/latest/owid-covid-latest.csv 200
+/data/latest/owid-covid-latest.xlsx https://covid-19.nyc3.digitaloceanspaces.com/public/latest/owid-covid-latest.xlsx 200
+/data/latest/owid-covid-latest.json https://covid-19.nyc3.digitaloceanspaces.com/public/latest/owid-covid-latest.json 200
