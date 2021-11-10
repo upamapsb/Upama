@@ -1,3 +1,6 @@
+import os
+from cowidev.utils.utils import get_project_dir
+from cowidev.utils.web import get_soup
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
@@ -5,15 +8,12 @@ from datetime import date
 
 
 def main():
-    data = pd.read_csv("automated_sheets/Nigeria.csv").sort_values(by="Date", ascending=False)
+    path = os.path.join(get_project_dir(), "scripts", "scripts", "testing", "automated_sheets", "Nigeria.csv")
+    data = pd.read_csv(path).sort_values(by="Date", ascending=False)
 
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
-    }
     source_url = "http://covid19.ncdc.gov.ng/"
 
-    req = requests.get(source_url, headers=headers)
-    soup = BeautifulSoup(req.content, "html.parser")
+    soup = get_soup(source_url)
 
     cumulative_total = int(soup.find("div", class_="col-xl-3").find("span").text.replace(",", ""))
 
@@ -31,7 +31,7 @@ def main():
         )
 
         df = pd.concat([new, data], sort=False)
-        df.to_csv("automated_sheets/Nigeria.csv", index=False)
+        df.to_csv(path, index=False)
 
 
 if __name__ == "__main__":
