@@ -334,10 +334,12 @@ def get_cgrt():
 
 def add_excess_mortality(df: pd.DataFrame) -> pd.DataFrame:
     column_mapping = {
-        "p_proj_all_ages": "excess_mortality",
-        "cum_p_proj_all_ages": "excess_mortality_cumulative",
-        "cum_excess_proj_all_ages": "excess_mortality_cumulative_absolute",
-        "cum_excess_per_million_proj_all_ages": "excess_mortality_cumulative_per_million",
+        "p_proj_all_ages": "excess_mortality",  # excess_mortality_perc_weekly
+        "cum_p_proj_all_ages": "excess_mortality_cumulative",  # excess_mortality_perc_cum
+        "cum_excess_proj_all_ages": "excess_mortality_cumulative_absolute",  # excess_mortality_count_cum
+        "cum_excess_per_million_proj_all_ages": "excess_mortality_cumulative_per_million",  # excess_mortality_count_cum_pm
+        "excess_proj_all_ages": "excess_mortality_count_week",  # excess_mortality_count_week
+        "excess_per_million_proj_all_ages": "excess_mortality_count_week_pm",  # excess_mortality_count_week_pm
     }
     xm = pd.read_csv(
         os.path.join(DATA_DIR, "excess_mortality/excess_mortality.csv"),
@@ -407,6 +409,28 @@ def df_to_columnar_json(complete_dataset, output_path):
         columnar_dict[k] = [x if pd.notnull(x) else None for x in v]
     with open(output_path, "w") as file:
         file.write(dict_to_compact_json(columnar_dict))
+
+
+def create_dataset(df, macro_variables):
+    print("Writing to CSV…")
+    filename = os.path.join(DATA_DIR, "owid-covid-data.csv")
+    df.to_csv(filename, index=False)
+    upload_to_s3(filename, "public/owid-covid-data.csv", public=True)
+
+    print("Writing to XLSX…")
+    # filename = os.path.join(DATA_DIR, "owid-covid-data.xlsx")
+    # all_covid.to_excel(os.path.join(DATA_DIR, "owid-covid-data.xlsx"), index=False, engine="xlsxwriter")
+    # upload_to_s3(filename, "public/owid-covid-data.xlsx", public=True)
+    df_to_s3(df, "public/owid-covid-data.xlsx", public=True, extension="xlsx")
+
+    print("Writing to JSON…")
+    filename = os.path.join(DATA_DIR, "owid-covid-data.json")
+    df_to_json(
+        df,
+        os.path.join(DATA_DIR, "owid-covid-data.json"),
+        macro_variables.keys(),
+    )
+    upload_to_s3(filename, "public/owid-covid-data.json", public=True)
 
 
 def create_latest(df):
@@ -538,10 +562,12 @@ internal_files_columns = {
         "columns": [
             "location",
             "date",
-            "excess_mortality",
-            "excess_mortality_cumulative",
-            "excess_mortality_cumulative_absolute",
-            "excess_mortality_cumulative_per_million",
+            "excess_mortality",  # perc_week
+            "excess_mortality_cumulative",  # perc_cum
+            "excess_mortality_cumulative_absolute",  # count_cum
+            "excess_mortality_cumulative_per_million",  # count_cum_pm
+            "excess_mortality_count_week",
+            "excess_mortality_count_week_pm",
         ],
         "dropna": "all",
     },
@@ -584,6 +610,8 @@ internal_files_columns = {
             "positive_rate",
             "reproduction_rate",
             "excess_mortality",
+            "excess_mortality_count_week",
+            "excess_mortality_count_week_pm",
         ],
         "dropna": "all",
     },
@@ -923,32 +951,19 @@ def generate_megafile():
     # Check that we only have 1 unique row for each location/date pair
     assert all_covid.drop_duplicates(subset=["location", "date"]).shape == all_covid.shape
 
+    print("Creating internal files…")
+    create_internal(all_covid)
+
+    # Drop columns not included in final dataset
+    cols_drop = ["excess_mortality_count_week", "excess_mortality_count_week_pm"]
+    all_covid = all_covid.drop(columns=cols_drop)
+
     # # Create light versions of complete dataset with only the latest data point
     print("Writing latest…")
     create_latest(all_covid)
 
-    print("Writing to CSV…")
-    filename = os.path.join(DATA_DIR, "owid-covid-data.csv")
-    all_covid.to_csv(filename, index=False)
-    upload_to_s3(filename, "public/owid-covid-data.csv", public=True)
-
-    print("Writing to XLSX…")
-    # filename = os.path.join(DATA_DIR, "owid-covid-data.xlsx")
-    # all_covid.to_excel(os.path.join(DATA_DIR, "owid-covid-data.xlsx"), index=False, engine="xlsxwriter")
-    # upload_to_s3(filename, "public/owid-covid-data.xlsx", public=True)
-    df_to_s3(all_covid, "public/owid-covid-data.xlsx", public=True, extension="xlsx")
-
-    print("Writing to JSON…")
-    filename = os.path.join(DATA_DIR, "owid-covid-data.json")
-    df_to_json(
-        all_covid,
-        os.path.join(DATA_DIR, "owid-covid-data.json"),
-        macro_variables.keys(),
-    )
-    upload_to_s3(filename, "public/owid-covid-data.json", public=True)
-
-    print("Creating internal files…")
-    create_internal(all_covid)
+    # Create datasets
+    create_dataset(all_covid, macro_variables)
 
     # Store the last updated time
     timestamp_filename = os.path.join(DATA_DIR, "owid-covid-data-last-updated-timestamp.txt")  # @deprecate
