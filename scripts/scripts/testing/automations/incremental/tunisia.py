@@ -20,13 +20,13 @@ def main():
     cumulative_total = json.loads(soup.find("span", class_="vcex-milestone-time").attrs["data-options"])["endVal"]
 
     Date = soup.select("p span")[0].text.replace("Chiffres clés mis à jour le ", "")
-    pd.to_datetime(Date, format="%d %B %Y").strftime("%d-%m-%Y")
+    Date = pd.to_datetime(Date, format="%d %B %Y").strftime("%Y-%m-%d")
 
     if cumulative_total > data["Cumulative total"].max():
         new = pd.DataFrame(
             {
                 "Cumulative total": cumulative_total,
-                "Date": [date.today().strftime("%Y-%m-%d")],
+                "Date": [Date],
                 "Country": "Tunisia",
                 "Units": "people tested",
                 "Source URL": source_url,
