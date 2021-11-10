@@ -40,7 +40,7 @@ class Malaysia:
     def pipe_calculate_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.melt(id_vars="date", var_name="vaccine", value_name="doses")
         df["dose_number"] = df.vaccine.str.extract(r"(\d+)$").astype(int)
-        df["vaccine"] = df.vaccine.str.replace(r"(\d+)$", "")
+        df["vaccine"] = df.vaccine.str.replace(r"(\d+)$", "", regex=True)
 
         df = df.pivot(index=["date", "vaccine"], columns="dose_number", values="doses").reset_index().fillna(0)
 
