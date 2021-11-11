@@ -1,9 +1,9 @@
 import os
 from cowidev.utils.utils import get_project_dir
 from cowidev.utils.web import get_soup
-
+from cowidev.utils.clean import clean_count
+from cowidev.utils.clean import extract_clean_date
 import pandas as pd
-import datetime
 
 
 def main():
@@ -14,19 +14,19 @@ def main():
 
     soup = get_soup(source_url)
 
-    cumulative_total = int(
-        soup.find("div", class_="elementor-element-b36fad5").find(class_="elementor-text-editor").text.replace(",", "")
-    )
+    element = soup.find("div", class_="elementor-element-b36fad5").find(class_="elementor-text-editor")
+    cumulative_total = clean_count(element.text)
 
-    year = datetime.datetime.now().year
-    Date = soup.select(".elementor-element-75168b2 p")[0].text.replace("[Updated on ", "").replace(" [18:04]", "")
-    Date = str(year) + "-" + pd.to_datetime(Date, format="%B %d").strftime("%m-%d")
+    date_raw = soup.select(".elementor-element-75168b2 p")[0].text
+    date = extract_clean_date(
+        date_raw, regex=r"\[Updated on ([A-Za-z]+ \d+) \[\d\d:\d\d\]", date_format="%B %d", replace_year=2021
+    )
 
     if cumulative_total > data["Cumulative total"].max():
         new = pd.DataFrame(
             {
                 "Cumulative total": cumulative_total,
-                "Date": [Date],
+                "Date": [date],
                 "Country": "Kenya",
                 "Units": "samples tested",
                 "Source URL": source_url,
