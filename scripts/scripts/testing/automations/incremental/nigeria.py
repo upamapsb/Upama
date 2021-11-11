@@ -1,8 +1,9 @@
 import os
 from cowidev.utils.utils import get_project_dir
 from cowidev.utils.web import get_soup
+from cowidev.utils.clean.dates import localdate
+from cowidev.utils.clean import clean_count
 import pandas as pd
-from datetime import date
 
 
 def main():
@@ -13,13 +14,14 @@ def main():
 
     soup = get_soup(source_url)
 
-    cumulative_total = int(soup.find("div", class_="col-xl-3").find("span").text.replace(",", ""))
+    element = soup.find("div", class_="col-xl-3").find("span")
+    cumulative_total = clean_count(element.text)
 
     if cumulative_total > data["Cumulative total"].max():
 
         new = pd.DataFrame(
             {
-                "Date": [date.today().strftime("%Y-%m-%d")],
+                "Date": [localdate("Africa/Lagos")],
                 "Cumulative total": cumulative_total,
                 "Country": "Nigeria",
                 "Units": "samples tested",
