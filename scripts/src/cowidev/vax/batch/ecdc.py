@@ -70,6 +70,8 @@ columns = {
     "UnknownDose",
     "Vaccine",
     "YearWeekISO",
+    "DoseAdditional1",
+    "NumberDosesExported",
 }
 
 
@@ -109,9 +111,10 @@ class ECDC:
     def pipe_base(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.pipe(self.pipe_initial_check)
         df = df.assign(
-            total_vaccinations=df[["FirstDose", "SecondDose", "UnknownDose"]].sum(axis=1),
+            total_vaccinations=df[["FirstDose", "SecondDose", "UnknownDose", "DoseAdditional1"]].sum(axis=1),
             people_vaccinated=df.FirstDose,
             people_fully_vaccinated=df.SecondDose,
+            total_boosters=df.DoseAdditional1,
             date=df.YearWeekISO.apply(self._weekday_to_date),
             location=df.ReportingCountry.replace(self.country_mapping),
         )
@@ -127,6 +130,7 @@ class ECDC:
                     "total_vaccinations",
                     "people_vaccinated",
                     "people_fully_vaccinated",
+                    "total_boosters",
                     "UnknownDose",
                 ]
             ]
@@ -139,6 +143,7 @@ class ECDC:
             total_vaccinations=df.groupby(["location", group_field_renamed])["total_vaccinations"].cumsum(),
             people_vaccinated=df.groupby(["location", group_field_renamed])["people_vaccinated"].cumsum(),
             people_fully_vaccinated=df.groupby(["location", group_field_renamed])["people_fully_vaccinated"].cumsum(),
+            total_boosters=df.groupby(["location", group_field_renamed])["total_boosters"].cumsum(),
             UnknownDose=df.groupby(["location", group_field_renamed])["UnknownDose"].cumsum(),
         )
 
@@ -152,6 +157,7 @@ class ECDC:
                     "total_vaccinations",
                     "people_vaccinated",
                     "people_fully_vaccinated",
+                    "total_boosters",
                     "UnknownDose",
                 ]
             ]
