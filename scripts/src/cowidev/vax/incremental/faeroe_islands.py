@@ -7,10 +7,9 @@ from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 class FaeroeIslands:
-    def __init__(self, source_url: str, location: str, source_url_ref: str):
-        self.source_url = source_url
-        self.source_url_ref = source_url_ref
-        self.location = location
+    location: str = "Faeroe Islands"
+    source_url: str = "https://corona.fo/json/stats"
+    source_url_ref: str = "https://corona.fo/api"
 
     def read(self) -> pd.Series:
         data = request_json(self.source_url)["stats"]
@@ -44,7 +43,7 @@ class FaeroeIslands:
             .pipe(self.pipe_source)
         )
 
-    def to_csv(self, paths):
+    def export(self, paths):
         data = self.read().pipe(self.pipeline)
         increment(
             paths=paths,
@@ -59,11 +58,7 @@ class FaeroeIslands:
 
 
 def main(paths):
-    FaeroeIslands(
-        location="Faeroe Islands",
-        source_url="https://corona.fo/json/stats",
-        source_url_ref="https://corona.fo/api",
-    ).to_csv(paths)
+    FaeroeIslands().export(paths)
 
 
 if __name__ == "__main__":
