@@ -292,7 +292,7 @@ def create_subnational():
     filename = "subnational_cases_deaths.zip"
     compression = {"method": "zip", "archive_name": filename}
     df.to_csv(os.path.join(OUTPUT_PATH, filename), index=False, compression=compression)
-    df_to_s3(df, f"public/jhu/{filename}", extension="csv", compression=compression)
+    df_to_s3(df, f"public/jhu/{filename}", extension="csv", compression=compression, public=True)
 
 
 def main(skip_download=False):

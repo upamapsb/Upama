@@ -27,4 +27,8 @@
 # Latest datasets in S3
 /data/latest/owid-covid-latest.csv https://covid-19.nyc3.digitaloceanspaces.com/public/latest/owid-covid-latest.csv 200
 /data/latest/owid-covid-latest.xlsx https://covid-19.nyc3.digitaloceanspaces.com/public/latest/owid-covid-latest.xlsx 200
-/data/latest/owid-covid-latest.json https://covid-19.nyc3.digitaloceanspaces.com/public/latest/owid-covid-latest.json 200
+/data/latest/owid-covid-latest.json https://covid-19.nyc3.digitaloceanspaces.com/public/latest/owid-covid-latest.json
+200
+
+# Other files
+/data/jhu/subnational_cases_deaths.csv https://covid-19.nyc3.digitaloceanspaces.com/public/jhu/subnational_cases_deaths.csv 200
