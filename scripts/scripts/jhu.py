@@ -6,6 +6,7 @@ import numpy as np
 import pytz
 from datetime import datetime
 from termcolor import colored
+from cowidev.utils.s3 import df_to_s3
 
 CURRENT_DIR = os.path.dirname(__file__)
 sys.path.append(CURRENT_DIR)
@@ -61,7 +62,8 @@ def download_csv():
     for file in files:
         print(file)
         os.system(
-            f"curl --silent -f -o {INPUT_PATH}/{file} -L https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_time_series/{file}"
+            f"curl --silent -f -o {INPUT_PATH}/{file} -L"
+            f" https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_time_series/{file}"
         )
 
 
@@ -288,6 +290,7 @@ def create_subnational():
     ]
     df = df[df.total_cases > 0]
     df.to_csv(os.path.join(OUTPUT_PATH, "subnational_cases_deaths.zip"), index=False, compression="zip")
+    df_to_s3(df, extension="csv", compression="zip")
 
 
 def main(skip_download=False):
