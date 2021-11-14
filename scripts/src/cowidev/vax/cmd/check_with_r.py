@@ -13,24 +13,12 @@ def test_check_with_r(paths):
         project_dir=paths.project_dir,
         vaccinations=paths.tmp_vax_all,
         metadata=paths.tmp_met_all,
-        iso=os.path.join(
-            paths.project_dir, "scripts/input/iso/iso3166_1_alpha_3_codes.csv"
-        ),
-        population=os.path.join(
-            paths.project_dir, "scripts/input/un/population_2020.csv"
-        ),
-        population_sub=os.path.join(
-            paths.project_dir, "scripts/input/owid/subnational_population_2020.csv"
-        ),
-        continent_countries=os.path.join(
-            paths.project_dir, "scripts/input/owid/continents.csv"
-        ),
-        eu_countries=os.path.join(
-            paths.project_dir, "scripts/input/owid/eu_countries.csv"
-        ),
-        income_groups=os.path.join(
-            paths.project_dir, "scripts/input/wb/income_groups.csv"
-        ),
+        iso=os.path.join(paths.project_dir, "scripts/input/iso/iso3166_1_alpha_3_codes.csv"),
+        population=os.path.join(paths.project_dir, "scripts/input/un/population_latest.csv"),
+        population_sub=os.path.join(paths.project_dir, "scripts/input/owid/subnational_population_2020.csv"),
+        continent_countries=os.path.join(paths.project_dir, "scripts/input/owid/continents.csv"),
+        eu_countries=os.path.join(paths.project_dir, "scripts/input/owid/eu_countries.csv"),
+        income_groups=os.path.join(paths.project_dir, "scripts/input/wb/income_groups.csv"),
         manufacturer=os.path.join(
             paths.project_dir,
             "scripts/scripts/vaccinations/output/by_manufacturer/*.csv",
@@ -42,13 +30,9 @@ def test_check_with_r(paths):
             automated=os.path.abspath(os.path.join(tmp, "automation_state.csv")),
             vaccinations=os.path.abspath(os.path.join(tmp, "vaccinations.csv")),
             vaccinations_json=os.path.abspath(os.path.join(tmp, "vaccinations.json")),
-            manufacturer=os.path.abspath(
-                os.path.join(tmp, "vaccinations-by-manufacturer.csv")
-            ),
+            manufacturer=os.path.abspath(os.path.join(tmp, "vaccinations-by-manufacturer.csv")),
             grapher=os.path.abspath(os.path.join(tmp, "COVID-19 - Vaccinations.csv")),
-            grapher_manufacturer=os.path.abspath(
-                os.path.join(tmp, "COVID-19 - Vaccinations by manufacturer.csv")
-            ),
+            grapher_manufacturer=os.path.abspath(os.path.join(tmp, "COVID-19 - Vaccinations by manufacturer.csv")),
             html_table=os.path.abspath(os.path.join(tmp, "source_table.html")),
         )
         generator = DatasetGenerator(inputs, outputs)
@@ -69,21 +53,13 @@ def test_check_with_r(paths):
 
         # Load R generated files
         # paths
-        locations = os.path.join(
-            paths.project_dir, "public/data/vaccinations/locations.csv"
-        )
+        locations = os.path.join(paths.project_dir, "public/data/vaccinations/locations.csv")
         automated = os.path.abspath(
-            os.path.join(
-                paths.project_dir, "scripts/scripts/vaccinations/automation_state.csv"
-            )
+            os.path.join(paths.project_dir, "scripts/scripts/vaccinations/automation_state.csv")
         )
-        vaccinations = os.path.abspath(
-            os.path.join(paths.project_dir, "public/data/vaccinations/vaccinations.csv")
-        )
+        vaccinations = os.path.abspath(os.path.join(paths.project_dir, "public/data/vaccinations/vaccinations.csv"))
         vaccinations_json = os.path.abspath(
-            os.path.join(
-                paths.project_dir, "public/data/vaccinations/vaccinations.json"
-            )
+            os.path.join(paths.project_dir, "public/data/vaccinations/vaccinations.json")
         )
         manufacturer = os.path.abspath(
             os.path.join(
@@ -91,22 +67,14 @@ def test_check_with_r(paths):
                 "public/data/vaccinations/vaccinations-by-manufacturer.csv",
             )
         )
-        grapher = os.path.abspath(
-            os.path.join(
-                paths.project_dir, "scripts/grapher/COVID-19 - Vaccinations.csv"
-            )
-        )
+        grapher = os.path.abspath(os.path.join(paths.project_dir, "scripts/grapher/COVID-19 - Vaccinations.csv"))
         grapher_manufacturer = os.path.abspath(
             os.path.join(
                 paths.project_dir,
                 "scripts/grapher/COVID-19 - Vaccinations by manufacturer.csv",
             )
         )
-        html = os.path.abspath(
-            os.path.join(
-                paths.project_dir, "scripts/scripts/vaccinations/source_table.html"
-            )
-        )
+        html = os.path.abspath(os.path.join(paths.project_dir, "scripts/scripts/vaccinations/source_table.html"))
         # load
         loc_r = pd.read_csv(locations)
         aut_r = pd.read_csv(automated)

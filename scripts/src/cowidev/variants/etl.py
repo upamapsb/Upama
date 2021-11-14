@@ -163,7 +163,7 @@ class VariantsETL:
 
     def pipe_filter_locations(self, df: pd.DataFrame) -> pd.DataFrame:
         # Filter locations
-        populations_path = os.path.join(get_project_dir(), "scripts", "input", "un", "population_2020.csv")
+        populations_path = os.path.join(get_project_dir(), "scripts", "input", "un", "population_latest.csv")
         dfc = pd.read_csv(populations_path)
         df = df[df.location.isin(dfc.entity.unique())]
         return df
