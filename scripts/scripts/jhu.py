@@ -287,7 +287,8 @@ def create_subnational():
         ]
     ]
     df = df[df.total_cases > 0]
-    df.to_csv(os.path.join(OUTPUT_PATH, "subnational_cases_deaths.zip"), index=False, compression="zip")
+    df.to_csv(os.path.join(OUTPUT_PATH, "subnational_cases_deaths.zip"), index=False,
+              compression={"method": "zip", "archive_name": "subnational_cases_deaths.csv"})
 
 
 def main(skip_download=False):
