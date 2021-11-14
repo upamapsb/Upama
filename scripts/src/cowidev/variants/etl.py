@@ -86,6 +86,7 @@ class VariantsETL:
             .pipe(self.pipe_filter_by_num_sequences)
             .pipe(self.pipe_rename_columns)
             .pipe(self.pipe_variants)
+            .pipe(self.pipe_group_by_variants)
             .pipe(self.pipe_check_variants)
             .pipe(self.pipe_location)
             .pipe(self.pipe_date)
@@ -130,14 +131,14 @@ class VariantsETL:
         # Modify/add columns
         df = df.assign(
             variant=df.cluster.str.replace("cluster_counts.", "", regex=True).replace(self.variants_mapping),
-        )
+        ).drop(columns="cluster")
         return df
 
     def pipe_group_by_variants(self, df: pd.DataFrame) -> pd.DataFrame:
-        cols_values = ["num_sequences_total", "num_sequences"]
+        cols_values = ["num_sequences"]
         cols_index = [c for c in df.columns if c not in cols_values]
         df = df.groupby(cols_index, as_index=False).sum()
-        pass
+        return df
 
     def pipe_check_variants(self, df: pd.DataFrame) -> pd.DataFrame:
         variants_missing = set(df.variant).difference(self.variants_mapping.values())
