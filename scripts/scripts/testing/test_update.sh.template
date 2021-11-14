@@ -11,7 +11,7 @@ open $url
 
 # Update excess mortality data & megafile
 source ../../venv/bin/activate
-python3 -m cowidev.excess_mortality etl
+python3 -m cowidev.xm etl
 python3 ../../scripts/megafile.py
 deactivate
 ​
