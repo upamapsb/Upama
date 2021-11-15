@@ -51,7 +51,6 @@ class DatasetGenerator:
             "new_vaccinations_smoothed_per_million",
             "new_vaccinations",
             "new_people_vaccinated_smoothed",
-            "new_people_vaccinated_smoothed_per_hundred",
         ]
 
     def build_aggregates(self):
@@ -205,6 +204,7 @@ class DatasetGenerator:
         return df
 
     def _add_smoothed(self, df: pd.DataFrame) -> pd.DataFrame:
+        # NEW VACCINATIONS
         # Range where total_vaccinations is registered
         dt_min = df.dropna(subset=["total_vaccinations"]).date.min()
         dt_max = df.dropna(subset=["total_vaccinations"]).date.max()
@@ -224,6 +224,24 @@ class DatasetGenerator:
             .mean()
             .apply(lambda x: round(x) if not isnan(x) else x)
         )
+
+        # Add missing dates
+        df = pd.concat([df, df_nan], ignore_index=True).sort_values("date")
+        df.loc[:, "location"] = df.location.dropna().iloc[0]
+
+        # PEOPLE_VACCINATED
+        # Range where people_vaccinated is registered
+        dt_min = df.dropna(subset=["people_vaccinated"]).date.min()
+        dt_max = df.dropna(subset=["people_vaccinated"]).date.max()
+        df_nan = df[(df.date < dt_min) | (df.date > dt_max)]
+
+        # Add missing dates
+        df = df.merge(
+            pd.Series(pd.date_range(dt_min, dt_max), name="date"),
+            how="right",
+        ).sort_values(by="date")
+
+        # Calculate and add smoothed vars
         df["new_people_vaccinated_smoothed"] = (
             df.people_vaccinated.interpolate(method="linear")
             .diff()
@@ -285,9 +303,9 @@ class DatasetGenerator:
             people_fully_vaccinated_per_hundred=(df.people_fully_vaccinated * 100 / df.population).round(2),
             total_boosters_per_hundred=(df.total_boosters * 100 / df.population).round(2),
             new_vaccinations_smoothed_per_million=(df.new_vaccinations_smoothed * 1000000 / df.population).round(),
-            new_people_vaccinated_smoothed_per_hundred=(
-                df.new_people_vaccinated_smoothed * 100 / df.population
-            ).round(),
+            new_people_vaccinated_smoothed_per_hundred=(df.new_people_vaccinated_smoothed * 100 / df.population).round(
+                3
+            ),
         )
         df.loc[:, "people_fully_vaccinated"] = df.people_fully_vaccinated.replace({0: pd.NA})
         df.loc[df.people_fully_vaccinated.isnull(), "people_fully_vaccinated_per_hundred"] = pd.NA
