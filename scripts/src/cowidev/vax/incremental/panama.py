@@ -25,6 +25,7 @@ class Panama:
             "total_vaccinations": data["total_vaccinations"],
             "people_vaccinated": data["dose_1"],
             "people_fully_vaccinated": data["dose_2"],
+            "total_boosters": data["total_vaccinations"] - data["dose_1"] - data["dose_2"],
         }
 
     def _api_request(self):
@@ -62,6 +63,7 @@ class Panama:
             total_vaccinations=data["total_vaccinations"],
             people_vaccinated=data["people_vaccinated"],
             people_fully_vaccinated=data["people_fully_vaccinated"],
+            total_boosters=data["total_boosters"],
             date=data["date"],
             source_url=data["source_url"],
             vaccine=data["vaccine"],
