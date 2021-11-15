@@ -9,7 +9,7 @@ sys.path.append(CURRENT_DIR)
 
 import megafile
 
-POPULATION_CSV_PATH = os.path.join(CURRENT_DIR, "../input/un/population_2020.csv")
+POPULATION_CSV_PATH = os.path.join(CURRENT_DIR, "../input/un/population_latest.csv")
 CONTINENTS_CSV_PATH = os.path.join(CURRENT_DIR, "../input/owid/continents.csv")
 WB_INCOME_GROUPS_CSV_PATH = os.path.join(CURRENT_DIR, "../input/wb/income_groups.csv")
 EU_COUNTRIES_CSV_PATH = os.path.join(CURRENT_DIR, "../input/owid/eu_countries.csv")

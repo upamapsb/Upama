@@ -30,7 +30,7 @@ update_time <- floor_date(now(tzone = "Europe/London"), unit = "hours") %>%
 # Offset date for grapher dataset
 origin_date <- ymd("2020-01-21")
 
-population <- fread("../../input/un/population_2020.csv")
+population <- fread("../../input/un/population_latest.csv")
 population <- population[, .(Country = entity, Population = population)]
 world_population <- population[Country == "World", Population]
 

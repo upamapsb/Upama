@@ -22,13 +22,14 @@ def df_to_s3(
     bucket_name: str = "covid-19",
     public: bool = False,
     extension: str = "csv",
+    **kwargs,
 ) -> Optional[str]:
     with tempfile.TemporaryDirectory() as f:
         output_path = os.path.join(f, f"file.{extension}")
         if extension == "csv":
-            df.to_csv(output_path, index=False)
+            df.to_csv(output_path, index=False, **kwargs)
         elif extension == "xlsx":
-            df.to_excel(output_path, index=False, engine="xlsxwriter")
+            df.to_excel(output_path, index=False, engine="xlsxwriter", **kwargs)
         else:
             raise ValueError(f"Unknown extension {extension}. Only use csv or xlsx!")
         upload_to_s3(output_path, relative_path, bucket_name, public)

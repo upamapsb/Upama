@@ -23,6 +23,8 @@ class Kenya:
         return pd.Series(
             {
                 "total_vaccinations": total_vaccinations,
+                # TODO: Currently this is number of *partially* vaxxed. Table "Fully vaccinated Vs. partially vaccinated
+                # by Priority group" in the PDF reports numbers on JJ alone, so we can do the math.
                 "people_vaccinated": people_vaccinated,
                 "people_fully_vaccinated": people_fully_vaccinated,
                 "date": date,

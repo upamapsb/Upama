@@ -723,7 +723,7 @@ def main_generate_dataset(paths):
         vaccinations=paths.tmp_vax_all,
         metadata=paths.tmp_met_all,
         iso=os.path.join(paths.project_dir, "scripts/input/iso/iso3166_1_alpha_3_codes.csv"),
-        population=os.path.join(paths.project_dir, "scripts/input/un/population_2020.csv"),
+        population=os.path.join(paths.project_dir, "scripts/input/un/population_latest.csv"),
         population_sub=os.path.join(paths.project_dir, "scripts/input/owid/subnational_population_2020.csv"),
         continent_countries=os.path.join(paths.project_dir, "scripts/input/owid/continents.csv"),
         eu_countries=os.path.join(paths.project_dir, "scripts/input/owid/eu_countries.csv"),

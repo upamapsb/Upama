@@ -243,7 +243,7 @@ def countries_missing(
     """
     if not path_population:
         path_population = os.path.abspath(
-            os.path.join(get_project_dir(), "scripts", "input", "un", "population_2020.csv")
+            os.path.join(get_project_dir(), "scripts", "input", "un", "population_latest.csv")
         )
     if not path_locations:
         path_locations = os.path.abspath(

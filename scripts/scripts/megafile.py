@@ -925,7 +925,7 @@ def generate_megafile():
     # - the key is the name of the variable of interest
     # - the value is the path to the corresponding file
     macro_variables = {
-        "population": "un/population_2020.csv",
+        "population": "un/population_latest.csv",
         "population_density": "wb/population_density.csv",
         "median_age": "un/median_age.csv",
         "aged_65_older": "wb/aged_65_older.csv",
@@ -1021,7 +1021,7 @@ def get_num_countries_jhu(csv_filepath):
 
 def load_macro_df():
     macro_variables = {
-        "population": "un/population_2020.csv",
+        "population": "un/population_latest.csv",
         "population_density": "wb/population_density.csv",
         "median_age": "un/median_age.csv",
         "aged_65_older": "wb/aged_65_older.csv",
