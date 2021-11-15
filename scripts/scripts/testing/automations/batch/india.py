@@ -9,6 +9,7 @@ class India:
     units: str = "samples tested"
     source_label: str = "Indian Council of Medical Research"
     source_url: str = "https://raw.githubusercontent.com/datameet/covid19/master/data/icmr_testing_status.json"
+    source_url_ref: str = "https://github.com/datameet/covid19"
     notes: str = "Made available by DataMeet on GitHub"
     rename_columns: dict = {"report_time": "Date", "samples": "Cumulative total"}
 
@@ -27,8 +28,8 @@ class India:
             **{
                 "Country": self.location,
                 "Units": self.units,
-                "Source URL": self.source_url,
                 "Source label": self.source_label,
+                "Source URL": self.source_url_ref,
                 "Notes": self.notes,
             }
         )
