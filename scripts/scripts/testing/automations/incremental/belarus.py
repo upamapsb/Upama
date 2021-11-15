@@ -1,10 +1,11 @@
 import re
 import os
+
+import pandas as pd
+
 from cowidev.utils.utils import get_project_dir
 from cowidev.utils.web import get_soup
-from cowidev.utils.clean import clean_count
-import pandas as pd
-from bs4 import BeautifulSoup
+from cowidev.utils.clean import clean_count, clean_date
 
 
 def main():
@@ -20,19 +21,19 @@ def main():
 
     news_tags = soup.select(".news_text a[href]")
     for news_tag in news_tags:
-        
-        url = "https://www.belarus.by" + news_tag.get('href')
+
+        url = f"https://www.belarus.by{news_tag.get('href')}"
         soup_page = get_soup(url, verify=False)
-        text_page = soup_page.find(class_="ic").get_text()
+        text_page = soup_page.find(class_="ic").text
         match_text = re.search(r"Belarus (has )?performed [\d,]+ tests", text_page)
 
         # Go to next URL if unable to match the pattern
         if match_text is not None:
 
             cumulative_total = clean_count(re.search(r"[\d,]+", match_text.group(0)).group(0))
-            
-            date_raw = soup_page.find(class_="pages_header_inner").get_text()
-            date = str(pd.to_datetime(date_raw).date())
+
+            date_raw = soup_page.find(class_="pages_header_inner").text
+            date = clean_date(date_raw, "%d %b %Y")
 
             if cumulative_total > data["Cumulative total"].max() and date > data["Date"].max():
                 # create and append new row
@@ -44,7 +45,7 @@ def main():
                         "Source URL": url,
                         "Source label": "Government of Belarus",
                         "Notes": pd.NA,
-                        "Cumulative total": cumulative_total
+                        "Cumulative total": cumulative_total,
                     }
                 )
 
