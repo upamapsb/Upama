@@ -613,6 +613,7 @@ internal_files_columns = {
             "excess_mortality_count_week",
             "excess_mortality_count_week_pm",
             "new_deaths_smoothed",
+            "total_deaths",
         ],
         "dropna": "all",
     },
