@@ -34,8 +34,15 @@ class India:
             }
         )
 
+    def pipe_filter_rows(self, df: pd.DataFrame) -> pd.DataFrame:
+        return (
+            df.drop_duplicates(subset="Cumulative total")
+            .drop_duplicates(subset="Date")
+            .drop(df[df['Date'] == "2021-09-02"].index)
+        )
+
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metadata)
+        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metadata).pipe(self.pipe_filter_rows)
 
     def export(self):
         path = os.path.join(
