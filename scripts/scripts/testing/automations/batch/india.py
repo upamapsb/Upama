@@ -2,6 +2,7 @@ import os
 import pandas as pd
 from cowidev.utils.web import request_json
 from cowidev.utils.utils import get_project_dir
+from cowidev.utils.clean import clean_date_series
 
 
 class India:
@@ -15,9 +16,9 @@ class India:
 
     def read(self) -> pd.DataFrame:
         data = request_json(self.source_url)
-        df = pd.DataFrame.from_records(data["rows"])["value"].apply(pd.Series)
-        df = df.drop(columns=["_id", "_rev", "individuals", "confirmed_positive", "source", "type"])
-        df["report_time"] = df["report_time"].str.slice(0, 10)
+        data = [x["value"] for x in data["rows"]]
+        df = pd.DataFrame.from_records(data, columns=["report_time", "samples"])  # Load only columns needed
+        df["report_time"] = clean_date_series(df["report_time"], "%Y-%m-%dT%H:%M:%S.%f%z")  # Clean date
         return df
 
     def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -38,7 +39,7 @@ class India:
         return (
             df.drop_duplicates(subset="Cumulative total")
             .drop_duplicates(subset="Date")
-            .drop(df[df['Date'] == "2021-09-02"].index)
+            .drop(df[df["Date"] == "2021-09-02"].index)
         )
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
