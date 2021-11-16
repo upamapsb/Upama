@@ -615,11 +615,9 @@ internal_files_columns = {
             "new_tests_smoothed_per_thousand",
             "positive_rate",
             "reproduction_rate",
-            "excess_mortality",
-            "excess_mortality_count_week",
-            "excess_mortality_count_week_pm",
             "new_deaths_smoothed",
-            "total_deaths",
+            "total_deaths_per_million",
+            "excess_mortality_cumulative_per_million",  # count_cum_pm
         ],
         "dropna": "all",
     },
