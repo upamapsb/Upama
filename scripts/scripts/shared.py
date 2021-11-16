@@ -7,7 +7,8 @@ from datetime import datetime
 CURRENT_DIR = os.path.dirname(__file__)
 sys.path.append(CURRENT_DIR)
 
-import megafile
+from cowidev.megafile.steps.test import get_testing
+
 
 POPULATION_CSV_PATH = os.path.join(CURRENT_DIR, "../input/un/population_latest.csv")
 CONTINENTS_CSV_PATH = os.path.join(CURRENT_DIR, "../input/owid/continents.csv")
@@ -407,7 +408,7 @@ def inject_exemplars(df):
 
     # Inject boolean when all exenplar conditions hold
     # Use int because the Grapher doesn't handle non-ints very well
-    countries_with_testing_data = set(megafile.get_testing()["location"])
+    countries_with_testing_data = set(get_testing()["location"])
 
     def mapper_bool(row):
         if (

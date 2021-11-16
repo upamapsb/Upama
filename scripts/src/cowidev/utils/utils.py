@@ -2,6 +2,7 @@ import os
 import pytz
 import ntpath
 import tempfile
+import json
 
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
@@ -51,3 +52,18 @@ def xlsx2csv(filename_xlsx: str, filename_csv: str):
 def pd_series_diff_values(a, b):
     common = set(a) & set(b)
     return {*set(a[-a.isin(common)]), *set(b[-b.isin(common)])}
+
+
+def dict_to_compact_json(d: dict):
+    """
+    Encodes a Python dict into valid, minified JSON.
+    """
+    return json.dumps(
+        d,
+        # Use separators without any trailing whitespace to minimize file size.
+        # The defaults (", ", ": ") contain a trailing space.
+        separators=(",", ":"),
+        # The json library by default encodes NaNs in JSON, but this is invalid JSON.
+        # By having this False, an error will be thrown if a NaN exists in the data.
+        allow_nan=False,
+    )
