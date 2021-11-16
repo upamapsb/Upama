@@ -618,6 +618,8 @@ internal_files_columns = {
             "new_deaths_smoothed",
             "total_deaths_per_million",
             "excess_mortality_cumulative_per_million",  # count_cum_pm
+            "total_deaths",
+            "excess_mortality_cumulative_absolute",
         ],
         "dropna": "all",
     },
