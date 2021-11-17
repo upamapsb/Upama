@@ -18,4 +18,4 @@
 
 ---
 
-**📢 Some files are being deprecated on GitHub, but are still available via our stable URLs. Please check #2082**
+**📢 Some files are being deprecated on GitHub, but are still available via our stable URLs. Please check [#2082](https://github.com/owid/covid-19-data/discussions/2082)**
