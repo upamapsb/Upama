@@ -6,11 +6,13 @@ manufacturers were added, so that we can maintain control over this.
 import pandas as pd
 
 from cowidev.vax.utils.files import export_metadata
+from cowidev.vax.utils.utils import build_vaccine_timeline
 
 
 vaccine_mapping = {
     "Comirnaty": "Pfizer/BioNTech",
     "Spikevax": "Moderna",
+    "SPIKEVAX": "Moderna",
     "VAXZEVRIA": "Oxford/AstraZeneca",
     "COVID-19 Vaccine Janssen": "Johnson&Johnson",
 }
@@ -24,6 +26,7 @@ def read(source: str) -> pd.DataFrame:
 
 def check_columns(df: pd.DataFrame) -> pd.DataFrame:
     expected = [
+        "id",
         "datum",
         "vakcina",
         "kraj_nuts_kod",
@@ -107,21 +110,19 @@ def infer_one_dose_vaccines(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def aggregate_by_date(df: pd.DataFrame) -> pd.DataFrame:
+    vaccine_schedule = df[["datum", "vakcina"]].groupby("vakcina").min().to_dict()["datum"]
     return (
         df.groupby(by="datum")
         .agg(
-            vaccine=("vakcina", lambda x: ", ".join(sorted(set(x)))),
             people_vaccinated=(1, "sum"),  # 1 means 1st dose
             people_fully_vaccinated=(2, "sum"),
             total_vaccinations=("total_vaccinations", "sum"),
             total_boosters=("total_boosters", "sum"),
         )
         .reset_index()
+        .rename(columns={"datum": "date"})
+        .pipe(build_vaccine_timeline, vaccine_schedule)
     )
-
-
-def translate_columns(df: pd.DataFrame) -> pd.DataFrame:
-    return df.rename(columns={"datum": "date"})
 
 
 def format_date(df: pd.DataFrame) -> pd.DataFrame:
@@ -147,7 +148,6 @@ def global_pipeline(df: pd.DataFrame) -> pd.DataFrame:
         df.pipe(aggregate_by_date_vaccine)
         .pipe(infer_one_dose_vaccines)
         .pipe(aggregate_by_date)
-        .pipe(translate_columns)
         .pipe(format_date)
         .pipe(enrich_cumulated_sums)
         .pipe(enrich_metadata)
