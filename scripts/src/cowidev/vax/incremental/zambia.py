@@ -12,7 +12,7 @@ class Zambia:
         self.location = "Zambia"
         self.source_url = (
             "https://services7.arcgis.com/OwPYxdqWv7612O7N/arcgis/rest/services/"
-            "service_0c3a3c585d01433da6caf4d0feb4c664/FeatureServer/0/query?f=json&&cacheHint=true&resultOffset=0&"
+            "service_ef4ce56ba48a44ef82991dcf85f62f71/FeatureServer/0/query?f=json&&cacheHint=true&resultOffset=0&"
             "resultRecordCount=100&where=1=1&outFields=*&resultType=standard&returnGeometry=false&"
             "spatialRel=esriSpatialRelIntersects"
         )
