@@ -1,9 +1,9 @@
 import locale
 
 import pandas as pd
+from uk_covid19 import Cov19API
 
 from cowidev.vax.utils.utils import make_monotonic
-from uk_covid19 import Cov19API
 
 
 class UnitedKingdom:
@@ -37,34 +37,6 @@ class UnitedKingdom:
         df = api.get_dataframe()
         return df
 
-    def _fix_metric(self, df: pd.DataFrame, metric: str) -> pd.DataFrame:
-        return df.assign(**{metric: df[f"{metric}_report"].fillna(df[metric])})
-
-    def pipe_fix_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
-        cols = ["people_vaccinated", "people_fully_vaccinated", "total_vaccinations", "total_boosters"]
-        df = df.sort_values(["location", "date"])
-        _tmp = df.groupby("location", as_index=False)[cols].fillna(method="ffill").fillna(0)
-        df.loc[_tmp.index, cols] = _tmp
-        df = df.assign(total_vaccinations=df[["total_vaccinations", "people_vaccinated", "total_boosters"]].max(axis=1))
-        return df
-
-    def pipe_aggregate_first_date(self, df: pd.DataFrame) -> pd.DataFrame:
-        return (
-            df.groupby(
-                [
-                    "location",
-                    "total_vaccinations",
-                    "people_vaccinated",
-                    "people_fully_vaccinated",
-                    "total_boosters",
-                ],
-                as_index=False,
-                dropna=False,
-            )[["date"]]
-            .min()
-            .replace(0, pd.NA)
-        )
-
     def pipe_source_url(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(source_url=self.source_url)
 
@@ -96,12 +68,11 @@ class UnitedKingdom:
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
-            df.pipe(self.pipe_fix_metrics)
-            .pipe(self.pipe_aggregate_first_date)
-            .pipe(self.pipe_source_url)
+            df.pipe(self.pipe_source_url)
             .pipe(self.pipe_vaccine)
             .pipe(self.pipe_select_output_cols)
             .sort_values(by=["location", "date"])
+            .dropna(subset=["total_vaccinations"])
         )
 
     def _filter_location(self, df: pd.DataFrame, location: str) -> pd.DataFrame:
