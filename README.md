@@ -16,5 +16,6 @@
 - [Development: vaccinations (contribution guidelines)](scripts/docs/vaccinations/CONTRIBUTE.md)
 - [Development: testing](scripts/scripts/testing/README.md)
 
+---
 
 **📢 Some files are being deprecated on GitHub, but are still available via our stable URLs. Please check #2082**
