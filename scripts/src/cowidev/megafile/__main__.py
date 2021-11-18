@@ -1,6 +1,4 @@
 """
-DEPRECATED: run `python -m cowidev.megafile` instead
-
 Merges all COVID-19 data into a 'megafile';
 - Follows a long format of 1 row per country & date, and variables as columns;
 - Published in CSV, XLSX, and JSON formats;
