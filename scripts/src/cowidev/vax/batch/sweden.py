@@ -36,24 +36,29 @@ class Sweden(object):
         return df.pipe(self.pipe_vaccine).pipe(self.pipe_columns).pipe(self.pipe_out_columns).pipe(make_monotonic)
 
     def _week_to_date(self, row: int):
-        origin_date = pd.to_datetime("2019-12-29") if row.Vecka >= 52 else pd.to_datetime("2021-01-03")
+        origin_dates = {
+            2020: "2019-12-29",
+            2021: "2021-01-03",
+            2022: "2022-01-02",
+            2023: "2023-01-01",
+        }
+        origin_date = pd.to_datetime(origin_dates[row["År"]])
         return origin_date + pd.DateOffset(days=7 * int(row.Vecka))
 
     def _read_weekly_data(self) -> pd.DataFrame:
         df = pd.read_excel(self.source_url_weekly, sheet_name="Vaccinerade tidsserie")
-        df = df[df["Region"] == "| Sverige |"][["Vecka", "Antal vaccinerade", "Vaccinationsstatus"]]
-        df = df.pivot_table(values="Antal vaccinerade", index="Vecka", columns="Vaccinationsstatus").reset_index()
-        # Week-to-date logic will stop working after 2021
-        if not datetime.date.today().year < 2022:
-            raise ValueError("Check the year! This script is not ready for 2022!")
+        df = df[df["Region"] == "| Sverige |"][["Vecka", "Antal vaccinerade", "Vaccinationsstatus", "År"]]
+        df = df.pivot_table(
+            values="Antal vaccinerade", index=["Vecka", "År"], columns="Vaccinationsstatus"
+        ).reset_index()
         df.loc[:, "date"] = df.apply(self._week_to_date, axis=1).dt.date.astype(str)
         df = (
-            df.drop(columns=["Vecka"])
+            df.drop(columns=["Vecka", "År"])
             .sort_values("date")
             .rename(
                 columns={
                     "Minst 1 dos": "people_vaccinated",
-                    "Färdigvaccinerade": "people_fully_vaccinated",
+                    "Minst 2 doser": "people_fully_vaccinated",
                 }
             )
         )
