@@ -33,9 +33,9 @@ class SouthKorea:
         # if df.shape[1] != 10:
         #     raise ValueError("Number of columns has changed!")
         columns_lv = dict()
-        columns_lv[0] = {"일반 접종", "일자", "전체 누적", "추가 접종"}
+        columns_lv[0] = {"기본 접종", "일자", "전체 누적", "추가 접종"}
         columns_lv[1] = {"모더나 누적", "아스트라제네카 누적", "얀센 누적", "화이자 누적"}
-        columns_lv[2] = {"", "1차", "1차(완료)", "완료", "완료\n(AZ-PF교차미포함)", "완료\n(AZ-PF교차포함)", "추가"}
+        columns_lv[2] = {"", "1차", "1차(완료)", "완료", "완료\n(AZ-PF교차미포함)","완료\n(M-Pf 교차 포함)", "완료\n(AZ-PF교차포함)","완료\n(교차미포함)", "추가"}
 
         columns_lv_wrong = {i: df.columns.levels[i].difference(k) for i, k in columns_lv.items()}
 
@@ -51,16 +51,16 @@ class SouthKorea:
                 "people_vaccinated": df.loc[:, ("전체 누적", "", "1차")],
                 "people_fully_vaccinated": df.loc[:, ("전체 누적", "", "완료")],
                 "total_boosters": df.loc[:, ("전체 누적", "", "추가")],
-                "janssen": df.loc[:, ("일반 접종", "얀센 누적", "1차(완료)")],
+                "janssen": df.loc[:, ("기본 접종", "얀센 누적", "1차(완료)")],
             }
         )
 
     def pipe_extract_manufacturer(self, df: pd.DataFrame) -> pd.DataFrame:
         data = {"date": df.loc[:, "일자"]}
         for vax_og, vax_new in self.vaccines_mapping.items():
-            regular = df.loc[:, ("일반 접종", vax_og)].sum(axis=1)
+            primary = df.loc[:, ("기본 접종", vax_og)].sum(axis=1)
             booster = df.loc[:, ("추가 접종")].get(vax_og)
-            data[vax_new] = regular + (0 if booster is None else booster)
+            data[vax_new] = primary + (0 if booster is None else booster)
         return pd.DataFrame(data)
 
     def pipe_melt_manufacturer(self, df: pd.DataFrame) -> pd.DataFrame:
