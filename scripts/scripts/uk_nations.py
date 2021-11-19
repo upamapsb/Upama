@@ -44,7 +44,7 @@ def get_uk() -> pd.DataFrame:
         "areaCode": "areaCode",
         "cumulative_cases_rate": "cumCasesByPublishDateRate",
         "cumulative_deaths_rate": "cumDeaths28DaysByPublishDateRate",
-        "weekly_cases_rate": "newCasesByPublishDateRollingRate",
+        "weekly_cases_rate": "newCasesBySpecimenDateRollingRate",
         "weekly_deaths_rate": "newDeaths28DaysByDeathDateRollingRate",
     }
     api = Cov19API(filters=filters, structure=structure)
@@ -82,7 +82,7 @@ def get_nation() -> pd.DataFrame:
         "areaCode": "areaCode",
         "cumulative_cases_rate": "cumCasesByPublishDateRate",
         "cumulative_deaths_rate": "cumDeaths28DaysByPublishDateRate",
-        "weekly_cases_rate": "newCasesByPublishDateRollingRate",
+        "weekly_cases_rate": "newCasesBySpecimenDateRollingRate",
         "weekly_deaths_rate": "newDeaths28DaysByDeathDateRollingRate",
     }
     api = Cov19API(filters=filters, structure=structure)
@@ -113,7 +113,7 @@ def get_local() -> pd.DataFrame:
     # Rate
     url_local_rate = (
         "https://api.coronavirus.data.gov.uk/v2/data?areaType=utla&metric=cumCasesByPublishDateRate&"
-        "metric=cumDeaths28DaysByPublishDateRate&metric=newCasesByPublishDateRollingRate&"
+        "metric=cumDeaths28DaysByPublishDateRate&metric=newCasesBySpecimenDateRollingRate&"
         "metric=newDeaths28DaysByDeathDateRollingRate"
     )
     local_rate = requests.get(url_local_rate).json()
@@ -124,7 +124,7 @@ def get_local() -> pd.DataFrame:
             "date": "Year",
             "cumCasesByPublishDateRate": "cumulative_cases_rate",
             "cumDeaths28DaysByPublishDateRate": "cumulative_deaths_rate",
-            "newCasesByPublishDateRollingRate": "weekly_cases_rate",
+            "newCasesBySpecimenDateRollingRate": "weekly_cases_rate",
             "newDeaths28DaysByDeathDateRollingRate": "weekly_deaths_rate",
         }
     )
