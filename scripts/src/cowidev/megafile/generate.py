@@ -107,7 +107,8 @@ def generate_megafile():
     create_dataset(all_covid, macro_variables)
 
     # Store the last updated time
-    export_timestamp("owid-covid-data-last-updated-timestamp.txt")  # @deprecate
+    dir = os.path.join(get_project_dir(), "public", "data")
+    export_timestamp("owid-covid-data-last-updated-timestamp.txt", force_directory=dir)  # @deprecate
 
     print("Generating public/data/README.md")
     generate_readme(readme_template=README_TMP, readme_output=README_FILE)

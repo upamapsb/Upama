@@ -31,3 +31,6 @@
 
 # Other files
 /data/jhu/subnational_cases_deaths.zip https://covid-19.nyc3.digitaloceanspaces.com/public/jhu/subnational_cases_deaths.zip 200
+
+# timestamps
+/data/owid-covid-data-last-updated-timestamp.txt /data/internal/timestamps/owid-covid-data-last-updated-timestamp.txt 301
