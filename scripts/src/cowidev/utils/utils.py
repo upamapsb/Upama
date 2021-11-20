@@ -19,8 +19,13 @@ def get_project_dir(err: bool = False):
     return project_dir
 
 
-def export_timestamp(timestamp_filename: str):
-    timestamp_filename = os.path.join(get_project_dir(), "public", "data", "internal", "timestamp", timestamp_filename)
+def export_timestamp(timestamp_filename: str, force_directory: str = None):
+    if force_directory:
+        timestamp_filename = os.path.join(force_directory, timestamp_filename)
+    else:
+        timestamp_filename = os.path.join(
+            get_project_dir(), "public", "data", "internal", "timestamp", timestamp_filename
+        )
     with open(timestamp_filename, "w") as timestamp_file:
         timestamp_file.write(datetime.utcnow().replace(microsecond=0).isoformat())
 
