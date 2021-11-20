@@ -1,17 +1,22 @@
 import pandas as pd
 
-from cowidev.utils.clean import clean_date_series
 from cowidev.utils.web import request_json
 from cowidev.vax.utils.files import load_query
 
 
-def read(source: str) -> pd.DataFrame:
+def read(source_protocol: str, source_boosters: str) -> pd.DataFrame:
     params = load_query("ireland-metrics", to_str=False)
-    data = request_json(source, params=params)
-    return parse_data(data)
+
+    protocol_data = request_json(source_protocol, params=params)
+    protocol_data = parse_data_protocol(protocol_data)
+
+    boosters_data = request_json(source_boosters, params=params)
+    boosters_data = parse_data_boosters(boosters_data)
+
+    return pd.merge(protocol_data, boosters_data, how="outer", on="date", validate="one_to_one")
 
 
-def parse_data(data: dict) -> int:
+def parse_data_protocol(data: dict) -> int:
     records = [
         {
             "date": x["attributes"]["VaccinationDate"],
@@ -26,10 +31,23 @@ def parse_data(data: dict) -> int:
     return pd.DataFrame.from_records(records)
 
 
+def parse_data_boosters(data: dict) -> int:
+    records = [
+        {
+            "date": x["attributes"]["VaccinationDate"],
+            "immuno_doses": x["attributes"]["ImmunoDoseCum"],
+            "additional_doses": x["attributes"]["AdditionalDoseCum"],
+        }
+        for x in data["features"]
+    ]
+    return pd.DataFrame.from_records(records)
+
+
 def add_totals(df: pd.DataFrame) -> pd.DataFrame:
-    return df.assign(total_vaccinations=df.dose_1 + df.dose_2 + df.single_dose).drop(
-        columns=["dose_1", "dose_2", "single_dose"]
-    )
+    return df.assign(
+        total_vaccinations=df.dose_1 + df.dose_2 + df.single_dose + df.immuno_doses + df.additional_doses,
+        total_boosters=df.immuno_doses + df.additional_doses,
+    ).drop(columns=["dose_1", "dose_2", "single_dose", "immuno_doses", "additional_doses"])
 
 
 def format_date(df: pd.DataFrame) -> pd.DataFrame:
@@ -56,14 +74,23 @@ def enrich_source(df: pd.DataFrame, source: str) -> pd.DataFrame:
 
 
 def pipeline(df: pd.DataFrame, source: str) -> pd.DataFrame:
-    return df.pipe(add_totals).pipe(enrich_location).pipe(enrich_source, source).pipe(format_date).pipe(pipe_vaccine)
+    return (
+        df.fillna(0)
+        .pipe(add_totals)
+        .pipe(enrich_location)
+        .pipe(enrich_source, source)
+        .pipe(format_date)
+        .pipe(pipe_vaccine)
+        .sort_values("date")
+    )
 
 
 def main(paths):
     source_ref = "https://covid19ireland-geohive.hub.arcgis.com/"
-    source = "https://services-eu1.arcgis.com/z6bHNio59iTqqSUY/arcgis/rest/services/COVID19_Daily_Vaccination/FeatureServer/0/query"
+    source_protocol = "https://services-eu1.arcgis.com/z6bHNio59iTqqSUY/arcgis/rest/services/COVID19_Daily_Vaccination/FeatureServer/0/query"
+    source_boosters = "https://services-eu1.arcgis.com/z6bHNio59iTqqSUY/arcgis/rest/services/COVID19_HSE_vaccine_booster_dose_daily/FeatureServer/0/query"
     destination = paths.tmp_vax_out("Ireland")
-    read(source).pipe(pipeline, source_ref).to_csv(destination, index=False)
+    read(source_protocol, source_boosters).pipe(pipeline, source_ref).to_csv(destination, index=False)
 
 
 if __name__ == "__main__":
