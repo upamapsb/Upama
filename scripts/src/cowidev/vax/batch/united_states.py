@@ -46,6 +46,8 @@ class UnitedStates:
                 }
             )
             .dropna(subset=["total_vaccinations"])
+            .sort_values("date")
+            .drop_duplicates(subset=["total_vaccinations"], keep="first")
         )
         return df
 
