@@ -86,14 +86,14 @@ class Peru:
             raise ValueError("Check `people_vaccinated_per_hundred` field! Found values above 100%.")
         if (df.people_fully_vaccinated_per_hundred > 100).sum():
             raise ValueError("Check `people_fully_vaccinated_per_hundred` field! Found values above 100%.")
-        if (df.monday.min() < "2021-02-08") or (df.monday.max() > localdatenow("America/Lima")):
-            raise ValueError("Check `monday` field! Some dates may be out of normal")
+        if (df.sunday.min() < "2021-02-08") or (df.sunday.max() > localdatenow("America/Lima")):
+            raise ValueError("Check `sunday` field! Some dates may be out of normal")
         if not (df.location.unique() == "Peru").all():
             raise ValueError("Invalid values in `location` field!")
         return df
 
     def pipe_age_rename_date(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.rename(columns={"monday": "date"})
+        return df.rename(columns={"sunday": "date"})
 
     def pipeline_age(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.pipe(self.pipe_age_checks).pipe(self.pipe_age_rename_date)
