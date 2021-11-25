@@ -3,30 +3,33 @@ import pandas as pd
 
 def main(paths):
 
-    df = pd.read_csv(
-        "https://raw.githubusercontent.com/sledilnik/data/master/csv/vaccination.csv",
-        usecols=[
-            "date",
-            "vaccination.administered.todate",
-            "vaccination.administered2nd.todate",
-        ],
+    df = (
+        pd.read_csv(
+            "https://raw.githubusercontent.com/sledilnik/data/master/csv/vaccination.csv",
+            usecols=[
+                "date",
+                "vaccination.administered.todate",
+                "vaccination.administered2nd.todate",
+                "vaccination.administered3rd.todate",
+            ],
+        )
+        .rename(
+            columns={
+                "vaccination.administered.todate": "people_vaccinated",
+                "vaccination.administered2nd.todate": "people_fully_vaccinated",
+                "vaccination.administered3rd.todate": "total_boosters",
+            }
+        )
+        .dropna(subset=["people_vaccinated"])
     )
 
-    df = df.rename(
-        columns={
-            "vaccination.administered.todate": "people_vaccinated",
-            "vaccination.administered2nd.todate": "people_fully_vaccinated",
-        }
+    df["total_vaccinations"] = (
+        df["people_vaccinated"] + df["people_fully_vaccinated"].fillna(0) + df["total_boosters"].fillna(0)
     )
 
-    df = df[-df["people_vaccinated"].isna()]
-    df["total_vaccinations"] = df["people_vaccinated"] + df[
-        "people_fully_vaccinated"
-    ].fillna(0)
-
-    df.loc[:, "location"] = "Slovenia"
-    df.loc[:, "source_url"] = "https://covid-19.sledilnik.org/en/stats"
-    df.loc[:, "vaccine"] = "Oxford/AstraZeneca, Pfizer/BioNTech"
+    df["location"] = "Slovenia"
+    df["source_url"] = "https://covid-19.sledilnik.org/en/stats"
+    df["vaccine"] = "Oxford/AstraZeneca, Pfizer/BioNTech"
 
     df.to_csv(paths.tmp_vax_out("Slovenia"), index=False)
 
