@@ -66,7 +66,25 @@ class Denmark:
         df_dose1 = self._load_df_metric(path, "PaabegVacc_daek_DK_prdag.csv", "Kumuleret antal påbegyndt vacc.")
         df_fully = self._load_df_metric(path, "FaerdigVacc_daekning_DK_prdag.csv", "Kumuleret antal færdigvacc.")
         df = df_fully.merge(df_dose1, on="Vaccinedato", how="outer")
+        df_boosters = self._load_boosters(path, "Revacc1_region_dag.csv")
+        df = pd.merge(df, df_boosters, on="Vaccinedato", how="outer")
         return df.sort_values("Vaccinedato")
+
+    def _load_boosters(self, path, filename: str) -> pd.DataFrame:
+        df = (
+            pd.read_csv(
+                os.path.join(path, "Vaccine_DB", filename),
+                encoding="iso-8859-1",
+                usecols=["Revacc. 1 dato", "Antal revacc. 1"],
+                sep=";",
+            )
+            .rename(columns={"Revacc. 1 dato": "Vaccinedato"})
+            .groupby("Vaccinedato", as_index=False)
+            .sum()
+            .sort_values("Vaccinedato")
+        )
+        df["Antal revacc. 1"] = df["Antal revacc. 1"].cumsum()
+        return df
 
     def _load_df_metric(self, path, filename: str, metric_name: str):
         try:
@@ -133,6 +151,7 @@ class Denmark:
                 "Vaccinedato": "date",
                 "Kumuleret antal færdigvacc.": "people_fully_vaccinated",
                 "Kumuleret antal påbegyndt vacc.": "people_vaccinated",
+                "Antal revacc. 1": "total_boosters",
             }
         )
 
