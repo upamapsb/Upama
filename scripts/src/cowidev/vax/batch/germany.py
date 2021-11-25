@@ -13,7 +13,6 @@ class Germany:
     columns_rename: str = {
         "dosen_kumulativ": "total_vaccinations",
         "personen_erst_kumulativ": "people_vaccinated",
-        "personen_voll_kumulativ": "people_fully_vaccinated",
         "dosen_dritt_kumulativ": "total_boosters",
     }
     vaccine_mapping: str = {
@@ -21,6 +20,12 @@ class Germany:
         "dosen_moderna_kumulativ": "Moderna",
         "dosen_astra_kumulativ": "Oxford/AstraZeneca",
         "dosen_johnson_kumulativ": "Johnson&Johnson",
+    }
+    fully_vaccinated_mapping: str = {
+        "dosen_biontech_zweit_kumulativ": "full_biontech",
+        "dosen_moderna_zweit_kumulativ": "full_moderna",
+        "dosen_johnson_erst_kumulativ": "full_jj",
+        "dosen_astra_zweit_kumulativ": "full_astra",
     }
     regex_doses_colnames: str = r"dosen_([a-zA-Z]*)_kumulativ"
 
@@ -46,7 +51,10 @@ class Germany:
         return df.rename(columns=self.columns_rename)
 
     def translate_vaccine_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.rename(columns=self.vaccine_mapping)
+        return df.rename(columns=self.vaccine_mapping).rename(columns=self.fully_vaccinated_mapping)
+
+    def calculate_fully_vaccinated(self, df: pd.DataFrame) -> pd.DataFrame:
+        return df.assign(people_fully_vaccinated=df.full_biontech + df.full_moderna + df.full_jj + df.full_astra)
 
     def enrich_location(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(location="Germany")
@@ -56,6 +64,7 @@ class Germany:
             df.pipe(self._check_vaccines)
             .pipe(self.translate_columns)
             .pipe(self.translate_vaccine_columns)
+            .pipe(self.calculate_fully_vaccinated)
             .pipe(self.enrich_location)
         )
 
