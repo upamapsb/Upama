@@ -47,7 +47,7 @@ class Denmark:
         with tempfile.TemporaryDirectory() as tf:
             # Download and extract
             self._download_data(url, tf)
-            df = self._parse_data(tf)
+            df = self._parse_data(tf, load_boosters=True)
             total_vaccinations_latest = self._parse_total_vaccinations(tf)
             df.loc[df["Vaccinedato"] == df["Vaccinedato"].max(), "total_vaccinations"] = total_vaccinations_latest
         return df
@@ -62,12 +62,13 @@ class Denmark:
         z = zipfile.ZipFile(io.BytesIO(r.content))
         z.extractall(output_path)
 
-    def _parse_data(self, path):
+    def _parse_data(self, path, load_boosters: bool = False):
         df_dose1 = self._load_df_metric(path, "PaabegVacc_daek_DK_prdag.csv", "Kumuleret antal påbegyndt vacc.")
         df_fully = self._load_df_metric(path, "FaerdigVacc_daekning_DK_prdag.csv", "Kumuleret antal færdigvacc.")
         df = df_fully.merge(df_dose1, on="Vaccinedato", how="outer")
-        df_boosters = self._load_boosters(path, "Revacc1_region_dag.csv")
-        df = pd.merge(df, df_boosters, on="Vaccinedato", how="outer")
+        if load_boosters:
+            df_boosters = self._load_boosters(path, "Revacc1_region_dag.csv")
+            df = pd.merge(df, df_boosters, on="Vaccinedato", how="outer")
         return df.sort_values("Vaccinedato")
 
     def _load_boosters(self, path, filename: str) -> pd.DataFrame:
@@ -162,6 +163,7 @@ class Denmark:
         df = df.assign(
             people_vaccinated=df.people_vaccinated.ffill(),
             people_fully_vaccinated=df.people_fully_vaccinated.ffill(),
+            total_boosters=df.total_boosters.ffill(),
         )
         mask = df.date < self.date_limit_one_dose
         df.loc[mask, "total_vaccinations"] = df.loc[mask, "people_vaccinated"] + df.loc[
@@ -169,6 +171,8 @@ class Denmark:
         ].fillna(0)
         # Uncomment to backfill total_vaccinations
         df = df.pipe(self.pipe_total_vax_bfill, n_days=self.num_days_since_launch_single_dose)
+        # Correct total_vaccinations with boosters
+        df.loc[:, "total_vaccinations"] = df["total_vaccinations"] + df["total_boosters"]
         return df
 
     def pipe_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
