@@ -51,6 +51,7 @@ LARGE_DATA_CORRECTIONS = [
     ("France", "2020-11-04", "cases"),
     ("France", "2021-05-20", "cases"),
     ("Mexico", "2021-06-01", "deaths"),
+    ("South Africa", "2021-11-23", "cases"),
     ("Turkey", "2020-12-10", "cases"),
 ]
 
