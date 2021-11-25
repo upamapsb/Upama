@@ -8,7 +8,7 @@ class Norway:
         self.source_url_ref = "https://github.com/folkehelseinstituttet/surveillance_data"
 
     def read(self):
-        return pd.read_csv(source_url)
+        return pd.read_csv(self.source_url)
 
     def pipe_filter_rows(self, df: pd.DataFrame) -> pd.DataFrame:
         return df[df.granularity_geo == "nation"]
