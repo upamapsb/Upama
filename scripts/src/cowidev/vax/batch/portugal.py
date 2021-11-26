@@ -49,6 +49,17 @@ def enrich_columns(df: pd.DataFrame) -> pd.DataFrame:
     return df.assign(location="Portugal", source_url="https://github.com/dssg-pt/covid19pt-data")
 
 
+def add_boosters(df: pd.DataFrame) -> pd.DataFrame:
+    # Booster data is only reported as rounded values in reports or press conference. No booster
+    # data is available from the source as of Nov 26 2021, but Rui Barros from Publico is collecting
+    # the data on GitHub.
+    boosters = pd.read_csv("https://raw.githubusercontent.com/ruimgbarros/vacinacao/master/booster_doses.csv").rename(
+        columns={"Data": "date", "n_doses_booster": "total_boosters"}
+    )
+    boosters["date"] = boosters.date.str.slice(0, 10)
+    return pd.merge(df, boosters, how="left", on="date", validate="one_to_one")
+
+
 def sanity_checks(df: pd.DataFrame) -> pd.DataFrame:
     assert all(df.total_vaccinations.fillna(0) >= df.people_vaccinated.fillna(0))
     return df[-df.total_vaccinations.isna()]
@@ -61,6 +72,7 @@ def pipeline(df: pd.DataFrame) -> pd.DataFrame:
         .pipe(calculate_metrics)
         .pipe(enrich_vaccine_name)
         .pipe(enrich_columns)
+        .pipe(add_boosters)
         .pipe(sanity_checks)
         .pipe(make_monotonic)
         .sort_values("date")
