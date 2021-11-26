@@ -16,8 +16,7 @@ COLUMNS = [
     "prima_dose",
     "seconda_dose",
     "pregressa_infezione",
-    "dose_aggiuntiva",
-    "dose_booster",
+    "dose_addizionale_booster",
 ]
 COLUMNS_RENAME = {
     "data_somministrazione": "date",
@@ -65,17 +64,9 @@ class Italy:
         return df.replace({"vaccine": self.vaccine_mapping})
 
     def get_total_vaccinations(self, df: pd.DataFrame) -> pd.DataFrame:
-        # The EMA differentiates between additional doses (aggiuntiva) for immunocompromised people
-        # who need it to complete the vaccination cycle (given after 4 weeks), and booster doses for
-        # people who completed the vaccination cycle and will get another one (given after 6 months)
-        # We add the two fields to obtain the total_boosters
         return df.assign(
-            total_vaccinations=df.prima_dose
-            + df.seconda_dose
-            + df.pregressa_infezione
-            + df.dose_aggiuntiva
-            + df.dose_booster,
-            total_boosters=df.dose_aggiuntiva + df.dose_booster,
+            total_vaccinations=df.prima_dose + df.seconda_dose + df.pregressa_infezione + df.dose_addizionale_booster,
+            total_boosters=df.dose_addizionale_booster,
         )
 
     def pipeline_base(self, df: pd.DataFrame) -> pd.DataFrame:
