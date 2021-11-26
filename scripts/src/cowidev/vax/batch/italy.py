@@ -1,7 +1,9 @@
 import pandas as pd
 from typing import List, Tuple
 
-from cowidev.vax.utils.files import export_metadata
+from cowidev.vax.utils.files import export_metadata_manufacturer
+from cowidev.utils import paths
+
 
 LOCATION = "Italy"
 SOURCE_URL = (
@@ -153,24 +155,19 @@ class Italy:
     def pipeline_manufacturer(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.pipe(self.get_total_vaccinations_by_manufacturer).pipe(self.enrich_location)
 
-    def to_csv(self, paths) -> None:
+    def to_csv(self) -> None:
         vaccine_data = self.read().pipe(self.pipeline_base)
 
         self.vax_date_mapping = self.vaccine_start_dates(vaccine_data)
 
-        vaccine_data.pipe(self.pipeline).to_csv(paths.tmp_vax_out(self.location), index=False)
+        vaccine_data.pipe(self.pipeline).to_csv(paths.out_vax(self.location), index=False)
 
         df_man = vaccine_data.pipe(self.pipeline_manufacturer)
-        df_man.to_csv(paths.tmp_vax_out_man(self.location), index=False)
-        export_metadata(
-            df_man,
-            "Extraordinary commissioner for the Covid-19 emergency",
-            self.source_url,
-            paths.tmp_vax_metadata_man,
-        )
+        df_man.to_csv(paths.out_vax(self.location, manufacturer=True), index=False)
+        export_metadata_manufacturer(df_man, "Extraordinary commissioner for the Covid-19 emergency", self.source_url)
 
 
-def main(paths):
+def main():
     Italy(
         source_url=SOURCE_URL,
         location=LOCATION,
@@ -178,7 +175,7 @@ def main(paths):
         columns_rename=COLUMNS_RENAME,
         vaccine_mapping=VACCINE_MAPPING,
         one_dose_vaccines=ONE_DOSE_VACCINES,
-    ).to_csv(paths)
+    ).to_csv()
 
 
 if __name__ == "__main__":

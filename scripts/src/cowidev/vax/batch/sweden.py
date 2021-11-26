@@ -3,8 +3,8 @@ import requests
 import pandas as pd
 
 from cowidev.utils.clean import clean_count, clean_date
-from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.utils import make_monotonic
+from cowidev.utils import paths
 
 
 class Sweden(object):
@@ -171,11 +171,11 @@ class Sweden(object):
             ]
         ]
 
-    def export(self, paths):
+    def export(self):
         """Generalized."""
         df = self.read().pipe(self.pipeline)
-        df.to_csv(paths.tmp_vax_out(self.location), index=False)
+        df.to_csv(paths.out_vax(self.location), index=False)
 
 
-def main(paths):
-    Sweden().export(paths)
+def main():
+    Sweden().export()

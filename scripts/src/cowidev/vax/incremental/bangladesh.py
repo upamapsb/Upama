@@ -47,10 +47,9 @@ class Bangladesh:
     def pipeline(self, ds: pd.Series) -> pd.Series:
         return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine).pipe(self.pipe_source)
 
-    def export(self, paths):
+    def export(self):
         data = self.read().pipe(self.pipeline)
         increment(
-            paths=paths,
             location=data["location"],
             total_vaccinations=data["total_vaccinations"],
             people_vaccinated=data["people_vaccinated"],
@@ -61,5 +60,5 @@ class Bangladesh:
         )
 
 
-def main(paths):
-    Bangladesh().export(paths)
+def main():
+    Bangladesh().export()

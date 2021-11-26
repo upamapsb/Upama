@@ -1,9 +1,9 @@
 import re
-from typing import Dict
 
 import pandas as pd
 
-from cowidev.vax.utils.files import export_metadata
+from cowidev.vax.utils.files import export_metadata_manufacturer
+from cowidev.utils import paths
 
 
 class Germany:
@@ -116,19 +116,19 @@ class Germany:
     def pipeline_manufacturer(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.pipe(self.melt_manufacturers)
 
-    def to_csv(self, paths):
+    def export(self):
         df_base = self.read().pipe(self.pipeline_base)
         # Export data
         df = df_base.pipe(self.pipeline)
-        df.to_csv(paths.tmp_vax_out(self.location), index=False)
+        df.to_csv(paths.out_vax(self.location), index=False)
         # Export manufacturer data
         df = df_base.pipe(self.pipeline_manufacturer)
-        df.to_csv(paths.tmp_vax_out_man(self.location), index=False)
-        export_metadata(df, "Robert Koch Institut", self.source_url_ref, paths.tmp_vax_metadata_man)
+        df.to_csv(paths.out_vax(self.location, manufacturer=True), index=False)
+        export_metadata_manufacturer(df, "Robert Koch Institut", self.source_url_ref)
 
 
-def main(paths):
-    Germany().to_csv(paths)
+def main():
+    Germany().export()
 
 
 if __name__ == "__main__":

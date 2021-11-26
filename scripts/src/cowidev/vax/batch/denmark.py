@@ -10,6 +10,7 @@ import pandas as pd
 from cowidev.utils.clean import clean_date_series
 from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.checks import VACCINES_ONE_DOSE
+from cowidev.utils import paths
 
 
 SEPARATOR = ";"
@@ -206,9 +207,9 @@ class Denmark:
             .pipe(self.pipe_filter_rows)
         )
 
-    def export(self, paths):
+    def export(self):
         df = self.read()
-        df.pipe(self.pipeline).to_csv(paths.tmp_vax_out("Denmark"), index=False)
+        df.pipe(self.pipeline).to_csv(paths.out_vax(self.location), index=False)
 
     def pipe_total_vax_bfill(self, df: pd.DataFrame, n_days: int) -> pd.DataFrame:
         soup = get_soup(self.source_url_ref)
@@ -236,5 +237,5 @@ class Denmark:
         return df
 
 
-def main(paths):
-    Denmark().export(paths)
+def main():
+    Denmark().export()

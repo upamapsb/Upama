@@ -1,7 +1,8 @@
 import pandas as pd
+from cowidev.utils import paths
 
 
-def main(paths):
+def main():
 
     df = (
         pd.read_csv(
@@ -31,7 +32,7 @@ def main(paths):
     df["source_url"] = "https://covid-19.sledilnik.org/en/stats"
     df["vaccine"] = "Oxford/AstraZeneca, Pfizer/BioNTech"
 
-    df.to_csv(paths.tmp_vax_out("Slovenia"), index=False)
+    df.to_csv(paths.out_vax("Slovenia"), index=False)
 
 
 if __name__ == "__main__":

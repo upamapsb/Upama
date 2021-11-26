@@ -1,6 +1,7 @@
 import pandas as pd
 
 from cowidev.vax.utils.utils import make_monotonic
+from cowidev.utils import paths
 
 
 def read(source_url: str) -> pd.DataFrame:
@@ -67,9 +68,9 @@ def pipeline(df: pd.DataFrame) -> pd.DataFrame:
     )
 
 
-def main(paths):
+def main():
     source_url = "https://github.com/dssg-pt/covid19pt-data/raw/master/vacinas.csv"
-    destination = paths.tmp_vax_out("Portugal")
+    destination = paths.out_vax("Portugal")
     read(source_url).pipe(pipeline).to_csv(destination, index=False)
 
 

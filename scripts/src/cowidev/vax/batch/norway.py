@@ -1,4 +1,5 @@
 import pandas as pd
+from cowidev.utils import paths
 
 
 class Norway:
@@ -57,10 +58,10 @@ class Norway:
             .pipe(self.pipe_metadata)
         )
 
-    def export(self, paths):
+    def export(self):
         df = self.read().pipe(self.pipeline)
-        df.to_csv(paths.tmp_vax_out(self.location), index=False)
+        df.to_csv(paths.out_vax(self.location), index=False)
 
 
-def main(paths):
-    Norway().export(paths)
+def main():
+    Norway().export()
