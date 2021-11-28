@@ -3,7 +3,7 @@ import json
 
 import pandas as pd
 
-from cowidev.utils.clean import clean_count
+from cowidev.utils.clean import clean_count, clean_date_series
 from cowidev.utils.web import get_soup
 from cowidev.vax.utils.incremental import increment
 from cowidev.vax.utils.files import export_metadata_manufacturer
@@ -72,7 +72,7 @@ def main():
 
     df = df.melt("date", var_name="vaccine", value_name="total_vaccinations")
 
-    df["date"] = pd.to_datetime(df["date"], format="%d.%m.%y").astype(str)
+    df["date"] = clean_date_series(df["date"], "%d.%m.%Y")
     df["total_vaccinations"] = pd.to_numeric(df["total_vaccinations"], errors="coerce").fillna(0)
     df["total_vaccinations"] = df.sort_values("date").groupby("vaccine", as_index=False)["total_vaccinations"].cumsum()
     df["location"] = "Iceland"
