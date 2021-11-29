@@ -16,7 +16,7 @@ from cowidev.vax.utils.utils import get_latest_file
 class Brazil:
     def __init__(self) -> None:
         self.location = "Brazil"
-        self.source_url = "https://qsprod.saude.gov.br/extensions/DEMAS_C19_Vacina_V2/DEMAS_C19_Vacina_v2.html"
+        self.source_url = "https://infoms.saude.gov.br/extensions/DEMAS_C19_Vacina_v2/DEMAS_C19_Vacina_v2.html"
         self._download_path = "/tmp"
 
     def read(self) -> pd.Series:
