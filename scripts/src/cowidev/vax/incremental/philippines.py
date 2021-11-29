@@ -33,15 +33,26 @@ class Philippines:
             # Metrics
             total_vaccinations = clean_count(spans[8].text)
             people_fully_vaccinated = clean_count(spans[15].text)
+            total_boosters = clean_count(spans[18].text)
         if total_vaccinations < people_fully_vaccinated:
             raise ValueError(
                 "Check values for:\n"
                 f"total_vaccinations\t\t{total_vaccinations}\npeople_fully_vaccinated\t\t{people_fully_vaccinated}"
             )
+        if total_vaccinations < total_boosters:
+            raise ValueError(
+                f"Check values for:\ntotal_vaccinations\t\t{total_vaccinations}\ntotal_boosters\t\t{total_boosters}"
+            )
+        if people_fully_vaccinated < total_boosters:
+            raise ValueError(
+                "Check values for:\n"
+                f"people_fully_vaccinated\t\t{people_fully_vaccinated}\ntotal_boosters\t\t{total_boosters}"
+            )
         return {
             "total_vaccinations": total_vaccinations,
             # "people_vaccinated": people_vaccinated,
             "people_fully_vaccinated": people_fully_vaccinated,
+            "total_boosters": total_boosters,
             "date": date,
         }
 
@@ -72,6 +83,7 @@ class Philippines:
             total_vaccinations=data["total_vaccinations"],
             # people_vaccinated=data["people_vaccinated"],
             people_fully_vaccinated=data["people_fully_vaccinated"],
+            total_boosters=data["total_boosters"],
             date=data["date"],
             source_url=data["source_url"],
             vaccine=data["vaccine"],
