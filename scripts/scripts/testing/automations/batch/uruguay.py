@@ -29,7 +29,8 @@ class Uruguay:
     def pipe_date(df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(Date=clean_date_series(df.Date, "%Y-%m-%d"))
 
-    def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
+    @staticmethod
+    def pipe_metrics(df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(**{"Cumulative total": df["Cumulative total"].cumsum()})
 
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
