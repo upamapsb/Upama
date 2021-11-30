@@ -58,11 +58,11 @@ class USStatesETL:
     def transform(self, df: pd.DataFrame):
         return (
             df.pipe(pipe_rename_cols)
+            .pipe(pipe_monotonic_by_state)
             .pipe(pipe_per_capita)
             .pipe(pipe_smoothed)
             .pipe(pipe_usage)
             .drop(columns=["Census2019"])
-            .pipe(pipe_monotonic_by_state)
             .sort_values(["location", "date"])
             .pipe(pipe_select_columns)
             .pipe(pipe_checks)
