@@ -32,7 +32,7 @@ class Bulgaria:
         data = self._parse_data()
         increment(
             count=data["count"],
-            sheet_name="Bulgaria2",
+            sheet_name="Bulgaria",
             country=self.location,
             units=self.units,
             date=data["date"],

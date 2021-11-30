@@ -1,13 +1,13 @@
 df <-
   fread(
     "https://raw.githubusercontent.com/COVID19-Malta/COVID19-Data/master/COVID-19%20Malta%20-%20COVID%20Tests.csv",
-    select = c("Publication date", "Total PCR and rapid antigen tests"),
+    select = c("Publication date", "Total NAA and rapid antigen tests"),
     showProgress = FALSE
   )
 
 setnames(
   df,
-  c("Publication date", "Total PCR and rapid antigen tests"),
+  c("Publication date", "Total NAA and rapid antigen tests"),
   c("Date", "Cumulative total")
 )
 
