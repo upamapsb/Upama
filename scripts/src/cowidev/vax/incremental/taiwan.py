@@ -66,18 +66,22 @@ class Taiwan:
 
     def _parse_stats(self, df: pd.DataFrame) -> int:
         if (
-            df.shape[1] != 4
+            (df.shape[1] != 3 and df.shape[1] != 4)
             or df.iloc[0, 0] != "廠牌"
             or df.iloc[0, 1] != "劑次"
             or not (df.iloc[-1, 0] == "總計" or df.iloc[-2, 0] == "總計")
         ):
             raise ValueError(f"Table 1: format has changed!")
 
-        num_dose1 = df[df[1] == "第 1劑"].tail(1).values[0][-1]
-        num_dose1 = clean_count(num_dose1)
+        num1 = df[df[1] == "第 1劑"].tail(1).values[0][-1]
+        num2 = df[df[1] == "第 2劑"].tail(1).values[0][-1]
 
-        num_dose2 = df[df[1] == "第 2劑"].tail(1).values[0][-1]
-        num_dose2 = clean_count(num_dose2)
+        if df.shape[1] == 4:
+            num_dose1 = clean_count(num1)
+            num_dose2 = clean_count(num2)
+        if df.shape[1] == 3:
+            num_dose1 = clean_count(num1.split(" ")[-1])
+            num_dose2 = clean_count(num2.split(" ")[-1])
 
         return {
             "total_vaccinations": (num_dose1 + num_dose2),
