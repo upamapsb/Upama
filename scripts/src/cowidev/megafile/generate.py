@@ -96,7 +96,7 @@ def generate_megafile():
     )
 
     # Drop columns not included in final dataset
-    cols_drop = ["excess_mortality_count_week", "excess_mortality_count_week_pm"]
+    cols_drop = ["excess_mortality_count_week", "excess_mortality_count_week_pm", "share_cases_sequenced"]
     all_covid = all_covid.drop(columns=cols_drop)
 
     # # Create light versions of complete dataset with only the latest data point

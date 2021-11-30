@@ -35,6 +35,7 @@ internal_files_columns = {
             "positive_rate",
             "tests_per_case",
             "tests_units",
+            "share_cases_sequenced",
             "stringency_index",
         ],
         "dropna": "all",

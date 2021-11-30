@@ -6,6 +6,7 @@ from cowidev.megafile.steps.hosp import get_hosp
 from cowidev.megafile.steps.jhu import get_jhu
 from cowidev.megafile.steps.reprod import get_reprod
 from cowidev.megafile.steps.test import get_testing
+from cowidev.megafile.steps.variants import get_variants
 from cowidev.megafile.steps.vax import get_vax
 
 
@@ -41,6 +42,12 @@ def get_base_dataset():
         country_mapping=os.path.join(INPUT_DIR, "bsg", "bsg_country_standardised.csv"),
     )
 
+    print("Fetching variants dataset…")
+    variants = get_variants(
+        variants_file=os.path.join(DATA_DIR, "variants", "covid-variants.csv"),
+        cases_file=os.path.join(DATA_DIR, "jhu", "full_data.csv"),
+    )
+
     # Big merge
     return (
         jhu.merge(reprod, on=["date", "location"], how="outer")
@@ -48,5 +55,6 @@ def get_base_dataset():
         .merge(testing, on=["date", "location"], how="outer")
         .merge(vax, on=["date", "location"], how="outer")
         .merge(cgrt, on=["date", "location"], how="left")
+        .merge(variants, on=["date", "location"], how="left")
         .sort_values(["location", "date"])
     )
