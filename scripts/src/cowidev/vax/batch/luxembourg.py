@@ -31,13 +31,13 @@ def correct_time_series(df: pd.DataFrame) -> pd.DataFrame:
     df.loc[df.date >= "2021-04-14", "people_fully_vaccinated"] = pd.NA
     fix = pd.DataFrame(
         {
-            "date": [pd.to_datetime("2021-11-07")],
+            "date": [pd.to_datetime("2021-11-29")],
             "people_vaccinated": pd.NA,
-            "people_fully_vaccinated": 418437,
+            "people_fully_vaccinated": 429705,
             "total_boosters": pd.NA,
             "total_vaccinations": pd.NA,
             "source_url": [
-                "https://download.data.public.lu/resources/covid-19-rapports-journaliers/20211108-170457/coronavirus-rapport-journalier-08112021.pdf"
+                "https://download.data.public.lu/resources/covid-19-rapports-journaliers/20211130-172453/coronavirus-rapport-journalier-30112021.pdf"
             ],
         }
     )
