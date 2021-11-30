@@ -1,246 +1,318 @@
-location,date,total_vaccinations,people_vaccinated,vaccine,source_url,people_fully_vaccinated,total_boosters
-Brazil,2021-01-16,0,0,Sinovac,https://g1.globo.com/sp/sao-paulo/noticia/2021/01/17/apos-aprovacao-da-anvisa-governo-de-sp-aplica-1a-dose-da-coronavac-antes-do-inicio-do-plano-nacional-de-vacinacao.ghtml,,
-Brazil,2021-01-17,112,112,Sinovac,https://g1.globo.com/sp/sao-paulo/noticia/2021/01/17/apos-aprovacao-da-anvisa-governo-de-sp-aplica-1a-dose-da-coronavac-antes-do-inicio-do-plano-nacional-de-vacinacao.ghtml,,
-Brazil,2021-01-18,1109,1109,Sinovac,https://coronavirusbra1.github.io/,,
-Brazil,2021-01-19,11470,11470,Sinovac,https://coronavirusbra1.github.io/,,
-Brazil,2021-01-20,28543,28543,Sinovac,https://coronavirusbra1.github.io/,,
-Brazil,2021-01-21,136519,136519,Sinovac,https://coronavirusbra1.github.io/,,
-Brazil,2021-01-22,245877,245877,Sinovac,https://coronavirusbra1.github.io/,,
-Brazil,2021-01-23,537774,537774,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,,
-Brazil,2021-01-24,604722,604722,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,,
-Brazil,2021-01-25,700608,700608,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,,
-Brazil,2021-01-26,848883,848883,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,,
-Brazil,2021-01-27,1129885,1129885,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,,
-Brazil,2021-01-28,1450900,1450900,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,,
-Brazil,2021-01-29,1668032,1656851,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,,
-Brazil,2021-01-30,2003211,1923813,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,,
-Brazil,2021-01-31,2074059,2046523,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,,
-Brazil,2021-02-01,2124307,2107624,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,,
-Brazil,2021-02-02,2292551,2292551,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,,
-Brazil,2021-02-03,2521704,2521704,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,,
-Brazil,2021-02-04,3073057,3073057,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,,
-Brazil,2021-02-05,3074906,3074906,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,,
-Brazil,2021-02-06,3401383,3399421,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,1962,
-Brazil,2021-02-07,3553681,3534004,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,19677,
-Brazil,2021-02-08,3605538,3579850,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,25688,
-Brazil,2021-02-09,3820207,3786591,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,33616,
-Brazil,2021-02-10,4120332,4069677,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,50655,
-Brazil,2021-02-11,4406835,4326075,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,80760,
-Brazil,2021-02-12,4696136,4586270,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,109866,
-Brazil,2021-02-13,5125206,4946738,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,178468,
-Brazil,2021-02-14,5236943,5042713,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,194230,
-Brazil,2021-02-15,5293979,5076110,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,217869,
-Brazil,2021-02-16,5609937,5324317,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,285620,
-Brazil,2021-02-17,5883539,5326007,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,557532,
-Brazil,2021-02-18,6206680,5482925,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,723755,
-Brazil,2021-02-19,6535156,5640483,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,894673,
-Brazil,2021-02-20,6813168,5756361,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,1056807,
-Brazil,2021-02-21,6950802,5817908,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,1132894,
-Brazil,2021-02-22,7028356,5857080,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,1171276,
-Brazil,2021-02-23,7297061,6002873,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,1294188,
-Brazil,2021-02-24,7551676,6116082,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,1435594,
-Brazil,2021-02-25,7799000,6202055,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,1596945,
-Brazil,2021-02-26,8101787,6346769,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,1755018,
-Brazil,2021-02-27,8322042,6437836,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,1884206,
-Brazil,2021-02-28,8433568,6518628,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,1914940,
-Brazil,2021-03-01,8465403,6542206,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,1923197,
-Brazil,2021-03-02,8841027,6806293,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,2034734,
-Brazil,2021-03-03,9277322,7114219,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,2163103,
-Brazil,2021-03-04,9739676,7417852,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,2321824,
-Brazil,2021-03-05,10169160,7701146,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/,2468014,
-Brazil,2021-03-10,10362487,7851531,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,2510956,
-Brazil,2021-03-11,10740859,8092244,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,2648615,
-Brazil,2021-03-12,11149530,8360366,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,2789164,
-Brazil,2021-03-13,11362190,8512960,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,2849230,
-Brazil,2021-03-14,11422666,8561847,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,2860819,
-Brazil,2021-03-15,11895560,8919356,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,2976204,
-Brazil,2021-03-17,12682290,9451188,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,3231102,
-Brazil,2021-03-18,13013331,9709526,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,3303805,
-Brazil,2021-03-19,13335728,9970231,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,3365497,
-Brazil,2021-03-20,13479165,10099070,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,3380095,
-Brazil,2021-03-21,13562176,10168973,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,3393203,
-Brazil,2021-03-22,14116560,10609471,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,3507089,
-Brazil,2021-03-23,15209201,11559487,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,3649714,
-Brazil,2021-03-24,15943964,12148769,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,3795195,
-Brazil,2021-03-25,16557071,12639545,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,3917526,
-Brazil,2021-03-26,17032868,13053114,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,3979754,
-Brazil,2021-03-27,17519083,13487207,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,4031876,
-Brazil,2021-03-28,17706983,13659406,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,4047577,
-Brazil,2021-03-29,18082153,13988029,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,4094124,
-Brazil,2021-03-30,18222559,14112509,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,4110050,
-Brazil,2021-03-31,19155981,14921376,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,4234605,
-Brazil,2021-04-02,20632877,16099532,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,4533345,
-Brazil,2021-04-03,20956770,16377083,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,4579687,
-Brazil,2021-04-04,21070128,16472281,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,4597847,
-Brazil,2021-04-05,21960953,17128933,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,4832020,
-Brazil,2021-04-06,22850791,17791338,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,5059453,
-Brazil,2021-04-07,24197996,18859274,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,5338722,
-Brazil,2021-04-08,24981199,19386057,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,5595142,
-Brazil,2021-04-09,25735314,19886870,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,5848444,
-Brazil,2021-04-10,26548845,20513828,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,6035017,
-Brazil,2021-04-11,26741261,20654434,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,6086827,
-Brazil,2021-04-12,27432994,21080623,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,6352371,
-Brazil,2021-04-13,30801723,23602070,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,7199653,
-Brazil,2021-04-14,31703967,24197321,"Oxford/AstraZeneca, Sinovac",https://viz.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,7506646,
-Brazil,2021-04-18,32947066,24350046,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,8597020,
-Brazil,2021-04-19,33755229,24776701,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,8978528,
-Brazil,2021-04-20,33807132,24805515,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,9001617,
-Brazil,2021-04-21,34058640,24918188,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,9140452,
-Brazil,2021-04-22,35024957,25340967,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,9683990,
-Brazil,2021-04-23,37112833,26398005,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,10714828,
-Brazil,2021-04-24,37730651,26687711,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,11042940,
-Brazil,2021-04-25,38027113,26873143,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,11153970,
-Brazil,2021-04-26,38986878,27345796,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,11641082,
-Brazil,2021-04-27,40168799,27920546,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,12248253,
-Brazil,2021-04-28,41003659,28312000,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,12691659,
-Brazil,2021-04-29,41989957,28778338,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,13211619,
-Brazil,2021-04-30,42698862,29149512,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,13549350,
-Brazil,2021-05-01,43036179,29336953,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,13699226,
-Brazil,2021-05-02,43173356,29421191,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,13752165,
-Brazil,2021-05-03,43962159,29865013,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,14097146,
-Brazil,2021-05-04,45273825,30658945,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,14614880,
-Brazil,2021-05-05,46185689,31265483,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,14920206,
-Brazil,2021-05-06,46542392,31504414,"Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,15037978,
-Brazil,2021-05-07,46875460,31722544,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,15152916,
-Brazil,2021-05-10,47365348,32101075,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,15264273,
-Brazil,2021-05-11,48193472,32647725,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,15545747,
-Brazil,2021-05-12,49188608,33332789,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,15855819,
-Brazil,2021-05-13,50308106,34092728,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,16215378,
-Brazil,2021-05-14,52093242,35383566,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,16709676,
-Brazil,2021-05-15,52641583,35731848,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,16909735,
-Brazil,2021-05-16,52771668,35801333,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,16970335,
-Brazil,2021-05-17,53624328,36355939,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,17268389,
-Brazil,2021-05-18,54332240,36844286,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,17487954,
-Brazil,2021-05-19,55098913,37376193,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,17722720,
-Brazil,2021-05-20,55960152,37937840,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,18022312,
-Brazil,2021-05-25,63740557,42702699,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,21037858,
-Brazil,2021-05-26,64568609,43239648,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,21328961,
-Brazil,2021-05-27,65268576,43727936,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,21540640,
-Brazil,2021-05-28,66432341,44564785,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,21867556,
-Brazil,2021-05-29,66934363,44956732,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,21977631,
-Brazil,2021-05-30,67088046,45079934,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,22008112,
-Brazil,2021-05-31,67482730,45376214,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,22106516,
-Brazil,2021-06-01,68244216,45940210,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,22304006,
-Brazil,2021-06-02,68919860,46498375,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,22421485,
-Brazil,2021-06-03,70330300,47636424,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,22693876,
-Brazil,2021-06-04,70743531,48007886,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,22735645,
-Brazil,2021-06-05,71429257,48576572,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,22852685,
-Brazil,2021-06-06,71691137,48802098,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,22889039,
-Brazil,2021-06-09,74812794,51465240,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,23347554,
-Brazil,2021-06-10,75890097,52429219,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,23460878,
-Brazil,2021-06-11,76758587,53224020,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,23534567,
-Brazil,2021-06-13,78133938,54489914,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,23644024,
-Brazil,2021-06-14,78906225,55226467,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,23679758,
-Brazil,2021-06-15,80268207,56479200,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,23789007,
-Brazil,2021-06-16,81540602,57676179,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,23864423,
-Brazil,2021-06-17,84102155,60066656,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,24035499,
-Brazil,2021-06-18,85390996,61270446,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,24120550,
-Brazil,2021-06-19,86475842,62276105,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,24199737,
-Brazil,2021-06-20,86960570,62741992,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,24218578,
-Brazil,2021-06-21,88353063,64034871,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,24318192,
-Brazil,2021-06-22,90077011,,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,,
-Brazil,2021-06-23,91593968,67005097,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,24588871,
-Brazil,2021-06-24,92917274,68185022,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,24732252,
-Brazil,2021-06-27,96804664,71206835,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,25597829,
-Brazil,2021-06-28,96913929,71291563,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,25622366,
-Brazil,2021-06-29,98827485,72722360,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,26105125,
-Brazil,2021-07-01,102780096,75783345,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,26996751,
-Brazil,2021-07-04,105301611,77653882,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,27647729,
-Brazil,2021-07-05,106909223,78950076,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,27959147,
-Brazil,2021-07-06,107628177,79467536,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,28160641,
-Brazil,2021-07-07,110101829,81134483,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,28967346,
-Brazil,2021-07-08,111477691,83713097,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,29493829,
-Brazil,2021-07-09,112774302,85201397,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,29901792,
-Brazil,2021-07-11,114456183,86797811,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,30551564,
-Brazil,2021-07-12,115832172,87883245,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,31074583,
-Brazil,2021-07-13,117005229,88805948,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,31489872,
-Brazil,2021-07-14,118886610,90161336,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,32303899,
-Brazil,2021-07-15,120873006,91336865,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,33296719,
-Brazil,2021-07-16,121802482,92180046,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,33467639,
-Brazil,2021-07-17,123793735,93842534,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,33854929,
-Brazil,2021-07-18,124113911,94082186,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,33990366,
-Brazil,2021-07-19,124906515,94429515,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,34514945,
-Brazil,2021-07-20,126643283,95589624,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,35160343,
-Brazil,2021-07-21,128405129,96240322,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,35846608,
-Brazil,2021-07-22,130432227,97420756,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,36765097,
-Brazil,2021-07-23,131522663,98268594,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,37036459,
-Brazil,2021-07-24,131845297,98514854,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,37145993,
-Brazil,2021-07-25,131967387,98616846,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,37179203,
-Brazil,2021-07-26,134539613,100371110,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,38035356,
-Brazil,2021-07-27,136509687,101534282,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,38880731,
-Brazil,2021-07-28,137880754,102294772,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,39524828,
-Brazil,2021-07-29,140028826,103500926,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,40546320,
-Brazil,2021-07-30,140169214,103597287,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,40602854,
-Brazil,2021-07-31,142488679,105057816,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,41489804,
-Brazil,2021-08-02,142559470,105105405,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,41515443,
-Brazil,2021-08-03,145558264,106917279,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,42756263,
-Brazil,2021-08-04,147214665,107980946,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,43375897,
-Brazil,2021-08-06,149469803,,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,,
-Brazil,2021-08-07,151711314,108567088,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,45188539,
-Brazil,2021-08-08,152989038,111583449,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,45612438,
-Brazil,2021-08-10,155432167,113049759,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,46582569,
-Brazil,2021-08-11,157673092,114496161,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,47397442,
-Brazil,2021-08-14,163452602,116123404,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,49297923,
-Brazil,2021-08-15,164638573,119793423,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,49629214,
-Brazil,2021-08-16,168157560,121838235,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,51152090,
-Brazil,2021-08-17,169753003,122541955,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/vacinacao,51771235,
-Brazil,2021-08-18,171741149,123678883,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io/vacinacao,52629848,
-Brazil,2021-08-19,173650317,124755667,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,53240329,
-Brazil,2021-08-22,176616552,126453502,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,54521380,
-Brazil,2021-08-23,178551085,127635209,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,55286442,
-Brazil,2021-08-24,179727882,128359705,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,55748292,
-Brazil,2021-08-25,181908368,129675516,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,56624456,
-Brazil,2021-08-26,186279872,132202507,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,58486260,
-Brazil,2021-08-27,187637417,132897426,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,59161643,
-Brazil,2021-08-29,189061012,133647690,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,59840253,
-Brazil,2021-08-30,191502128,134521410,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,61416222,
-Brazil,2021-09-01,195521167,136458383,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,63515389,
-Brazil,2021-09-02,197285447,137246796,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,64500731,
-Brazil,2021-09-04,199146903,138001912,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,65613092,
-Brazil,2021-09-05,200714744,138636322,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,66548816,
-Brazil,2021-09-06,202266292,139358218,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,67383668,
-Brazil,2021-09-08,203930265,140010729,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,68402645,
-Brazil,2021-09-09,205866758,140609541,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,69746839,
-Brazil,2021-09-10,208292584,141425785,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,71365811,
-Brazil,2021-09-11,210275382,142138164,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,72640257,
-Brazil,2021-09-12,210549234,142257204,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,72795741,
-Brazil,2021-09-14,214665906,143732460,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,75453129,
-Brazil,2021-09-15,216611648,144397444,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,76735581,
-Brazil,2021-09-16,218651740,145113195,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,78072189,
-Brazil,2021-09-18,220596996,145788916,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,79345927,
-Brazil,2021-09-19,222322654,146354111,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,80507122,
-Brazil,2021-09-20,222478696,146421254,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,80596815,
-Brazil,2021-09-21,224901404,147173307,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,82276982,
-Brazil,2021-09-23,229179603,148489013,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,85254118,
-Brazil,2021-09-25,230477848,148959378,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,86085238,
-Brazil,2021-09-26,231844536,149349669,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,87063618,
-Brazil,2021-09-27,233261963,149841174,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,87994741,
-Brazil,2021-09-28,234674906,150269515,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,88983740,
-Brazil,2021-09-30,237425768,151150943,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,90860944,
-Brazil,2021-10-03,241625472,152268850,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,93951410,
-Brazil,2021-10-05,242736755,152596850,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,94739208,
-Brazil,2021-10-06,243589234,152886127,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,95306373,
-Brazil,2021-10-07,245109870,153360099,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,96366335,
-Brazil,2021-10-08,246835990,153856720,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,97624430,
-Brazil,2021-10-09,248201579,154202574,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,98653914,
-Brazil,2021-10-10,249340259,154414034,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,99584719,
-Brazil,2021-10-14,250811841,154852830,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,100632085,
-Brazil,2021-10-15,256425302,156046285,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,105171980,
-Brazil,2021-10-17,257801055,156355821,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,106240671,
-Brazil,2021-10-18,257933346,156384784,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,106344897,
-Brazil,2021-10-19,259937358,156718094,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,108025121,
-Brazil,2021-10-21,261002038,156924572,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,108873341,
-Brazil,2021-10-22,263093138,157551962,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,110329167,
-Brazil,2021-10-23,268199870,158233397,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,114767275,
-Brazil,2021-10-24,269148527,158464224,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,115489354,
-Brazil,2021-10-26,270107435,158722691,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19Vacina/DEMAS_C19Vacina.html,116192968,
-Brazil,2021-10-27,272673196,159200858,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19_Vacina_V2/DEMAS_C19_Vacina_v2.html,118280562,7284303
-Brazil,2021-10-31,275907676,,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19_Vacina_V2/DEMAS_C19_Vacina_v2.html,120758718,8140564
-Brazil,2021-11-08,279097836,160675863,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19_Vacina_V2/DEMAS_C19_Vacina_v2.html,123166636,9935578
-Brazil,2021-11-10,280989164,161113931,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19_Vacina_V2/DEMAS_C19_Vacina_v2.html,124652049,10627207
-Brazil,2021-11-11,282987544,161596115,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19_Vacina_V2/DEMAS_C19_Vacina_v2.html,126202217,11231782
-Brazil,2021-11-12,294219326,161787056,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19_Vacina_V2/DEMAS_C19_Vacina_v2.html,126202217,11231782
-Brazil,2021-11-14,296865258,162313446,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19_Vacina_V2/DEMAS_C19_Vacina_v2.html,127854186,11744335
-Brazil,2021-11-16,297103960,162341985,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19_Vacina_V2/DEMAS_C19_Vacina_v2.html,127998040,11814702
-Brazil,2021-11-17,297960460,162436791,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://qsprod.saude.gov.br/extensions/DEMAS_C19_Vacina_V2/DEMAS_C19_Vacina_v2.html,128481994,12107003
-Brazil,2021-11-28,306519588,164022223,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://infoms.saude.gov.br/extensions/DEMAS_C19_Vacina_v2/DEMAS_C19_Vacina_v2.html,133606390,14101808
+location,date,total_vaccinations,people_vaccinated,people_fully_vaccinated,total_boosters,vaccine,source_url
+Brazil,2021-01-17,112,112,0,0,Sinovac,https://coronavirusbra1.github.io
+Brazil,2021-01-18,1109,1109,0,0,Sinovac,https://coronavirusbra1.github.io
+Brazil,2021-01-19,13527,13527,0,0,Sinovac,https://coronavirusbra1.github.io
+Brazil,2021-01-20,105824,105824,0,0,Sinovac,https://coronavirusbra1.github.io
+Brazil,2021-01-21,193699,193699,0,0,Sinovac,https://coronavirusbra1.github.io
+Brazil,2021-01-22,462269,462269,0,0,Sinovac,https://coronavirusbra1.github.io
+Brazil,2021-01-23,573268,573268,0,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-01-24,613954,613954,0,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-01-25,801759,801759,0,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-01-26,1045746,1045746,0,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-01-27,1327546,1327546,0,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-01-28,1563098,1563098,0,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-01-29,1923813,1923813,0,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-01-30,2046523,2046523,0,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-01-31,2084119,2084119,0,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-01,2292551,2292551,0,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-02,2521704,2521704,0,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-03,2802134,2802134,0,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-04,3074906,3074906,0,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-05,3401383,3399421,1962,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-06,3553681,3534004,19677,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-07,3605538,3579850,25688,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-08,3820207,3786591,33616,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-09,4120332,4069677,50655,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-10,4406835,4326075,80760,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-11,4696136,4586270,109866,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-12,5125206,4946738,178468,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-13,5236943,5042713,194230,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-14,5293979,5076110,217869,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-15,5609937,5324317,285620,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-16,5883539,5326007,557532,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-17,6206680,5482925,723755,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-18,6535156,5640483,894673,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-19,6813168,5756361,1056807,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-20,6950802,5817908,1132894,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-21,7028356,5857080,1171276,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-22,7297061,6002873,1294188,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-23,7551676,6116082,1435594,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-24,7799000,6202055,1596945,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-25,8101787,6346769,1755018,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-26,8322042,6437836,1884206,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-27,8433568,6518628,1914940,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-02-28,8465403,6542206,1923197,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-01,8841027,6806293,2034734,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-02,9277322,7114219,2163103,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-03,9739676,7417852,2321824,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-04,10169160,7701146,2468014,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-05,10576542,7958939,2617603,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-06,10830688,8142004,2688684,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-07,10948409,8227671,2720738,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-08,11357494,8504966,2852528,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-09,11756131,8764547,2991584,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-10,12181103,9013293,3167810,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-11,12613179,9298511,3314668,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-12,13017720,9547655,3470065,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-13,13223729,9669967,3553762,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-14,13286664,9718209,3568455,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-15,13763573,10087787,3675786,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-16,14198794,10402388,3796406,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-17,14648691,10725474,3923217,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-18,15087602,11055747,4031855,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-19,15623349,11509501,4113848,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-20,15883688,11739832,4143856,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-21,15980363,11818482,4161881,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-22,16567102,12314847,4252255,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-23,17157631,12817812,4339819,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-24,17886781,13436373,4450408,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-25,18655345,14102934,4552411,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-26,19577786,14928869,4648917,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-27,19962072,15282128,4679944,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-28,20216938,15513974,4702964,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-29,21160763,16335279,4825484,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-30,21950245,16995184,4955061,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-03-31,22839287,17745732,5093555,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-01,23880805,18639028,5241777,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-02,24181208,18900837,5280371,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-03,24575470,19222342,5353128,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-04,24910668,19510333,5400335,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-05,25658532,20056296,5602236,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-06,26736003,20850120,5885883,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-07,27644079,21538484,6105595,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-08,28653848,22246612,6407236,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-09,29544578,22693305,6851273,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-10,30084664,23097172,6987492,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-11,30356896,23300896,7056000,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-12,31316420,23910515,7405905,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-13,32217205,24473138,7744067,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-14,33148388,24996380,8152008,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-15,34050325,25478194,8572131,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-16,34993448,25810304,9183144,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-17,35603882,26085155,9518727,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-18,35817144,26210282,9606862,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-19,36910479,26707227,10203252,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-20,37909705,27184073,10725632,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-21,38467754,27518053,10949701,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-22,39291064,27887014,11404050,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-23,41073104,28783905,12289199,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-24,41494939,28981002,12513937,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-25,41626753,29041497,12585256,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-26,42787199,29601947,13185252,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-27,44287510,30275923,14011587,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-28,45379804,30748674,14631130,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-29,46426188,31243694,15182494,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-04-30,47399150,31696792,15702358,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-01,47663526,31830880,15832646,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-02,47755613,31884404,15871209,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-03,48643324,32345310,16298014,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-04,49626137,32896171,16729966,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-05,50576224,33490395,17085829,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-06,51624587,34271192,17353395,0,"Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-07,52647815,35008550,17639265,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-08,52972460,35253389,17719071,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-09,53064124,35318058,17746066,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-10,54008862,35926219,18082643,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-11,54912939,36523507,18389432,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-12,55907165,37233983,18673182,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-13,56583962,37768491,18815471,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-14,57313642,38320507,18993135,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-15,57668646,38570631,19098015,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-16,57935280,38752714,19182566,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-17,58714631,39284275,19430356,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-18,59603625,39891922,19711703,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-19,60363334,40435632,19927702,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-20,61297420,41089722,20207698,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-21,62122684,41659039,20463645,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-22,62459684,41882011,20577673,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-23,63278821,42474538,20804283,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-24,64098809,43008064,21090745,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-25,64918585,43525933,21392652,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-26,65668438,44045168,21623270,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-27,66363506,44530761,21832745,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-28,67359292,45284397,22074895,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-29,67761958,45604680,22157278,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-30,67874735,45684962,22189773,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-05-31,68665647,46328168,22337479,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-01,69477898,46932629,22545269,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-02,70685368,47852026,22833342,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-03,71245492,48321463,22924029,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-04,71961789,48963900,22997889,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-05,72586950,49491413,23095537,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-06,72811509,49685501,23126008,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-07,73614079,50381104,23232975,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-08,74920113,51502554,23417559,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-09,76117123,52567517,23549606,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-10,77243101,53577624,23665477,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-11,78471914,54685737,23786177,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-12,79118243,55292343,23825900,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-13,79466212,55617274,23848938,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-14,80577338,56657381,23919957,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-15,81940689,57910386,24030303,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-16,83181485,59068483,24113002,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-17,85441106,61187304,24253802,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-18,87160471,62785859,24374612,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-19,88108418,63659153,24449265,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-20,88570223,64099339,24470884,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-21,90013336,65421825,24591511,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-22,91420290,66688623,24731667,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-23,92782243,67890907,24891336,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-24,94322179,69113521,25208658,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-25,95764065,70369603,25404254,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-26,96545254,71090361,25520772,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-27,96789753,71319026,25568632,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-28,97929680,72324820,25866869,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-29,99828676,73943650,26348752,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-06-30,101167462,75097273,26642477,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-01,102561737,76284848,26949200,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-02,104047565,77586349,27259467,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-03,104753510,78210253,27418130,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-04,105097389,78512727,27489232,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-05,106696625,79835457,27854683,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-06,108247755,81152984,28317786,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-07,109976127,82649595,28929443,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-08,111573265,83948802,29547039,0,"Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-09,112999344,85166293,30044191,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-10,113929447,85922323,30387607,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-11,114350128,86272249,30545014,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-12,115654260,87264587,31003288,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-13,117154411,88385719,31569503,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-14,118689127,89449394,32219034,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-15,120155331,90743692,32832460,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-16,121651233,91739486,33467323,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-17,122615695,92434146,33818142,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-18,122859535,92630599,33891244,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-19,124433796,93786760,34383717,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-20,126315897,95101845,35053766,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-21,128199383,96304601,35808080,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-22,130131385,97428671,36676823,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-23,131858906,98712936,37161762,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-24,132812191,99391757,37463852,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-25,133139145,99610570,37583404,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-26,134540217,100522817,38110566,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-27,136158369,101528055,38761406,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-28,137944954,102535345,39603390,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-29,139483586,103363365,40360686,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-30,141319627,104477597,41116889,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-07-31,142301917,105083580,41507968,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-01,142598659,105292650,41599313,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-02,143762758,105934725,42147735,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-03,145618595,107137953,42823483,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-04,148054492,108658469,43769705,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-05,149763010,109745651,44414256,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-06,151506191,110841845,45086810,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-07,152313188,111342715,45397341,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-08,152680029,111566720,45542992,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-09,154190964,112476618,46160465,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-10,156399040,113880889,46980025,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-11,158422879,115251518,47644783,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-12,160674246,116780678,48383179,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-13,162832096,118175020,49164242,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-14,164215233,119132205,49606493,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-15,164680217,119504650,49705914,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-16,166750328,120686544,50600926,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-17,169753003,122541955,51771235,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-18,171741149,123678883,52629848,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-19,174263122,125160916,53680684,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-20,176376890,126384146,54578690,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-21,177587502,127168248,55013076,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-22,178173214,127600937,55170955,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-23,180251675,128859272,55999780,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-24,182654763,130267899,57002150,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-25,184707573,131489509,57838947,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-26,186102952,131918133,58811744,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-27,188045400,132939921,59746726,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-28,189376018,133608741,60412846,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-29,189971293,133947333,60672443,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-30,191515901,134777145,61384034,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-08-31,194176380,136127045,62698760,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-01,196166473,137067385,63754375,0,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-02,198142390,137897705,64905651,282,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-03,200077775,138653061,66093601,373,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-04,201126108,139039441,66758831,537,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-05,201522079,139210778,66984704,780,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-06,203024669,139985523,67702291,14059,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-07,203577189,140218809,68020838,17205,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-08,205296045,140820674,69133319,25446,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-09,207509808,141565747,70594540,37195,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-10,209917761,142382292,72173074,52191,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-11,211223433,142798088,73050585,67596,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-12,211710814,142983971,73355123,68590,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-13,213203733,143433748,74381040,88874,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-14,215338063,144100429,75814267,128791,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-15,217240047,144761529,76990802,197261,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-16,218735998,145238112,77988754,223085,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-17,221071595,146000277,79542916,249365,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-18,222156927,146371189,80250454,259046,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-19,222581680,146553215,80492254,260661,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-20,223781527,146923305,81250428,334020,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-21,225592884,147473077,82467468,381549,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-22,227304555,147966925,83644344,427712,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-23,229100357,148510818,84869772,458735,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-24,230893002,148994474,86119839,520839,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-25,231983152,149386359,86796636,543561,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-26,232495892,149565073,87122476,552379,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-27,233772505,149871708,87828174,818917,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-28,235617220,150382518,89101310,882537,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-29,237320144,150881737,90253376,937694,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-09-30,239190412,151420924,91430204,1095300,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-01,241200485,151901209,92759486,1302298,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-02,242252204,152166987,93442685,1407110,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-03,242632087,152277364,93674362,1445470,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-04,243733571,152519888,94337578,1643658,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-05,245292452,152926450,95257454,1877233,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-06,247057054,153310124,96345260,2171857,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-07,248820533,153699490,97382944,2509515,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-08,250516351,154010913,98464451,2814838,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-09,251524115,154181567,99070817,3047975,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-10,252149684,154292724,99520881,3116010,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-11,253164892,154580496,100085018,3281210,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-12,253561158,154693150,100324302,3326730,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-13,254426529,154798792,100864092,3545399,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-14,256762148,155526988,102264366,3755046,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-15,258849471,156015804,103527053,4093579,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-16,260157865,156313972,104314315,4320556,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-17,260683274,156420266,104630777,4428544,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-18,261824131,156558619,105223364,4839664,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-19,263569544,156892317,106356335,5137429,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-20,265607325,157322792,107582227,5525142,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-21,266620080,157475037,108197260,5771569,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-22,267964026,157679997,108994434,6117946,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-23,268638494,157810514,109422127,6234557,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-24,269442502,157986323,109945760,6340977,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-25,271861944,158281322,111550520,6864893,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-26,273720279,158619663,112584033,7348675,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-27,275436454,158890656,113647161,7732904,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-28,277057532,159171324,114610870,8109625,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-29,278686713,159412919,115562494,8548187,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-30,279265141,159518249,115897379,8687173,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-10-31,279666131,159589151,116117550,8798263,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-01,279959241,159631476,116288959,8877862,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-02,280181200,159667965,116399784,8952577,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-03,281228625,159792323,117020085,9256939,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-04,282661800,160056071,117929773,9518430,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-05,284683953,160333906,119243098,9942921,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-06,285378181,160423951,119655284,10135262,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-07,285943124,160707880,119901571,10172914,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-08,287531811,160971992,120880423,10547189,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-09,288956195,161179478,121738604,10886116,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-10,290429521,161412780,122635903,11230958,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-11,292021210,161690791,123598784,11584564,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-12,293253508,161743151,124416550,11947900,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-13,293936446,161814220,124872035,12105575,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-14,294339583,161908494,125123667,12162832,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-15,294928227,161973124,125467475,12343281,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-16,295624622,162028086,125915845,12537109,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-17,297253230,162257537,126961439,12891623,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-18,298447729,162397679,127639599,13268488,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-19,299734733,162554502,128377050,13665714,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-20,300573489,162688776,128851409,13896415,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-21,301182753,162812584,129200205,14033709,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-22,302331069,162957786,129832016,14406374,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-23,303515430,163108526,130530871,14741803,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-24,304659197,163216460,131215922,15093083,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-25,305503188,163342820,131709249,15316348,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-26,306741882,163546806,132395866,15662595,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-27,307205318,163607249,132667094,15794900,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-28,307583387,163684746,132895365,15889956,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
+Brazil,2021-11-29,307817825,163706613,133029594,15967140,"Johnson&Johnson, Pfizer/BioNTech, Oxford/AstraZeneca, Sinovac",https://coronavirusbra1.github.io
