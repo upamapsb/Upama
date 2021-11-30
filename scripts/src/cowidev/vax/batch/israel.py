@@ -7,6 +7,7 @@ import pandas as pd
 from cowidev.vax.utils.files import export_metadata_age
 from cowidev.utils.clean import clean_date_series
 from cowidev.utils import paths
+from cowidev.utils.web import request_json
 
 
 class Israel:
@@ -19,15 +20,7 @@ class Israel:
     )
 
     def read(self) -> pd.DataFrame:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:85.0) Gecko/20100101 Firefox/85.0",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-            "Connection": "keep-alive",
-            "Upgrade-Insecure-Requests": "1",
-            "Pragma": "no-cache",
-            "Cache-Control": "no-cache",
-        }
-        data = json.loads(requests.get(self.source_url, headers=headers).content)
+        data = request_json(self.source_url)
         return pd.DataFrame.from_records(data)
 
     def read_age(self):
@@ -127,9 +120,9 @@ class Israel:
         df = df[(df.age_group_min != "10") | (df.age_group_max != "19")]
         # Final column creations
         df = df.assign(
-            location="Israel",
-            people_vaccinated_per_hundred=100 * df["first dose"] / df["pop"],
-            people_fully_vaccinated_per_hundred=100 * df["second dose"] / df["pop"],
+            location=self.location,
+            people_vaccinated_per_hundred=100 * df["1st perc"],
+            people_fully_vaccinated_per_hundred=100 * df["2nd perc"],
         )
         # Select output columns
         df = df[
