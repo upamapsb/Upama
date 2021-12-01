@@ -41,6 +41,7 @@ def main():
         "people_vaccinated": "8d14f33a-d482-4176-af55-71209314b07b",
         "people_fully_vaccinated": "16a69e30-01fd-4806-920c-436f8f29e9bf",
         "total_boosters": "209af2de-9927-4c51-a704-ddc85e28bab9",
+        "additional_doses": "c1286d9e-254c-434a-9455-21b94969d163",
     }
     data = {}
 
@@ -57,7 +58,7 @@ def main():
         total_vaccinations=data["total_vaccinations"],
         people_vaccinated=data["people_vaccinated"],
         people_fully_vaccinated=data["people_fully_vaccinated"],
-        total_boosters=data["total_boosters"],
+        total_boosters=data["total_boosters"] + data["additional_doses"],
         date=date,
         source_url="https://www.covid.is/tolulegar-upplysingar-boluefni",
         vaccine=", ".join(sorted(VACCINE_MAPPING.values())),
@@ -72,7 +73,7 @@ def main():
 
     df = df.melt("date", var_name="vaccine", value_name="total_vaccinations")
 
-    df["date"] = clean_date_series(df["date"], "%d.%m.%Y")
+    df["date"] = clean_date_series(df["date"], "%d.%m.%y")
     df["total_vaccinations"] = pd.to_numeric(df["total_vaccinations"], errors="coerce").fillna(0)
     df["total_vaccinations"] = df.sort_values("date").groupby("vaccine", as_index=False)["total_vaccinations"].cumsum()
     df["location"] = "Iceland"
