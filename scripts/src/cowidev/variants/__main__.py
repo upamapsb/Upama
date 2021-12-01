@@ -15,8 +15,10 @@ def run_step(step: str):
     if step == "etl":
         run_etl(FILE_DS)
     elif step == "grapher-file":
+        # Filter by num_seq
         run_grapheriser(FILE_DS, FILE_GRAPHER)
     elif step == "explorer-file":
+        # Filter by num_seq
         run_explorerizer(FILE_DS, FILE_EXPLORER)
     elif step == "grapher-db":
         run_db_updater(FILE_GRAPHER)

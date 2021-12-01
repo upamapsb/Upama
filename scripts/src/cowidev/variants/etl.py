@@ -57,7 +57,7 @@ class VariantsETL:
             "perc_sequences",
             "num_sequences_total",
         ]
-        self.num_sequences_total_threshold = 30
+        self.num_sequences_total_threshold = 0
 
     @property
     def variants_mapping(self):
