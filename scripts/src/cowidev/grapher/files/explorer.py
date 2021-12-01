@@ -1,21 +1,19 @@
 import json
+from dataclasses import dataclass
+from typing import Callable
 
 import pandas as pd
 import numpy as np
 
 
+@dataclass
 class Exploriser:
-    def __init__(
-        self,
-        location: str = "location",
-        date: str = "date",
-        pivot_column: str = None,
-        pivot_values: str = None,
-    ) -> None:
-        self.location = location
-        self.date = date
-        self.pivot_column = pivot_column
-        self.pivot_values = pivot_values
+    location: str = "location"
+    date: str = "date"
+    pivot_column: str = None
+    pivot_values: str = None
+    function_input: Callable = lambda x: x
+    function_output: Callable = lambda x: x
 
     def pipe_pivot(self, df: pd.DataFrame) -> pd.DataFrame:
         if self.pivot_column is not None and self.pivot_values is not None:
@@ -32,10 +30,13 @@ class Exploriser:
     def pipe_to_dict(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.to_dict(orient="list")
 
-    def pipeline(self, input_path: str) -> dict:
-        df = pd.read_csv(input_path)
+    def pipeline(self, df: pd.DataFrame) -> dict:
         df = (
-            df.pipe(self.pipe_pivot).pipe(self.pipe_nan_to_none).pipe(self.pipe_to_dict)
+            df.pipe(self.function_input)
+            .pipe(self.pipe_pivot)
+            .pipe(self.pipe_nan_to_none)
+            .pipe(self.function_output)
+            .pipe(self.pipe_to_dict)
         )
         return df
 
@@ -51,6 +52,7 @@ class Exploriser:
         )
 
     def run(self, input_path: str, output_path: str):
-        data = self.pipeline(input_path)
+        df = pd.read_csv(input_path)
+        data = df.pipe(self.pipeline)
         with open(output_path, "w") as f:
             f.write(self.to_json(data))

@@ -1,26 +1,21 @@
 from datetime import datetime
+from dataclasses import dataclass
+from typing import Callable
 
 import pandas as pd
 
 
+@dataclass
 class Grapheriser:
-    def __init__(
-        self,
-        location: str = "location",
-        date: str = "date",
-        date_ref: datetime = datetime(2020, 1, 21),
-        fillna: bool = False,
-        fillna_0: bool = True,
-        pivot_column: str = None,
-        pivot_values: str = None,
-    ) -> None:
-        self.location = location
-        self.date = date
-        self.date_ref = date_ref
-        self.fillna = fillna
-        self.fillna_0 = fillna_0
-        self.pivot_column = pivot_column
-        self.pivot_values = pivot_values
+    location: str = "location"
+    date: str = "date"
+    date_ref: datetime = datetime(2020, 1, 21)
+    fillna: bool = False
+    fillna_0: bool = True
+    pivot_column: str = None
+    pivot_values: str = None
+    function_input: Callable = lambda x: x
+    function_output: Callable = lambda x: x
 
     @property
     def columns_metadata(self) -> list:
@@ -58,23 +53,27 @@ class Grapheriser:
     def pipe_fillna(self, df: pd.DataFrame) -> pd.DataFrame:
         columns_data = self.columns_data(df)
         if self.fillna:
-            df[columns_data] = df.groupby(["Country"])[columns_data].fillna(
-                method="ffill"
-            )
+            df[columns_data] = df.groupby(["Country"])[columns_data].fillna(method="ffill")
         if self.fillna_0:
             df[columns_data] = df[columns_data].fillna(0)
         return df
 
-    def pipeline(self, input_path: str):
+    def read(self, input_path: str):
         df = pd.read_csv(input_path, parse_dates=[self.date])
+        return df
+
+    def pipeline(self, df: pd.DataFrame):
         df = (
-            df.pipe(self.pipe_pivot)
+            df.pipe(self.function_input)
+            .pipe(self.pipe_pivot)
             .pipe(self.pipe_metadata_columns)
             .pipe(self.pipe_order_columns)
             .pipe(self.pipe_fillna)
+            .pipe(self.function_output)
         )
         return df
 
     def run(self, input_path: str, output_path: str):
-        df = self.pipeline(input_path)
+        df = self.read(input_path)
+        df = df.pipe(self.pipeline)
         df.to_csv(output_path, index=False)
