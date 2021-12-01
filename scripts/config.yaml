@@ -33,7 +33,7 @@ pipeline:
            - total_vaccinations
            - people_vaccinated
       Luxembourg:
-        - date: 2021-11-07
+        - date: 2021-11-29
           metrics: people_fully_vaccinated
       Nigeria:
         - date: 2021-06-15

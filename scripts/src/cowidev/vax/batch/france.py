@@ -1,6 +1,7 @@
 import pandas as pd
 
 from cowidev.vax.utils.files import export_metadata_manufacturer
+from cowidev.vax.utils.utils import build_vaccine_timeline
 from cowidev.utils import paths
 
 
@@ -16,41 +17,62 @@ def main():
 
     source = "https://www.data.gouv.fr/fr/datasets/r/b273cf3b-e9de-437c-af55-eda5979e92fc"
 
-    df = pd.read_csv(source, usecols=["vaccin", "jour", "n_cum_dose1", "n_cum_dose2", "n_cum_dose3"], sep=";")
+    df = pd.read_csv(
+        source,
+        sep=";",
+        usecols=[
+            "vaccin",
+            "jour",
+            "n_cum_dose1",
+            "n_cum_dose2",
+            "n_cum_dose3",
+            "n_cum_dose4",
+        ],
+    )
 
     df = df.rename(
         columns={
             "vaccin": "vaccine",
             "jour": "date",
-            "n_cum_dose1": "people_vaccinated",
-            "n_cum_dose2": "people_fully_vaccinated",
-            "n_cum_dose3": "total_boosters",
         }
     )
 
     # Map vaccine names
-    df = df[(df.vaccine.isin(vaccine_mapping.keys())) & (df.people_vaccinated > 0)]
+    df = df[(df.vaccine.isin(vaccine_mapping.keys())) & (df.n_cum_dose1 > 0)]
     assert set(df["vaccine"].unique()) == set(vaccine_mapping.keys())
     df["vaccine"] = df.vaccine.replace(vaccine_mapping)
 
-    # Add total doses
-    df["total_vaccinations"] = df.people_vaccinated + df.people_fully_vaccinated + df.total_boosters
+    df["total_vaccinations"] = df.n_cum_dose1 + df.n_cum_dose2 + df.n_cum_dose3 + df.n_cum_dose4
+    df["people_vaccinated"] = df.n_cum_dose1
+
+    # 2-dose vaccines
+    mask = -df.vaccine.isin(one_dose_vaccines)
+    df.loc[mask, "people_fully_vaccinated"] = df.n_cum_dose2
+    df.loc[mask, "total_boosters"] = df.n_cum_dose3 + df.n_cum_dose4
+
+    # 1-dose vaccines
+    mask = df.vaccine.isin(one_dose_vaccines)
+    df.loc[mask, "people_fully_vaccinated"] = df.n_cum_dose1
+    df.loc[mask, "total_boosters"] = df.n_cum_dose2 + df.n_cum_dose3 + df.n_cum_dose4
+
+    df = df.drop(columns=["n_cum_dose1", "n_cum_dose2", "n_cum_dose3", "n_cum_dose4"])
 
     manufacturer = df[["date", "total_vaccinations", "vaccine"]].assign(location="France")
     manufacturer.to_csv(paths.out_vax("France", manufacturer=True), index=False)
     export_metadata_manufacturer(manufacturer, "Public Health France", source)
+    approval_timeline = manufacturer[["vaccine", "date"]].groupby("vaccine").min().to_dict()["date"]
 
-    # Infer fully vaccinated for one-dose vaccines
-    df.loc[df.vaccine.isin(one_dose_vaccines), "people_fully_vaccinated"] = df.people_vaccinated
-
-    df = df.groupby("date", as_index=False).agg(
-        {
-            "total_vaccinations": "sum",
-            "people_vaccinated": "sum",
-            "people_fully_vaccinated": "sum",
-            "total_boosters": "sum",
-            "vaccine": lambda x: ", ".join(sorted(x)),
-        }
+    df = (
+        df.groupby("date", as_index=False)
+        .agg(
+            {
+                "total_vaccinations": "sum",
+                "people_vaccinated": "sum",
+                "people_fully_vaccinated": "sum",
+                "total_boosters": "sum",
+            }
+        )
+        .pipe(build_vaccine_timeline, approval_timeline)
     )
 
     df = df.assign(

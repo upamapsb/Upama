@@ -26,11 +26,15 @@ class HospETL:
         per_million = df.copy()
         per_million.loc[:, "value"] = per_million["value"].div(per_million["population"]).mul(1000000)
         per_million.loc[:, "indicator"] = per_million["indicator"] + " per million"
-        df = pd.concat([df, per_million]).drop(columns="population")
+        df = pd.concat([df, per_million], ignore_index=True).drop(columns="population")
+        return df
+
+    def pipe_round_values(self, df):
+        df.loc[-df.indicator.str.contains("per million"), "value"] = df.value.round()
         return df
 
     def transform(self, df: pd.DataFrame):
-        return df.pipe(self.pipe_per_million)
+        return df.pipe(self.pipe_per_million).pipe(self.pipe_round_values)
 
     def load(self, df: pd.DataFrame, output_path: str) -> None:
         # Export data
