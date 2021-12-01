@@ -82,7 +82,7 @@ class Sweden(object):
         df["date"] = ds.apply(lambda x: clean_date(x, "%Y-W%W+%w"))
         # Prepare output
         df = df.drop(columns=["Vecka", "År"]).sort_values("date")
-        print(df)
+        # print(df)
         return df
 
     def _read_daily_data(self) -> pd.DataFrame:
@@ -109,7 +109,7 @@ class Sweden(object):
     def _get_df_daily(self, df):
         return df.assign(
             people_vaccinated=df["Antal vaccinerademed minst 1 dos*"].apply(clean_count),
-            people_fully_vaccinated=df["Antal vaccinerademed 2 doser"].apply(clean_count),
+            people_fully_vaccinated=df["Antal vaccinerademed minst 2 doser"].apply(clean_count),
         )
 
     def _get_df_teens_daily(self, df):
