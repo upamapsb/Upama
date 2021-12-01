@@ -114,16 +114,16 @@ class VariantsETL:
         return df
 
     def pipe_filter_by_num_sequences(self, df: pd.DataFrame) -> pd.DataFrame:
-        msk = df.total_sequences >= self.num_sequences_total_threshold
+        msk = df.total_sequences < self.num_sequences_total_threshold
         # Info
-        _sk_perc_rows = round(100 * (1 - msk.sum() / len(df)), 2)
-        _sk_num_countries = df.loc[-msk, "country"].nunique()
-        _sk_countries_top = df[-msk]["country"].value_counts().head(10).to_dict()
+        _sk_perc_rows = round(100 * (msk.sum() / len(df)), 2)
+        _sk_num_countries = df.loc[msk, "country"].nunique()
+        _sk_countries_top = df[msk]["country"].value_counts().head(10).to_dict()
         print(
             f"Skipping {msk.sum()} datapoints ({_sk_perc_rows}%), affecting {_sk_num_countries} countries. Some are:"
             f" {_sk_countries_top}"
         )
-        return df[msk]
+        return df[~msk]
 
     def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.rename(columns=self.column_rename)
