@@ -1,7 +1,8 @@
-import os
 from datetime import datetime
 
 import pandas as pd
+
+import cowidev.megafile.generate
 from cowidev.grapher.db.base import GrapherBaseUpdater
 from cowidev.utils.utils import time_str_grapher, get_filename, export_timestamp
 from cowidev.utils.clean.dates import DATE_FORMAT
@@ -40,6 +41,9 @@ def run_grapheriser(input_path: str, output_path: str):
     df = df.drop_duplicates(keep=False, subset=["Country", "Year"])
     df.to_csv(output_path, index=False)
     export_timestamp("owid-covid-data-last-updated-timestamp-hosp.txt")
+
+    print("Generating megafile…")
+    cowidev.megafile.generate.generate_megafile()
 
 
 def run_db_updater(input_path: str):
