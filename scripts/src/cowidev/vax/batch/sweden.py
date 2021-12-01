@@ -33,7 +33,13 @@ class Sweden(object):
         return df.assign(vaccine="Moderna, Oxford/AstraZeneca, Pfizer/BioNTech")
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self.pipe_vaccine).pipe(self.pipe_columns).pipe(self.pipe_out_columns).pipe(make_monotonic)
+        return (
+            df.pipe(self.pipe_vaccine)
+            .pipe(self.pipe_columns)
+            .pipe(self.pipe_out_columns)
+            .pipe(make_monotonic)
+            .drop_duplicates(subset=["date"], keep=False)
+        )
 
     def _read_weekly_data_doses(self, dfs) -> pd.DataFrame:
         """Read weekly data for number of vaccinations administered."""
