@@ -1,3 +1,4 @@
+import datetime
 import requests
 
 import pandas as pd
@@ -188,7 +189,8 @@ class Sweden(object):
         # The existing data only allows us to know the latest value of total_boosters. Ideally at
         # some point we'll get a full time series, but for now we assign this value to the last day
         # of the time series, so that it can at least be shown on bar charts and maps.
-        df.loc[df.total_vaccinations == df.total_vaccinations.max(), "total_boosters"] = self.latest_boosters
+        df = df[df.date <= str(datetime.date.today() - datetime.timedelta(days=1))]
+        df.loc[df.date == df.date.max(), "total_boosters"] = self.latest_boosters
         return df
 
     def export(self):
