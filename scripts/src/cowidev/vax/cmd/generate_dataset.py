@@ -264,22 +264,13 @@ class DatasetGenerator:
         column_rename = {"entity": "location", "population": "population"}
         pop = pd.read_csv(self.inputs.population, usecols=column_rename.keys()).rename(columns=column_rename)
         pop = pd.concat([pop, df_subnational], ignore_index=True)
-        # Group territories
-        location_rename = {
-            "United States": [
-                "American Samoa",
-                "Micronesia (country)",
-                "Guam",
-                "Marshall Islands",
-                "Northern Mariana Islands",
-                "Puerto Rico",
-                "Palau",
-                "United States Virgin Islands",
-            ]
-        }
-        location_rename = ChainMap(*[{vv: k for vv in v} for k, v in location_rename.items()])
-        pop.loc[:, "location"] = pop.location.replace(location_rename)
-        pop = pop.groupby("location", as_index=False).sum()
+
+        # The US population denominator is more complex to calculate, as the US CDC is pulling
+        # together data from multiple territories and federal agencies to build national figures.
+        # To ensure that we use the correct territorial boundaries in the denominator, we use the
+        # population figure provided by the CDC in its data.
+        pop.loc[pop.location == "United States", "population"] = 332008832
+
         return pop
 
     def pipe_capita(self, df: pd.DataFrame) -> pd.DataFrame:
