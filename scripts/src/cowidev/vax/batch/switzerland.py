@@ -77,6 +77,7 @@ class Switzerland:
                 "COVID19FullyVaccPersons": "people_fully_vaccinated",
                 "COVID19VaccDosesAdministered": "total_vaccinations",
                 "COVID19AtLeastOneDosePersons": "people_vaccinated",
+                "COVID19FirstBoosterPersons": "total_boosters",
             }
         )
 
@@ -119,6 +120,7 @@ class Switzerland:
                     "total_vaccinations",
                     "people_vaccinated",
                     "people_fully_vaccinated",
+                    "total_boosters",
                 ]
             ]
         )
