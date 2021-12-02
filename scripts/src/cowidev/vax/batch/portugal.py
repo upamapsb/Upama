@@ -64,6 +64,7 @@ def add_boosters(df: pd.DataFrame) -> pd.DataFrame:
     boosters["date"] = boosters.date.str.slice(0, 10)
     df = pd.merge(df, boosters, how="outer", on=["date", "location"], validate="one_to_one").sort_values("date")
     df.loc[df.source_url.isna(), "source_url"] = "https://github.com/ruimgbarros/vacinacao"
+    df["total_vaccinations"] = df.total_vaccinations + df.total_boosters.ffill().fillna(0)
     return df
 
 
