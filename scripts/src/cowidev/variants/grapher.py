@@ -22,7 +22,7 @@ def filter_by_num_sequences(df: pd.DataFrame) -> pd.DataFrame:
 def run_grapheriser(input_path: str, output_path: str):
     Grapheriser(
         pivot_column="variant",
-        pivot_values="perc_sequences",
+        pivot_values="num_sequences",
         fillna_0=True,
         function_input=filter_by_num_sequences,
     ).run(input_path, output_path)
