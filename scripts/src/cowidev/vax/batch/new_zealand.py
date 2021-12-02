@@ -4,6 +4,7 @@ from urllib.parse import urlparse
 import pandas as pd
 from bs4 import BeautifulSoup
 
+from cowidev.vax.utils.utils import build_vaccine_timeline
 from cowidev.utils.clean import clean_date_series, clean_date
 from cowidev.utils.web.scraping import get_soup
 from cowidev.utils.web.download import read_xlsx_from_url
@@ -18,15 +19,17 @@ class NewZealand:
         )
         self.location = "New Zealand"
         self.columns_rename = {
-            "First dose administered": "people_vaccinated",
-            "Second dose administered": "people_fully_vaccinated",
+            "First doses": "people_vaccinated",
+            "Second doses": "people_fully_vaccinated",
+            "Third primary doses": "third_dose",
+            "Boosters": "total_boosters",
             "Date": "date",
         }
         self.columns_by_age_group_rename = {
             "# doses administered": "total_vaccinations",
             "Ten year age group": "age_group",
         }
-        self.columns_cumsum = ["First dose administered", "Second dose administered"]
+        self.columns_cumsum = ["First doses", "Second doses", "Third primary doses", "Boosters"]
         self.columns_cumsum_by_age = ["Ten year age group"]
 
     def read(self) -> pd.DataFrame:
@@ -42,6 +45,8 @@ class NewZealand:
                 "people_fully_vaccinated": latest.loc[
                     latest["Unnamed: 0"] == "Second dose", "Cumulative total"
                 ].item(),
+                "total_boosters": latest.loc[latest["Unnamed: 0"] == "Boosters", "Cumulative total"].item(),
+                "third_dose": latest.loc[latest["Unnamed: 0"] == "Third primary", "Cumulative total"].item(),
                 "date": [clean_date(latest_date, fmt="%d %B %Y", lang="en")],
             }
         )
@@ -55,44 +60,61 @@ class NewZealand:
         link = f"https://{urlparse(self.source_url).netloc}/{href}"
         return link
 
-    def pipe_rename(self, df: pd.DataFrame) -> pd.DataFrame:
-        if self.columns_rename:
-            return df.rename(columns=self.columns_rename)
-        return df
-
     def pipe_cumsum(self, df: pd.DataFrame) -> pd.DataFrame:
         if self.columns_cumsum:
             df[self.columns_cumsum] = df[self.columns_cumsum].cumsum()
         return df
 
+    def pipe_rename(self, df: pd.DataFrame) -> pd.DataFrame:
+        if self.columns_rename:
+            return df.rename(columns=self.columns_rename)
+        return df
+
+    def pipe_merge_with_latest(self, df: pd.DataFrame) -> pd.DataFrame:
+        return pd.concat([df, self.latest]).drop_duplicates("date", keep="first").reset_index(drop=True)
+
     def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(total_vaccinations=df.people_vaccinated + df.people_fully_vaccinated)
-
-    def pipe_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(vaccine="Pfizer/BioNTech")
-
-    def pipe_location(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(location=self.location)
-
-    def pipe_source_url(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(source_url=self.source_url)
+        return df.assign(
+            total_vaccinations=df.people_vaccinated + df.people_fully_vaccinated + df.total_boosters + df.third_dose,
+            total_boosters=df.total_boosters + df.third_dose,
+        )
 
     def pipe_date(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(date=clean_date_series(df.date))
 
-    def pipe_merge_with_latest(self, df: pd.DataFrame) -> pd.DataFrame:
-        return pd.concat([df, self.latest]).drop_duplicates("date", keep="first").reset_index(drop=True)
+    def pipe_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
+        return build_vaccine_timeline(df, {"Pfizer/BioNTech": "2021-01-01", "Oxford/AstraZeneca": "2021-11-26"})
+
+    def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
+        return df.assign(
+            location=self.location,
+            source_url=self.source_url,
+        )
+
+    def pipe_columns_out(self, df: pd.DataFrame):
+        return df[
+            [
+                "location",
+                "date",
+                "vaccine",
+                "source_url",
+                "people_vaccinated",
+                "people_fully_vaccinated",
+                "total_boosters",
+                "total_vaccinations",
+            ]
+        ]
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
             df.pipe(self.pipe_cumsum)
             .pipe(self.pipe_rename)
+            .pipe(self.pipe_merge_with_latest)
             .pipe(self.pipe_metrics)
             .pipe(self.pipe_date)
-            .pipe(self.pipe_merge_with_latest)
             .pipe(self.pipe_vaccine)
-            .pipe(self.pipe_location)
-            .pipe(self.pipe_source_url)
+            .pipe(self.pipe_metadata)
+            .pipe(self.pipe_columns_out)
         )
 
     def pipe_rename_by_age(self, df: pd.DataFrame) -> pd.DataFrame:
