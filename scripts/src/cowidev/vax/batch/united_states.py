@@ -1,17 +1,19 @@
 import os
 from glob import glob
-import requests
 
 import pandas as pd
 
 from cowidev.vax.utils.files import export_metadata_manufacturer
 from cowidev.utils import paths
+from cowidev.utils.clean.dates import clean_date_series
+from cowidev.vax.utils.utils import build_vaccine_timeline
 
 
 class UnitedStates:
     def __init__(self):
-        self.source_url = (
-            "https://covid.cdc.gov/covid-data-tracker/COVIDData/getAjaxData?id=vaccination_jurisdictional_trends_by_US"
+        self.source_url = "https://data.cdc.gov/api/views/rh2h-3yt2/rows.csv?accessType=DOWNLOAD"
+        self.source_url_ref = (
+            "https://data.cdc.gov/Vaccinations/COVID-19-Vaccination-Trends-in-the-United-States-N/rh2h-3yt2"
         )
         self.source_url_age = "https://data.cdc.gov/resource/km4m-vcsb.json"
         self.location = "United States"
@@ -19,58 +21,58 @@ class UnitedStates:
     ### Main processing ###
 
     def read(self) -> pd.DataFrame:
-        data = requests.get(
-            "https://covid.cdc.gov/covid-data-tracker/COVIDData/getAjaxData?id=vaccination_jurisdictional_trends_by_US"
-        ).json()
-        return pd.DataFrame.from_records(data["vaccination_jurisdictional_trends_Geography"])
+        return pd.read_csv(
+            self.source_url,
+            usecols=[
+                "Date",
+                "Location",
+                "Administered_Cumulative",
+                "Admin_Dose_1_Cumulative",
+                "date_type",
+                "Series_Complete_Cumulative",
+                "Booster_Cumulative",
+            ],
+        )
+
+    def pipe_filter_rows(self, df: pd.DataFrame) -> pd.DataFrame:
+        return df[(df.Location == "US") & (df.date_type == "Admin")]
 
     def pipe_clean_data(self, df: pd.DataFrame) -> pd.DataFrame:
         df = (
-            df[
-                [
-                    "Date",
-                    "LongName",
-                    "Administered_Cumulative",
-                    "Admin_Dose_1_Cumulative",
-                    "Series_Complete_Cumulative",
-                    "Cumulative_Count_Booster",
-                ]
-            ]
+            df.assign(Date=clean_date_series(df.Date, format_input="%m/%d/%Y"), Location="United States")
+            .drop(columns=["date_type"])
             .rename(
                 columns={
                     "Date": "date",
-                    "LongName": "location",
+                    "Location": "location",
                     "Administered_Cumulative": "total_vaccinations",
                     "Admin_Dose_1_Cumulative": "people_vaccinated",
                     "Series_Complete_Cumulative": "people_fully_vaccinated",
-                    "Cumulative_Count_Booster": "total_boosters",
+                    "Booster_Cumulative": "total_boosters",
                 }
             )
-            .dropna(subset=["total_vaccinations"])
             .sort_values("date")
-            .drop_duplicates(subset=["total_vaccinations"], keep="first")
         )
-        return df
+        return df[df.total_vaccinations > 0]
 
     def pipe_add_source(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(source_url="https://covid.cdc.gov/covid-data-tracker/#vaccination-trends")
+        return df.assign(source_url=self.source_url_ref)
 
     def pipe_add_vaccines(self, df: pd.DataFrame) -> pd.DataFrame:
-        vaccines = pd.DataFrame.from_dict(
-            {
-                0: ["Pfizer/BioNTech", "2020-12-01"],
-                1: ["Moderna, Pfizer/BioNTech", "2020-12-23"],
-                2: ["Johnson&Johnson, Moderna, Pfizer/BioNTech", "2021-03-05"],
-            },
-            orient="index",
-            columns=["vaccine", "date"],
-        )
-        df = df.merge(vaccines, on="date", how="outer").sort_values("date")
-        df["vaccine"] = df.vaccine.ffill()
-        return df.dropna(subset=["source_url"])
+        schedule = {
+            "Pfizer/BioNTech": "2020-12-01",
+            "Moderna": "2020-12-23",
+            "Johnson&Johnson": "2021-03-05",
+        }
+        return build_vaccine_timeline(df, schedule)
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self.pipe_clean_data).pipe(self.pipe_add_source).pipe(self.pipe_add_vaccines)
+        return (
+            df.pipe(self.pipe_filter_rows)
+            .pipe(self.pipe_clean_data)
+            .pipe(self.pipe_add_source)
+            .pipe(self.pipe_add_vaccines)
+        )
 
     ### Manufacturer processing ###
 
