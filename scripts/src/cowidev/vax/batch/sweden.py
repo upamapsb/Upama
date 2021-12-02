@@ -37,6 +37,7 @@ class Sweden(object):
             df.pipe(self.pipe_vaccine)
             .pipe(self.pipe_columns)
             .pipe(self.pipe_out_columns)
+            .pipe(self.pipe_add_boosters)
             .pipe(make_monotonic)
             .drop_duplicates(subset=["date"], keep=False)
         )
@@ -48,6 +49,12 @@ class Sweden(object):
         # Filter rows and columns of interest
         df_doses = df.loc[df.Region == "| Sverige |", ["Vecka", "År", "Antal vaccinationer"]]
         df_doses = df_doses.rename(columns={"Antal vaccinationer": "total_vaccinations"})
+
+        boosters = dfs["Dos 3 per åldersgrupp"]
+        self.latest_boosters = boosters.loc[
+            (boosters.Region == "| Sverige |") & (boosters["Åldersgrupp"] == "Totalt"), "Antal vaccinerade"
+        ].item()
+
         return df_doses
 
     def _read_weekly_data_people(self, dfs) -> pd.DataFrame:
@@ -176,6 +183,13 @@ class Sweden(object):
                 "source_url",
             ]
         ]
+
+    def pipe_add_boosters(self, df: pd.DataFrame):
+        # The existing data only allows us to know the latest value of total_boosters. Ideally at
+        # some point we'll get a full time series, but for now we assign this value to the last day
+        # of the time series, so that it can at least be shown on bar charts and maps.
+        df.loc[df.total_vaccinations == df.total_vaccinations.max(), "total_boosters"] = self.latest_boosters
+        return df
 
     def export(self):
         """Generalized."""
