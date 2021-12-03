@@ -40,3 +40,19 @@ def get_vax(data_file):
     ]
     vax[rounded_cols] = vax[rounded_cols].round(3)
     return vax
+
+
+def _add_rolling(df: pd.DataFrame) -> pd.DataFrame:
+    for n_months in (6, 9, 12):
+        n_days = round(365.2425 * n_months / 12)
+        df[f"rolling_vaccinations_{n_months}m"] = (
+            df.total_vaccinations.interpolate(method="linear").diff().rolling(n_days, min_periods=1).sum().round()
+        )
+        df[f"rolling_vaccinations_{n_months}m_per_hundred"] = (
+            df[f"rolling_vaccinations_{n_months}m"] * 100 / df.population
+        ).round(2)
+    return df
+
+
+def add_rolling_vaccinations(df: pd.DataFrame) -> pd.DataFrame:
+    return df.groupby("location").apply(_add_rolling).reset_index(drop=True)

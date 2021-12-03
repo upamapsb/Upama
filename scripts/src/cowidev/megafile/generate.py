@@ -4,7 +4,12 @@ from datetime import date
 import pandas as pd
 
 from cowidev.utils.utils import get_project_dir, export_timestamp
-from cowidev.megafile.steps import get_base_dataset, add_macro_variables, add_excess_mortality
+from cowidev.megafile.steps import (
+    get_base_dataset,
+    add_macro_variables,
+    add_excess_mortality,
+    add_rolling_vaccinations,
+)
 from cowidev.megafile.export import (
     create_internal,
     create_dataset,
@@ -81,6 +86,9 @@ def generate_megafile():
         df=all_covid, data_file=os.path.join(DATA_DIR, "excess_mortality", "excess_mortality.csv")
     )
 
+    # Calculate rolling vaccinations
+    all_covid = add_rolling_vaccinations(all_covid)
+
     # Sort by location and date
     all_covid = all_covid.sort_values(["location", "date"])
 
@@ -96,7 +104,17 @@ def generate_megafile():
     )
 
     # Drop columns not included in final dataset
-    cols_drop = ["excess_mortality_count_week", "excess_mortality_count_week_pm", "share_cases_sequenced"]
+    cols_drop = [
+        "excess_mortality_count_week",
+        "excess_mortality_count_week_pm",
+        "share_cases_sequenced",
+        "rolling_vaccinations_6m",
+        "rolling_vaccinations_6m_per_hundred",
+        "rolling_vaccinations_9m",
+        "rolling_vaccinations_9m_per_hundred",
+        "rolling_vaccinations_12m",
+        "rolling_vaccinations_12m_per_hundred",
+    ]
     all_covid = all_covid.drop(columns=cols_drop)
 
     # # Create light versions of complete dataset with only the latest data point
