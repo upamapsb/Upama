@@ -14,6 +14,9 @@ class Peru:
         self.source_url_age = (
             "https://github.com/jmcastagnetto/covid-19-peru-vacunas/raw/main/datos/vacunas_covid_rangoedad_owid.csv"
         )
+        self.source_url_manufacturer = (
+            "https://github.com/jmcastagnetto/covid-19-peru-vacunas/raw/main/datos/vacunas_covid_fabricante.csv"
+        )
         self.source_url_ref = "https://www.datosabiertos.gob.pe/dataset/vacunacion"
         self.vaccine_mapping = {
             "SINOPHARM": "Sinopharm/Beijing",
@@ -29,6 +32,9 @@ class Peru:
 
     def read_age(self):
         return pd.read_csv(self.source_url_age)
+
+    def read_manufacturer(self):
+        return pd.read_csv(self.source_url_manufacturer)
 
     def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.rename(columns={"fecha_vacunacion": "date", "fabricante": "vaccine"})
@@ -128,6 +134,12 @@ class Peru:
     def pipeline_age(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.pipe(self.pipe_age_checks).pipe(self.pipe_age_date).pipe(self.pipe_columns_out)
 
+    def pipeline_manufacturer(self, df: pd.DataFrame) -> pd.DataFrame:
+        df = df.sort_values(["location", "date", "vaccine"])[["location", "date", "vaccine", "total_vaccinations"]]
+        if not df.groupby("vaccine")["total_vaccinations"].is_monotonic_increasing.all():
+            raise ValueError("Manufacturer data for Peru is not monotonically increasing!")
+        return df
+
     def export(self):
         df = self.read().pipe(self.pipeline)
         df.to_csv(paths.out_vax(self.location), index=False)
@@ -136,6 +148,14 @@ class Peru:
         df_age.to_csv(paths.out_vax(self.location, age=True), index=False)
         export_metadata_age(
             df_age,
+            "Ministerio de Salud via https://github.com/jmcastagnetto/covid-19-peru-vacunas",
+            self.source_url_ref,
+        )
+        # Manufacturer data
+        df_manuf = self.read_manufacturer().pipe(self.pipeline_manufacturer)
+        df_manuf.to_csv(paths.out_vax(self.location, manufacturer=True), index=False)
+        export_metadata_age(
+            df_manuf,
             "Ministerio de Salud via https://github.com/jmcastagnetto/covid-19-peru-vacunas",
             self.source_url_ref,
         )
