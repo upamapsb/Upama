@@ -1,6 +1,6 @@
 import pandas as pd
 
-from cowidev.utils.clean.dates import localdatenow
+from cowidev.utils.clean.dates import localdate, localdatenow
 from cowidev.vax.utils.files import export_metadata_age
 from cowidev.utils import paths
 
@@ -87,17 +87,46 @@ class Peru:
             raise ValueError("Check `people_vaccinated_per_hundred` field! Found values above 100%.")
         if (df.people_fully_vaccinated_per_hundred > 100).sum():
             raise ValueError("Check `people_fully_vaccinated_per_hundred` field! Found values above 100%.")
-        if (df.sunday.min() < "2021-02-08") or (df.sunday.max() > localdatenow("America/Lima")):
-            raise ValueError("Check `sunday` field! Some dates may be out of normal")
+        if (df["last_day_of_epi_week"].min() < "2021-02-14") or (
+            df["last_day_of_epi_week"].max() > localdatenow("America/Lima", sum_days=7)
+        ):
+            raise ValueError(
+                "Check `last_day_of_epi_week` field! Some dates may be out of normal! Current range is"
+                f" [{df['last_day_of_epi_week'].min()}, {df['last_day_of_epi_week'].max()}]."
+            )
         if not (df.location.unique() == "Peru").all():
             raise ValueError("Invalid values in `location` field!")
         return df
 
-    def pipe_age_rename_date(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.rename(columns={"sunday": "date"})
+    def pipe_age_date(self, df: pd.DataFrame) -> pd.DataFrame:
+        df = df.rename(columns={"last_day_of_epi_week": "date"})
+        self._sanity_checks_age_date(df)
+        df.loc[df.complete_epi_week == 0, "date"] = localdatenow("America/Lima")
+        return df
+
+    def _sanity_checks_age_date(self, df: pd.DataFrame):
+        msk = df.date > localdatenow("America/Lima")
+        if (
+            (df.loc[msk, "complete_epi_week"].unique() != 0) | (df.loc[~msk, "complete_epi_week"].unique() != 1)
+        ).any():
+            raise ValueError(
+                "Some inconsistency found! Check values for `last_day_of_epi_week` and `complete_epi_week`."
+            )
+
+    def pipe_columns_out(self, df: pd.DataFrame) -> pd.DataFrame:
+        return df[
+            [
+                "location",
+                "date",
+                "age_group_min",
+                "age_group_max",
+                "people_vaccinated_per_hundred",
+                "people_fully_vaccinated_per_hundred",
+            ]
+        ]
 
     def pipeline_age(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self.pipe_age_checks).pipe(self.pipe_age_rename_date)
+        return df.pipe(self.pipe_age_checks).pipe(self.pipe_age_date).pipe(self.pipe_columns_out)
 
     def export(self):
         df = self.read().pipe(self.pipeline)
