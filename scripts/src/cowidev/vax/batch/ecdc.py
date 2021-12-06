@@ -115,7 +115,7 @@ class ECDC:
             total_vaccinations=df[["FirstDose", "SecondDose", "UnknownDose", "DoseAdditional1"]].sum(axis=1),
             people_vaccinated=df.FirstDose,
             people_fully_vaccinated=df.SecondDose,
-            total_boosters=df.DoseAdditional1,
+            people_with_booster=df.DoseAdditional1,
             date=df.YearWeekISO.apply(self._weekday_to_date),
             location=df.ReportingCountry.replace(self.country_mapping),
         )
@@ -131,7 +131,7 @@ class ECDC:
                     "total_vaccinations",
                     "people_vaccinated",
                     "people_fully_vaccinated",
-                    "total_boosters",
+                    "people_with_booster",
                     "UnknownDose",
                 ]
             ]
@@ -144,7 +144,7 @@ class ECDC:
             total_vaccinations=df.groupby(["location", group_field_renamed])["total_vaccinations"].cumsum(),
             people_vaccinated=df.groupby(["location", group_field_renamed])["people_vaccinated"].cumsum(),
             people_fully_vaccinated=df.groupby(["location", group_field_renamed])["people_fully_vaccinated"].cumsum(),
-            total_boosters=df.groupby(["location", group_field_renamed])["total_boosters"].cumsum(),
+            people_with_booster=df.groupby(["location", group_field_renamed])["people_with_booster"].cumsum(),
             UnknownDose=df.groupby(["location", group_field_renamed])["UnknownDose"].cumsum(),
         )
 
@@ -158,7 +158,7 @@ class ECDC:
                     "total_vaccinations",
                     "people_vaccinated",
                     "people_fully_vaccinated",
-                    "total_boosters",
+                    "people_with_booster",
                     "UnknownDose",
                 ]
             ]
@@ -270,6 +270,7 @@ class ECDC:
         return df.assign(
             people_vaccinated_per_hundred=(100 * df.people_vaccinated / df.Denominator).round(2),
             people_fully_vaccinated_per_hundred=(100 * df.people_fully_vaccinated / df.Denominator).round(2),
+            people_with_booster_per_hundred=(100 * df.people_with_booster / df.Denominator).round(2),
         )
 
     def pipeline_age(self, df: pd.DataFrame):
@@ -291,6 +292,7 @@ class ECDC:
                     "age_group_max",
                     "people_vaccinated_per_hundred",
                     "people_fully_vaccinated_per_hundred",
+                    "people_with_booster_per_hundred",
                 ]
             ]
             .sort_values(["location", "date", "age_group_min"])
@@ -320,6 +322,7 @@ class ECDC:
                     "age_group_max",
                     "people_vaccinated_per_hundred",
                     "people_fully_vaccinated_per_hundred",
+                    "people_with_booster_per_hundred",
                 ],
             )
         export_metadata_age(

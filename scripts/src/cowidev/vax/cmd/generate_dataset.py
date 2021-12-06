@@ -451,6 +451,7 @@ class DatasetGenerator:
         if not (
             is_numeric_dtype(df.people_vaccinated_per_hundred)
             and is_numeric_dtype(df.people_fully_vaccinated_per_hundred)
+            and is_numeric_dtype(df.people_with_booster_per_hundred)
         ):
             raise TypeError("Metrics should be numeric! E.g., 50.23")
         return df
@@ -459,6 +460,7 @@ class DatasetGenerator:
         cols_metrics = [
             "people_vaccinated_per_hundred",
             "people_fully_vaccinated_per_hundred",
+            "people_with_booster_per_hundred",
         ]
         df[cols_metrics] = df[cols_metrics].round(2)
         return df
@@ -471,15 +473,25 @@ class DatasetGenerator:
         return df.assign(age_group=age_group)
 
     def pipe_age_output(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.dropna(subset=["people_vaccinated_per_hundred", "people_fully_vaccinated_per_hundred",], how="all",)[
+        return df.dropna(
+            subset=[
+                "people_vaccinated_per_hundred",
+                "people_fully_vaccinated_per_hundred",
+                "people_with_booster_per_hundred",
+            ],
+            how="all",
+        )[
             [
                 "location",
                 "date",
                 "age_group",
                 "people_vaccinated_per_hundred",
                 "people_fully_vaccinated_per_hundred",
+                "people_with_booster_per_hundred",
             ]
-        ].sort_values(["location", "date", "age_group"])
+        ].sort_values(
+            ["location", "date", "age_group"]
+        )
 
     def pipeline_age(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
@@ -562,10 +574,13 @@ class DatasetGenerator:
         # Ensure column order
         columns = pd.MultiIndex.from_tuples(sorted(df.columns, key=lambda x: x[0] + x[1]))
         df = df[columns]
-        columns_wrong = df.people_vaccinated_per_hundred.columns.difference(
+        columns_wrong_1 = df.people_vaccinated_per_hundred.columns.difference(
             df.people_fully_vaccinated_per_hundred.columns
         )
-        if columns_wrong.any():
+        columns_wrong_2 = df.people_fully_vaccinated_per_hundred.columns.difference(
+            df.people_with_booster_per_hundred.columns
+        )
+        if columns_wrong_1.any() or columns_wrong_2.any():
             raise ValueError(f"There is missmatch between age groups in people vaccinated and people fully vaccinated")
         return df
 
@@ -587,6 +602,8 @@ class DatasetGenerator:
                 new_cols.append(f"{col[1]}_fully")
             elif col[0] == "people_partly_vaccinated_per_hundred":
                 new_cols.append(f"{col[1]}_partly")
+            elif col[0] == "people_with_booster_per_hundred":
+                new_cols.append(f"{col[1]}_booster")
             else:
                 new_cols.append(col[0])
         df.columns = new_cols
