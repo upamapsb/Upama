@@ -17,7 +17,6 @@ class Taiwan:
     def __init__(self):
         self.source_url = "https://www.cdc.gov.tw"
         self.location = "Taiwan"
-        self.columns_accepted = {"廠牌", "劑次", "12/3接種劑數", "累計至 12/3接種劑數"}
         self.vaccines_mapping = {
             "AstraZeneca": "Oxford/AstraZeneca",
             "高端": "Medigen",
@@ -51,10 +50,11 @@ class Taiwan:
     def _parse_table(self, url_pdf: str):
         dfs = self._parse_tables_all(url_pdf)
         df = dfs[0]
+
         # Sanity check
-        cols_wrong = df.columns.difference(self.columns_accepted)
-        if cols_wrong.any():
-            raise ValueError(f"There are some unknown columns: {cols_wrong}")
+        cols = df.columns
+        if not (len(cols) == 4 and cols[0] == "廠牌" and cols[1] == "劑次" and cols[2].endswith("接種人次") and cols[3].startswith("累計") and cols[3].endswith("接種人次")):
+            raise ValueError(f"There are some unknown columns: {cols}")
 
         # Fix index
         index_ = df["廠牌"].shift().fillna(method="bfill")
