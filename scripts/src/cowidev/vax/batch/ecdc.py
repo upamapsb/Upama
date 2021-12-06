@@ -30,6 +30,10 @@ age_groups_known = {
 
 
 age_groups_relevant = {
+    "Age0_4",
+    "Age5_9",
+    "Age10_14",
+    "Age15_17",
     "Age18_24",
     "Age25_49",
     "Age50_59",
