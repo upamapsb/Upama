@@ -121,8 +121,8 @@ class Israel:
         # Final column creations
         df = df.assign(
             location=self.location,
-            people_vaccinated_per_hundred=100 * df["1st perc"],
-            people_fully_vaccinated_per_hundred=100 * df["2nd perc"],
+            people_vaccinated_per_hundred=df["1st perc"],
+            people_fully_vaccinated_per_hundred=df["2nd perc"],
         )
         # Select output columns
         df = df[
