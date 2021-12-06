@@ -17,7 +17,6 @@ class Taiwan:
     def __init__(self):
         self.source_url = "https://www.cdc.gov.tw"
         self.location = "Taiwan"
-        self.columns_accepted = {"廠牌", "劑次", "12/2接種劑數", "累計至 12/2接種劑數"}
         self.vaccines_mapping = {
             "AstraZeneca": "Oxford/AstraZeneca",
             "高端": "Medigen",
@@ -51,13 +50,15 @@ class Taiwan:
     def _parse_table(self, url_pdf: str):
         dfs = self._parse_tables_all(url_pdf)
         df = dfs[0]
+
         # Sanity check
-        cols_wrong = df.columns.difference(self.columns_accepted)
-        if cols_wrong.any():
-            raise ValueError(f"There are some unknown columns: {cols_wrong}")
+        cols = df.columns
+        if not (len(cols) == 4 and cols[0] == "廠牌" and cols[1] == "劑次" and cols[2].endswith("接種人次") and cols[3].startswith("累計") and cols[3].endswith("接種人次")):
+            raise ValueError(f"There are some unknown columns: {cols}")
+
         # Fix index
-        index_ = df["廠牌"].iloc[:-1].shift().fillna(method="bfill")
-        df["廠牌"].iloc[:-1] = index_
+        index_ = df["廠牌"].shift().fillna(method="bfill")
+        df["廠牌"] = index_
         df = df.set_index(["廠牌", "劑次"])
         # Drop NaNs
         df = df.dropna()
@@ -101,7 +102,7 @@ class Taiwan:
         #     num_dose1 = clean_count(num1.split(" ")[-1])
         #     num_dose2 = clean_count(num2.split(" ")[-1])
 
-        if df.shape != (11, 2):
+        if df.shape != (13, 2):
             raise ValueError(f"Table 1: format has changed!")
 
         num_dose1 = clean_count(df.loc["總計", "第 1劑"]["total"])
