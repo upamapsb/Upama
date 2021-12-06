@@ -1,4 +1,4 @@
-"merge"
+import numpy as np
 import pandas as pd
 
 
@@ -43,11 +43,13 @@ def get_vax(data_file):
 
 
 def _add_rolling(df: pd.DataFrame) -> pd.DataFrame:
+    last_known_date = df.loc[df.total_vaccinations.notnull(), "date"].max()
     for n_months in (6, 9, 12):
         n_days = round(365.2425 * n_months / 12)
         df[f"rolling_vaccinations_{n_months}m"] = (
             df.total_vaccinations.interpolate(method="linear").diff().rolling(n_days, min_periods=1).sum().round()
         )
+        df.loc[df.date > last_known_date, f"rolling_vaccinations_{n_months}m"] = np.NaN
         df[f"rolling_vaccinations_{n_months}m_per_hundred"] = (
             df[f"rolling_vaccinations_{n_months}m"] * 100 / df.population
         ).round(2)
