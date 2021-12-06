@@ -53,7 +53,14 @@ class Taiwan:
 
         # Sanity check
         cols = df.columns
-        if not (len(cols) == 4 and cols[0] == "廠牌" and cols[1] == "劑次" and cols[2].endswith("接種人次") and cols[3].startswith("累計") and cols[3].endswith("接種人次")):
+        if not (
+            len(cols := df.columns) == 4
+            and cols[0] == "廠牌"
+            and cols[1] == "劑次"
+            and cols[2].endswith("接種人次")
+            and re.match(r"\d+\/\d+\-\d+\/\d+接種人次", cols[2])
+            and re.match(r"累計至 \d+\/\d+接種人次", cols[3])
+        ):
             raise ValueError(f"There are some unknown columns: {cols}")
 
         # Fix index
