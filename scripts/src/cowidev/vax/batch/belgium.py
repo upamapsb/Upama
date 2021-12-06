@@ -36,7 +36,7 @@ class Belgium:
 
     def pipe_add_totals(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.assign(
-            total_vaccinations=df.A + df.B + df.C,
+            total_vaccinations=df.A + df.B + df.C + df.E,
             people_vaccinated=df.A + df.C,
             people_fully_vaccinated=df.B + df.C,
             total_boosters=df.E,
