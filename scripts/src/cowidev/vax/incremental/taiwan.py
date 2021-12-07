@@ -58,8 +58,8 @@ class Taiwan:
             and cols[0] == "廠牌"
             and cols[1] == "劑次"
             and cols[2].endswith("接種人次")
-            and re.match(r"\d+\/\d+\-\d+\/\d+接種人次", cols[2])
-            and re.match(r"累計至 \d+\/\d+接種人次", cols[3])
+            and re.match(r"(\d+\/\d+ *\- *)?\d+\/\d+ *接種人次", cols[2])
+            and re.match(r"累計至 *\d+\/\d+ *接種人次", cols[3])
         ):
             raise ValueError(f"There are some unknown columns: {cols}")
 
@@ -109,7 +109,7 @@ class Taiwan:
         #     num_dose1 = clean_count(num1.split(" ")[-1])
         #     num_dose2 = clean_count(num2.split(" ")[-1])
 
-        if df.shape != (13, 2):
+        if df.shape != (15, 2):
             raise ValueError(f"Table 1: format has changed!")
 
         num_dose1 = clean_count(df.loc["總計", "第 1劑"]["total"])
