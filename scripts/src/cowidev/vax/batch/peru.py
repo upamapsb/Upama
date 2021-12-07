@@ -46,7 +46,7 @@ class Peru:
         if unknown_vaccines:
             raise ValueError("Found unknown vaccines: {}".format(unknown_vaccines))
         # Check dose number
-        dose_num_wrong = set(df.dosis).difference({1, 2, 3})
+        dose_num_wrong = set(df.dosis).difference({1, 2, 3, 4})
         if dose_num_wrong:
             raise ValueError(f"Invalid dose number. Check field `dosis`: {dose_num_wrong}")
         return df
@@ -55,6 +55,7 @@ class Peru:
         return df.replace(self.vaccine_mapping)
 
     def pipe_format(self, df: pd.DataFrame) -> pd.DataFrame:
+        df.loc[df.dosis >= 3, "dosis"] = 3  # All doses from 3 onwards are boosters
         return (
             df.drop(columns="vaccine")
             .groupby(["date", "dosis"], as_index=False)
