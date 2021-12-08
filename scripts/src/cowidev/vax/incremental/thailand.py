@@ -47,6 +47,7 @@ class Thailand:
             if link["date"] <= last_update:
                 break
             records.append(self._parse_metrics(link))
+            break
         return pd.DataFrame(records)
 
     def _get_month_links(self, soup):
