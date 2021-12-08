@@ -514,7 +514,7 @@ class DatasetGenerator:
                 (global_boosters.total_boosters - global_boosters.total_boosters.shift(1))
                 / (global_boosters.total_vaccinations - global_boosters.total_vaccinations.shift(1))
             )
-            .rolling(7)
+            .rolling(14)
             .mean()
             .round(4)
         )
