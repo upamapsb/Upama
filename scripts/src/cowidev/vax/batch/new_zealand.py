@@ -13,10 +13,7 @@ from cowidev.utils import paths
 
 class NewZealand:
     def __init__(self):
-        self.source_url = (
-            "https://www.health.govt.nz/our-work/diseases-and-conditions/covid-19-novel-coronavirus/"
-            "covid-19-data-and-statistics/covid-19-vaccine-data"
-        )
+        self.source_url = "https://www.health.govt.nz/our-work/diseases-and-conditions/covid-19-novel-coronavirus/covid-19-data-and-statistics/covid-19-vaccine-data"
         self.location = "New Zealand"
         self.columns_rename = {
             "First doses": "people_vaccinated",
@@ -71,6 +68,7 @@ class NewZealand:
         return df
 
     def pipe_merge_with_latest(self, df: pd.DataFrame) -> pd.DataFrame:
+        df["date"] = df.date.astype(str)
         return pd.concat([df, self.latest]).drop_duplicates("date", keep="first").reset_index(drop=True)
 
     def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
