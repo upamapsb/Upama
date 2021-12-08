@@ -132,6 +132,12 @@ internal_files_columns = {
             "excess_mortality_cumulative_per_million",  # count_cum_pm
             "excess_mortality_count_week",
             "excess_mortality_count_week_pm",
+            "cumulative_estimated_daily_excess_deaths",
+            "cumulative_estimated_daily_excess_deaths_ci_95_top",
+            "cumulative_estimated_daily_excess_deaths_ci_95_bot",
+            "cumulative_estimated_daily_excess_deaths_per_100k",
+            "cumulative_estimated_daily_excess_deaths_ci_95_top_per_100k",
+            "cumulative_estimated_daily_excess_deaths_ci_95_bot_per_100k",
         ],
         "dropna": "all",
     },

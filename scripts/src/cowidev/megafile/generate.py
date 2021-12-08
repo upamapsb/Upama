@@ -83,7 +83,9 @@ def generate_megafile():
 
     # Add excess mortality
     all_covid = add_excess_mortality(
-        df=all_covid, data_file=os.path.join(DATA_DIR, "excess_mortality", "excess_mortality.csv")
+        df=all_covid,
+        wmd_hmd_file=os.path.join(DATA_DIR, "excess_mortality", "excess_mortality.csv"),
+        economist_file=os.path.join(DATA_DIR, "excess_mortality", "excess_mortality_economist_estimates.csv"),
     )
 
     # Calculate rolling vaccinations
@@ -114,6 +116,12 @@ def generate_megafile():
         "rolling_vaccinations_9m_per_hundred",
         "rolling_vaccinations_12m",
         "rolling_vaccinations_12m_per_hundred",
+        "cumulative_estimated_daily_excess_deaths",
+        "cumulative_estimated_daily_excess_deaths_ci_95_top",
+        "cumulative_estimated_daily_excess_deaths_ci_95_bot",
+        "cumulative_estimated_daily_excess_deaths_per_100k",
+        "cumulative_estimated_daily_excess_deaths_ci_95_top_per_100k",
+        "cumulative_estimated_daily_excess_deaths_ci_95_bot_per_100k",
     ]
     all_covid = all_covid.drop(columns=cols_drop)
 
