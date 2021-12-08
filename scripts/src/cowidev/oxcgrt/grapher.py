@@ -52,7 +52,7 @@ def run_grapheriser(input_path: str, input_path_country_std: str, output_path: s
     vax = pd.read_csv(
         URL_VACCINE,
         low_memory=False,
-        usecols=["CountryName", "Date", "V2_Vaccine Availability (summary)"],
+        usecols=["CountryName", "Date", "V2_Vaccine Availability (summary)", "V2_Pregnant people"],
     )
     cgrt = pd.merge(cgrt, vax, how="outer", on=["CountryName", "Date"], validate="one_to_one")
 
@@ -91,7 +91,8 @@ def run_grapheriser(input_path: str, input_path_country_std: str, output_path: s
         "V2_Vaccine Availability (summary)": "vaccine_eligibility",
         "V2A_Vaccine Availability (summary)":"vaccine_availability",
         "V2B_Vaccine age eligibility/availability age floor (general population summary)":"vaccine_eligibility_age",
-        "V2C_Vaccine age eligibility/availability age floor (at risk summary)":"vaccine_eligibility_age_at_risk"
+        "V2C_Vaccine age eligibility/availability age floor (at risk summary)":"vaccine_eligibility_age_at_risk",
+        "V2_Pregnant people":"pregnant_vaccine_eligibility"
     }
 
     cgrt = cgrt.rename(columns=rename_dict).sort_values(["Country", "Year"])
