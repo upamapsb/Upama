@@ -40,6 +40,9 @@ def run_grapheriser(input_path: str, input_path_country_std: str, output_path: s
             "H7_Vaccination policy",
             "StringencyIndex",
             "ContainmentHealthIndex",
+            "V2A_Vaccine Availability (summary)",
+            "V2B_Vaccine age eligibility/availability age floor (general population summary)",
+            "V2C_Vaccine age eligibility/availability age floor (at risk summary)"
         ],
     )
     country_mapping = pd.read_csv(input_path_country_std)
@@ -86,6 +89,9 @@ def run_grapheriser(input_path: str, input_path_country_std: str, output_path: s
         "H7_Vaccination policy": "vaccination_policy",
         "H2_Testing policy": "testing_policy",
         "V2_Vaccine Availability (summary)": "vaccine_eligibility",
+        "V2A_Vaccine Availability (summary)":"vaccine_availability",
+        "V2B_Vaccine age eligibility/availability age floor (general population summary)":"vaccine_eligibility_age",
+        "V2C_Vaccine age eligibility/availability age floor (at risk summary)":"vaccine_eligibility_age_at_risk"
     }
 
     cgrt = cgrt.rename(columns=rename_dict).sort_values(["Country", "Year"])
