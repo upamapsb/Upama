@@ -88,7 +88,7 @@ def get_data() -> pd.DataFrame:
     assert (
         json_data["data"]["total_pcr_testing_count"] == df["Daily change in cumulative total"].sum()
     ), "Sum of daily changes does not equal cumulative total."
-    return df
+    return df.drop_duplicates(subset="Date")
 
 
 def sanity_checks(df: pd.DataFrame) -> None:
