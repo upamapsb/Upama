@@ -44,6 +44,7 @@ class Kenya:
 
         with tempfile.NamedTemporaryFile() as tf:
             with open(tf.name, mode="wb") as f:
+                print(url_pdf)
                 f.write(requests.get(url_pdf, verify=False).content)
             with open(tf.name, mode="rb") as f:
                 reader = PyPDF2.PdfFileReader(f)
@@ -52,8 +53,8 @@ class Kenya:
         return pages
 
     def _parse_date(self, pdf_text: str):
-        regex = r"vaccine doses dispensed as at [a-z]+ ([0-9a-z]+,? [a-z]+ 202\d)"
-        date_str = re.search(regex, pdf_text).group(1)
+        regex = r"vaccine doses dispensed as at (day )?[a-z]+ ([0-9a-z]+,? [a-z]+ 202\d)"
+        date_str = re.search(regex, pdf_text).group(2)
         date = str(pd.to_datetime(date_str).date())
         return date
 
