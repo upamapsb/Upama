@@ -83,7 +83,7 @@ class Portugal:
             .pipe(self.pipe_dropna)
             .pipe(self.pipe_sanity_checks)
             .pipe(self.pipe_columns_out)
-            .pipe(make_monotonic)
+            .pipe(make_monotonic, max_removed_rows=20)
             .sort_values("date")
         )
 
