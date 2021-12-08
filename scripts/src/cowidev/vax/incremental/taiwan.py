@@ -81,6 +81,7 @@ class Taiwan:
         stats = self._parse_stats(df)
         data = pd.Series(
             {
+                "total_boosters": stats["total_boosters"],
                 "total_vaccinations": stats["total_vaccinations"],
                 "people_vaccinated": stats["people_vaccinated"],
                 "date": self._parse_date(soup),
@@ -114,9 +115,11 @@ class Taiwan:
 
         num_dose1 = clean_count(df.loc["總計", "第 1劑"]["total"])
         num_dose2 = clean_count(df.loc["總計", "第 2劑"]["total"])
+        num_booster = clean_count(df.loc["總計", "追加劑"]["total"])
         return {
             "total_vaccinations": (num_dose1 + num_dose2),
             "people_vaccinated": num_dose1,
+            "total_boosters": num_booster,
         }
 
     def _parse_vaccines(self, df: pd.DataFrame) -> str:
@@ -162,6 +165,7 @@ class Taiwan:
                 date=data["date"],
                 source_url=data["source_url"],
                 vaccine=data["vaccine"],
+                total_boosters=data["total_boosters"],
             )
         else:
             increment(
