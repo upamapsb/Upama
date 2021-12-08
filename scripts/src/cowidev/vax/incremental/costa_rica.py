@@ -31,7 +31,7 @@ class CostaRica:
         return pd.Series(data=data)
 
     def _parse_table(self, soup):
-        df = pd.read_html(str(soup.find("table", id="content-table3")))[0]
+        df = pd.read_html(str(soup.find("table", id="content-table3")), thousands=".")[0]
         df = df[df["Región"] == "Total"]
         total_vaccinations = clean_count(df["Total dosis"].item())
         people_vaccinated = clean_count(df["Dosis 1"].item())
