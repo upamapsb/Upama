@@ -25,7 +25,7 @@ def run_grapheriser(input_path: str, output_path: str):
         pivot_values=["num_sequences", "perc_sequences"],
         fillna_0=True,
         function_input=filter_by_num_sequences,
-        suffixes=["", "percentages"],
+        suffixes=["", "_percentages"],
     ).run(input_path, output_path)
 
 
