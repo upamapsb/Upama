@@ -59,15 +59,18 @@ class Kenya:
         return date
 
     def _parse_metrics(self, pages: list):
-        regex = (
-            r"total doses administered ([\d,]+) total partially vaccinated ([\d,]+) total fully vaccinated ([\d,]+)"
-        )
+        regex = r"total doses administered ([\d,]+) total partially vaccinated above 18 yrs ([\d,]+) total fully vaccinated above 18 yrs ([\d,]+)"
         data = re.search(regex, pages[0])
         total_vaccinations = clean_count(data.group(1))
-        people_partially_vaccinated = clean_count(data.group(2))
+        adults_partially_vaccinated = clean_count(data.group(2))
         people_fully_vaccinated = clean_count(data.group(3))
+
+        regex = r"15-18 yrs received first dose \(pfizer vaccine\) ([\d,]+)"
+        data = re.search(regex, pages[0])
+        teenagers_vaccinated = clean_count(data.group(1))
+
         # Correct people vaccinated with JJ doses
-        people_vaccinated = people_partially_vaccinated + self._extract_jj_doses(pages)
+        people_vaccinated = adults_partially_vaccinated + self._extract_jj_doses(pages) + teenagers_vaccinated
         return total_vaccinations, people_vaccinated, people_fully_vaccinated
 
     def _extract_jj_doses(self, pages):
@@ -77,7 +80,7 @@ class Kenya:
         )
         rex_jj = r"total ([\d,]+) (?:[\d,]+) (?:[\d,]+) (?:[\d,]+) (?:[\d.]+)% table 5 shows percentage of clients"
         for page in pages:
-            if "table 5: fully vaccinated vs. partially vaccinated by priority group" in page:
+            if "table 5: fully vaccinated vs. partially vaccinated above 18 years by priority group" in page:
                 if not re.search(rex_header, page):
                     raise Exception("Header columns of table 5 have changed!")
                 doses_jj = re.search(rex_jj, page).group(1)
