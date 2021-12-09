@@ -26,7 +26,7 @@ regex_mapping = {
     "AstraZeneca Vaccine": r"(AstraZeneca Vaccine) 1st Dose ([\d,]+) 2nd Dose ([\d,]+)",
     "Sinopharm Vaccine": r"(Sinopharm Vaccine) 1st Dose ([\d,]+) 2nd Dose ([\d,]+)",
     "Sputnik V": r"(Sputnik V) 1st Dose ([\d,]+) 2nd Dose ([\d,]+)",
-    "Pfizer": r"(Pfizer) 1st Dose ([\d,]+) 2nd Dose ([\d,]+)",
+    "Pfizer": r"(Pfizer) 1st Dose ([\d,]+) 2nd Dose ([\d,]+) \d+ 3rd dose ([\d,]+)",
     "Moderna": r"(Moderna) 1st Dose ([\d,]+) 2nd Dose ([\d,]+)",
 }
 
@@ -51,7 +51,8 @@ class SriLanka:
         df_vax = self._parse_vaccines_table_as_df(text)
         people_vaccinated = df_vax.doses_1.sum()
         people_fully_vaccinated = df_vax.doses_2.sum()
-        total_vaccinations = people_vaccinated + people_fully_vaccinated
+        total_boosters = df_vax.doses_3.sum()
+        total_vaccinations = people_vaccinated + people_fully_vaccinated + total_boosters
         vaccine = ", ".join(df_vax.vaccine.map(vaccines_mapping))
         # Get date
         regex = r"Situation Report\s+([\d\.]{10})"
@@ -62,6 +63,7 @@ class SriLanka:
             "total_vaccinations": total_vaccinations,
             "people_vaccinated": people_vaccinated,
             "people_fully_vaccinated": people_fully_vaccinated,
+            "total_boosters": total_boosters,
             "date": date,
             "source_url": pdf_path,
             "vaccine": vaccine,
@@ -99,11 +101,12 @@ class SriLanka:
             results = re.findall(vaccine_regex, vax_info, re.IGNORECASE)
             allresults.append(results)
         flat_ls = list(itertools.chain(*allresults))
-        df = pd.DataFrame(flat_ls, columns=["vaccine", "doses_1", "doses_2"]).replace("-", 0)
+        df = pd.DataFrame(flat_ls, columns=["vaccine", "doses_1", "doses_2", "doses_3"]).replace("-", 0)
         df = df.replace(to_replace=[None], value=0)
         df = df.assign(
             doses_1=df["doses_1"].astype(str).apply(clean_count),
             doses_2=df["doses_2"].astype(str).apply(clean_count),
+            doses_3=df["doses_3"].astype(str).apply(clean_count),
             vaccine=df.vaccine.str.strip(),
         )
         return df
@@ -115,6 +118,7 @@ class SriLanka:
             total_vaccinations=data["total_vaccinations"],
             people_vaccinated=data["people_vaccinated"],
             people_fully_vaccinated=data["people_fully_vaccinated"],
+            total_boosters=data["total_boosters"],
             date=data["date"],
             source_url=data["source_url"],
             vaccine=data["vaccine"],
