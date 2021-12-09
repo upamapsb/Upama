@@ -71,7 +71,7 @@ class WHO:
         """Replace vaccine names and create column `only_2_doses`."""
         if pd.isna(row.VACCINES_USED):
             raise ValueError("Vaccine field is NaN")
-        vaccines = pd.Series(row.VACCINES_USED.split(","))
+        vaccines = pd.Series(row.VACCINES_USED.split(",")).str.strip()
         vaccines = vaccines.replace(WHO_VACCINES)
         only_2doses = all(-vaccines.isin(pd.Series(VACCINES_ONE_DOSE)))
 
