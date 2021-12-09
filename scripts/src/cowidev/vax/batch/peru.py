@@ -45,10 +45,6 @@ class Peru:
         unknown_vaccines = set(df["vaccine"].unique()).difference(self.vaccine_mapping.keys())
         if unknown_vaccines:
             raise ValueError("Found unknown vaccines: {}".format(unknown_vaccines))
-        # Check dose number
-        dose_num_wrong = set(df.dosis).difference({1, 2, 3, 4})
-        if dose_num_wrong:
-            raise ValueError(f"Invalid dose number. Check field `dosis`: {dose_num_wrong}")
         return df
 
     def pipe_rename_vaccines(self, df: pd.DataFrame) -> pd.DataFrame:
