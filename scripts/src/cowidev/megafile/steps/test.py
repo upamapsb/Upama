@@ -58,7 +58,6 @@ def get_testing():
             "new_tests_per_thousand",
             "new_tests_smoothed_per_thousand",
             "tests_per_case",
-            "positive_rate",
         ]
     ] = testing[
         [
@@ -66,7 +65,6 @@ def get_testing():
             "new_tests_per_thousand",
             "new_tests_smoothed_per_thousand",
             "tests_per_case",
-            "positive_rate",
         ]
     ].round(
         3

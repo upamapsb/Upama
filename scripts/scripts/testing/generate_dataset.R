@@ -179,7 +179,7 @@ parse_country <- function(sheet_name) {
 
         # Tests per case = inverse of positive rate
         collated[, `Short-term tests per case` := ifelse(`Short-term positive rate` > 0, round(1 / `Short-term positive rate`, 1), NA_integer_)]
-        collated[, `Short-term positive rate` := round(`Short-term positive rate`, 3)]
+        collated[, `Short-term positive rate` := round(`Short-term positive rate`, 4)]
 
         # Cumulative versions based on JHU data
         collated[, `Cumulative positive rate` := round(total_cases / `Cumulative total`, 3)]
