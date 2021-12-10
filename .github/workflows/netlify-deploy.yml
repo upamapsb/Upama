@@ -16,9 +16,7 @@ jobs:
         persist-credentials: false
 
     - name: Deploy to Netlify
-      uses: owid/netlify-actions/cli@master
-      with:
-        args: deploy --dir=./public/ --prod
+      run: netlify deploy --dir=./public/ --prod
       env:
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
