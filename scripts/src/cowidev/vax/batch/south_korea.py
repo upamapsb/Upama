@@ -35,13 +35,13 @@ class SouthKorea:
         # if df.shape[1] != 10:
         #     raise ValueError("Number of columns has changed!")
         columns_lv = dict()
-        columns_lv[0] = {"1·2차 접종", "일자", "전체 누적", "3차(부스터) 접종"}
+        columns_lv[0] = {"1·2차 접종", "일자", "전체 누적", "3차 접종"}
         columns_lv[1] = {"모더나 누적", "아스트라제네카 누적", "얀센 누적", "화이자 누적"}
         columns_lv[2] = {
             "",
             "1차",
             "2차",
-            "3차(부스터)",
+            "3차",
             "2차\n(AZ-PF교차미포함)",
             "2차\n(M-Pf 교차 포함)",
             "2차\n(AZ-PF교차포함)",
@@ -61,7 +61,7 @@ class SouthKorea:
                 "date": df.loc[:, "일자"],
                 "people_vaccinated": df.loc[:, ("전체 누적", "", "1차")],
                 "people_fully_vaccinated": df.loc[:, ("전체 누적", "", "2차")],
-                "total_boosters": df.loc[:, ("전체 누적", "", "3차(부스터)")],
+                "total_boosters": df.loc[:, ("전체 누적", "", "3차")],
                 "janssen": df.loc[:, ("1·2차 접종", "얀센 누적", "1차")],
             }
         )
@@ -70,7 +70,7 @@ class SouthKorea:
         data = {"date": df.loc[:, "일자"]}
         for vax_og, vax_new in self.vaccines_mapping.items():
             primary = df.loc[:, ("1·2차 접종", vax_og)].sum(axis=1)
-            booster = df.loc[:, "3차(부스터) 접종"].get(vax_og)
+            booster = df.loc[:, "3차 접종"].get(vax_og)
             data[vax_new] = primary + (0 if booster is None else booster)
         return pd.DataFrame(data)
 
