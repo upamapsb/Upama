@@ -4,7 +4,7 @@ For more general information on our COVID-19 data, see our main README file in [
 
 ## Data sources
 
-The all-cause mortality data is from the [Human Mortality Database](https://www.mortality.org/) (HMD) Short-term Mortality Fluctuations project and the [World Mortality Dataset](https://github.com/akarlinsky/world_mortality) (WMD). Both sources are updated weekly.
+The reported all-cause mortality data is from the [Human Mortality Database](https://www.mortality.org/) (HMD) Short-term Mortality Fluctuations project and the [World Mortality Dataset](https://github.com/akarlinsky/world_mortality) (WMD). Both sources are updated weekly. We also present estimates of excess deaths globally that are [published by _The Economist_](https://github.com/TheEconomist/covid-19-the-economist-global-excess-deaths-model).
 
 WMD sources some of its data from HMD, but we use the data from HMD directly. We do not use the data from some countries in WMD because they fail to meet the following data quality criteria: 1) at least three years of historical data; and 2) data published either weekly or monthly. The full list of excluded countries and reasons for exclusion can be found [in this spreadsheet](https://docs.google.com/spreadsheets/d/1JPMtzsx-smO3_K4ReK_HMeuVLEzVZ71qHghSuAfG788/edit?usp=sharing).
 
@@ -18,7 +18,9 @@ For a more detailed description of the HMD data, including week date definitions
 
 For a more detailed description of the WMD data, including original source information, [see their GitHub page](https://github.com/akarlinsky/world_mortality).
 
-## Excess mortality data
+For a more detailed description of _The Economist's_ estimates, including metadata, source information, details of their methodology, and their presentation of the estimates, [see their GitHub page](https://github.com/TheEconomist/covid-19-the-economist-global-excess-deaths-model).
+
+## Excess mortality data from HMD and WMD that is collated by Our World in Data
 
 Stored in [`excess_mortality.csv`](https://github.com/owid/covid-19-data/blob/master/public/data/excess_mortality/excess_mortality.csv).
 
