@@ -59,18 +59,21 @@ class Kenya:
         return date
 
     def _parse_metrics(self, pages: list):
-        regex = r"total doses administered ([\d,]+) total partially vaccinated above 18 yrs ([\d,]+) total fully vaccinated above 18 yrs ([\d,]+)"
+        regex = r"total doses administered above 18 yrs ([\d,]+) total partially vaccinated above 18 yrs ([\d,]+) total fully vaccinated above 18 yrs ([\d,]+)"
         data = re.search(regex, pages[0])
-        total_vaccinations = clean_count(data.group(1))
+        adults_total_vaccinations = clean_count(data.group(1))
         adults_partially_vaccinated = clean_count(data.group(2))
         people_fully_vaccinated = clean_count(data.group(3))
 
         regex = r"15-18 yrs received first dose \(pfizer vaccine\) ([\d,]+)"
         data = re.search(regex, pages[0])
-        teenagers_vaccinated = clean_count(data.group(1))
+        teenagers_first_doses = clean_count(data.group(1))
+
+        total_vaccinations = adults_total_vaccinations + teenagers_first_doses
 
         # Correct people vaccinated with JJ doses
-        people_vaccinated = adults_partially_vaccinated + self._extract_jj_doses(pages) + teenagers_vaccinated
+        people_vaccinated = adults_partially_vaccinated + self._extract_jj_doses(pages) + teenagers_first_doses
+
         return total_vaccinations, people_vaccinated, people_fully_vaccinated
 
     def _extract_jj_doses(self, pages):
