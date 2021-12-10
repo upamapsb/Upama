@@ -44,9 +44,17 @@ scripts/scripts/testing/automated_sheets_new
 scripts/scripts/*.ipynb
 scripts/notebooks/Untitled*.ipynb
 scripts/notebooks/readme.ipynb
+scripts/subnational_cases_deaths.zip
+scripts/*.ipynb
+scripts/notebooks/
+scripts/scripts/testing/automations/incremental/Untitled.ipynb
+Untitled.ipynb
 
 # Misc (Cam)
 misc/
 scripts/build
 .Rproj.user
 covid-19-data.Rproj
+gitsize.sh
+
+# local files
