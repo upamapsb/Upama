@@ -35,6 +35,7 @@ def main() -> pd.DataFrame:
     icu_stock = icu[["date", "Aktuelle_COVID_Faelle_ITS"]].copy()
 
     icu_flow = icu[["date", "faelle_covid_erstaufnahmen"]].copy()
+    icu_flow = icu_flow[icu_flow.faelle_covid_erstaufnahmen > 0]
     icu_flow["date"] = (icu_flow["date"] + pd.to_timedelta(6 - icu_flow["date"].dt.dayofweek, unit="d")).dt.date
     icu_flow = icu_flow[icu_flow["date"] <= datetime.date.today()]
     icu_flow = icu_flow.groupby("date", as_index=False).agg({"faelle_covid_erstaufnahmen": ["sum", "count"]})
