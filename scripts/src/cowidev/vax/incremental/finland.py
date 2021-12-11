@@ -11,21 +11,18 @@ def read(source: str) -> pd.Series:
 
 def parse_data(df: pd.DataFrame) -> pd.Series:
 
-    people_vaccinated = df.loc[
-        (df.Measure == "Administered doses") & (df["Vaccination dose"] == "First dose"),
-        "val",
-    ].item()
+    df = df[df.Age == "All ages"]
 
-    people_fully_vaccinated = df.loc[
-        (df.Measure == "Administered doses") & (df["Vaccination dose"] == "Second dose"),
-        "val",
-    ].item()
+    dose_1 = df.loc[df["Vaccination dose"] == "First dose", "val"].item()
+    dose_2 = df.loc[df["Vaccination dose"] == "Second dose", "val"].item()
+    dose_3 = df.loc[df["Vaccination dose"] == "Third dose", "val"].item()
 
     return pd.Series(
         {
-            "people_vaccinated": int(people_vaccinated),
-            "people_fully_vaccinated": int(people_fully_vaccinated),
-            "total_vaccinations": int(people_vaccinated + people_fully_vaccinated),
+            "people_vaccinated": dose_1,
+            "people_fully_vaccinated": dose_2,
+            "total_vaccinations": dose_1 + dose_2 + dose_3,
+            "total_boosters": dose_3,
         }
     )
 
@@ -43,12 +40,7 @@ def enrich_vaccine(ds: pd.Series) -> pd.Series:
 
 
 def enrich_source(ds: pd.Series) -> pd.Series:
-    return enrich_data(
-        ds,
-        "source_url",
-        "https://sampo.thl.fi/pivot/prod/en/vaccreg/cov19cov/fact_cov19cov?column=measure-533185.533172.433796."
-        "533175&row=cov_vac_dose-533174L",
-    )
+    return enrich_data(ds, "source_url", "https://sampo.thl.fi/pivot/prod/en/vaccreg/cov19cov")
 
 
 def pipeline(ds: pd.Series) -> pd.Series:
@@ -56,16 +48,14 @@ def pipeline(ds: pd.Series) -> pd.Series:
 
 
 def main():
-    source = (
-        "https://sampo.thl.fi/pivot/prod/en/vaccreg/cov19cov/fact_cov19cov.csv?row=cov_vac_dose-533174L&"
-        "column=measure-533185.533172.433796.533175&"
-    )
+    source = "https://sampo.thl.fi/pivot/prod/en/vaccreg/cov19cov/fact_cov19cov.csv?row=cov_vac_dose-533170.533164.639082.&column=cov_vac_age-630311.518413.&filter=measure-533175&"
     data = read(source).pipe(pipeline)
     increment(
         location=data["location"],
         total_vaccinations=int(data["total_vaccinations"]),
         people_vaccinated=int(data["people_vaccinated"]),
         people_fully_vaccinated=int(data["people_fully_vaccinated"]),
+        total_boosters=int(data["total_boosters"]),
         date=data["date"],
         source_url=data["source_url"],
         vaccine=data["vaccine"],
