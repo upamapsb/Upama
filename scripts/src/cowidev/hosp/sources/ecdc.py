@@ -9,11 +9,16 @@ POPULATION = pd.read_csv(
     usecols=["iso_code", "entity", "population"],
 )
 SOURCE_URL = "https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/csv/data.csv"
+EXCLUDED_COUNTRIES = [
+    "France",
+    "Germany",
+]
 
 
 def download_data():
     print("Downloading ECDC data…")
     df = pd.read_csv(SOURCE_URL, usecols=["country", "indicator", "date", "value", "year_week"])
+    df = df[-df.country.isin(EXCLUDED_COUNTRIES)]
     df = df.drop_duplicates()
     df = df.rename(columns={"country": "entity"})
     return df
