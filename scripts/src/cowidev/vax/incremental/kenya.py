@@ -59,7 +59,7 @@ class Kenya:
         return date
 
     def _parse_metrics(self, pages: list):
-        regex = r"total doses administered above 18 yrs ([\d,]+) total partially vaccinated above 18 yrs ([\d,]+) total fully vaccinated above 18 yrs ([\d,]+)"
+        regex = r"total doses administered above 18 ye?a?rs ([\d,.]+) total partially vaccinated above 18 ye?a?rs ([\d,.]+) total fully vaccinated above 18 yrs ([\d,.]+)"
         data = re.search(regex, pages[0])
         adults_total_vaccinations = clean_count(data.group(1))
         adults_partially_vaccinated = clean_count(data.group(2))
