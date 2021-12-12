@@ -127,7 +127,7 @@ class Jersey:
         # Process and merge dataframes
         df1 = df1.assign(age_group=df1.age_group.apply(self._extract_age_group))
         df2 = df2.assign(age_group=df2.age_group.apply(self._extract_age_group))
-        df = df1.merge(df2, on=["Date", "age_group"])
+        df = df1.merge(df2, on=["Date", "age_group"]).dropna(subset=["Date"])
         return df
 
     def pipe_age_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
