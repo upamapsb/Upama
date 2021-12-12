@@ -43,6 +43,7 @@ def check_columns(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def check_vaccine_names(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.dropna(subset=["vakcina"])
     unknown_vaccines = set(df.vakcina.unique()).difference(set(vaccine_mapping.keys()))
     if unknown_vaccines:
         raise ValueError("Found unknown vaccines: {}".format(unknown_vaccines))
