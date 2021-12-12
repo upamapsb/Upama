@@ -17,8 +17,7 @@ class Vietnam:
         "metrics": (
             r"Trong ngày \d{1,2}/\d{1,2} có [\.\d]+ liều (?:vắc xin phòng|vaccine|vaccine phòng|vaccien phòng)"
             r" COVID\-19 được tiêm(?:.*)?\. Như vậy, tổng số liều (?:vắc xin|vaccine|vaccien) đã được tiêm là"
-            r" ([\d\.]+)"
-            r" liều, trong đó tiêm 1 mũi là ([\d\.]+) liều, tiêm mũi 2 là ([\d\.]+)(?:\sliều)?"
+            r" ([\d\.]+) liều, trong đó tiêm [1 mũi]{5} là ([\d\.]+) liều, tiêm mũi 2 là ([\d\.]+)(?:\sliều)?"
         ),
     }
 
