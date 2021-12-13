@@ -8,6 +8,7 @@ for manually imported country data**. To see which countries are automated and w
 
 ### Content
 - [About our vaccination data](#about-our-vaccination-data)
+  - [General data](#General-data)
   - [Manufacturer data](#Manufacturer-data)
   - [Age group data](#Age-group-data)
 - [Report new data values](#report-new-data-values)
@@ -19,6 +20,7 @@ for manually imported country data**. To see which countries are automated and w
 For details about the development environment, check the details in [README](README.md#2-development-environment).
 
 
+### General data
 We are currently collecting vaccination data at country level in the following format:
 |location|date      |vaccine                                                        |source_url                                                                                   |total_vaccinations|people_vaccinated|people_fully_vaccinated|total_boosters|
 |--------|----------|---------------------------------------------------------------|---------------------------------------------------------------------------------------------|------------------|-----------------|-----------------------|--------------|
@@ -81,18 +83,20 @@ general rule, we try to have groups in 10 years chunks.
 - `location`: Region name.
 - `people_vaccinated_per_hundred`: Percentage of people within the age group that have received at least one dose.
 - `people_fully_vaccinated_per_hundred`: Percentage of people within the age group that have been fully vaccinated.
+- `people_with_booster_per_hundred`: Percentage of people within the age group that have received at least one booster.
 
 #### Example
-|location | date |age_group_min |age_group_max|people_vaccinated_per_hundred|people_fully_vaccinated_per_hundred|
-|----------|------------------|-------------|------------------|--------|--------|
-|...|...           |...            |...|...|...|
-Poland|2021-06-08|18|24|26.77|7.33|
-Poland|2021-06-08|25|49|36.01|14.2|
-Poland|2021-06-08|50|59|50.68|30.22|
-Poland|2021-06-08|60|69|63.05|35.67|
-Poland|2021-06-08|70|79|77.45|70.7|
-Poland|2021-06-08|80||59.94|56.55|
-|...|...           |...            |...|...|...|
+
+|location|date      |age_group_min|age_group_max|people_vaccinated_per_hundred|people_fully_vaccinated_per_hundred|people_with_booster_per_hundred|
+|--------|----------|-------------|-------------|-----------------------------|-----------------------------------|-------------------------------|
+|...|...           |...            |...|...|...|...|
+|Slovakia|2021-12-03|18 |24 |50.41|46.65|1.3  |
+|Slovakia|2021-12-03|25 |49 |51.31|48.26|3.52 |
+|Slovakia|2021-12-03|50 |59 |60.24|57.6 |6.14 |
+|Slovakia|2021-12-03|60 |69 |67.12|65.14|16.05|
+|Slovakia|2021-12-03|70 |79 |77.86|75.99|36.14|
+|Slovakia|2021-12-03|80 |   |63.5 |61.1 |27.39|
+|...|...           |...            |...|...|...|...|
 
 #### Notes
 We only include age group data for countries for which the process can be automated. No manual reports are currently
