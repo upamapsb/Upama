@@ -30,9 +30,6 @@ class Peru:
             usecols=["fecha_vacunacion", "fabricante", "dosis", "n_reg"],
         )
 
-    def read_age(self):
-        return pd.read_csv(self.source_url_age)
-
     def read_manufacturer(self):
         return pd.read_csv(self.source_url_manufacturer)
 
@@ -84,40 +81,26 @@ class Peru:
             .pipe(self.pipe_metadata)
         )
 
+    def read_age(self):
+        return pd.read_csv(self.source_url_age)
+
     def pipe_age_checks(self, df: pd.DataFrame) -> pd.DataFrame:
         # print(df.columns)
         if (df.people_vaccinated_per_hundred > 100).sum():
             raise ValueError("Check `people_vaccinated_per_hundred` field! Found values above 100%.")
         if (df.people_fully_vaccinated_per_hundred > 100).sum():
             raise ValueError("Check `people_fully_vaccinated_per_hundred` field! Found values above 100%.")
-        if (df["last_day_of_epi_week"].min() < "2021-02-14") or (
-            df["last_day_of_epi_week"].max() > localdatenow("America/Lima", sum_days=7)
-        ):
-            raise ValueError(
-                "Check `last_day_of_epi_week` field! Some dates may be out of normal! Current range is"
-                f" [{df['last_day_of_epi_week'].min()}, {df['last_day_of_epi_week'].max()}]."
-            )
         if not (df.location.unique() == "Peru").all():
             raise ValueError("Invalid values in `location` field!")
         return df
 
     def pipe_age_date(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.rename(columns={"last_day_of_epi_week": "date"})
-        self._sanity_checks_age_date(df)
-        df.loc[df.complete_epi_week == 0, "date"] = localdatenow("America/Lima")
+        df.loc[df.complete_epi_week == 0, "date"] = localdate("America/Lima")
         return df
 
-    def _sanity_checks_age_date(self, df: pd.DataFrame):
-        msk = df.date > localdatenow("America/Lima")
-        if (
-            (df.loc[msk, "complete_epi_week"].unique() != 0) | (df.loc[~msk, "complete_epi_week"].unique() != 1)
-        ).any():
-            raise ValueError(
-                "Some inconsistency found! Check values for `last_day_of_epi_week` and `complete_epi_week`."
-            )
-
     def pipe_columns_out(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df[
+        return df.rename(columns={"people_recieving_booster_per_hundred": "people_with_booster_per_hundred"})[
             [
                 "location",
                 "date",
@@ -125,6 +108,7 @@ class Peru:
                 "age_group_max",
                 "people_vaccinated_per_hundred",
                 "people_fully_vaccinated_per_hundred",
+                "people_with_booster_per_hundred",
             ]
         ]
 
