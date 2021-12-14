@@ -19,7 +19,8 @@ def filter_by_num_sequences(df: pd.DataFrame) -> pd.DataFrame:
     return df[~msk]
 
 
-def run_grapheriser(input_path: str, output_path: str):
+def run_grapheriser(input_path: str, output_path: str, input_path_seq: str, output_path_seq: str):
+    # Variants
     Grapheriser(
         pivot_column="variant",
         pivot_values=["num_sequences", "perc_sequences"],
@@ -27,6 +28,10 @@ def run_grapheriser(input_path: str, output_path: str):
         function_input=filter_by_num_sequences,
         suffixes=["", "_percentage"],
     ).run(input_path, output_path)
+    # Sequencing
+    Grapheriser(
+        fillna_0=True,
+    ).run(input_path_seq, output_path_seq)
 
 
 def run_explorerizer(input_path: str, output_path: str):
