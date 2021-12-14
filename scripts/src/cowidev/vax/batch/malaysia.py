@@ -7,8 +7,8 @@ from cowidev.utils import paths
 class Malaysia:
     def __init__(self) -> None:
         self.location = "Malaysia"
-        self.source_url = "https://github.com/CITF-Malaysia/citf-public/raw/main/vaccination/vax_malaysia.csv"
-        self.source_url_ref = "https://github.com/CITF-Malaysia/citf-public"
+        self.source_url = "https://github.com/MoH-Malaysia/covid19-public/raw/main/vaccination/vax_malaysia.csv"
+        self.source_url_ref = "https://github.com/MoH-Malaysia/covid19-public"
         self._vax_2d = [
             "pfizer",
             "astra",
