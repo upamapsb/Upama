@@ -7,7 +7,7 @@ Some grapher updates are run separately, by means of run_grapher_db step in libr
 import traceback
 
 from cowidev.grapher.db.procs.testing import GrapherTestUpdater
-from cowidev.grapher.db.procs.variants import GrapherVariantsUpdater
+from cowidev.grapher.db.procs.variants import GrapherVariantsUpdater, GrapherSequencingUpdater
 from cowidev.grapher.db.procs.vax_age import GrapherVaxAgeUpdater
 from cowidev.grapher.db.procs.vax_manufacturer import GrapherVaxManufacturerUpdater
 from cowidev.grapher.db.procs.vax import GrapherVaxUpdater
@@ -20,6 +20,7 @@ from cowidev.grapher.db.utils.slack_client import send_error
 updaters = [
     GrapherTestUpdater,
     GrapherVariantsUpdater,
+    GrapherSequencingUpdater,
     GrapherVaxAgeUpdater,
     GrapherVaxManufacturerUpdater,
     GrapherVaxUpdater,

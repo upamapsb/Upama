@@ -36,12 +36,10 @@ class GrapherBaseUpdater:
 
     @property
     def input_csv_path(self):
-        if self.project_dir:
-            return os.path.join(
-                self.project_dir, "scripts", "grapher", f"{self.dataset_name}.csv"
-            )
         if self._input_csv_path is not None:
             return self._input_csv_path
+        if self.project_dir:
+            return os.path.join(self.project_dir, "scripts", "grapher", f"{self.dataset_name}.csv")
         raise ValueError(
             "Either specify attribute `_input_csv_path` or set environment variable ${OWID_COVID_PROJECT_DIR}."
         )
