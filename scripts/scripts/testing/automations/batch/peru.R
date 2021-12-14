@@ -1,4 +1,11 @@
-url <- "https://datos.ins.gob.pe/dataset/a219dc7b-bd79-4ba8-b4ce-65120ea3d461/resource/81edf8b4-e806-4898-92fd-968b691257b9/download/pm04noviembre2021.zip"
+url <- "https://datos.ins.gob.pe/api/3/action/package_show?id=dataset-de-pruebas-moleculares-del-instituto-nacional-de-salud-ins"
+
+context <- rjson::fromJSON(file = url)
+last_modified <- lapply(context$result$resources, FUN = "[[", "last_modified") %>%
+  unlist %>%
+  ymd_hms %>%
+  which.max
+url <- context$result$resources[[last_modified]]$url
 
 process_file <- function(url) {
   filename <- str_extract(url, "[^/]+\\.zip$")
