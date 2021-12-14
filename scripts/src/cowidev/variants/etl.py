@@ -97,6 +97,7 @@ class VariantsETL:
             .pipe(self.pipe_dtypes)
             .pipe(self.pipe_percent)
             .pipe(self.pipe_correct_excess_percentage)
+            .pipe(self.pipe_variant_totals)
             .pipe(self.pipe_out)
         )
         return df
@@ -241,6 +242,16 @@ class VariantsETL:
         mask = df.variant.isin(["others"])
         df.loc[mask, "perc_sequences"] = (df.loc[mask, "perc_sequences"] - df.loc[mask, "excess"]).round(4)
         df = df.drop(columns="excess")
+        return df
+
+    def pipe_variant_totals(self, df: pd.DataFrame) -> pd.DataFrame:
+        # Create totals
+        total = df[["location", "date", "num_sequences_total"]].drop_duplicates()
+        total = total.rename(columns={"num_sequences_total": "num_sequences"})
+        total = total.assign(perc_sequences=100, num_sequences_total=total.num_sequences, variant="total")
+        # Merge
+        df = pd.concat([df, total])
+        df = df.sort_values(["location", "date", "variant"]).reset_index(drop=True)
         return df
 
     def pipe_out(self, df: pd.DataFrame) -> pd.DataFrame:
