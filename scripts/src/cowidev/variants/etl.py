@@ -109,8 +109,8 @@ class VariantsETL:
     def pipe_population(self, df: pd.DataFrame) -> pd.DataFrame:
         df_pop = pd.read_csv(os.path.join(paths.SCRIPTS.INPUT_UN, "population_latest.csv"), index_col="entity")
         df = df.merge(df_pop["population"], left_on="location", right_index=True)
-        df = df.assign(
-            num_sequences_per_1M=(1000000 * df.num_sequences / df.population).drop(columns=["population"]).round(2)
+        df = df.assign(num_sequences_per_1M=(1000000 * df.num_sequences / df.population).round(2)).drop(
+            columns=["population"]
         )
         return df
 
