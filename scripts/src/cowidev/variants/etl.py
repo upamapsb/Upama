@@ -6,6 +6,7 @@ import pandas as pd
 from cowidev.utils.utils import get_project_dir
 from cowidev.utils.clean.dates import clean_date, DATE_FORMAT
 from cowidev.utils.web import request_json
+from cowidev.utils import paths
 
 
 class VariantsETL:
@@ -97,8 +98,19 @@ class VariantsETL:
             .pipe(self.pipe_dtypes)
             .pipe(self.pipe_percent)
             .pipe(self.pipe_correct_excess_percentage)
-            .pipe(self.pipe_variant_totals)
             .pipe(self.pipe_out)
+        )
+        return df
+
+    def transform_seq(self, df: pd.DataFrame) -> pd.DataFrame:
+        df = df.pipe(self.pipe_variant_totals).pipe(self.pipe_population)
+        return df
+
+    def pipe_population(self, df: pd.DataFrame) -> pd.DataFrame:
+        df_pop = pd.read_csv(os.path.join(paths.SCRIPTS.INPUT_UN, "population_latest.csv"), index_col="entity")
+        df = df.merge(df_pop["population"], left_on="location", right_index=True)
+        df = df.assign(
+            num_sequences_per_1M=(1000000 * df.num_sequences / df.population).drop(columns=["population"]).round(2)
         )
         return df
 
@@ -248,21 +260,22 @@ class VariantsETL:
         # Create totals
         total = df[["location", "date", "num_sequences_total"]].drop_duplicates()
         total = total.rename(columns={"num_sequences_total": "num_sequences"})
-        total = total.assign(perc_sequences=100, num_sequences_total=total.num_sequences, variant="total")
-        # Merge
-        df = pd.concat([df, total])
-        df = df.sort_values(["location", "date", "variant"]).reset_index(drop=True)
-        return df
+        # Sort
+        total = total.sort_values(["location", "date"])
+        return total
 
     def pipe_out(self, df: pd.DataFrame) -> pd.DataFrame:
         return df[self.columns_out].sort_values(["location", "date"])  #  + ["perc_sequences_raw"]
 
-    def run(self, output_path: str):
+    def run(self, output_path: str, output_path_sequencing: str):
         data = self.extract()
         df = self.transform(data)
         self.load(df, output_path)
+        # Sequencing
+        df_seq = self.transform_seq(df)
+        self.load(df_seq, output_path_sequencing)
 
 
-def run_etl(output_path: str):
+def run_etl(output_path: str, output_path_seq: str):
     etl = VariantsETL()
-    etl.run(output_path)
+    etl.run(output_path, output_path_seq)
