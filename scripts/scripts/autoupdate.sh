@@ -58,13 +58,15 @@ git pull
 # JHU
 
 # Attempt to download JHU CSVs
-run_python 'import jhu; jhu.download_csv()'
+# run_python 'import jhu; jhu.download_csv()'
+python -m cowidev.jhu download
 
 # If there are any unstaged changes in the repo, then one of
 # the CSVs has changed, and we need to run the update script.
 if has_changed './scripts/input/jhu/*'; then
   echo "Generating JHU files..."
-  python $SCRIPTS_DIR/scripts/jhu.py --skip-download
+  python -m cowidev.jhu etl --skip-download
+  # python $SCRIPTS_DIR/scripts/jhu.py --skip-download
   git add .
   git commit -m "Automated JHU update"
   git push
@@ -75,7 +77,8 @@ fi
 # Always run the database update.
 # The script itself contains a check against the database
 # to make sure it doesn't run unnecessarily.
-run_python 'import jhu; jhu.update_db()'
+python -m cowidev.jhu grapher-db
+# run_python 'import jhu; jhu.update_db()'
 
 # =====================================================================
 # Policy responses
