@@ -78,7 +78,10 @@ def get_metric(metric, region):
     df.loc[df["Country/Region"].isin(["Diamond Princess", "MS Zaandam"]), "Country/Region"] = "International"
 
     # Relabel Hong Kong to its own time series
-    df.loc[df["Province/State"] == "Hong Kong", "Country/Region"] = "Hong Kong"
+    subregion_to_region = ["Hong Kong", "Greenland", "Faroe Islands"]
+    msk = df["Province/State"].isin(subregion_to_region)
+    df.loc[msk, "Country/Region"] = df.loc[msk, "Province/State"]
+    # df.loc[df["Province/State"] == "Hong Kong", "Country/Region"] = "Hong Kong"
 
     national = df.drop(columns="Province/State").groupby("Country/Region", as_index=False).sum()
 
