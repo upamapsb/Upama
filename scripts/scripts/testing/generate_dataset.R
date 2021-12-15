@@ -231,6 +231,22 @@ date_7d <- format.Date(today() - 7, "%e %B %Y") %>% str_squish()
 # Change URLs and Notes based on audit
 source("replace_audited_metadata.R")
 
+# Add series for Europe
+europe_list <- fread("../../input/owid/continents.csv")[V4 == "Europe", Entity]
+europe <- collated[
+    Country %in% europe_list & Date < today() - 5,
+    .(`7-day smoothed daily change` = sum(`7-day smoothed daily change`, na.rm = TRUE)),
+    Date
+]
+europe[, Units := "units and tests vary"]
+europe[, Sheet := "Europe"]
+europe[, Entity := "Europe"]
+europe[, Country := "Europe"]
+europe[, `Source URL` := "https://github.com/owid/covid-19-data/tree/master/public/data/testing"]
+europe[, `Source label` := "Our World in Data"]
+setorder(europe, Date)
+collated <- rbindlist(list(collated, europe), use.names = TRUE, fill = TRUE)
+
 # Add ISO codes
 add_iso_codes <- function(df) {
     iso <- fread("../../input/iso/iso3166_1_alpha_3_codes.csv")
@@ -303,7 +319,7 @@ fwrite(grapher, "../../grapher/COVID testing time series data.csv")
 # Make public version
 public <- copy(collated)
 public[, c("Country", "Units") := NULL]
-public_latest <- merge(public, metadata)
+public_latest <- merge(public, metadata, all.x = TRUE)
 public_latest[, c("Sheet", "Ready for review", "Collate") := NULL]
 setorder(public_latest, Entity, -Date)
 public_latest <- public_latest[, .SD[1], Entity]
