@@ -49,7 +49,7 @@ class Vietnam:
         return {
             "total_vaccinations": clean_count(metrics[0]),
             "people_vaccinated": clean_count(metrics[1]),
-            "people_fully_vaccinated": clean_count(metrics[2]),
+            # "people_fully_vaccinated": clean_count(metrics[2]),
             "source_url": news_info["link"],
             "date": news_info["date"],
         }
@@ -60,7 +60,7 @@ class Vietnam:
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(
             location=self.location,
-            vaccine="Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sputnik V",
+            vaccine="Abdala, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sinopharm/Beijing, Sputnik V",
         )
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
