@@ -35,10 +35,10 @@ from cowidev.grapher.db.utils.db_imports import import_dataset
 from cowidev.utils import paths
 
 
-INPUT_PATH = os.path.join(get_project_dir(), "scripts", "input", "jhu")
-OUTPUT_PATH = os.path.join(get_project_dir(), "public", "data", "jhu")
-TMP_PATH = os.path.join(get_project_dir(), "scripts", "tmp")
-LOCATIONS_CSV_PATH = os.path.join(INPUT_PATH, "jhu_country_standardized.csv")
+INPUT_PATH = paths.SCRIPTS.INPUT_JHU
+OUTPUT_PATH = paths.DATA.JHU
+TMP_PATH = paths.SCRIPTS.TMP
+LOCATIONS_CSV_PATH = os.path.join(paths.SCRIPTS.INPUT_JHU, "jhu_country_standardized.csv")
 
 ERROR = colored("[Error]", "red")
 WARNING = colored("[Warning]", "yellow")
@@ -49,8 +49,11 @@ LARGE_DATA_CORRECTIONS = [
     ("Brazil", "2021-09-18", "cases"),
     ("Ecuador", "2020-09-07", "deaths"),
     ("Ecuador", "2021-07-20", "deaths"),
+    ("France", "2020-04-05", "cases"),
+    ("France", "2020-11-04", "cases"),
     ("France", "2021-05-20", "cases"),
     ("Mexico", "2021-06-01", "deaths"),
+    ("South Africa", "2021-11-23", "cases"),
     ("Turkey", "2020-12-10", "cases"),
 ]
 
