@@ -4,16 +4,14 @@ import numpy as np
 import os
 from datetime import datetime
 
-CURRENT_DIR = os.path.dirname(__file__)
-sys.path.append(CURRENT_DIR)
-
 from cowidev.megafile.steps.test import get_testing
+from cowidev.utils import paths
 
 
-POPULATION_CSV_PATH = os.path.join(CURRENT_DIR, "../input/un/population_latest.csv")
-CONTINENTS_CSV_PATH = os.path.join(CURRENT_DIR, "../input/owid/continents.csv")
-WB_INCOME_GROUPS_CSV_PATH = os.path.join(CURRENT_DIR, "../input/wb/income_groups.csv")
-EU_COUNTRIES_CSV_PATH = os.path.join(CURRENT_DIR, "../input/owid/eu_countries.csv")
+POPULATION_CSV_PATH = os.path.join(paths.SCRIPTS.INPUT_UN, "population_latest.csv")
+CONTINENTS_CSV_PATH = os.path.join(paths.SCRIPTS.INPUT_OWID, "continents.csv")
+WB_INCOME_GROUPS_CSV_PATH = os.path.join(paths.SCRIPTS.INPUT_WB, "income_groups.csv")
+EU_COUNTRIES_CSV_PATH = os.path.join(paths.SCRIPTS.INPUT_OWID, "eu_countries.csv")
 
 ZERO_DAY = "2020-01-21"
 zero_day = datetime.strptime(ZERO_DAY, "%Y-%m-%d")
@@ -548,35 +546,64 @@ GRAPHER_COL_NAMES = {
     # Days since
     "days_since_100_total_cases": "Days since the total confirmed cases of COVID-19 reached 100",
     "days_since_5_total_deaths": "Days since the total confirmed deaths of COVID-19 reached 5",
-    "days_since_1_total_cases_per_million": "Days since the total confirmed cases of COVID-19 per million people reached 1",
-    "days_since_0_1_total_deaths_per_million": "Days since the total confirmed deaths of COVID-19 per million people reached 0.1",
+    "days_since_1_total_cases_per_million": (
+        "Days since the total confirmed cases of COVID-19 per million people reached 1"
+    ),
+    "days_since_0_1_total_deaths_per_million": (
+        "Days since the total confirmed deaths of COVID-19 per million people reached 0.1"
+    ),
     "days_since_30_new_cases": "Days since 30 daily new confirmed cases recorded",
     "days_since_50_new_cases": "Days since 50 daily new confirmed cases recorded",
     "days_since_10_new_deaths": "Days since 10 daily new confirmed deaths recorded",
     "days_since_5_new_deaths": "Days since 5 daily new confirmed deaths recorded",
     "days_since_3_new_deaths": "Days since 3 daily new confirmed deaths recorded",
-    "days_since_30_new_cases_7_day_avg_right": "Days since daily new confirmed cases of COVID-19 (rolling 7-day average, right-aligned) reached 30",
-    "days_since_5_new_deaths_7_day_avg_right": "Days since daily new confirmed deaths due to COVID-19 (rolling 7-day average, right-aligned) reached 5",
-    "days_since_1_new_cases_per_million_7_day_avg_right": "Days since daily new confirmed cases of COVID-19 per million people (rolling 7-day average, right-aligned) reached 1",
-    "days_since_0_1_new_deaths_per_million_7_day_avg_right": "Days since daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned) reached 0.1",
-    "days_since_0_01_new_deaths_per_million_7_day_avg_right": "Days since daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned) reached 0.01",
+    "days_since_30_new_cases_7_day_avg_right": (
+        "Days since daily new confirmed cases of COVID-19 (rolling 7-day average, right-aligned) reached 30"
+    ),
+    "days_since_5_new_deaths_7_day_avg_right": (
+        "Days since daily new confirmed deaths due to COVID-19 (rolling 7-day average, right-aligned) reached 5"
+    ),
+    "days_since_1_new_cases_per_million_7_day_avg_right": (
+        "Days since daily new confirmed cases of COVID-19 per million people (rolling 7-day average, right-aligned)"
+        " reached 1"
+    ),
+    "days_since_0_1_new_deaths_per_million_7_day_avg_right": (
+        "Days since daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average,"
+        " right-aligned) reached 0.1"
+    ),
+    "days_since_0_01_new_deaths_per_million_7_day_avg_right": (
+        "Days since daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average,"
+        " right-aligned) reached 0.01"
+    ),
     # Rolling averages
     "new_cases_3_day_avg_right": "Daily new confirmed cases of COVID-19 (rolling 3-day average, right-aligned)",
     "new_cases_7_day_avg_right": "Daily new confirmed cases due to COVID-19 (rolling 7-day average, right-aligned)",
     "new_deaths_3_day_avg_right": "Daily new confirmed deaths due to COVID-19 (rolling 3-day average, right-aligned)",
     "new_deaths_7_day_avg_right": "Daily new confirmed deaths due to COVID-19 (rolling 7-day average, right-aligned)",
     # Rolling averages - per million
-    "new_cases_per_million_3_day_avg_right": "Daily new confirmed cases of COVID-19 per million people (rolling 3-day average, right-aligned)",
-    "new_deaths_per_million_3_day_avg_right": "Daily new confirmed deaths due to COVID-19 per million people (rolling 3-day average, right-aligned)",
-    "new_cases_per_million_7_day_avg_right": "Daily new confirmed cases of COVID-19 per million people (rolling 7-day average, right-aligned)",
-    "new_deaths_per_million_7_day_avg_right": "Daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned)",
+    "new_cases_per_million_3_day_avg_right": (
+        "Daily new confirmed cases of COVID-19 per million people (rolling 3-day average, right-aligned)"
+    ),
+    "new_deaths_per_million_3_day_avg_right": (
+        "Daily new confirmed deaths due to COVID-19 per million people (rolling 3-day average, right-aligned)"
+    ),
+    "new_cases_per_million_7_day_avg_right": (
+        "Daily new confirmed cases of COVID-19 per million people (rolling 7-day average, right-aligned)"
+    ),
+    "new_deaths_per_million_7_day_avg_right": (
+        "Daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned)"
+    ),
     # Case fatality ratio
     "cfr": "Case fatality rate of COVID-19 (%)",
     "cfr_100_cases": "Case fatality rate of COVID-19 (%) (Only observations with ≥100 cases)",
     "cfr_short_term": "Case fatality rate of COVID-19 (%) (Short-term)",
     # Exemplars variables
-    "days_since_100_total_cases_and_5m_pop": "Days since the total confirmed cases of COVID-19 reached 100 (with population ≥ 5M)",
-    "5m_pop_and_21_days_since_100_cases_and_testing": "Has population ≥ 5M AND had ≥100 cases ≥21 days ago AND has testing data",
+    "days_since_100_total_cases_and_5m_pop": (
+        "Days since the total confirmed cases of COVID-19 reached 100 (with population ≥ 5M)"
+    ),
+    "5m_pop_and_21_days_since_100_cases_and_testing": (
+        "Has population ≥ 5M AND had ≥100 cases ≥21 days ago AND has testing data"
+    ),
     # Doubling days time-series
     "doubling_days_total_cases_3_day_period": "Doubling days of total confirmed cases (3 day period)",
     "doubling_days_total_cases_7_day_period": "Doubling days of total confirmed cases (7 day period)",

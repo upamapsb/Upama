@@ -13,6 +13,7 @@ sys.path.append(CURRENT_DIR)
 
 from cowidev.utils.utils import get_project_dir
 from cowidev.megafile.generate import generate_megafile
+from cowidev.jhu._parser import _parse_args
 from cowidev.jhu.shared import (
     load_population,
     load_owid_continents,
@@ -31,6 +32,7 @@ from cowidev.jhu.shared import (
 )
 from cowidev.grapher.db.utils.slack_client import send_warning, send_success
 from cowidev.grapher.db.utils.db_imports import import_dataset
+from cowidev.utils import paths
 
 
 INPUT_PATH = os.path.join(get_project_dir(), "scripts", "input", "jhu")
@@ -55,16 +57,6 @@ LARGE_DATA_CORRECTIONS = [
 
 def print_err(*args, **kwargs):
     return print(*args, file=sys.stderr, **kwargs)
-
-
-def download_csv():
-    files = ["time_series_covid19_confirmed_global.csv", "time_series_covid19_deaths_global.csv"]
-    for file in files:
-        print(file)
-        os.system(
-            f"curl --silent -f -o {INPUT_PATH}/{file} -L"
-            f" https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_time_series/{file}"
-        )
 
 
 def get_metric(metric, region):
@@ -325,6 +317,16 @@ def main(skip_download=False):
     create_subnational()
 
 
+def download_csv():
+    files = ["time_series_covid19_confirmed_global.csv", "time_series_covid19_deaths_global.csv"]
+    for file in files:
+        print(file)
+        os.system(
+            f"curl --silent -f -o {INPUT_PATH}/{file} -L"
+            f" https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_time_series/{file}"
+        )
+
+
 def update_db():
     time_str = datetime.now().astimezone(pytz.timezone("Europe/London")).strftime("%-d %B, %H:%M")
     source_name = f"Johns Hopkins University CSSE COVID-19 Data – Last updated {time_str} (London time)"
@@ -337,13 +339,15 @@ def update_db():
     )
 
 
+def run_step(step: str, skip_download):
+    if step == "download":
+        download_csv()
+    if step == "etl":
+        main(skip_download=skip_download)
+    elif step == "grapher-db":
+        update_db()
+
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Run JHU update script")
-    parser.add_argument(
-        "-s",
-        "--skip-download",
-        action="store_true",
-        help="Skip downloading files from the JHU repository",
-    )
-    args = parser.parse_args()
-    main(skip_download=args.skip_download)
+    args = _parse_args()
+    run_step(step=args.step, skip_download=args.skip_download)
