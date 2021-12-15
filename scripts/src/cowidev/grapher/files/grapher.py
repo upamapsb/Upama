@@ -95,8 +95,9 @@ class Grapheriser:
 
     def pipe_order_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         """Re-order the columns of the dataframe.
-        
-        First columns are [Country, Year]"""
+
+        First columns are [Country, Year]
+        """
         col_order = self.columns_metadata + self.columns_data(df)
         df = df[col_order].sort_values(col_order)
         return df
