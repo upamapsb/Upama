@@ -56,6 +56,7 @@ def _get_scripts_dir(project_dir: str):
         "OUTPUT_TEST": _SCRIPTS_OUTPUT_TEST_DIR,
         "DOCS": _SCRIPTS_DOCS_DIR,
         "DOCS_VAX": os.path.join(_SCRIPTS_DOCS_DIR, "vaccination"),
+        "TMP": os.path.join(_SCRIPTS_DIR, "tmp"),
         "TMP_VAX": os.path.join(_SCRIPTS_DIR, "vaccinations.preliminary.csv"),
         "TMP_VAX_META": os.path.join(_SCRIPTS_DIR, "metadata.preliminary.csv"),
     }
@@ -94,7 +95,11 @@ def _get_data_dir(project_dir: str):
         "VAX_META": os.path.join(_data_dirs["VACCINATIONS"], "locations.csv"),
     }
 
-    B = make_dataclass("Bucket", _data_dirs.keys(), frozen=True,)
+    B = make_dataclass(
+        "Bucket",
+        _data_dirs.keys(),
+        frozen=True,
+    )
     B.__repr__ = lambda _: _DATA_DIR
     return B(**_data_dirs)
 
