@@ -103,14 +103,30 @@ class VariantsETL:
         return df
 
     def transform_seq(self, df: pd.DataFrame) -> pd.DataFrame:
-        df = df.pipe(self.pipe_variant_totals).pipe(self.pipe_population)
+        df = df.pipe(self.pipe_variant_totals).pipe(self.pipe_per_capita).pipe(self.pipe_cumsum)
         return df
 
-    def pipe_population(self, df: pd.DataFrame) -> pd.DataFrame:
+    def pipe_variant_totals(self, df: pd.DataFrame) -> pd.DataFrame:
+        # Create totals
+        total = df[["location", "date", "num_sequences_total"]].drop_duplicates()
+        total = total.rename(columns={"num_sequences_total": "num_sequences"})
+        # Sort
+        total = total.sort_values(["location", "date"])
+        return total
+
+    def pipe_per_capita(self, df: pd.DataFrame) -> pd.DataFrame:
         df_pop = pd.read_csv(os.path.join(paths.SCRIPTS.INPUT_UN, "population_latest.csv"), index_col="entity")
         df = df.merge(df_pop["population"], left_on="location", right_index=True)
         df = df.assign(num_sequences_per_1M=(1000000 * df.num_sequences / df.population).round(2)).drop(
             columns=["population"]
+        )
+        return df
+
+    def pipe_cumsum(self, df: pd.DataFrame) -> pd.DataFrame:
+        df_cum = df.groupby(["location"])[["num_sequences", "num_sequences_per_1M"]].cumsum()
+        df = df.assign(
+            num_sequences_cumulative=df_cum.num_sequences,
+            num_sequences_cumulative_per_1M=df_cum.num_sequences_per_1M.round(2),
         )
         return df
 
@@ -255,14 +271,6 @@ class VariantsETL:
         df.loc[mask, "perc_sequences"] = (df.loc[mask, "perc_sequences"] - df.loc[mask, "excess"]).round(4)
         df = df.drop(columns="excess")
         return df
-
-    def pipe_variant_totals(self, df: pd.DataFrame) -> pd.DataFrame:
-        # Create totals
-        total = df[["location", "date", "num_sequences_total"]].drop_duplicates()
-        total = total.rename(columns={"num_sequences_total": "num_sequences"})
-        # Sort
-        total = total.sort_values(["location", "date"])
-        return total
 
     def pipe_out(self, df: pd.DataFrame) -> pd.DataFrame:
         return df[self.columns_out].sort_values(["location", "date"])  #  + ["perc_sequences_raw"]
