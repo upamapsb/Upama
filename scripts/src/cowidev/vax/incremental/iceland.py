@@ -107,7 +107,7 @@ class Iceland:
             vaccine=", ".join(sorted(VACCINE_MAPPING.values())),
         )
         # By manufacturer
-        df_manuf = df_manuf.pipe(self.pipeline_manufacturer)
+        df_manuf = df_manuf.pipe(self.pipeline_manufacturer).dropna(subset=["date"])
         df_manuf.to_csv(paths.out_vax("Iceland", manufacturer=True), index=False)
         export_metadata_manufacturer(df_manuf, "Ministry of Health", self.source_url)
 
