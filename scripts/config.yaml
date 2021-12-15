@@ -32,6 +32,9 @@ pipeline:
           metrics: 
            - total_vaccinations
            - people_vaccinated
+      Bulgaria:
+        - date: 2021-12-14
+          metrics: total_boosters
       Luxembourg:
         - date: 2021-11-29
           metrics: people_fully_vaccinated
