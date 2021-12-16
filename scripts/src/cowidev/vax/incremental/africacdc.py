@@ -57,8 +57,8 @@ class AfricaCDC:
 
     def pipe_filter_countries(self, df: pd.DataFrame) -> pd.DataFrame:
         """Get rows from selected countries."""
+        df = df[df.location.isin(ACDC_COUNTRIES.keys())]
         df["location"] = df.location.replace(ACDC_COUNTRIES)
-        df = df[df.location.isin(ACDC_COUNTRIES)]
         return df
 
     def pipe_one_dose_correction(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -141,6 +141,7 @@ class AfricaCDC:
     def increment_countries(self, df: pd.DataFrame):
         for row in df.sort_values("location").iterrows():
             row = row[1]
+            print(row)
             increment(
                 location=row["location"],
                 total_vaccinations=row["total_vaccinations"],
