@@ -5,10 +5,8 @@ from cowidev.utils import paths
 def import_iza():
 
     iza = pd.read_csv(
-        (
-            "https://github.com/Institut-Zdravotnych-Analyz/covid19-data/raw/main/Vaccination/"
-            "OpenData_Slovakia_Vaccination_Regions.csv"
-        ),
+        "https://github.com/Institut-Zdravotnych-Analyz/covid19-data/raw/main/Vaccination/"
+        "OpenData_Slovakia_Vaccination_Regions.csv",
         usecols=["Date", "first_dose", "second_dose"],
         sep=";",
     )
@@ -24,6 +22,7 @@ def import_iza():
                 "Date": "date",
                 "first_dose": "people_vaccinated",
                 "second_dose": "people_fully_vaccinated",
+                "third_dose": "total_boosters",
             }
         )
         .sort_values("date")
@@ -31,9 +30,7 @@ def import_iza():
 
     iza["people_vaccinated"] = iza["people_vaccinated"].cumsum()
     iza["people_fully_vaccinated"] = iza["people_fully_vaccinated"].cumsum()
-    iza["total_vaccinations"] = (
-        iza["people_vaccinated"] + iza["people_fully_vaccinated"]
-    )
+    iza["total_vaccinations"] = iza["people_vaccinated"] + iza["people_fully_vaccinated"]
     iza["people_fully_vaccinated"] = iza["people_fully_vaccinated"].replace(0, pd.NA)
     iza["source_url"] = "https://github.com/Institut-Zdravotnych-Analyz/covid19-data"
 
@@ -48,9 +45,7 @@ def main():
 
     df.loc[:, "vaccine"] = "Pfizer/BioNTech"
     df.loc[df.date >= "2021-01-27", "vaccine"] = "Moderna, Pfizer/BioNTech"
-    df.loc[
-        df.date >= "2021-02-13", "vaccine"
-    ] = "Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V"
+    df.loc[df.date >= "2021-02-13", "vaccine"] = "Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V"
 
     df.to_csv(paths.out_vax("Slovakia"), index=False)
 
