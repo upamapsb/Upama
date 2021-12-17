@@ -92,6 +92,7 @@ def get_metric(metric, region):
         "Greenland",
         "Hong Kong",
         "Isle of Man",
+        "Macau",
         "Montserrat",
         "New Caledonia",
         "Saint Helena, Ascension and Tristan da Cunha",
