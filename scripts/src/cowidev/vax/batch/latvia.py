@@ -49,7 +49,15 @@ class Latvia:
         return (
             df.replace(vaccine_mapping)
             .drop(columns=["Preparāts"])
-            .replace({"1.pote": "people_vaccinated", "2.pote": "people_fully_vaccinated"})
+            .replace(
+                {
+                    "1.pote": "people_vaccinated",
+                    "2.pote": "people_fully_vaccinated",
+                    "3.pote": "dose_3",
+                    "1.balstvakcinācija": "booster_1",
+                    "2.balstvakcinācija": "booster_2",
+                }
+            )
         )
 
     def pipe_pivot(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -68,7 +76,14 @@ class Latvia:
         )
 
     def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
-        df["total_vaccinations"] = df["people_vaccinated"].fillna(0) + df["people_fully_vaccinated"].fillna(0)
+        df["total_vaccinations"] = (
+            df["people_vaccinated"].fillna(0)
+            + df["people_fully_vaccinated"].fillna(0)
+            + df["dose_3"].fillna(0)
+            + df["booster_1"].fillna(0)
+            + df["booster_2"].fillna(0)
+        )
+        df["total_boosters"] = df["dose_3"].fillna(0) + df["booster_1"].fillna(0) + df["booster_2"].fillna(0)
         df.loc[df["vaccine"].isin(one_dose_vaccines), "people_fully_vaccinated"] = df.people_vaccinated
         return df
 
@@ -81,14 +96,15 @@ class Latvia:
                     "total_vaccinations": "sum",
                     "people_vaccinated": "sum",
                     "people_fully_vaccinated": "sum",
+                    "total_boosters": "sum",
                     "vaccine": lambda x: ", ".join(sorted(x)),
                 }
             )
         )
 
     def pipe_cumsum(self, df: pd.DataFrame) -> pd.DataFrame:
-        df[["total_vaccinations", "people_vaccinated", "people_fully_vaccinated"]] = df[
-            ["total_vaccinations", "people_vaccinated", "people_fully_vaccinated"]
+        df[["total_vaccinations", "people_vaccinated", "people_fully_vaccinated", "total_boosters"]] = df[
+            ["total_vaccinations", "people_vaccinated", "people_fully_vaccinated", "total_boosters"]
         ].cumsum()
         return df
 
@@ -110,6 +126,7 @@ class Latvia:
                     "total_vaccinations",
                     "people_vaccinated",
                     "people_fully_vaccinated",
+                    "total_boosters",
                 ]
             ]
             .sort_values("date")
