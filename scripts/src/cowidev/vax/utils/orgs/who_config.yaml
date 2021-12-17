@@ -8,6 +8,9 @@ vaccines:
       - "Anhui ZL - Recombinant"
       - "RBD-Dimer"
       - "ZF2001"
+  - owid_name: "Covidful"
+    org_name:
+      - "IMB - Covidful"
   - owid_name: "IMBCAMS/Inactivated"
     org_name: "IMB - Inactivated"
   - owid_name: "Oxford/AstraZeneca"
