@@ -1,4 +1,3 @@
-import argparse
 import os
 import sys
 import pandas as pd
@@ -11,7 +10,6 @@ from cowidev.utils.s3 import df_to_s3
 CURRENT_DIR = os.path.dirname(__file__)
 sys.path.append(CURRENT_DIR)
 
-from cowidev.utils.utils import get_project_dir
 from cowidev.megafile.generate import generate_megafile
 from cowidev.jhu._parser import _parse_args
 from cowidev.jhu.shared import (
@@ -78,7 +76,29 @@ def get_metric(metric, region):
     df.loc[df["Country/Region"].isin(["Diamond Princess", "MS Zaandam"]), "Country/Region"] = "International"
 
     # Relabel Hong Kong to its own time series
-    subregion_to_region = ["Hong Kong", "Greenland", "Faroe Islands"]
+    subregion_to_region = [
+        "Hong Kong",
+        "Greenland",
+        "Faroe Islands",
+        "Aruba",
+        "Curacao",
+        "Bonaire, Sint Eustatius and Saba",
+        "Montserrat",
+        "Turks and Caicos Islands",
+        "Saint Helena, Ascension and Tristan da Cunha",
+        "Isle of Man",
+        "Falkland Islands (Malvinas)",
+        "Gibraltar",
+        "AnguillaBermuda",
+        "British Virgin Islands",
+        "Cayman Islands",
+        "Saint Pierre and Miquelon",
+        "Saint Pierre and Miquelon",
+        "Wallis and Futuna",
+        "New Caledonia",
+        "French Polynesia",
+        "Cook Islands",
+    ]
     msk = df["Province/State"].isin(subregion_to_region)
     df.loc[msk, "Country/Region"] = df.loc[msk, "Province/State"]
     # df.loc[df["Province/State"] == "Hong Kong", "Country/Region"] = "Hong Kong"
