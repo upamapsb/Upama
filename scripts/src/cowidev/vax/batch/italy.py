@@ -5,56 +5,40 @@ from cowidev.vax.utils.files import export_metadata_manufacturer
 from cowidev.utils import paths
 
 
-LOCATION = "Italy"
-SOURCE_URL = (
-    "https://raw.githubusercontent.com/italia/covid19-opendata-vaccini/master/dati/somministrazioni-vaccini-latest.csv"
-)
-COLUMNS = [
-    "data_somministrazione",
-    "fornitore",
-    "fascia_anagrafica",
-    "prima_dose",
-    "seconda_dose",
-    "pregressa_infezione",
-    "dose_addizionale_booster",
-]
-COLUMNS_RENAME = {
-    "data_somministrazione": "date",
-    "fornitore": "vaccine",
-    "fascia_anagrafica": "age_group",
-}
-VACCINE_MAPPING = {
-    "Pfizer/BioNTech": "Pfizer/BioNTech",
-    "Moderna": "Moderna",
-    "Vaxzevria (AstraZeneca)": "Oxford/AstraZeneca",
-    "Janssen": "Johnson&Johnson",
-}
-ONE_DOSE_VACCINES = ["Johnson&Johnson"]
-
-
 class Italy:
-    def __init__(
-        self,
-        source_url: str,
-        location: str,
-        columns: list = None,
-        columns_rename: dict = None,
-        vaccine_mapping: dict = None,
-        one_dose_vaccines: list = None,
-    ):
-        self.source_url = source_url
-        self.location = location
-        self.columns = columns
-        self.columns_rename = columns_rename
-        self.vaccine_mapping = vaccine_mapping
-        self.one_dose_vaccines = one_dose_vaccines
-        self.vax_date_mapping = None
+    source_url: str = "https://raw.githubusercontent.com/italia/covid19-opendata-vaccini/master/dati/somministrazioni-vaccini-latest.csv"
+    location: str = "Italy"
+    columns: list = [
+        "data_somministrazione",
+        "fornitore",
+        "fascia_anagrafica",
+        "prima_dose",
+        "seconda_dose",
+        "pregressa_infezione",
+        "dose_addizionale_booster",
+    ]
+    columns_rename: dict = {
+        "data_somministrazione": "date",
+        "fornitore": "vaccine",
+        "fascia_anagrafica": "age_group",
+    }
+    vaccine_mapping: dict = {
+        "Pfizer/BioNTech": "Pfizer/BioNTech",
+        "Pfizer Pediatrico": "Pfizer/BioNTech",
+        "Moderna": "Moderna",
+        "Vaxzevria (AstraZeneca)": "Oxford/AstraZeneca",
+        "Janssen": "Johnson&Johnson",
+    }
+    one_dose_vaccines: list = ["Johnson&Johnson"]
+    vax_date_mapping = None
 
     def read(self) -> pd.DataFrame:
         return pd.read_csv(self.source_url, usecols=self.columns)
 
     def _check_vaccines(self, df: pd.DataFrame) -> pd.DataFrame:
-        assert set(df["fornitore"].unique()) == set(self.vaccine_mapping.keys())
+        vax_wrong = set(df["fornitore"]).difference(self.vaccine_mapping.keys())
+        if vax_wrong:
+            raise ValueError(f"Unknown vaccine(s) {vax_wrong}")
         return df
 
     def rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -113,7 +97,7 @@ class Italy:
             key=lambda x: x[0],
             reverse=True,
         )
-        return [(date2vax[i][0], ", ".join(sorted([v[1] for v in date2vax[i:]]))) for i in range(len(date2vax))]
+        return [(date2vax[i][0], ", ".join(sorted(set([v[1] for v in date2vax[i:]])))) for i in range(len(date2vax))]
 
     def enrich_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
         def _enrich_vaccine(date: str) -> str:
@@ -159,14 +143,7 @@ class Italy:
 
 
 def main():
-    Italy(
-        source_url=SOURCE_URL,
-        location=LOCATION,
-        columns=COLUMNS,
-        columns_rename=COLUMNS_RENAME,
-        vaccine_mapping=VACCINE_MAPPING,
-        one_dose_vaccines=ONE_DOSE_VACCINES,
-    ).to_csv()
+    Italy().to_csv()
 
 
 if __name__ == "__main__":
