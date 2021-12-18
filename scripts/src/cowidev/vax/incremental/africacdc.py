@@ -141,7 +141,6 @@ class AfricaCDC:
     def increment_countries(self, df: pd.DataFrame):
         for row in df.sort_values("location").iterrows():
             row = row[1]
-            print(row)
             increment(
                 location=row["location"],
                 total_vaccinations=row["total_vaccinations"],
