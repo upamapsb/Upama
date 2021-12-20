@@ -23,8 +23,12 @@ def make_monotonic(df: pd.DataFrame, max_removed_rows=10) -> pd.DataFrame:
             df = df[(diff >= 0) | (diff.isna())]
 
     if max_removed_rows is not None:
-        if n_rows_before - len(df) > max_removed_rows:
-            raise Exception(f"More than {max_removed_rows} rows removed by make_monotonic() - check the data.")
+        num_removed_rows = n_rows_before - len(df)
+        if num_removed_rows > max_removed_rows:
+            raise Exception(
+                f"{num_removed_rows} rows have been removed. That is more than maximum allowed ({max_removed_rows}) by"
+                " make_monotonic() - check the data."
+            )
 
     return df
 
