@@ -23,6 +23,7 @@ def clean_date(
     loc: str = "",
     minus_days: int = 0,
     unicode_norm: bool = True,
+    output_fmt: str = DATE_FORMAT,
 ):
     """Extract a date from a `text`.
 
@@ -40,12 +41,13 @@ def clean_date(
                                 `locale.windows_locale` in windows. Defaults to "" (system default).
         minus_days (int, optional): Number of days to subtract. Defaults to 0.
         unicode_norm (bool, optional): [description]. Defaults to True.
+        output_fmt (str, optional): Format of the output date. By default, uses `DATE_FORMAT`.
 
     Returns:
         str: Extracted date in format %Y-%m-%d
     """
     if isinstance(date_or_text, (datetime, date)):
-        return date_or_text.strftime(DATE_FORMAT)
+        return date_or_text.strftime(output_fmt)
     # If lang is given, map language to a locale
     if fmt is None:
         raise ValueError("Input date format is required!")
@@ -60,7 +62,7 @@ def clean_date(
         date_or_text = clean_string(date_or_text)
     # Thread-safe extract date
     with _setlocale(loc):
-        return (datetime.strptime(date_or_text, fmt) - timedelta(days=minus_days)).strftime(DATE_FORMAT)
+        return (datetime.strptime(date_or_text, fmt) - timedelta(days=minus_days)).strftime(output_fmt)
 
 
 def extract_clean_date(
