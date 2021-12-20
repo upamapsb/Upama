@@ -65,6 +65,7 @@ def get_soup(
     soup = BeautifulSoup(content, parser, from_encoding=from_encoding)
     if soup.text == "":
         soup = BeautifulSoup(content, "html.parser", from_encoding=from_encoding)
+    # print(response.url)
     return soup
 
 
