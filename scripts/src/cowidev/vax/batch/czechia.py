@@ -12,6 +12,7 @@ from cowidev.utils import paths
 
 vaccine_mapping = {
     "Comirnaty": "Pfizer/BioNTech",
+    "Comirnaty 5-11": "Pfizer/BioNTech",
     "Spikevax": "Moderna",
     "SPIKEVAX": "Moderna",
     "VAXZEVRIA": "Oxford/AstraZeneca",
