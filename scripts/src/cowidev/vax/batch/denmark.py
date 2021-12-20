@@ -7,7 +7,7 @@ from datetime import datetime
 import requests
 import pandas as pd
 
-from cowidev.utils.clean import clean_date_series
+from cowidev.utils.clean import clean_date_series, clean_date
 from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.checks import VACCINES_ONE_DOSE
 from cowidev.utils import paths
@@ -40,8 +40,8 @@ class Denmark:
         }
 
     @property
-    def num_days_since_launch_single_dose(self):
-        return (datetime.now() - datetime.strptime(self.date_limit_one_dose, "%Y-%m-%d")).days
+    def date_limit_one_dose_ddmmyyyy(self):
+        return clean_date(self.date_limit_one_dose, "%Y-%m-%d", output_fmt="%d%m%Y")
 
     def read(self) -> str:
         url = self._parse_link_zip()
@@ -103,9 +103,17 @@ class Denmark:
                 usecols=["Vaccinedato", "geo", metric_name],
                 sep=SEPARATOR_ALT,
             )
+        # except FileNotFoundError:
+        #     df = pd.read_csv(
+        #         os.path.join(path, filename),
+        #         encoding="iso-8859-1",
+        #         usecols=["Vaccinedato", "geo", metric_name],
+        #         sep=SEPARATOR,
+        #     )
         return df[df.geo == "Nationalt"].drop(columns=["geo"])
 
     def _parse_total_vaccinations(self, path):
+        # try:
         df = pd.read_csv(
             os.path.join(path, "Vaccine_DB", "Vaccinationstyper_regioner.csv"),
             encoding="iso-8859-1",
@@ -117,6 +125,12 @@ class Denmark:
                 encoding="iso-8859-1",
                 sep=SEPARATOR_ALT,
             )
+        # except FileNotFoundError:
+        #     df = pd.read_csv(
+        #         os.path.join(path, "Vaccinationstyper_regioner.csv"),
+        #         encoding="iso-8859-1",
+        #         sep=SEPARATOR,
+        #     )
         # Check 1/2
         self._check_df_vax_1(df)
         # Rename columns
@@ -171,7 +185,7 @@ class Denmark:
             mask, "people_fully_vaccinated"
         ].fillna(0)
         # Uncomment to backfill total_vaccinations
-        df = df.pipe(self.pipe_total_vax_bfill, n_days=self.num_days_since_launch_single_dose)
+        df = df.pipe(self.pipe_total_vax_bfill)
         # Correct total_vaccinations with boosters
         df.loc[:, "total_vaccinations"] = df["total_vaccinations"] + df["total_boosters"]
         return df
@@ -211,10 +225,14 @@ class Denmark:
         df = self.read()
         df.pipe(self.pipeline).to_csv(paths.out_vax(self.location), index=False)
 
-    def pipe_total_vax_bfill(self, df: pd.DataFrame, n_days: int) -> pd.DataFrame:
+    def pipe_total_vax_bfill(self, df: pd.DataFrame) -> pd.DataFrame:
         soup = get_soup(self.source_url_ref)
         links = self._get_zip_links(soup)
-        links = links[:n_days]
+        i = [i for i, l in enumerate(links) if self.date_limit_one_dose_ddmmyyyy in l]
+        print(links[0], self.date_limit_one_dose_ddmmyyyy, i)
+        if len(i) != 1:
+            raise ValueError(f"Limit date URL not found! Check self.date_limit_one_dose and the URL format!")
+        links = links[: i[0]]
         df = self._backfill_total_vaccinations(df, links)
         return df
 
@@ -231,7 +249,7 @@ class Denmark:
 
     def _backfill_total_vaccinations(self, df: pd.DataFrame, links: list):
         for link in links:
-            # print(link)
+            print(link)
             total_vaccinations_latest, date = self._get_total_vax(link)
             df.loc[df["date"] == date, "total_vaccinations"] = total_vaccinations_latest
         return df
