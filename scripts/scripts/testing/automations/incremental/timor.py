@@ -4,7 +4,8 @@ from datetime import date
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
-
+from cowidev.utils.clean import clean_count
+import re
 
 def main():
     output_file = "automated_sheets/Timor.csv"
@@ -12,8 +13,8 @@ def main():
     req = requests.get(url)
     soup = BeautifulSoup(req.text, "html.parser")
 
-    stats = soup.find_all("span", attrs={"class": "wdt-column-sum-value"})
-    count = int(stats[5].text.replace(",", ""))
+    stats = soup.select("#testing .c-green .wdt-column-sum")[0].text
+    count = int("".join(re.findall("[0-9]",stats)))
     # print(count)
 
     date_str = date.today().strftime("%Y-%m-%d")

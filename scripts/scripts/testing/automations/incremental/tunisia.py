@@ -2,7 +2,6 @@ import os
 from cowidev.utils.utils import get_project_dir
 from cowidev.utils.web import get_soup
 import pandas as pd
-from datetime import date
 import json
 import locale
 
