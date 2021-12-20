@@ -19,7 +19,9 @@ class Kenya:
         url_pdf = self._parse_pdf_link(self.source_url)
         pages = self._get_text_from_pdf(url_pdf)
         total_vaccinations, people_vaccinated, people_fully_vaccinated = self._parse_metrics(pages)
+        print("metrics")
         date = self._parse_date(pages[0])
+        print("date")
         return pd.Series(
             {
                 "total_vaccinations": total_vaccinations,
@@ -59,14 +61,18 @@ class Kenya:
         return date
 
     def _parse_metrics(self, pages: list):
-        regex = r"total doses administered above 18 ye?a?rs ([\d,.]+) total partially vaccinated above 18 ye?a?rs ([\d,.]+) total fully vaccinated above 18 yrs ([\d,.]+)"
+        regex = (
+            r"total doses administered above 18 ye?a?rs ([\d,.]+) total partially vaccinated above 18 ye?a?rs"
+            r" ([\d,.]+) total fully vaccinated above 18 yrs ([\d,.]+)"
+        )
         data = re.search(regex, pages[0])
         adults_total_vaccinations = clean_count(data.group(1))
         adults_partially_vaccinated = clean_count(data.group(2))
         people_fully_vaccinated = clean_count(data.group(3))
 
-        regex = r"15-18 yrs received first dose \(pfizer vaccine\) ([\d,]+)"
-        data = re.search(regex, pages[0])
+        regex = r"15-18 ye?a?rs received first dose \(pfizer vaccine\) ([\d,]+)"
+        regex_alt = r"the number vaccinated 15-18 ye?a?rs (?:.*) \(([\d,.]+)\)"
+        data = re.search(regex_alt, pages[0])
         teenagers_first_doses = clean_count(data.group(1))
 
         total_vaccinations = adults_total_vaccinations + teenagers_first_doses
