@@ -229,7 +229,7 @@ class Denmark:
         soup = get_soup(self.source_url_ref)
         links = self._get_zip_links(soup)
         i = [i for i, l in enumerate(links) if self.date_limit_one_dose_ddmmyyyy in l]
-        print(links[0], self.date_limit_one_dose_ddmmyyyy, i)
+        # print(links[0], self.date_limit_one_dose_ddmmyyyy, i)
         if len(i) != 1:
             raise ValueError(f"Limit date URL not found! Check self.date_limit_one_dose and the URL format!")
         links = links[: i[0]]
