@@ -8,12 +8,18 @@ import pytz
 import re
 
 import pandas as pd
-
+import epiweeks
 from cowidev.utils.clean.strings import clean_string
 
 
 LOCALE_LOCK = threading.Lock()
 DATE_FORMAT = "%Y-%m-%d"
+
+
+def week_to_date(year: int, week: int, output_fmt: str = DATE_FORMAT):
+    week = epiweeks.Week(year, week)
+    dt = week.enddate()
+    return clean_date(dt, output_fmt=output_fmt)
 
 
 def clean_date(
