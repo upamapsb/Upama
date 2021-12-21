@@ -13,6 +13,7 @@ from cowidev.utils import paths
 
 class NewZealand:
     def __init__(self):
+        # Consider: https://github.com/minhealthnz/nz-covid-data/tree/main/vaccine-data
         self.source_url = "https://www.health.govt.nz/our-work/diseases-and-conditions/covid-19-novel-coronavirus/covid-19-data-and-statistics/covid-19-vaccine-data"
         self.location = "New Zealand"
         self.columns_rename = {
