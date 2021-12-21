@@ -6,9 +6,7 @@ from cowidev.vax.tracking.vaccines import vaccines_missing, vaccines_comparison_
 
 
 def _parse_args():
-    parser = argparse.ArgumentParser(
-        description="Get tracking information from dataset."
-    )
+    parser = argparse.ArgumentParser(description="Get tracking information from dataset.")
     parser.add_argument(
         "mode",
         choices=[
@@ -18,6 +16,7 @@ def _parse_args():
             "countries-least-updatedfreq",
             "vaccines-missing",
             "vaccines-missing-who",
+            "report",
         ],
         default="countries-last-updated",
         help=(
@@ -29,9 +28,7 @@ def _parse_args():
             "approved), 6) `vaccines-missing-who` get comparison with WHO vaccine record."
         ),
     )
-    parser.add_argument(
-        "--who", action="store_true", help="Display country names by WHO."
-    )
+    parser.add_argument("--who", action="store_true", help="Display country names by WHO.")
     parser.add_argument("--to-csv", action="store_true", help="Export outputs to CSV.")
     parser.add_argument(
         "--vax",
@@ -54,58 +51,51 @@ def main():
         print("-- Missing countries... --\n")
         df = countries_missing()
         print(df)
-        print(
-            "----------------------------\n----------------------------\n----------------------------\n"
-        )
+        print("----------------------------\n----------------------------\n----------------------------\n")
         if args.to_csv:
             export_to_csv(df, filename="countries-missing.tmp.csv")
     if args.mode == "countries-last-updated":
         print("-- Last updated countries... --")
         df = country_updates_summary()
         print(df)
-        print(
-            "----------------------------\n----------------------------\n----------------------------\n"
-        )
+        print("----------------------------\n----------------------------\n----------------------------\n")
         if args.to_csv:
             export_to_csv(df, filename="countries-last-updated.tmp.csv")
     if args.mode == "countries-least-updated":
         print("-- Least updated countries... --")
         df = country_updates_summary(sortby_counts=True)
         print(df)
-        print(
-            "----------------------------\n----------------------------\n----------------------------\n"
-        )
+        print("----------------------------\n----------------------------\n----------------------------\n")
         if args.to_csv:
             export_to_csv(df, filename="countries-least-updated.tmp.csv")
     if args.mode == "countries-least-updatedfreq":
         print("-- Least frequently-updated countries... --")
-        df = country_updates_summary(
-            sortby_updatefreq=True, who=args.who, vaccines=args.vax
-        )
+        df = country_updates_summary(sortby_updatefreq=True, who=args.who, vaccines=args.vax)
         print(df)
-        print(
-            "----------------------------\n----------------------------\n----------------------------\n"
-        )
+        print("----------------------------\n----------------------------\n----------------------------\n")
         if args.to_csv:
             export_to_csv(df, filename="countries-least-updatedfreq.tmp.csv")
     if args.mode == "vaccines-missing":
         print("-- Missing vaccines... --")
         df = vaccines_missing(verbose=True)
         print(df)
-        print(
-            "----------------------------\n----------------------------\n----------------------------\n"
-        )
+        print("----------------------------\n----------------------------\n----------------------------\n")
         if args.to_csv:
             export_to_csv(df, filename="vaccines-missing-who.tmp.csv")
     if args.mode == "vaccines-missing-who":
         print("-- Missing vaccines (WHO)... --")
         df = vaccines_comparison_with_who()
         print(df)
-        print(
-            "----------------------------\n----------------------------\n----------------------------\n"
-        )
+        print("----------------------------\n----------------------------\n----------------------------\n")
         if args.to_csv:
             export_to_csv(df, filename="vaccines-missing-who.tmp.csv")
+    if args.mode == "report":
+        print("-- Full report of vax data... --")
+        df = country_updates_summary(sortby_updatefreq=True, who=True, vaccines=True, metric_counts=True)
+        print(df)
+        print("----------------------------\n----------------------------\n----------------------------\n")
+        if args.to_csv:
+            export_to_csv(df, filename="cowid-vax-track.report.tmp.csv")
 
 
 if __name__ == "__main__":

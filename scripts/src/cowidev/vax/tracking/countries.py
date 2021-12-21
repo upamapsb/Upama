@@ -28,6 +28,7 @@ def country_updates_summary(
     sortby_updatefreq: bool = False,
     who: bool = False,
     vaccines: bool = False,
+    metric_counts: bool = False,
 ):
     """Check last updated countries.
 
@@ -55,7 +56,8 @@ def country_updates_summary(
                                     DataFrame.
         sortby_counts (bool, optional): Set to True to sort resuls from least to most updated countries.
         who (bool, optional): Display WHO columns
-
+        metric_counts (bool, optional): Set to True to display how many rows with a non-null value for each metric
+                                        appear.
     Returns:
         Union[pd.DataFrame, dict]: List or DataFrame, where each row (or element) contains five fields:
                                     - 'last_observation_date': Last update date.
@@ -99,16 +101,24 @@ def country_updates_summary(
     df_state = pd.read_csv(path_automation_state)
     df_who = get_who_data()
     # Get counts
+    metrics = ["total_vaccinations", "people_vaccinated", "people_fully_vaccinated", "total_boosters"]
     df_vax = df_vax.dropna(
-        subset=["total_vaccinations", "people_vaccinated", "people_fully_vaccinated"],
+        subset=metrics,
         how="all",
     )
-    df_vax = pd.DataFrame(
+    df_vax_ = pd.DataFrame(
         {
             "counts": df_vax.groupby("location").date.count().sort_values(),
             "first_observation_date": df_vax.groupby("location").date.min(),
         }
     )
+    if metric_counts:
+        metrics_rename = {m: f"{m}_counts" for m in metrics}
+        df_vax_metrics = df_vax.groupby("location", as_index=False)[metrics].nunique().rename(columns=metrics_rename)
+        df_vax_ = df_vax_.merge(df_vax_metrics, on="location")
+        columns_output += list(metrics_rename.values())
+    df_vax = df_vax_.copy()
+
     # Merge data
     df = df_loc.merge(df_state, on="location")
     df = df.merge(df_vax, on="location")
@@ -213,7 +223,7 @@ def country_updates_summary(
     if vaccines:
         df_vax = vaccines_comparison_with_who()
         df = df.merge(
-            df_vax[["location", "missing_in_who", "missing_in_owid"]],
+            df_vax[["location", "vaccines_used_owid", "vaccines_used_who", "missing_in_who", "missing_in_owid"]],
             on="location",
             how="left",
         )
