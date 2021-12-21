@@ -4,32 +4,22 @@ import pandas as pd
 import numpy as np
 import requests
 
-from cowidev.vax.utils.files import export_metadata_manufacturer
 from cowidev.utils import paths
+from cowidev.utils.clean import clean_date_series
+from cowidev.vax.utils.utils import build_vaccine_timeline
+from cowidev.vax.utils.files import export_metadata_manufacturer
 
 
 class Ukraine:
     # it is expected to use Novavax vaccine as well in future,
     # if so, this script should be updated
-
-    def __init__(self):
-        self.source_url = "https://health-security.rnbo.gov.ua"
-        self.source_api_url = "https://health-security.rnbo.gov.ua/api/vaccination/process/chart"
-        self.location = "Ukraine"
+    source_url: str = "https://health-security.rnbo.gov.ua"
+    source_api_url: str = "https://health-security.rnbo.gov.ua/api/vaccination/process/chart"
+    location: str = "Ukraine"
 
     def _load_dose_data(self, dose_param, colname):
+        # if colname
         doses_api = requests.get(f"{self.source_api_url}?dose={dose_param}").json()
-
-        data_dict = {
-            "date": doses_api["daily"]["dates"],
-            f"{colname}_moderna": doses_api["daily"]["cumulative"]["Moderna"],
-            f"{colname}_astrazeneca": doses_api["daily"]["cumulative"]["AstraZeneca"],
-            f"{colname}_phizer": doses_api["daily"]["cumulative"]["Pfizer-BioNTech"],
-            f"{colname}_sinovac": doses_api["daily"]["cumulative"]["Sinovac (CoronaVac)"],
-        }
-
-        if dose_param == "1":
-            data_dict[f"{colname}_jnj"] = doses_api["daily"]["cumulative"]["Johnson & Johnson"]
 
         df = pd.DataFrame(
             {
@@ -68,26 +58,20 @@ class Ukraine:
         return total_df
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        conditions = [
-            (df["date"] <= np.datetime64("2021-04-13")),
-            (df["date"] > np.datetime64("2021-04-13")) & (df["date"] <= np.datetime64("2021-04-17")),
-            (df["date"] > np.datetime64("2021-04-17")) & (df["date"] <= np.datetime64("2021-05-21")),
-            (df["date"] > np.datetime64("2021-05-21")) & (df["date"] <= np.datetime64("2021-07-22")),
-            (df["date"] > np.datetime64("2021-07-22")),
-        ]
-        values = [
-            "Oxford/AstraZeneca",
-            "Oxford/AstraZeneca, Sinovac",
-            "Oxford/AstraZeneca, Sinovac, Pfizer/BioNTech",
-            "Johnson&Johnson, Oxford/AstraZeneca, Sinovac, Pfizer/BioNTech",
-            "Johnson&Johnson, Moderna, Oxford/AstraZeneca, Sinovac, Pfizer/BioNTech",
-        ]
-
-        df["vaccine"] = np.select(conditions, values)
+        df["date"] = df["date"].apply(lambda x: x.strftime("%Y-%m-%d"))  # clean_date_series
+        df = build_vaccine_timeline(
+            df,
+            {
+                "Oxford/AstraZeneca": "2021-01-01",
+                "Sinovac": "2021-04-14",
+                "Pfizer/BioNTech": "2021-04-18",
+                "Johnson&Johnson": "2021-05-22",
+                "Moderna": "2021-07-23",
+            },
+        )
         df["total_vaccinations"] = df["second_dose_total"] + df["first_dose_total"]
         df["people_fully_vaccinated"] = df["second_dose_total"] + df["first_dose_jnj"]
         df.rename(columns={"first_dose_total": "people_vaccinated"}, inplace=True)
-        df["date"] = df["date"].apply(lambda x: x.strftime("%Y-%m-%d"))
 
         return df[
             [
