@@ -75,10 +75,13 @@ def increment(
         "people_fully_vaccinated",
         "total_boosters",
     ]
-    for col in col_ints:
-        if col in df.columns:
-            df[col] = df[col].astype("Int64").fillna(pd.NA)
+    col_ints_have = [col for col in col_ints if col in df.columns]
+    for col in col_ints_have:
+        df[col] = df[col].astype("Int64").fillna(pd.NA)
 
+    print(df.columns)
+    df = df[["location", "date", "vaccine", "source_url"] + col_ints_have]
+    print(df.columns)
     df.to_csv(paths.out_vax(location), index=False)
     # print(f"NEW: {total_vaccinations} doses on {date}")
 
