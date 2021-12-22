@@ -7,21 +7,20 @@ from cowidev.utils import paths
 
 
 class Romania:
-    def __init__(
-        self,
-        source_url: str,
-        source_url_ref: str,
-        location: str,
-        vaccine_mapping: dict,
-        vaccines_1d: list,
-        columns_rename: dict = None,
-    ):
-        self.source_url = source_url
-        self.source_url_ref = source_url_ref
-        self.location = location
-        self.columns_rename = columns_rename
-        self.vaccine_mapping = vaccine_mapping
-        self.vaccines_1d = vaccines_1d
+    source_url: str = "https://d35p9e4fm9h3wo.cloudfront.net/latestData.json"
+    source_url_ref: str = "https://datelazi.ro/"
+    location: str = "Romania"
+    columns_rename: dict = {
+        "index": "date",
+        "numberTotalDosesAdministered": "total_vaccinations",
+    }
+    vaccine_mapping: dict = {
+        "pfizer": "Pfizer/BioNTech",
+        "moderna": "Moderna",
+        "astra_zeneca": "Oxford/AstraZeneca",
+        "johnson_and_johnson": "Johnson&Johnson",
+    }
+    vaccines_1d: list = ["johnson_and_johnson"]
 
     def read(self) -> pd.DataFrame:
         data = request_json(self.source_url)
@@ -153,7 +152,7 @@ class Romania:
     def pipeline_manufacturer(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.pipe(self.pipe_manufacturer_melt).pipe(self.pipe_manufacturer_cumsum)
 
-    def to_csv(self):
+    def export(self):
         df_base = self.read().pipe(self.pipeline_base)
         # Export data
         df = df_base.copy().pipe(self.pipeline)
@@ -169,22 +168,7 @@ class Romania:
 
 
 def main():
-    Romania(
-        source_url="https://d35p9e4fm9h3wo.cloudfront.net/latestData.json",
-        source_url_ref="https://datelazi.ro/",
-        location="Romania",
-        columns_rename={
-            "index": "date",
-            "numberTotalDosesAdministered": "total_vaccinations",
-        },
-        vaccine_mapping={
-            "pfizer": "Pfizer/BioNTech",
-            "moderna": "Moderna",
-            "astra_zeneca": "Oxford/AstraZeneca",
-            "johnson_and_johnson": "Johnson&Johnson",
-        },
-        vaccines_1d=["johnson_and_johnson"],
-    ).to_csv()
+    Romania().export()
 
 
 if __name__ == "__main__":
