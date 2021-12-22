@@ -61,7 +61,7 @@ class Ukraine:
         second_dose_df = self._load_dose_data(dose_param="2", colname="second_dose")
         total_df = first_dose_df.join(second_dose_df.set_index("date"), on=["date"])
 
-        for col in ["total", "moderna", "astrazeneca", "phizer", "jnj", "sinovac"]:
+        for col in ["total", "moderna", "astrazeneca", "pfizer", "jnj", "sinovac"]:
             total_df[f"all_doses_{col}"] = total_df[f"first_dose_{col}"] + total_df[f"second_dose_{col}"]
 
         total_df = total_df.assign(location=self.location, source_url=self.source_url)
