@@ -1,9 +1,12 @@
 import pandas as pd
 from cowidev.utils import paths
+from cowidev.vax.utils.utils import build_vaccine_timeline
 
 
 class Estonia:
     location: str = "Estonia"
+    # We should soon migrate to v3 of the API. Currently waiting for documentation for v3 to be released at
+    # https://www.terviseamet.ee/et/koroonaviirus/avaandmed
     source_url: str = "https://opendata.digilugu.ee/covid19/vaccination/v2/opendata_covid19_vaccination_total.json"
     source_url_ref: str = "https://opendata.digilugu.ee"
 
@@ -31,22 +34,19 @@ class Estonia:
         return df.assign(location=self.location)
 
     def pipe_vaccine_name(self, df: pd.DataFrame) -> pd.DataFrame:
-        def _enrich_vaccine_name(date: str) -> str:
-            if date < "2021-01-14":
-                return "Pfizer/BioNTech"
-            elif "2021-01-14" <= date < "2021-02-09":
-                return "Moderna, Pfizer/BioNTech"
-            elif "2021-02-09" <= date < "2021-04-14":
-                return "Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-            elif "2021-04-14" <= date:
-                # https://vaktsineeri.ee/covid-19/vaktsineerimine-eestis/
-                # https://vaktsineeri.ee/uudised/sel-nadalal-alustatakse-lamavate-haigete-ja-liikumisraskustega-inimeste-kodus-vaktsineerimist/
-                return "Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-
-        return df.assign(vaccine=df.date.apply(_enrich_vaccine_name))
+        df = build_vaccine_timeline(
+            df,
+            {
+                "Pfizer/BioNTech": "2020-12-01",
+                "Moderna": "2021-01-14",
+                "Oxford/AstraZeneca": "2021-02-09",
+                "Johnson&Johnson": "2021-04-14",
+            },
+        )
+        return df
 
     def pipe_source(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(source_url="https://opendata.digilugu.ee")
+        return df.assign(source_url=self.source_url_ref)
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.pipe(self.pipe_location).pipe(self.pipe_vaccine_name).pipe(self.pipe_source)
