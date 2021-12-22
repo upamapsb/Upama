@@ -17,6 +17,7 @@ class Cuba:
             "title": r"Al cierre del (\d{1,2}(?:ro)? de [a-z]+) se acumulan en el país ([\d ]+) dosis administradas",
             "people_vaccinated": r"al menos una dosis [^\.]+, ([\d ]+) personas",
             "people_fully_vaccinated": r"Tienen esquema de vacunación completo ([\d ]+) personas",
+            "total_boosters": r"Cuentan con dosis de refuerzo un total de ([\d ]+) personas",
         }
 
     def read(self) -> pd.Series:
@@ -31,12 +32,9 @@ class Cuba:
         data["date"] = clean_date(f"{date_str} {datetime.now().year}", "%d de %B %Y", lang="es")
         data["total_vaccinations"] = clean_count(match.group(2))
 
-        match = re.search(self.regex["people_vaccinated"], soup.text)
-        data["people_vaccinated"] = clean_count(match.group(1))
-
-        match = re.search(self.regex["people_fully_vaccinated"], soup.text)
-        data["people_fully_vaccinated"] = clean_count(match.group(1))
-
+        for metric in ["people_vaccinated", "people_fully_vaccinated", "total_boosters"]:
+            match = re.search(self.regex[metric], soup.text)
+            data[metric] = clean_count(match.group(1))
         return pd.Series(data)
 
     def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
@@ -52,6 +50,7 @@ class Cuba:
             total_vaccinations=data["total_vaccinations"],
             people_vaccinated=data["people_vaccinated"],
             people_fully_vaccinated=data["people_fully_vaccinated"],
+            total_boosters=data["total_boosters"],
             date=data["date"],
             source_url=self.source_url,
             vaccine=data["vaccine"],
