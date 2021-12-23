@@ -11,6 +11,7 @@ POPULATION = pd.read_csv(
 SOURCE_URL = "https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/csv/data.csv"
 EXCLUDED_COUNTRIES = [
     "Austria",
+    "Belgium",
     "France",
     "Germany",
     "Netherlands",
