@@ -1,11 +1,11 @@
 import os
 import pandas as pd
 
-from cowidev.utils.utils import get_project_dir
+from cowidev.utils import paths
 
 
 POPULATION = pd.read_csv(
-    os.path.join(get_project_dir(), "scripts", "input", "un", "population_latest.csv"),
+    os.path.join(paths.SCRIPTS.INPUT_UN, "population_latest.csv"),
     usecols=["entity", "population"],
 )
 SOURCE_URL = "https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/csv/data.csv"
