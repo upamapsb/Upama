@@ -13,9 +13,6 @@ def main() -> pd.DataFrame:
     df = pd.DataFrame.from_records(data["hospitalised"])
 
     df = df[df.area == "Finland"][["date", "totalHospitalised", "inIcu"]]
-    import pdb
-
-    pdb.set_trace()
     df["date"] = df.date.astype(str).str.slice(0, 10)
 
     df = df.melt("date", var_name="indicator").dropna(subset=["value"])
