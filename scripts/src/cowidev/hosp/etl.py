@@ -32,14 +32,6 @@ class HospETL:
         ), "Some entity-date-indicator combinations are present more than once!"
         return df
 
-    def pipe_undo_100k(df):
-        population = pd.read_csv(POPULATION_FILE, usecols=["entity", "iso_code", "population"])
-        df = pd.merge(df, population, on="entity", how="left")
-        assert df[df.population.isna()].shape[0] == 0, "Country missing from population file"
-        df.loc[df["indicator"].str.contains(" per 100k"), "value"] = df["value"].div(100000).mul(df["population"])
-        df.loc[:, "indicator"] = df["indicator"].str.replace(" per 100k", "")
-        return df
-
     def pipe_metadata(self, df):
         print("Adding ISO & population…")
         shape_og = df.shape
