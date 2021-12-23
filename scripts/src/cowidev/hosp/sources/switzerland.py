@@ -1,5 +1,7 @@
-import pandas as pd
+import datetime
 import requests
+
+import pandas as pd
 
 
 def main() -> pd.DataFrame:
@@ -29,6 +31,7 @@ def main() -> pd.DataFrame:
     flow = (
         flow[flow.geoRegion == "CH"].drop(columns=["geoRegion"]).rename(columns={"datum": "date"}).sort_values("date")
     )
+    flow = flow[pd.to_datetime(flow.date).dt.date < (datetime.date.today() - datetime.timedelta(days=3))]
     flow["entries"] = flow.entries.rolling(7).sum()
 
     # Merge
