@@ -25,7 +25,7 @@ def main() -> pd.DataFrame:
     flow = pd.read_csv(FLOW_URL, usecols=["jour", "incid_hosp", "incid_rea"], sep=";")
     flow = flow.rename(columns={"jour": "date"}).groupby("date", as_index=False).sum().sort_values("date")
     flow["incid_hosp"] = flow.incid_hosp.rolling(7).sum()
-    flow["incid_rea"] = flow.incid_hosp.rolling(7).sum()
+    flow["incid_rea"] = flow.incid_rea.rolling(7).sum()
 
     # Merge
     df = pd.merge(stock, flow, on="date", how="outer").melt("date", var_name="indicator").dropna(subset=["value"])
