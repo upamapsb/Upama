@@ -5,7 +5,7 @@ def main():
     print("Downloading Serbia data…")
 
     url = "https://raw.githubusercontent.com/aleksandar-jovicic/COVID19-Serbia/master/timeseries.csv"
-    serbia = (
+    df = (
         pd.read_csv(url, usecols=["ts", "hospitalized", "ventilated"])
         .rename(
             columns={"ts": "date", "hospitalized": "Daily hospital occupancy", "ventilated": "Daily ICU occupancy"}
@@ -17,5 +17,9 @@ def main():
             population=6908224,
         )
     )
-    serbia["date"] = serbia.date.str.slice(0, 10)
-    return serbia
+    df["date"] = df.date.str.slice(0, 10)
+    return df
+
+
+if __name__ == "__main__":
+    main()

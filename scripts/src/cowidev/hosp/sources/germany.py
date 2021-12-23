@@ -20,8 +20,6 @@ def main() -> pd.DataFrame:
         .groupby("date", as_index=False)
         .sum()
     )
-    hosp_flow["date"] = pd.to_datetime(hosp_flow["date"])
-    hosp_flow = hosp_flow[hosp_flow.date.dt.dayofweek == 6]
 
     # ICU admissions and patients
     icu = (
@@ -29,31 +27,17 @@ def main() -> pd.DataFrame:
         .rename(columns={"Datum": "date"})
         .groupby("date", as_index=False)
         .sum()
+        .sort_values("date")
     )
-    icu["date"] = pd.to_datetime(icu.date.str.slice(0, 10))
-
-    icu_stock = icu[["date", "Aktuelle_COVID_Faelle_ITS"]].copy()
-
-    icu_flow = icu[["date", "faelle_covid_erstaufnahmen"]].copy()
-    icu_flow = icu_flow[icu_flow.faelle_covid_erstaufnahmen > 0]
-    icu_flow["date"] = (icu_flow["date"] + pd.to_timedelta(6 - icu_flow["date"].dt.dayofweek, unit="d")).dt.date
-    icu_flow = icu_flow[icu_flow["date"] <= datetime.date.today()]
-    icu_flow = icu_flow.groupby("date", as_index=False).agg({"faelle_covid_erstaufnahmen": ["sum", "count"]})
-    icu_flow.columns = ["date", "faelle_covid_erstaufnahmen", "count"]
-    icu_flow = icu_flow[icu_flow["count"] == 7]
-    icu_flow = icu_flow.drop(columns="count")
-    icu_flow["date"] = pd.to_datetime(icu_flow["date"])
+    icu["date"] = icu.date.str.slice(0, 10)
+    icu["faelle_covid_erstaufnahmen"] = icu.faelle_covid_erstaufnahmen.rolling(7).sum()
 
     # Merge
     df = (
-        pd.merge(hosp_flow, icu_stock, on="date", how="outer")
-        .merge(icu_flow, on="date", how="outer")
+        pd.merge(hosp_flow, icu, on="date", how="outer")
         .sort_values("date")
-        .melt(
-            id_vars="date",
-            value_vars=["7T_Hospitalisierung_Faelle", "Aktuelle_COVID_Faelle_ITS", "faelle_covid_erstaufnahmen"],
-            var_name="indicator",
-        )
+        .melt(id_vars="date", var_name="indicator")
+        .dropna(subset=["value"])
     )
     df["indicator"] = df["indicator"].replace(
         {
@@ -63,9 +47,9 @@ def main() -> pd.DataFrame:
         },
     )
 
-    df.loc[:, "entity"] = "Germany"
-    df.loc[:, "iso_code"] = "DEU"
-    df.loc[:, "population"] = 83900471
+    df["entity"] = "Germany"
+    df["iso_code"] = "DEU"
+    df["population"] = 83900471
 
     return df
 
