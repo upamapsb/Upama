@@ -13,6 +13,8 @@ EXCLUDED_COUNTRIES = [
     "Austria",
     "France",
     "Germany",
+    "Netherlands",
+    "Spain",
 ]
 
 
