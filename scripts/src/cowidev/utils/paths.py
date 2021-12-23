@@ -79,6 +79,7 @@ def _get_data_dir(project_dir: str):
         "vaccinations",
         "variants",
         "who",
+        "hospitalizations",
     ]
 
     _data_dirs = {
