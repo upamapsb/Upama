@@ -2,6 +2,7 @@ from cowidev.utils.web import get_driver
 from cowidev.utils.clean import clean_count, clean_date
 from cowidev.vax.utils.incremental import merge_with_current_data
 from cowidev.utils import paths
+from cowidev.vax.utils.utils import build_vaccine_timeline
 
 import re
 import pandas as pd
@@ -69,14 +70,16 @@ class Uzbekistan:
         return df.assign(vaccine="Oxford/AstraZeneca, Sputnik V, ZF2001")
 
     def pipe_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
-        def _enrich_vaccine(date: str) -> str:
-            if date < "2021-05-10":
-                return "Oxford/AstraZeneca, ZF2001"
-            elif "2021-05-10" <= date < "2021-09-30":
-                return "Oxford/AstraZeneca, Sputnik V, ZF2001"
-            return "Oxford/AstraZeneca, Moderna, Sputnik V, ZF2001"
-
-        return df.assign(vaccine=df.date.apply(_enrich_vaccine))
+        df = build_vaccine_timeline(
+            df,
+            {
+                "Oxford/AstraZeneca": "2020-12-01",
+                "ZF2001": "2020-12-01",
+                "Sputnik V": "2021-05-10",
+                "Moderna": "2021-09-30",
+            },
+        )
+        return df
 
     def pipeline(self, df):
         return df.pipe(self.pipe_metadata).pipe(self.pipe_vaccine)
