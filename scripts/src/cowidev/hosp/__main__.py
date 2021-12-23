@@ -4,11 +4,11 @@ from cowidev.utils.utils import get_project_dir
 from .etl import run_etl
 from .grapher import run_grapheriser, run_db_updater
 from ._parser import _parse_args
+from cowidev.utils import paths
 
 
-project_dir = get_project_dir()
-FILE_DS = os.path.join("/tmp", "covid-hospitalisations.csv")
-FILE_GRAPHER = os.path.join(project_dir, "scripts", "grapher", "COVID-2019 - Hospital & ICU.csv")
+FILE_DS = os.path.join(paths.DATA.HOSPITALIZATIONS, "covid-hospitalizations.csv")
+FILE_GRAPHER = os.path.join(paths.SCRIPTS.GRAPHER, "COVID-2019 - Hospital & ICU.csv")
 
 
 def run_step(step: str):
