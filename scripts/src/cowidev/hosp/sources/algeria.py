@@ -11,7 +11,5 @@ def main():
     df["indicator"] = df.indicator.replace({"in_icu": "Daily ICU occupancy"})
 
     df["entity"] = "Algeria"
-    df["iso_code"] = "DZA"
-    df["population"] = 44616626
 
     return df

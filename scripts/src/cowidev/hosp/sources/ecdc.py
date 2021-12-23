@@ -6,7 +6,7 @@ from cowidev.utils.utils import get_project_dir
 
 POPULATION = pd.read_csv(
     os.path.join(get_project_dir(), "scripts", "input", "un", "population_latest.csv"),
-    usecols=["iso_code", "entity", "population"],
+    usecols=["entity", "population"],
 )
 SOURCE_URL = "https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/csv/data.csv"
 EXCLUDED_COUNTRIES = [
@@ -52,5 +52,5 @@ def pipe_week_to_date(df):
 
 def main():
     df = download_data()
-    df = df.pipe(pipe_undo_100k).pipe(pipe_week_to_date)
+    df = df.pipe(pipe_undo_100k).pipe(pipe_week_to_date).drop(columns=["population"])
     return df

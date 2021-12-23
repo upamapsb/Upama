@@ -1,9 +1,9 @@
 import os
 
 from cowidev.utils.utils import get_project_dir
-from .etl import run_etl
-from .grapher import run_grapheriser, run_db_updater
-from ._parser import _parse_args
+from cowidev.hosp.etl import run_etl
+from cowidev.hosp.grapher import run_grapheriser, run_db_updater
+from cowidev.hosp._parser import _parse_args
 from cowidev.utils import paths
 
 

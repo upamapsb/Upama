@@ -16,7 +16,5 @@ def main() -> pd.DataFrame:
     df["date"] = pd.to_datetime(df.date, dayfirst=True)
 
     df.loc[:, "entity"] = "South Africa"
-    df.loc[:, "iso_code"] = "ZAF"
-    df.loc[:, "population"] = 60041996
 
     return df

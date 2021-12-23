@@ -14,7 +14,7 @@ def main():
     df = (
         pd.merge(hosp, icu, on="date", how="outer", validate="one_to_one")
         .melt(id_vars="date", var_name="indicator")
-        .assign(entity="Malaysia", iso_code="MYS", population=32776195)
+        .assign(entity="Malaysia")
     )
 
     df.loc[:, "indicator"] = df.indicator.replace(

@@ -43,8 +43,6 @@ def main():
     )
 
     df["entity"] = "United States"
-    df["iso_code"] = "USA"
-    df["population"] = 332915074
 
     return df
 

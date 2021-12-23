@@ -13,8 +13,6 @@ def main():
         .melt(id_vars="date", var_name="indicator", value_name="value")
         .assign(
             entity="Serbia",
-            iso_code="SRB",
-            population=6908224,
         )
     )
     df["date"] = df.date.str.slice(0, 10)

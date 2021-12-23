@@ -39,8 +39,6 @@ def main() -> pd.DataFrame:
     )
 
     df["entity"] = "Austria"
-    df["iso_code"] = "AUT"
-    df["population"] = 9043072
 
     return df
 

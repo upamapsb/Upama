@@ -22,8 +22,6 @@ def main() -> pd.DataFrame:
     )
 
     df["entity"] = "Belgium"
-    df["iso_code"] = "BEL"
-    df["population"] = 11632334
 
     return df
 

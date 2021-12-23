@@ -21,8 +21,6 @@ def main():
     )
 
     df["entity"] = "United Kingdom"
-    df["iso_code"] = "GBR"
-    df["population"] = 68207114
 
     return df
 

@@ -23,7 +23,5 @@ def main():
 
     df["date"] = df["date"].dt.date
     df["entity"] = "Canada"
-    df["iso_code"] = "CAN"
-    df["population"] = 38067913
 
     return df
