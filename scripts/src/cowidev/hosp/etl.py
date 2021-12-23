@@ -24,6 +24,9 @@ class HospETL:
             dfs.append(df)
         df = pd.concat(dfs)
         df = df.dropna(subset=["value"])
+        assert all(
+            df.groupby(["entity", "date", "indicator"]).size().reset_index()[0] == 1
+        ), "Some entity-date-indicator combinations are present more than once!"
         return df
 
     def pipe_per_million(self, df):
