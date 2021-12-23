@@ -14,6 +14,7 @@ EXCLUDED_COUNTRIES = [
     "Belgium",
     "Czechia",
     "Denmark",
+    "Finland",
     "France",
     "Germany",
     "Netherlands",
