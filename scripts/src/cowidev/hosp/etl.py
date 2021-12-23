@@ -8,14 +8,19 @@ sources = [f"cowidev.hosp.sources.{s}" for s in sources]
 
 
 class HospETL:
-    def __init__(self) -> None:
-        self.source_url = "https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/csv/data.csv"
-
     def extract(self):
         dfs = []
         for source in sources:
             module = importlib.import_module(source)
             df = module.main()
+            assert df.indicator.isin(
+                {
+                    "Daily hospital occupancy",
+                    "Daily ICU occupancy",
+                    "Weekly new hospital admissions",
+                    "Weekly new ICU admissions",
+                }
+            ).all()
             dfs.append(df)
         df = pd.concat(dfs)
         df = df.dropna(subset=["value"])
