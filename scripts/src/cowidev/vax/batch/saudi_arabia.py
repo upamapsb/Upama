@@ -20,6 +20,7 @@ def main():
             "Total_Vaccinations": "total_vaccinations",
             "FirstDose": "people_vaccinated",
             "SecondDose": "people_fully_vaccinated",
+            "BoosterDose": "total_boosters",
         }
     )
 
@@ -37,6 +38,18 @@ def main():
     # The data contains an error that creates a negative change
     df = df[df.date != "2021-03-03"]
 
+    df = df[
+        [
+            "location",
+            "date",
+            "vaccine",
+            "source_url",
+            "total_vaccinations",
+            "people_vaccinated",
+            "people_fully_vaccinated",
+            "total_boosters",
+        ]
+    ]
     df.to_csv(paths.out_vax("Saudi Arabia"), index=False)
 
 
