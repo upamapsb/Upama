@@ -1,9 +1,8 @@
-import datetime
-
 import pandas as pd
+import numpy as np
 
 
-ICU_URL = "https://diviexchange.blob.core.windows.net/%24web/zeitreihe-bundeslaender.csv"
+ICU_URL = "https://diviexchange.blob.core.windows.net/%24web/zeitreihe-deutschland.csv"
 HOSP_URL = "https://raw.githubusercontent.com/robert-koch-institut/COVID-19-Hospitalisierungen_in_Deutschland/master/Aktuell_Deutschland_COVID-19-Hospitalisierungen.csv"
 
 
@@ -30,6 +29,7 @@ def main() -> pd.DataFrame:
         .sort_values("date")
     )
     icu["date"] = icu.date.str.slice(0, 10)
+    icu.loc[icu.faelle_covid_erstaufnahmen == 0, "faelle_covid_erstaufnahmen"] = np.nan
     icu["faelle_covid_erstaufnahmen"] = icu.faelle_covid_erstaufnahmen.rolling(7).sum()
 
     # Merge
