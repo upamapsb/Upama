@@ -12,6 +12,7 @@ SOURCE_URL = "https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/
 EXCLUDED_COUNTRIES = [
     "Austria",
     "Belgium",
+    "Czechia",
     "Denmark",
     "France",
     "Germany",
