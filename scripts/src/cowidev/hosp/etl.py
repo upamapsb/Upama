@@ -2,6 +2,7 @@ import os
 import importlib
 
 import pandas as pd
+from pandas.api.types import is_string_dtype
 from cowidev.hosp.sources import __all__ as sources
 from cowidev.utils import paths
 
@@ -16,6 +17,7 @@ class HospETL:
         for source in sources:
             module = importlib.import_module(source)
             df = module.main()
+
             assert df.indicator.isin(
                 {
                     "Daily hospital occupancy",
@@ -23,7 +25,9 @@ class HospETL:
                     "Weekly new hospital admissions",
                     "Weekly new ICU admissions",
                 }
-            ).all()
+            ).all(), "One of the indicators for this country is not recognized!"
+            assert is_string_dtype(df.date), "The date column is not a string!"
+
             dfs.append(df)
         df = pd.concat(dfs)
         df = df.dropna(subset=["value"])
