@@ -55,24 +55,23 @@ class Kenya:
         return pages
 
     def _parse_date(self, pdf_text: str):
-        regex = r"vaccine doses dispensed as at (day )?[a-z]+ ([0-9a-z]+,? [a-z]+ 202\d)"
+        regex = r"vaccine doses dispensed as at (day )?[a-z]+ ([0-9]+.{0,2},? [a-z]+,? 202\d)"
         date_str = re.search(regex, pdf_text).group(2)
         date = str(pd.to_datetime(date_str).date())
         return date
 
     def _parse_metrics(self, pages: list):
         regex = (
-            r"total doses administered above 18 ye?a?rs ([\d,.]+) total partially vaccinated above 18 ye?a?rs"
-            r" ([\d,.]+) total fully vaccinated above 18 yrs ([\d,.]+)"
+            r"doses administered above 18 ye?a?rs ([\d,.]+) partially vaccinated above 18 ye?a?rs"
+            r" ([\d,.]+) fully vaccinated above 18 yrs ([\d,.]+)"
         )
         data = re.search(regex, pages[0])
         adults_total_vaccinations = clean_count(data.group(1))
         adults_partially_vaccinated = clean_count(data.group(2))
         people_fully_vaccinated = clean_count(data.group(3))
 
-        regex = r"15-18 ye?a?rs received first dose \(pfizer vaccine\) ([\d,]+)"
-        regex_alt = r"the number vaccinated 15-18 ye?a?rs (?:.*) \(([\d,.]+)\)"
-        data = re.search(regex_alt, pages[0])
+        regex = r"15-18.*received first dose \(pfizer vaccine\) ([\d,]+)"
+        data = re.search(regex, pages[0])
         teenagers_first_doses = clean_count(data.group(1))
 
         total_vaccinations = adults_total_vaccinations + teenagers_first_doses
