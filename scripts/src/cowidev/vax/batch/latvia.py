@@ -5,16 +5,19 @@ from cowidev.utils import paths
 
 
 vaccine_mapping = {
+    "BBIBP-CorV": "Sinopharm/Beijing",
+    "BBIBP-CorV(Sinopharm)": "Sinopharm/Beijing",
     "Comirnaty": "Pfizer/BioNTech",
     "COMIRNATY": "Pfizer/BioNTech",
+    "CoronaVac": "Sinovac",
+    "CoronaVac(Sinovac)": "Sinovac",
+    "COVID-19 Vaccine Janssen": "Johnson&Johnson",
     "COVID-19 Vaccine Moderna": "Moderna",
+    "Covishield": "Oxford/AstraZeneca",
+    "Covishield(ChAdOx1_nCoV-19)": "Oxford/AstraZeneca",
     "Moderna COVID-19 vaccine": "Moderna",
     "Spikevax": "Moderna",
     "Vaxzevria": "Oxford/AstraZeneca",
-    "COVID-19 Vaccine Janssen": "Johnson&Johnson",
-    "Covishield(ChAdOx1_nCoV-19)": "Oxford/AstraZeneca",
-    "BBIBP-CorV(Sinopharm)": "Sinopharm/Beijing",
-    "CoronaVac(Sinovac)": "Sinovac",
 }
 one_dose_vaccines = ["Johnson&Johnson"]
 
