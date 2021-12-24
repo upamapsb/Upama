@@ -2,25 +2,47 @@ import datetime
 
 import pandas as pd
 
-SOURCE_URL = "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv"
+from cowidev.utils.web.scraping import get_soup
+
+SOURCE_PAGE = "https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/capacidadAsistencial.htm"
 
 
 def main() -> pd.DataFrame:
 
     print("Downloading Spain data…")
-    df = pd.read_csv(SOURCE_URL, usecols=["fecha", "num_hosp", "num_uci"])
 
-    df = df.rename(columns={"fecha": "date"}).groupby("date", as_index=False).sum().sort_values("date")
-    df = df[pd.to_datetime(df.date).dt.date < (datetime.date.today() - datetime.timedelta(days=3))]
+    soup = get_soup(SOURCE_PAGE)
+    url = soup.find(class_="informacion").find("a")["href"]
+    url = "https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/" + url
 
-    df["num_hosp"] = df.num_hosp.rolling(7).sum()
-    df["num_uci"] = df.num_uci.rolling(7).sum()
+    df = pd.read_csv(
+        url, usecols=["Fecha", "Unidad", "OCUPADAS_COVID19", "INGRESOS_COVID19"], encoding="Latin-1", sep=";"
+    )
+
+    df["Fecha"] = pd.to_datetime(df.Fecha, dayfirst=True).dt.date.astype(str)
+
+    df.loc[df.Unidad.str.contains("U. Críticas"), "Unidad"] = "ICU"
+
+    df = (
+        df.groupby(["Fecha", "Unidad"], as_index=False)
+        .sum()
+        .sort_values("Unidad")
+        .pivot(index="Fecha", columns="Unidad")
+        .reset_index()
+        .sort_values("Fecha")
+    )
+    df.columns = ["date", "hosp_stock", "icu_stock", "hosp_flow", "icu_flow"]
+
+    df["hosp_flow"] = df.hosp_flow.rolling(7).sum()
+    df["icu_flow"] = df.icu_flow.rolling(7).sum()
 
     df = df.melt("date", var_name="indicator").dropna(subset=["value"])
     df["indicator"] = df.indicator.replace(
         {
-            "num_hosp": "Weekly new hospital admissions",
-            "num_uci": "Weekly new ICU admissions",
+            "hosp_flow": "Weekly new hospital admissions",
+            "icu_flow": "Weekly new ICU admissions",
+            "hosp_stock": "Daily hospital occupancy",
+            "icu_stock": "Daily ICU occupancy",
         }
     )
 
