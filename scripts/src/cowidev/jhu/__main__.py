@@ -183,9 +183,32 @@ def check_data_correctness(df_merged):
     return errors == 0
 
 
+def hide_recent_zeros(df: pd.DataFrame) -> pd.DataFrame:
+    last_reported_date = df.date.max()
+
+    last_non0cases_date = df.loc[df.new_cases != 0, "date"].max()
+    last_known_cases = df.loc[df.date == last_non0cases_date, "new_cases"].item()
+    if last_known_cases >= 1000 and (last_reported_date - last_non0cases_date).days < 7:
+        df.loc[df.date > last_non0cases_date, "new_cases"] = np.nan
+
+    last_non0deaths_date = df.loc[df.new_deaths != 0, "date"].max()
+    last_known_deaths = df.loc[df.date == last_non0deaths_date, "new_deaths"].item()
+    if last_known_deaths >= 100 and (last_reported_date - last_non0deaths_date).days < 7:
+        df.loc[df.date > last_non0deaths_date, "new_deaths"] = np.nan
+
+    return df
+
+
 def discard_rows(df):
+
+    # Custom data corrections
     for ldc in LARGE_DATA_CORRECTIONS:
         df.loc[(df.location == ldc[0]) & (df.date.astype(str) == ldc[1]), f"new_{ldc[2]}"] = np.nan
+
+    # If the last known value is above 1000 cases or 100 deaths but the latest reported value is 0
+    # then set that value to NA in case it's a temporary reporting error. (Up to 7 days in the past)
+    df = df.sort_values(["location", "date"]).groupby("location").apply(hide_recent_zeros)
+
     return df
 
 
