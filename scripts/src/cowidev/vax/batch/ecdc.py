@@ -336,18 +336,18 @@ class ECDC:
         )
 
     def export_manufacturer(self, df: pd.DataFrame):
-        df_manufacuter = df.pipe(self.pipeline_manufacturer)
+        df_manufacturer = df.pipe(self.pipeline_manufacturer)
         # Export
-        locations = df_manufacuter.location.unique()
+        locations = df_manufacturer.location.unique()
         for location in locations:
             self._export_country_data(
-                df=df_manufacuter,
+                df=df_manufacturer,
                 location=location,
                 output_path=paths.out_vax(location, manufacturer=True),
                 columns=["location", "date", "vaccine", "total_vaccinations"],
             )
         export_metadata_manufacturer(
-            df=df,
+            df=df_manufacturer,
             source_name="European Centre for Disease Prevention and Control (ECDC)",
             source_url=self.source_url_ref,
         )
