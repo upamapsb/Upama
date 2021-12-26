@@ -36,7 +36,7 @@ def main() -> pd.DataFrame:
     )
     df["indicator"] = df.indicator.replace(
         {
-            "casi_media7gg": "Weekly new hospital admissions",
+            "casi": "Weekly new hospital admissions",
             "ingressi_terapia_intensiva": "Weekly new ICU admissions",
             "totale_ospedalizzati": "Daily hospital occupancy",
             "terapia_intensiva": "Daily ICU occupancy",
