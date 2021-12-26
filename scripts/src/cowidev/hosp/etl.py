@@ -48,7 +48,7 @@ class HospETL:
     def pipe_per_million(self, df):
         print("Adding per-capita metrics…")
         per_million = df.copy()
-        per_million.loc[:, "value"] = per_million["value"].div(per_million["population"]).mul(1000000)
+        per_million.loc[:, "value"] = per_million["value"].div(per_million["population"]).mul(1000000).round(3)
         per_million.loc[:, "indicator"] = per_million["indicator"] + " per million"
         df = pd.concat([df, per_million], ignore_index=True).drop(columns="population")
         return df
