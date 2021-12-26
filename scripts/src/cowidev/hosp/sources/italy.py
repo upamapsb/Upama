@@ -10,8 +10,13 @@ def main() -> pd.DataFrame:
 
     print("Downloading Italy data…")
 
-    hosp_flow = pd.read_csv(HOSP_FLOW_SOURCE, usecols=["data", "casi_media7gg"]).rename(columns={"data": "date"})
-    hosp_flow["casi_media7gg"] = hosp_flow.casi_media7gg.mul(7)
+    hosp_flow = (
+        pd.read_csv(HOSP_FLOW_SOURCE, usecols=["data", "casi"])
+        .rename(columns={"data": "date"})
+        .sort_values("date")
+        .tail(-5)
+    )
+    hosp_flow["casi"] = hosp_flow.casi.rolling(7).sum()
 
     df = (
         pd.read_csv(
