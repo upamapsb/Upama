@@ -186,19 +186,21 @@ def check_data_correctness(df_merged):
 def hide_recent_zeros(df: pd.DataFrame) -> pd.DataFrame:
     last_reported_date = df.date.max()
 
-    last_non0cases_date = df.loc[df.new_cases > 0, "date"].max()
-    if pd.isnull(last_non0cases_date):
+    last_positive_cases_date = df.loc[df.new_cases > 0, "date"].max()
+    if pd.isnull(last_positive_cases_date):
         return df
-    last_known_cases = df.loc[df.date == last_non0cases_date, "new_cases"].item()
-    if last_known_cases >= 1000 and (last_reported_date - last_non0cases_date).days < 7:
-        df = df[df.date <= last_non0cases_date]
+    if last_positive_cases_date != last_reported_date:
+        last_known_cases = df.loc[df.date == last_positive_cases_date, "new_cases"].item()
+        if last_known_cases >= 100 and (last_reported_date - last_positive_cases_date).days < 7:
+            df = df[df.date <= last_positive_cases_date]
 
-    last_non0deaths_date = df.loc[df.new_deaths > 0, "date"].max()
-    if pd.isnull(last_non0deaths_date):
+    last_positive_deaths_date = df.loc[df.new_deaths > 0, "date"].max()
+    if pd.isnull(last_positive_deaths_date):
         return df
-    last_known_deaths = df.loc[df.date == last_non0deaths_date, "new_deaths"].item()
-    if last_known_deaths >= 10 and (last_reported_date - last_non0deaths_date).days < 7:
-        df = df[df.date <= last_non0deaths_date]
+    if last_positive_deaths_date != last_reported_date:
+        last_known_deaths = df.loc[df.date == last_positive_deaths_date, "new_deaths"].item()
+        if last_known_deaths >= 10 and (last_reported_date - last_positive_deaths_date).days < 7:
+            df = df[df.date <= last_positive_deaths_date]
 
     return df
 
