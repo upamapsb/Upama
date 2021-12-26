@@ -191,14 +191,14 @@ def hide_recent_zeros(df: pd.DataFrame) -> pd.DataFrame:
         return df
     last_known_cases = df.loc[df.date == last_non0cases_date, "new_cases"].item()
     if last_known_cases >= 1000 and (last_reported_date - last_non0cases_date).days < 7:
-        df.loc[df.date > last_non0cases_date, "new_cases"] = np.nan
+        df = df[df.date <= last_non0cases_date]
 
     last_non0deaths_date = df.loc[df.new_deaths > 0, "date"].max()
     if pd.isnull(last_non0deaths_date):
         return df
     last_known_deaths = df.loc[df.date == last_non0deaths_date, "new_deaths"].item()
     if last_known_deaths >= 10 and (last_reported_date - last_non0deaths_date).days < 7:
-        df.loc[df.date > last_non0deaths_date, "new_deaths"] = np.nan
+        df = df[df.date <= last_non0deaths_date]
 
     return df
 
