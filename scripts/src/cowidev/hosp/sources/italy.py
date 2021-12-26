@@ -14,7 +14,7 @@ def main() -> pd.DataFrame:
         pd.read_csv(HOSP_FLOW_SOURCE, usecols=["data", "casi"])
         .rename(columns={"data": "date"})
         .sort_values("date")
-        .tail(-5)
+        .head(-5)
     )
     hosp_flow["casi"] = hosp_flow.casi.rolling(7).sum()
 
