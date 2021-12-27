@@ -1,6 +1,8 @@
 import os
 import pandas as pd
 from cowidev.utils.clean import clean_date_series
+from cowidev.utils import paths
+
 
 class Italy:
     location: str = "Italy"
@@ -13,7 +15,7 @@ class Italy:
 
     def read(self) -> pd.DataFrame:
         df = pd.read_csv(self.source_url, usecols=["data", "tamponi"])
-        df["data"] = df["data"].str.replace("T"," ")
+        df["data"] = df["data"].str.replace("T", " ")
         df["data"] = clean_date_series(df["data"], "%Y-%m-%d %H:%M:%S")
         return df
 
@@ -39,7 +41,8 @@ class Italy:
 
     def export(self):
         df = self.read().pipe(self.pipeline)
-        df.to_csv(os.path.join("automated_sheets", f"{self.location}.csv"), index=False)
+        output_path = os.path.join(paths.SCRIPTS.OLD, "testing", "automated_sheets", f"{self.location}.csv")
+        df.to_csv(output_path, index=False)
 
 
 def main():
