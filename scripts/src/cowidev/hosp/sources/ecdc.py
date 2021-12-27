@@ -38,9 +38,6 @@ def download_data():
 
 def update_metadata(df):
     entities = df.entity.unique()
-    import pdb
-
-    pdb.set_trace()
     METADATA = [{**METADATA_BASE, **{"entity": entity}} for entity in entities]
     return METADATA
 
