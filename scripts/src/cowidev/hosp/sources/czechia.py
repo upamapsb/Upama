@@ -6,7 +6,7 @@ METADATA = {
         "stock": "https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/hospitalizace.csv",
         "flow": "https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/nakazeni-hospitalizace-testy.csv",
     },
-    "source_url_ref": "https://onemocneni-aktualne.mzcr.cz",
+    "source_url_ref": "https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19",
     "source_name": "Ministry of Health",
     "entity": "Czechia",
 }

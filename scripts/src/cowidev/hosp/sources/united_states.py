@@ -2,7 +2,7 @@ import pandas as pd
 
 METADATA = {
     "source_url": "https://healthdata.gov/api/views/g62h-syeh/rows.csv",
-    "source_url_ref": "https://healthdata.gov/",
+    "source_url_ref": "https://healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/g62h-syeh",
     "source_name": "U.S. Department of Health & Human Services",
     "entity": "United States",
 }

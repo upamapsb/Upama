@@ -2,18 +2,15 @@ import pandas as pd
 
 METADATA = {
     "source_url": "https://lcps.nu/wp-content/uploads/covid-19-datafeed.csv",
-    "source_url_ref": "https://github.com/MoH-Malaysia/covid19-public",
-    "source_name": "Ministry of Health",
+    "source_url_ref": "https://lcps.nu/datafeed/",
+    "source_name": "National Coordination Center Patient Distribution",
     "entity": "Netherlands",
 }
 
 
-SOURCE_URL = "https://lcps.nu/wp-content/uploads/covid-19-datafeed.csv"
-
-
 def main() -> pd.DataFrame:
     df = pd.read_csv(
-        SOURCE_URL,
+        METADATA["source_url"],
         usecols=[
             "Datum",
             "Kliniek_Bedden_Nederland",

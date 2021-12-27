@@ -6,8 +6,8 @@ METADATA = {
         "icu": "https://diviexchange.blob.core.windows.net/%24web/zeitreihe-deutschland.csv",
         "hosp": "https://raw.githubusercontent.com/robert-koch-institut/COVID-19-Hospitalisierungen_in_Deutschland/master/Aktuell_Deutschland_COVID-19-Hospitalisierungen.csv",
     },
-    "source_url_ref": "github.com.com/robert-koch-institut/COVID-19-Hospitalisierungen_in_Deutschland/",
-    "source_name": "Robert Koch-Institut",
+    "source_url_ref": "https://github.com/robert-koch-institut/COVID-19-Hospitalisierungen_in_Deutschland/",
+    "source_name": "Robert Koch Institute",
     "entity": "Germany",
 }
 

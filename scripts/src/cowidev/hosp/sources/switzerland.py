@@ -6,7 +6,7 @@ import pandas as pd
 METADATA = {
     "source_url": "https://www.covid19.admin.ch/api/data/context",
     "source_url_ref": "https://www.covid19.admin.ch/",
-    "source_name": "Federal Office of Public Health FOPH",
+    "source_name": "Federal Office of Public Health",
     "entity": "Switzerland",
 }
 

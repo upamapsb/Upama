@@ -5,11 +5,9 @@ import pandas as pd
 METADATA = {
     "source_url": "https://w3qa5ydb4l.execute-api.eu-west-1.amazonaws.com/prod/finnishCoronaHospitalData",
     "source_url_ref": "https://www.thl.fi/episeuranta/tautitapaukset/coronamap.html",
-    "source_name": "Finnish Institute for Health and Welfare",
+    "source_name": "Department of Health and Welfare",
     "entity": "Finland",
 }
-
-SOURCE_URL = "https://w3qa5ydb4l.execute-api.eu-west-1.amazonaws.com/prod/finnishCoronaHospitalData"
 
 
 def main() -> pd.DataFrame:

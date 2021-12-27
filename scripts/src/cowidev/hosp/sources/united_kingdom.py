@@ -2,8 +2,8 @@ import pandas as pd
 
 METADATA = {
     "source_url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=hospitalCases&metric=newAdmissions&metric=covidOccupiedMVBeds&format=csv",
-    "source_url_ref": "https://data.gov.uk",
-    "source_name": "Find open data",
+    "source_url_ref": "https://coronavirus.data.gov.uk/details/healthcare",
+    "source_name": "Government of the United Kingdom",
     "entity": "United Kingdom",
 }
 

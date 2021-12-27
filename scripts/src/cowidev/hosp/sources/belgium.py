@@ -3,7 +3,7 @@ import pandas as pd
 METADATA = {
     "source_url": "https://epistat.sciensano.be/Data/COVID19BE_HOSP.csv",
     "source_url_ref": "https://epistat.sciensano.be/",
-    "source_name": "Sciensano, National Public Health Institute",
+    "source_name": "Sciensano",
     "entity": "Belgium",
 }
 

@@ -9,7 +9,7 @@ import pandas as pd
 METADATA = {
     "source_url": "https://covid19-dashboard.ages.at/data/data.zip",
     "source_url_ref": "https://covid19-dashboard.ages.at/",
-    "source_name": "AGES - Österreichische Agentur für Ernährungssicherheit",
+    "source_name": "Austrian Agency for Food Security",
     "entity": "Austria",
 }
 

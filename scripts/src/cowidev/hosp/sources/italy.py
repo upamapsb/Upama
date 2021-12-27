@@ -5,8 +5,8 @@ METADATA = {
         "main": "https://github.com/pcm-dpc/COVID-19/raw/master/dati-andamento-nazionale/dpc-covid19-ita-andamento-nazionale.csv",
         "flow": "https://covid19.infn.it/iss/csv_part/iss_bydate_italia_ricoveri.csv",
     },
-    "source_url_ref": "https://github.com/pcm-dpc/COVID-19, covid19.infn.it",
-    "source_name": "Ministry of Health and CovidStat INFN Working Group",
+    "source_url_ref": "https://github.com/pcm-dpc/COVID-19, https://covid19.infn.it/iss/",
+    "source_name": "Ministry of Health and Higher Institute of Health",
     "entity": "Italy",
 }
 
