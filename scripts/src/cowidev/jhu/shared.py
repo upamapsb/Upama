@@ -385,7 +385,6 @@ def inject_rolling_avg(df):
             .round(decimals=5)
             .reset_index(level=0, drop=True)
         )
-        df.loc[df[spec["col"]].isnull(), col] = np.nan
     return df
 
 
@@ -495,6 +494,9 @@ def _inject_growth(df, prefix, periods):
         .replace([np.inf, -np.inf], pd.NA)
         * 100
     )
+
+    df.loc[df.new_cases.isnull(), cases_colname] = np.nan
+    df.loc[df.new_deaths.isnull(), deaths_colname] = np.nan
 
     return df
 
