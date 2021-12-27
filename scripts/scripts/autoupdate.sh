@@ -172,7 +172,7 @@ run_python 'import sweden; sweden.update_db()'
 # Hospital & ICU data
 
 hour=$(date +%H)
-if [ $hour == 6 ] || [ $hour == 18 ] ; then
+if [ $hour == 06 ] || [ $hour == 18 ] ; then
   # Download CSV
   echo "Generating hospital & ICU export..."
   python -m cowidev.hosp etl

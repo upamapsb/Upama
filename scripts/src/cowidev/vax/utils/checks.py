@@ -26,6 +26,7 @@ VACCINES_ACCEPTED = [
     "Sputnik Light",
     "Sputnik V",
     "ZF2001",
+    "ZyCoV-D",
 ]
 
 VACCINES_ONE_DOSE = [
@@ -38,6 +39,7 @@ VACCINES_THREE_DOSES = [
     "ZF2001",
     "Abdala",
     "Soberana02",
+    "ZyCoV-D",
 ]
 
 

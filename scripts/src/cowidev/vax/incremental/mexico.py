@@ -24,6 +24,7 @@ class Mexico:
         link = soup.find(class_="list-unstyled").find("a")["href"]
         link = "http://www.gob.mx" + link
         self.source_url = link
+        print(link)
         return link
 
     def _get_pages_relevant_pdf(self, url) -> list:
@@ -32,7 +33,7 @@ class Mexico:
                 f.write(requests.get(url).content)
             with open(tf.name, mode="rb") as f:
                 reader = PyPDF2.PdfFileReader(f)
-                return [reader.getPage(i).extractText() for i in range(10)]
+                return [reader.getPage(i).extractText() for i in range(9)]
 
     def _parse_data(self, url) -> pd.Series:
         pages = self._get_pages_relevant_pdf(url)
@@ -44,8 +45,8 @@ class Mexico:
                     re.search(r"([\d,]{10,}) ?Total de dosis aplicadas reportadas", page_text).group(1)
                 )
                 date = clean_date(
-                    re.search(r"corte de informaci.n al (\d+ \w+ 202\d)", page_text).group(1),
-                    fmt="%d %B %Y",
+                    re.search(r"Informaci.n al (\d+ \w+ 202\d)", page_text).group(1),
+                    fmt="%d %b %Y",
                     lang="es",
                 )
 

@@ -1,9 +1,8 @@
-# Data on hospitalizations by _Our World in Data_
-> For more general information on our COVID-19 data, see our main README file in [`/public/data`](https://github.com/owid/covid-19-data/tree/master/public/data).
+# Data on COVID-19 (coronavirus) hospitalizations and intensive care by _Our World in Data_
 
+For more general information on our COVID-19 data, see our main README file in [`/public/data`](https://github.com/owid/covid-19-data/tree/master/public/data).
 
-The data is sourced from [GISAID](https://gisaid.org), via [CoVariants](https://CoVariants.org), and we make it
-available as a [CSV 💾](covid-hospitalizations.csv).
+The data is collected from official sources and collated by Our World in Data. We make it available as a [CSV 💾](covid-hospitalizations.csv).
 
 
 ### Fields

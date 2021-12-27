@@ -115,7 +115,7 @@ class PAHO:
         if countries_wrong:
             raise ValueError(f"Invalid country(s) {countries_wrong}")
         df = df[df.location.isin(PAHO_COUNTRIES)]
-        df["location"] = df.location.replace(PAHO_COUNTRIES)
+        df.loc[:, "location"] = df.location.replace(PAHO_COUNTRIES)
         return df
 
     def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:

@@ -17,18 +17,9 @@ def main():
 
     source = "https://www.data.gouv.fr/fr/datasets/r/b273cf3b-e9de-437c-af55-eda5979e92fc"
 
-    df = pd.read_csv(
-        source,
-        sep=";",
-        usecols=[
-            "vaccin",
-            "jour",
-            "n_cum_dose1",
-            "n_cum_dose2",
-            "n_cum_dose3",
-            "n_cum_dose4",
-        ],
-    )
+    df = pd.read_csv(source, sep=";")
+    assert "n_cum_dose5" not in df.columns, "Update the script for handle dose #5"
+    df = df[["vaccin", "jour", "n_cum_dose1", "n_cum_dose2", "n_cum_dose3", "n_cum_dose4"]]
 
     df = df.rename(
         columns={

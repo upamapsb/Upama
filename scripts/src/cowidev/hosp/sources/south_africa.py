@@ -13,8 +13,8 @@ def main() -> pd.DataFrame:
             "National": "value",
         }
     )
-    df["date"] = pd.to_datetime(df.date, dayfirst=True)
 
-    df.loc[:, "entity"] = "South Africa"
+    df["date"] = pd.to_datetime(df.date, dayfirst=True).dt.date.astype(str)
+    df["entity"] = "South Africa"
 
     return df
