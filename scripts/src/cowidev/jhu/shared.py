@@ -385,6 +385,7 @@ def inject_rolling_avg(df):
             .round(decimals=5)
             .reset_index(level=0, drop=True)
         )
+        df.loc[df[spec["col"]].isnull(), col] = np.nan
     return df
 
 
