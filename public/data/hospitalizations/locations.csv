@@ -1,20 +1,40 @@
 location,iso_code,last_observation_date,source_name,source_website
 Algeria,DZA,2021-12-26,Ministry of Health via github.com/yasserkaddour/covid19-icu-data-algeria/,https://github.com/yasserkaddour/covid19-icu-data-algeria/
-Austria,AUT,2021-12-27,AGES - Österreichische Agentur für Ernährungssicherheit,https://covid19-dashboard.ages.at/
-Belgium,BEL,2021-12-24,"Sciensano, National Public Health Institute",https://epistat.sciensano.be/
+Austria,AUT,2021-12-27,Austrian Agency for Food Security,https://covid19-dashboard.ages.at/
+Belgium,BEL,2021-12-24,Sciensano,https://epistat.sciensano.be/
+Bulgaria,BGR,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
 Canada,CAN,2021-12-27,Official data from provinces via covid19tracker.ca,https://covid19tracker.ca/
-Czechia,CZE,2021-12-26,Ministry of Health,https://onemocneni-aktualne.mzcr.cz
+Croatia,HRV,2021-12-12,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
+Cyprus,CYP,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
+Czechia,CZE,2021-12-26,Ministry of Health,https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19
 Denmark,DNK,2021-12-27,Statens Serum Institut,https://covid19.ssi.dk/overvagningsdata/download-fil-med-overvaagningdata
-Finland,FIN,2021-12-27,Finnish Institute for Health and Welfare,https://www.thl.fi/episeuranta/tautitapaukset/coronamap.html
-France,FRA,2021-12-26,l'Open Data - French Government,https://www.data.gouv.fr/fr/pages/donnees-coronavirus/
-Germany,DEU,2021-12-27,Robert Koch-Institut,github.com.com/robert-koch-institut/COVID-19-Hospitalisierungen_in_Deutschland/
+Estonia,EST,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
+Finland,FIN,2021-12-27,Department of Health and Welfare,https://www.thl.fi/episeuranta/tautitapaukset/coronamap.html
+France,FRA,2021-12-27,Santé publique France,https://www.data.gouv.fr/fr/datasets/donnees-hospitalieres-relatives-a-lepidemie-de-covid-19/
+Germany,DEU,2021-12-27,Robert Koch Institute,https://github.com/robert-koch-institut/COVID-19-Hospitalisierungen_in_Deutschland/
+Greece,GRC,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
+Hungary,HUN,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
+Iceland,ISL,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
+Ireland,IRL,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
 Israel,ISR,2021-12-27,Ministry of Health,https://datadashboard.health.gov.il/COVID-19/
-Italy,ITA,2021-12-27,Ministry of Health and CovidStat INFN Working Group,"https://github.com/pcm-dpc/COVID-19, covid19.infn.it"
+Italy,ITA,2021-12-27,Ministry of Health and Higher Institute of Health,"https://github.com/pcm-dpc/COVID-19, https://covid19.infn.it/iss/"
+Latvia,LVA,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
+Liechtenstein,LIE,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
+Lithuania,LTU,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
+Luxembourg,LUX,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
 Malaysia,MYS,2021-12-27,Ministry of Health,https://github.com/MoH-Malaysia/covid19-public
-Netherlands,NLD,2021-12-27,Ministry of Health,https://github.com/MoH-Malaysia/covid19-public
+Malta,MLT,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
+Netherlands,NLD,2021-12-27,National Coordination Center Patient Distribution,https://lcps.nu/datafeed/
+Norway,NOR,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
+Poland,POL,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
+Portugal,PRT,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
+Romania,ROU,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
 Serbia,SRB,2021-12-27,Ministry of Health via github.com/aleksandar-jovicic/COVID19-Serbia,https://github.com/aleksandar-jovicic/COVID19-Serbia
-South Africa,ZAF,2021-12-18,,https://docs.google.com/spreadsheets/d/e/2PACX-1vRGCkIwakQ5rpfXky9FZhDwr3qUgerfhBLSzn9OsA79yQ_2G_y-_Ns9JjRJZWXD5kxJ3qicoL7bHGjE/pub?gid=1044172863&single=true
-Spain,ESP,2021-12-22,"Ministry of Health, Consumption and Social Welfare",https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/capacidadAsistencial.htm
-Switzerland,CHE,2021-12-26,Federal Office of Public Health FOPH,https://www.covid19.admin.ch/
-United Kingdom,GBR,2021-12-22,Find open data,https://data.gov.uk
-United States,USA,2021-12-27,U.S. Department of Health & Human Services,https://healthdata.gov/
+Slovakia,SVK,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
+Slovenia,SVN,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
+South Africa,ZAF,2021-12-18,National Institute for Communicable Diseases,https://docs.google.com/spreadsheets/d/e/2PACX-1vRGCkIwakQ5rpfXky9FZhDwr3qUgerfhBLSzn9OsA79yQ_2G_y-_Ns9JjRJZWXD5kxJ3qicoL7bHGjE/pub?gid=1044172863&single=true
+Spain,ESP,2021-12-26,"Ministry of Health, Consumption and Social Welfare",https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/capacidadAsistencial.htm
+Sweden,SWE,2021-12-19,European Centre for Disease Prevention and Control,https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19
+Switzerland,CHE,2021-12-26,Federal Office of Public Health,https://www.covid19.admin.ch/
+United Kingdom,GBR,2021-12-22,Government of the United Kingdom,https://coronavirus.data.gov.uk/details/healthcare
+United States,USA,2021-12-27,U.S. Department of Health & Human Services,https://healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/g62h-syeh
