@@ -147,6 +147,16 @@ class HospETL:
             .sort_values(["entity", "date", "indicator"])
         )
 
+    def transform_meta(self, df_meta: pd.DataFrame, df: pd.DataFrame):
+        df_ = (
+            df.groupby(["entity", "iso_code"], as_index=False)
+            .date.max()
+            .rename(columns={"date": "last_observation_date"})
+        )
+        df_meta = df_meta.merge(df_, left_on="location", right_on="entity", how="left")
+        df_meta = df_meta[["location", "iso_code", "last_observation_date", "source_name", "source_website"]]
+        return df_meta
+
     def load(self, df: pd.DataFrame, output_path: str) -> None:
         # Export data
         df.to_csv(output_path, index=False)
@@ -154,6 +164,7 @@ class HospETL:
     def run(self, output_path: str, locations_path: str, parallel: bool, n_jobs: int):
         df, df_meta = self.extract(parallel, n_jobs)
         df = self.transform(df)
+        df_meta = self.transform_meta(df_meta, df)
         self.load(df, output_path)
         self.load(df_meta, locations_path)
 
