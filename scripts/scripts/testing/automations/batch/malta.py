@@ -1,13 +1,16 @@
 import os
 import pandas as pd
 from cowidev.utils.clean import clean_date_series
+from cowidev.utils import paths
 
 
 class Malta:
     location: str = "Malta"
     units: str = "tests performed"
     source_label: str = "COVID-19 Public Health Response Team (Ministry for Health)"
-    source_url: str = "https://raw.githubusercontent.com/COVID19-Malta/COVID19-Data/master/COVID-19%20Malta%20-%20COVID%20Tests.csv"
+    source_url: str = (
+        "https://raw.githubusercontent.com/COVID19-Malta/COVID19-Data/master/COVID-19%20Malta%20-%20COVID%20Tests.csv"
+    )
     source_url_ref: str = "https://github.com/COVID19-Malta/COVID19-Data/"
     notes: str = pd.NA
     rename_columns: dict = {"Publication date": "Date", "Total NAA and rapid antigen tests": "Cumulative total"}
@@ -40,7 +43,8 @@ class Malta:
 
     def export(self):
         df = self.read().pipe(self.pipeline)
-        df.to_csv(os.path.join("automated_sheets", f"{self.location}.csv"), index=False)
+        output_path = os.path.join(paths.SCRIPTS.OLD, "testing", "automated_sheets", f"{self.location}.csv")
+        df.to_csv(output_path, index=False)
 
 
 def main():
