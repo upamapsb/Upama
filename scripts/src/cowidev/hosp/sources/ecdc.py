@@ -5,7 +5,7 @@ from cowidev.utils import paths
 
 METADATA_BASE = {
     "source_url": "https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/csv/data.csv",
-    "source_url_ref": "https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19",
+    "source_url": "https://www.ecdc.europa.eu/en/publications-data/download-data-hospital-and-icu-admission-rates-and-current-occupancy-covid-19",
     "source_name": "European Centre for Disease Prevention and Control",
 }
 
