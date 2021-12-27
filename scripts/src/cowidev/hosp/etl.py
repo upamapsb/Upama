@@ -147,13 +147,23 @@ class HospETL:
             .sort_values(["entity", "date", "indicator"])
         )
 
-    def transform_meta(self, df_meta: pd.DataFrame, df: pd.DataFrame):
+    def transform_meta(self, df_meta: pd.DataFrame, df: pd.DataFrame, locations_path: str):
+        # Get most recent date of data update
         df_ = (
             df.groupby(["entity", "iso_code"], as_index=False)
             .date.max()
             .rename(columns={"date": "last_observation_date"})
         )
+        # Add iso and observation date to dataframe
         df_meta = df_meta.merge(df_, left_on="location", right_on="entity", how="left")
+        # Fill with locations' metadata of countries not updated in this batch
+        # df_meta_current = pd.read_csv(locations_path)
+        # df_meta = (
+        #     pd.concat([df_meta, df_meta_current])
+        #     .sort_values("last_observation_date")
+        #     .drop_duplicates(subset=["location"])
+        # )
+        # Order columns
         df_meta = df_meta[["location", "iso_code", "last_observation_date", "source_name", "source_website"]]
         return df_meta
 
@@ -164,7 +174,7 @@ class HospETL:
     def run(self, output_path: str, locations_path: str, parallel: bool, n_jobs: int):
         df, df_meta = self.extract(parallel, n_jobs)
         df = self.transform(df)
-        df_meta = self.transform_meta(df_meta, df)
+        df_meta = self.transform_meta(df_meta, df, locations_path)
         self.load(df, output_path)
         self.load(df_meta, locations_path)
 
