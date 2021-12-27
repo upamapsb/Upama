@@ -19,6 +19,7 @@ def _get_scripts_dir(project_dir: str):
     _SCRIPTS_INPUT_DIR = os.path.join(_SCRIPTS_DIR, "input")
     _SCRIPTS_OUTPUT_DIR = os.path.join(_SCRIPTS_DIR, "output")
     _SCRIPTS_OUTPUT_VAX_DIR = os.path.join(_SCRIPTS_OUTPUT_DIR, "vaccinations")
+    _SCRIPTS_OUTPUT_HOSP_DIR = os.path.join(_SCRIPTS_OUTPUT_DIR, "hospitalizations")
     _SCRIPTS_OUTPUT_TEST_DIR = os.path.join(_SCRIPTS_OUTPUT_DIR, "testing")
     _SCRIPTS_DOCS_DIR = os.path.join(_SCRIPTS_DIR, "docs")
     _INPUT_FOLDER_LS = [
@@ -45,6 +46,9 @@ def _get_scripts_dir(project_dir: str):
         "INPUT": _SCRIPTS_INPUT_DIR,
         **{f"INPUT_{e.upper()}": os.path.join(_SCRIPTS_INPUT_DIR, e) for e in _INPUT_FOLDER_LS},
         "OUTPUT": _SCRIPTS_OUTPUT_DIR,
+        "OUTPUT_HOSP": _SCRIPTS_OUTPUT_HOSP_DIR,
+        "OUTPUT_HOSP_MAIN": os.path.join(_SCRIPTS_OUTPUT_HOSP_DIR, "main_data"),
+        "OUTPUT_HOSP_META": os.path.join(_SCRIPTS_OUTPUT_HOSP_DIR, "metadata"),
         "OUTPUT_VAX": _SCRIPTS_OUTPUT_VAX_DIR,
         "OUTPUT_VAX_AGE": os.path.join(_SCRIPTS_OUTPUT_VAX_DIR, "by_age_group"),
         "OUTPUT_VAX_MANUFACT": os.path.join(_SCRIPTS_OUTPUT_VAX_DIR, "by_manufacturer"),
