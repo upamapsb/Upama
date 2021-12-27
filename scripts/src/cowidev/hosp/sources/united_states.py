@@ -1,12 +1,16 @@
 import pandas as pd
 
+METADATA = {
+    "source_url": "https://healthdata.gov/api/views/g62h-syeh/rows.csv",
+    "source_url_ref": "https://healthdata.gov/",
+    "source_name": "U.S. Department of Health & Human Services",
+    "entity": "United States",
+}
+
 
 def main():
-    print("Downloading US data…")
-
-    url = "https://healthdata.gov/api/views/g62h-syeh/rows.csv"
     df = pd.read_csv(
-        url,
+        METADATA["source_url"],
         usecols=[
             "date",
             "total_adult_patients_hospitalized_confirmed_covid",
@@ -42,9 +46,9 @@ def main():
         }
     )
 
-    df["entity"] = "United States"
+    df["entity"] = METADATA["entity"]
 
-    return df
+    return df, METADATA
 
 
 if __name__ == "__main__":

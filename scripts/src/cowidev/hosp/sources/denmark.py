@@ -8,11 +8,16 @@ import pandas as pd
 
 from cowidev.utils.web.scraping import get_soup
 
-SOURCE_URL = "https://covid19.ssi.dk/overvagningsdata/download-fil-med-overvaagningdata"
+METADATA = {
+    "source_url": "https://covid19.ssi.dk/overvagningsdata/download-fil-med-overvaagningdata",
+    "source_url_ref": "https://covid19.ssi.dk/overvagningsdata/download-fil-med-overvaagningdata",
+    "source_name": "Statens Serum Institut",
+    "entity": "Denmark",
+}
 
 
 def read() -> pd.DataFrame:
-    soup = get_soup(SOURCE_URL)
+    soup = get_soup(METADATA["source_url"])
     zip_url = soup.find("accordions").find("a").get("href")
 
     with tempfile.TemporaryDirectory() as tf:
@@ -35,8 +40,6 @@ def read() -> pd.DataFrame:
 
 
 def main() -> pd.DataFrame:
-
-    print("Downloading Denmark data…")
     flow, stock = read()
 
     flow = flow.rename(columns={"Dato": "date"}).groupby("date", as_index=False).sum().sort_values("date")
@@ -54,9 +57,9 @@ def main() -> pd.DataFrame:
         },
     )
 
-    df["entity"] = "Denmark"
+    df["entity"] = METADATA["entity"]
 
-    return df
+    return df, METADATA
 
 
 if __name__ == "__main__":

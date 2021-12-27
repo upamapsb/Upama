@@ -3,11 +3,16 @@ import requests
 
 import pandas as pd
 
+METADATA = {
+    "source_url": "https://www.covid19.admin.ch/api/data/context",
+    "source_url_ref": "https://www.covid19.admin.ch/",
+    "source_name": "Federal Office of Public Health FOPH",
+    "entity": "Switzerland",
+}
+
 
 def main() -> pd.DataFrame:
-
-    print("Downloading Switzerland data…")
-    context = requests.get("https://www.covid19.admin.ch/api/data/context").json()
+    context = requests.get(METADATA["source_url"]).json()
 
     # Hospital & ICU patients
     url = context["sources"]["individual"]["csv"]["daily"]["hospCapacity"]
@@ -45,9 +50,9 @@ def main() -> pd.DataFrame:
         },
     )
 
-    df["entity"] = "Switzerland"
+    df["entity"] = METADATA["entity"]
 
-    return df
+    return df, METADATA
 
 
 if __name__ == "__main__":

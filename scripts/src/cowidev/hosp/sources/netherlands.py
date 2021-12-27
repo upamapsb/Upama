@@ -1,11 +1,17 @@
 import pandas as pd
 
+METADATA = {
+    "source_url": "https://lcps.nu/wp-content/uploads/covid-19-datafeed.csv",
+    "source_url_ref": "https://github.com/MoH-Malaysia/covid19-public",
+    "source_name": "Ministry of Health",
+    "entity": "Netherlands",
+}
+
+
 SOURCE_URL = "https://lcps.nu/wp-content/uploads/covid-19-datafeed.csv"
 
 
 def main() -> pd.DataFrame:
-
-    print("Downloading Netherlands data…")
     df = pd.read_csv(
         SOURCE_URL,
         usecols=[
@@ -33,9 +39,9 @@ def main() -> pd.DataFrame:
         }
     )
 
-    df["entity"] = "Netherlands"
+    df["entity"] = METADATA["entity"]
 
-    return df
+    return df, METADATA
 
 
 if __name__ == "__main__":

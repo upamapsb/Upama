@@ -1,12 +1,15 @@
 import pandas as pd
 
-SOURCE_URL = "https://epistat.sciensano.be/Data/COVID19BE_HOSP.csv"
+METADATA = {
+    "source_url": "https://epistat.sciensano.be/Data/COVID19BE_HOSP.csv",
+    "source_url_ref": "https://epistat.sciensano.be/",
+    "source_name": "Sciensano, National Public Health Institute",
+    "entity": "Belgium",
+}
 
 
 def main() -> pd.DataFrame:
-
-    print("Downloading Belgium data…")
-    df = pd.read_csv(SOURCE_URL, usecols=["DATE", "TOTAL_IN", "TOTAL_IN_ICU", "NEW_IN"])
+    df = pd.read_csv(METADATA["source_url"], usecols=["DATE", "TOTAL_IN", "TOTAL_IN_ICU", "NEW_IN"])
 
     df = df.rename(columns={"DATE": "date"}).groupby("date", as_index=False).sum().sort_values("date")
 
@@ -21,9 +24,9 @@ def main() -> pd.DataFrame:
         }
     )
 
-    df["entity"] = "Belgium"
+    df["entity"] = METADATA["entity"]
 
-    return df
+    return df, METADATA
 
 
 if __name__ == "__main__":

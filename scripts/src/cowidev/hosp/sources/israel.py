@@ -1,9 +1,15 @@
 import pandas as pd
 import numpy as np
 
+METADATA = {
+    "source_url": "https://datadashboardapi.health.gov.il/api/queries/patientsPerDate",
+    "source_url_ref": "https://datadashboard.health.gov.il/COVID-19/",
+    "source_name": "Ministry of Health",
+    "entity": "Israel",
+}
+
 
 def main():
-    print("Downloading Israel data…")
     url = "https://datadashboardapi.health.gov.il/api/queries/patientsPerDate"
     df = pd.read_json(url)
 
@@ -29,9 +35,9 @@ def main():
         }
     )
 
-    df["entity"] = "Israel"
+    df["entity"] = METADATA["entity"]
 
-    return df
+    return df, METADATA
 
 
 if __name__ == "__main__":

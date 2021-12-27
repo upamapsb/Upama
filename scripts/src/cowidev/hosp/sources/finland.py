@@ -2,14 +2,18 @@ import requests
 
 import pandas as pd
 
+METADATA = {
+    "source_url": "https://w3qa5ydb4l.execute-api.eu-west-1.amazonaws.com/prod/finnishCoronaHospitalData",
+    "source_url_ref": "https://www.thl.fi/episeuranta/tautitapaukset/coronamap.html",
+    "source_name": "Finnish Institute for Health and Welfare",
+    "entity": "Finland",
+}
+
 SOURCE_URL = "https://w3qa5ydb4l.execute-api.eu-west-1.amazonaws.com/prod/finnishCoronaHospitalData"
 
 
 def main() -> pd.DataFrame:
-
-    print("Downloading Finland data…")
-
-    data = requests.get(SOURCE_URL).json()
+    data = requests.get(METADATA["source_url"]).json()
     df = pd.DataFrame.from_records(data["hospitalised"])
 
     df = df[df.area == "Finland"][["date", "totalHospitalised", "inIcu"]]
@@ -25,7 +29,7 @@ def main() -> pd.DataFrame:
 
     df["entity"] = "Finland"
 
-    return df
+    return df, METADATA
 
 
 if __name__ == "__main__":

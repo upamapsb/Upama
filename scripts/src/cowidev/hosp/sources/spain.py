@@ -1,17 +1,19 @@
-import datetime
-
 import pandas as pd
 
 from cowidev.utils.web.scraping import get_soup
 
-SOURCE_PAGE = "https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/capacidadAsistencial.htm"
+METADATA = {
+    "source_url": "",
+    "source_url_ref": (
+        "https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/capacidadAsistencial.htm"
+    ),
+    "source_name": "Ministry of Health, Consumption and Social Welfare",
+    "entity": "Spain",
+}
 
 
 def main() -> pd.DataFrame:
-
-    print("Downloading Spain data…")
-
-    soup = get_soup(SOURCE_PAGE)
+    soup = get_soup(METADATA["source_url_ref"])
     url = soup.find(class_="informacion").find("a")["href"]
     url = "https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/" + url
 
@@ -46,9 +48,9 @@ def main() -> pd.DataFrame:
         }
     )
 
-    df["entity"] = "Spain"
+    df["entity"] = METADATA["entity"]
 
-    return df
+    return df, METADATA
 
 
 if __name__ == "__main__":

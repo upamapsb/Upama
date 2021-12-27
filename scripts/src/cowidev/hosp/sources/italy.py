@@ -1,17 +1,19 @@
 import pandas as pd
 
-MAIN_SOURCE = (
-    "https://github.com/pcm-dpc/COVID-19/raw/master/dati-andamento-nazionale/dpc-covid19-ita-andamento-nazionale.csv"
-)
-HOSP_FLOW_SOURCE = "https://covid19.infn.it/iss/csv_part/iss_bydate_italia_ricoveri.csv"
+METADATA = {
+    "source_url": {
+        "main": "https://github.com/pcm-dpc/COVID-19/raw/master/dati-andamento-nazionale/dpc-covid19-ita-andamento-nazionale.csv",
+        "flow": "https://covid19.infn.it/iss/csv_part/iss_bydate_italia_ricoveri.csv",
+    },
+    "source_url_ref": "https://github.com/pcm-dpc/COVID-19, covid19.infn.it",
+    "source_name": "Ministry of Health and CovidStat INFN Working Group",
+    "entity": "Italy",
+}
 
 
 def main() -> pd.DataFrame:
-
-    print("Downloading Italy data…")
-
     hosp_flow = (
-        pd.read_csv(HOSP_FLOW_SOURCE, usecols=["data", "casi"])
+        pd.read_csv(METADATA["source_url"]["flow"], usecols=["data", "casi"])
         .rename(columns={"data": "date"})
         .sort_values("date")
         .head(-5)
@@ -20,7 +22,8 @@ def main() -> pd.DataFrame:
 
     df = (
         pd.read_csv(
-            MAIN_SOURCE, usecols=["data", "totale_ospedalizzati", "terapia_intensiva", "ingressi_terapia_intensiva"]
+            METADATA["source_url"]["main"],
+            usecols=["data", "totale_ospedalizzati", "terapia_intensiva", "ingressi_terapia_intensiva"],
         )
         .rename(columns={"data": "date"})
         .sort_values("date")
@@ -32,7 +35,7 @@ def main() -> pd.DataFrame:
         pd.merge(hosp_flow, df, on="date", how="outer", validate="one_to_one")
         .melt("date", var_name="indicator")
         .dropna(subset=["value"])
-        .assign(entity="Italy")
+        .assign(entity=METADATA["entity"])
     )
     df["indicator"] = df.indicator.replace(
         {
@@ -43,7 +46,7 @@ def main() -> pd.DataFrame:
         }
     )
 
-    return df
+    return df, METADATA
 
 
 if __name__ == "__main__":

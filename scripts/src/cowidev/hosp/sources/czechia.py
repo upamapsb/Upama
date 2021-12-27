@@ -1,17 +1,22 @@
 import pandas as pd
 
-STOCK_URL = "https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/hospitalizace.csv"
-FLOW_URL = "https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/nakazeni-hospitalizace-testy.csv"
+
+METADATA = {
+    "source_url": {
+        "stock": "https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/hospitalizace.csv",
+        "flow": "https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/nakazeni-hospitalizace-testy.csv",
+    },
+    "source_url_ref": "https://onemocneni-aktualne.mzcr.cz",
+    "source_name": "Ministry of Health",
+    "entity": "Czechia",
+}
 
 
 def main() -> pd.DataFrame:
-
-    print("Downloading Czechia data…")
-
-    stock = pd.read_csv(STOCK_URL, usecols=["datum", "pocet_hosp", "jip"])
+    stock = pd.read_csv(METADATA["source_url"]["stock"], usecols=["datum", "pocet_hosp", "jip"])
     stock = stock.rename(columns={"datum": "date"}).sort_values("date")
 
-    flow = pd.read_csv(FLOW_URL, usecols=["datum", "nove_hospitalizace", "nove_jip"])
+    flow = pd.read_csv(METADATA["source_url"]["flow"], usecols=["datum", "nove_hospitalizace", "nove_jip"])
     flow = flow.rename(columns={"datum": "date"}).groupby("date", as_index=False).sum().sort_values("date")
     flow["nove_hospitalizace"] = flow.nove_hospitalizace.rolling(7).sum()
     flow["nove_jip"] = flow.nove_jip.rolling(7).sum()
@@ -30,9 +35,9 @@ def main() -> pd.DataFrame:
         }
     )
 
-    df["entity"] = "Czechia"
+    df["entity"] = METADATA["entity"]
 
-    return df
+    return df, METADATA
 
 
 if __name__ == "__main__":

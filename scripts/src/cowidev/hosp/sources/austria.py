@@ -6,12 +6,17 @@ import zipfile
 
 import pandas as pd
 
-SOURCE_URL = "https://covid19-dashboard.ages.at/data/data.zip"
+METADATA = {
+    "source_url": "https://covid19-dashboard.ages.at/data/data.zip",
+    "source_url_ref": "https://covid19-dashboard.ages.at/",
+    "source_name": "AGES - Österreichische Agentur für Ernährungssicherheit",
+    "entity": "Austria",
+}
 
 
 def read() -> pd.DataFrame:
     with tempfile.TemporaryDirectory() as tf:
-        r = requests.get(SOURCE_URL)
+        r = requests.get(METADATA["source_url"])
         z = zipfile.ZipFile(io.BytesIO(r.content))
         z.extractall(tf)
         df = pd.read_csv(
@@ -23,8 +28,6 @@ def read() -> pd.DataFrame:
 
 
 def main() -> pd.DataFrame:
-
-    print("Downloading Austria data…")
     df = read()
 
     df = df[df.Bundesland == "Alle"].drop(columns="Bundesland").rename(columns={"Meldedat": "date"})
@@ -38,9 +41,9 @@ def main() -> pd.DataFrame:
         },
     )
 
-    df["entity"] = "Austria"
+    df["entity"] = METADATA["entity"]
 
-    return df
+    return df, METADATA
 
 
 if __name__ == "__main__":

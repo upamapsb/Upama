@@ -1,11 +1,15 @@
 import pandas as pd
 
+METADATA = {
+    "source_url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=hospitalCases&metric=newAdmissions&metric=covidOccupiedMVBeds&format=csv",
+    "source_url_ref": "https://data.gov.uk",
+    "source_name": "Find open data",
+    "entity": "United Kingdom",
+}
+
 
 def main():
-    print("Downloading UK data…")
-
-    url = "https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=hospitalCases&metric=newAdmissions&metric=covidOccupiedMVBeds&format=csv"
-    df = pd.read_csv(url, usecols=["date", "hospitalCases", "newAdmissions", "covidOccupiedMVBeds"])
+    df = pd.read_csv(METADATA["source_url"], usecols=["date", "hospitalCases", "newAdmissions", "covidOccupiedMVBeds"])
 
     df = df.sort_values("date")
 
@@ -20,9 +24,9 @@ def main():
         }
     )
 
-    df["entity"] = "United Kingdom"
+    df["entity"] = METADATA["entity"]
 
-    return df
+    return df, METADATA
 
 
 if __name__ == "__main__":

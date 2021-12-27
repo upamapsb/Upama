@@ -3,12 +3,16 @@ import pandas as pd
 
 from cowidev.utils import paths
 
+METADATA_BASE = {
+    "source_url": "https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/csv/data.csv",
+    "source_name": "European Centre for Disease Prevention and Control",
+}
+
 
 POPULATION = pd.read_csv(
     os.path.join(paths.SCRIPTS.INPUT_UN, "population_latest.csv"),
     usecols=["entity", "population"],
 )
-SOURCE_URL = "https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/csv/data.csv"
 EXCLUDED_COUNTRIES = [
     "Austria",
     "Belgium",
@@ -24,12 +28,17 @@ EXCLUDED_COUNTRIES = [
 
 
 def download_data():
-    print("Downloading ECDC data…")
-    df = pd.read_csv(SOURCE_URL, usecols=["country", "indicator", "date", "value", "year_week"])
+    df = pd.read_csv(METADATA_BASE["source_url"], usecols=["country", "indicator", "date", "value", "year_week"])
     df = df[-df.country.isin(EXCLUDED_COUNTRIES)]
     df = df.drop_duplicates()
     df = df.rename(columns={"country": "entity"})
     return df
+
+
+def update_metadata(df):
+    entities = df.entity.unique()
+    METADATA = [METADATA_BASE | {"entity": entity} for entity in entities]
+    return METADATA
 
 
 def pipe_undo_100k(df):
@@ -53,5 +62,6 @@ def pipe_week_to_date(df):
 
 def main():
     df = download_data()
+    METADATA = update_metadata(df)
     df = df.pipe(pipe_undo_100k).pipe(pipe_week_to_date).drop(columns=["population"])
-    return df
+    return df, METADATA

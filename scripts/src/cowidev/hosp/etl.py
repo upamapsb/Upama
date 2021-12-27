@@ -3,38 +3,54 @@ import importlib
 
 import pandas as pd
 from pandas.api.types import is_string_dtype
-from cowidev.hosp.sources import __all__ as sources
 from cowidev.utils import paths
+from cowidev.utils.log import get_logger
+from cowidev.hosp.sources import __all__ as sources
 
 
 sources = [f"cowidev.hosp.sources.{s}" for s in sources]
 POPULATION_FILE = os.path.join(paths.SCRIPTS.INPUT_UN, "population_latest.csv")
+logger = get_logger()
 
 
 class HospETL:
     def extract(self):
         dfs = []
+        metadata = []
+        # TODO: Print country here, status, parallelize
         for source in sources:
-            module = importlib.import_module(source)
-            df = module.main()
-
-            assert df.indicator.isin(
-                {
-                    "Daily hospital occupancy",
-                    "Daily ICU occupancy",
-                    "Weekly new hospital admissions",
-                    "Weekly new ICU admissions",
-                }
-            ).all(), "One of the indicators for this country is not recognized!"
-            assert is_string_dtype(df.date), "The date column is not a string!"
-
+            df, metadata_ = self._extract_entity(source)
             dfs.append(df)
+            metadata.append(metadata_)
         df = pd.concat(dfs)
         df = df.dropna(subset=["value"])
         assert all(
             df.groupby(["entity", "date", "indicator"]).size().reset_index()[0] == 1
         ), "Some entity-date-indicator combinations are present more than once!"
         return df
+
+    def _extract_entity(self, module_name: str):
+        module = importlib.import_module(module_name)
+        logger.info(f"HOSP - {module_name}: started")
+        try:
+            df, metadata = module.main()
+        except Exception as err:
+            logger.error(f"HOSP - {module_name}: ❌ {err}", exc_info=True)
+        else:
+            logger.info(f"HOSP - {module_name}: SUCCESS ✅")
+        self._check_fields_df(df)
+        return df, metadata
+
+    def _check_fields_df(self, df):
+        assert df.indicator.isin(
+            {
+                "Daily hospital occupancy",
+                "Daily ICU occupancy",
+                "Weekly new hospital admissions",
+                "Weekly new ICU admissions",
+            }
+        ).all(), "One of the indicators for this country is not recognized!"
+        assert is_string_dtype(df.date), "The date column is not a string!"
 
     def pipe_metadata(self, df):
         print("Adding ISO & population…")

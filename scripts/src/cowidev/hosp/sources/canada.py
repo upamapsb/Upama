@@ -4,10 +4,16 @@ import pandas as pd
 import requests
 
 
+METADATA = {
+    "source_url": "https://api.covid19tracker.ca/reports?after=2020-03-09",
+    "source_url_ref": "https://covid19tracker.ca/",
+    "source_name": "Official data from provinces via covid19tracker.ca",
+    "entity": "Canada",
+}
+
+
 def main():
-    print("Downloading Canada data…")
-    url = "https://api.covid19tracker.ca/reports?after=2020-03-09"
-    data = requests.get(url).json()
+    data = requests.get(METADATA["source_url"]).json()
     data = json.dumps(data["data"])
 
     df = pd.read_json(data, orient="records")
@@ -22,6 +28,6 @@ def main():
     )
 
     df["date"] = df["date"].dt.date
-    df["entity"] = "Canada"
+    df["entity"] = METADATA["entity"]
 
-    return df
+    return df, METADATA

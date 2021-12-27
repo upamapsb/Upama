@@ -1,17 +1,22 @@
 import pandas as pd
 import numpy as np
 
-
-ICU_URL = "https://diviexchange.blob.core.windows.net/%24web/zeitreihe-deutschland.csv"
-HOSP_URL = "https://raw.githubusercontent.com/robert-koch-institut/COVID-19-Hospitalisierungen_in_Deutschland/master/Aktuell_Deutschland_COVID-19-Hospitalisierungen.csv"
+METADATA = {
+    "source_url": {
+        "icu": "https://diviexchange.blob.core.windows.net/%24web/zeitreihe-deutschland.csv",
+        "hosp": "https://raw.githubusercontent.com/robert-koch-institut/COVID-19-Hospitalisierungen_in_Deutschland/master/Aktuell_Deutschland_COVID-19-Hospitalisierungen.csv",
+    },
+    "source_url_ref": "github.com.com/robert-koch-institut/COVID-19-Hospitalisierungen_in_Deutschland/",
+    "source_name": "Robert Koch-Institut",
+    "entity": "Germany",
+}
 
 
 def main() -> pd.DataFrame:
-
-    print("Downloading Germany data…")
-
     # Hospital admissions
-    hosp_flow = pd.read_csv(HOSP_URL, usecols=["Datum", "Bundesland", "Altersgruppe", "7T_Hospitalisierung_Faelle"])
+    hosp_flow = pd.read_csv(
+        METADATA["source_url"]["hosp"], usecols=["Datum", "Bundesland", "Altersgruppe", "7T_Hospitalisierung_Faelle"]
+    )
     hosp_flow = (
         hosp_flow[(hosp_flow.Bundesland == "Bundesgebiet") & (hosp_flow.Altersgruppe == "00+")]
         .drop(columns=["Bundesland", "Altersgruppe"])
@@ -22,7 +27,9 @@ def main() -> pd.DataFrame:
 
     # ICU admissions and patients
     icu = (
-        pd.read_csv(ICU_URL, usecols=["Datum", "Aktuelle_COVID_Faelle_ITS", "faelle_covid_erstaufnahmen"])
+        pd.read_csv(
+            METADATA["source_url"]["icu"], usecols=["Datum", "Aktuelle_COVID_Faelle_ITS", "faelle_covid_erstaufnahmen"]
+        )
         .rename(columns={"Datum": "date"})
         .groupby("date", as_index=False)
         .sum()
@@ -47,9 +54,9 @@ def main() -> pd.DataFrame:
         },
     )
 
-    df["entity"] = "Germany"
+    df["entity"] = METADATA["entity"]
 
-    return df
+    return df, METADATA
 
 
 if __name__ == "__main__":
