@@ -1,5 +1,8 @@
 import pandas as pd
 
+from cowidev.utils.clean import clean_date_series
+
+
 METADATA = {
     "source_url": "https://lcps.nu/wp-content/uploads/covid-19-datafeed.csv",
     "source_url_ref": "https://lcps.nu/datafeed/",
@@ -19,8 +22,7 @@ def main() -> pd.DataFrame:
             "IC_Nieuwe_Opnames_COVID_Nederland",
         ],
     )
-
-    df["Datum"] = pd.to_datetime(df.Datum, dayfirst=True).dt.date.astype(str)
+    df["Datum"] = clean_date_series(df.Datum, "%d-%m-%Y")
     df = df.rename(columns={"Datum": "date"}).sort_values("date")
 
     df["Kliniek_Nieuwe_Opnames_COVID_Nederland"] = df.Kliniek_Nieuwe_Opnames_COVID_Nederland.rolling(7).sum()

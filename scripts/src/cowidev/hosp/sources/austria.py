@@ -6,6 +6,8 @@ import zipfile
 
 import pandas as pd
 
+from cowidev.utils.clean import clean_date_series
+
 METADATA = {
     "source_url": "https://covid19-dashboard.ages.at/data/data.zip",
     "source_url_ref": "https://covid19-dashboard.ages.at/",
@@ -31,7 +33,7 @@ def main() -> pd.DataFrame:
     df = read()
 
     df = df[df.Bundesland == "Alle"].drop(columns="Bundesland").rename(columns={"Meldedat": "date"})
-    df["date"] = pd.to_datetime(df.date, dayfirst=True).dt.date.astype(str)
+    df["date"] = clean_date_series(df.date, "%d.%m.%Y")
 
     df = df.melt("date", var_name="indicator").dropna(subset=["value"])
     df["indicator"] = df.indicator.replace(

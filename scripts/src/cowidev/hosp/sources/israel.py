@@ -1,6 +1,9 @@
 import pandas as pd
 import numpy as np
 
+from cowidev.utils.clean import clean_date_series
+
+
 METADATA = {
     "source_url": "https://datadashboardapi.health.gov.il/api/queries/patientsPerDate",
     "source_url_ref": "https://datadashboard.health.gov.il/COVID-19/",
@@ -13,7 +16,7 @@ def main():
     url = "https://datadashboardapi.health.gov.il/api/queries/patientsPerDate"
     df = pd.read_json(url)
 
-    df["date"] = df.date.dt.date.astype(str)
+    df["date"] = clean_date_series(df.date, "%Y-%m-%dT%H:%M:%S.%fZ")
     df = df.sort_values("date")
 
     df.loc[df.date < "2020-08-17", "CountCriticalStatus"] = np.nan

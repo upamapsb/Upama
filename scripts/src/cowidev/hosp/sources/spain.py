@@ -1,6 +1,7 @@
 import pandas as pd
 
 from cowidev.utils.web.scraping import get_soup
+from cowidev.utils.clean import clean_date_series
 
 METADATA = {
     "source_url": "",
@@ -20,9 +21,7 @@ def main() -> pd.DataFrame:
     df = pd.read_csv(
         url, usecols=["Fecha", "Unidad", "OCUPADAS_COVID19", "INGRESOS_COVID19"], encoding="Latin-1", sep=";"
     )
-
-    df["Fecha"] = pd.to_datetime(df.Fecha, dayfirst=True).dt.date.astype(str)
-
+    df["Fecha"] = clean_date_series(df.Fecha, "%d/%m/%Y")
     df.loc[df.Unidad.str.contains("U. Críticas"), "Unidad"] = "ICU"
 
     df = (

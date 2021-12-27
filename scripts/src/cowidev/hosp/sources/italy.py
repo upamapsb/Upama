@@ -1,5 +1,8 @@
 import pandas as pd
 
+from cowidev.utils.clean import clean_date_series
+
+
 METADATA = {
     "source_url": {
         "main": "https://github.com/pcm-dpc/COVID-19/raw/master/dati-andamento-nazionale/dpc-covid19-ita-andamento-nazionale.csv",
@@ -28,7 +31,7 @@ def main() -> pd.DataFrame:
         .rename(columns={"data": "date"})
         .sort_values("date")
     )
-    df["date"] = df.date.astype(str).str.slice(0, 10)
+    df["date"] = clean_date_series(df.date, "%Y-%m-%dT%H:%M:%S")
     df["ingressi_terapia_intensiva"] = df.ingressi_terapia_intensiva.rolling(7).sum()
 
     df = (

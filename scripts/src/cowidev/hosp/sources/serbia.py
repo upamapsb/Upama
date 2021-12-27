@@ -1,5 +1,8 @@
 import pandas as pd
 
+from cowidev.utils.clean import clean_date_series
+
+
 METADATA = {
     "source_url": "https://raw.githubusercontent.com/aleksandar-jovicic/COVID19-Serbia/master/timeseries.csv",
     "source_url_ref": "https://github.com/aleksandar-jovicic/COVID19-Serbia",
@@ -19,7 +22,7 @@ def main():
             entity=METADATA["entity"],
         )
     )
-    df["date"] = df.date.str.slice(0, 10)
+    df["date"] = clean_date_series(df.date, "%Y-%m-%d %H:%M:%S")
     return df, METADATA
 
 

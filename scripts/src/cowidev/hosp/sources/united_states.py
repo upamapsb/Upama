@@ -1,4 +1,5 @@
 import pandas as pd
+from cowidev.utils.clean import clean_date_series
 
 METADATA = {
     "source_url": "https://healthdata.gov/api/views/g62h-syeh/rows.csv",
@@ -20,8 +21,7 @@ def main():
             "previous_day_admission_pediatric_covid_confirmed",
         ],
     )
-
-    df["date"] = pd.to_datetime(df.date, format="%Y/%m/%d").astype(str)
+    df["date"] = clean_date_series(df.date, "%Y/%m/%d")
     df = df[df.date >= "2020-07-15"]
     df = df.groupby("date", as_index=False).sum().sort_values("date")
 

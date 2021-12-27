@@ -1,6 +1,7 @@
 import requests
 
 import pandas as pd
+from cowidev.utils.clean import clean_date_series
 
 METADATA = {
     "source_url": "https://w3qa5ydb4l.execute-api.eu-west-1.amazonaws.com/prod/finnishCoronaHospitalData",
@@ -15,8 +16,7 @@ def main() -> pd.DataFrame:
     df = pd.DataFrame.from_records(data["hospitalised"])
 
     df = df[df.area == "Finland"][["date", "totalHospitalised", "inIcu"]]
-    df["date"] = df.date.astype(str).str.slice(0, 10)
-
+    df["date"] = clean_date_series(df.date, "%Y-%m-%dT%H:%M:%S.%fZ")
     df = df.melt("date", var_name="indicator").dropna(subset=["value"])
     df["indicator"] = df.indicator.replace(
         {

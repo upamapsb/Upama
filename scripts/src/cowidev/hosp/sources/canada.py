@@ -3,6 +3,7 @@ import json
 import pandas as pd
 import requests
 
+from cowidev.utils.clean import clean_date_series
 
 METADATA = {
     "source_url": "https://api.covid19tracker.ca/reports?after=2020-03-09",
@@ -26,8 +27,7 @@ def main():
             "total_criticals": "Daily ICU occupancy",
         }
     )
-
-    df["date"] = df["date"].dt.date
+    df["date"] = clean_date_series(df.date, "%Y.%m.%d")
     df["entity"] = METADATA["entity"]
 
     return df, METADATA

@@ -2,6 +2,7 @@ import os
 import pandas as pd
 
 from cowidev.utils import paths
+from cowidev.utils.clean import clean_date_series
 
 METADATA_BASE = {
     "source_url": "https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/csv/data.csv",
@@ -51,8 +52,9 @@ def pipe_undo_100k(df):
 
 
 def pipe_week_to_date(df):
+    df["date"] = clean_date_series(df.date, "%Y-%m-%d")
     if df.date.dtypes == "int64":
-        df["date"] = pd.to_datetime(df.date, format="%Y%m%d").dt.date
+        df["date"] = clean_date_series(df.date, "%Y%m%d")
     daily_records = df[df["indicator"].str.contains("Daily")]
     date_week_mapping = daily_records[["year_week", "date"]].groupby("year_week", as_index=False).max()
     weekly_records = df[df["indicator"].str.contains("Weekly")].drop(columns="date")
