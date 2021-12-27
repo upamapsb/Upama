@@ -19,5 +19,20 @@ def _parse_args():
             " to update Grapher DB."
         ),
     )
+    parser.add_argument(
+        "-p",
+        "--monothread",
+        action="store_true",
+        help="Execution done in monothread. Otherwise, it is parallelized.",
+    )
+    parser.add_argument(
+        "-j",
+        "--njobs",
+        default=-2,
+        help=(
+            "Number of jobs for parallel processing. Check Parallel class in joblib library for more info  (only in "
+            "mode get-data)."
+        ),
+    )
     args = parser.parse_args()
     return args
