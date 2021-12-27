@@ -171,16 +171,16 @@ run_python 'import sweden; sweden.update_db()'
 # =====================================================================
 # Hospital & ICU data
 
-hour=$(date +%H)
-if [ $hour == 06 ] || [ $hour == 18 ] ; then
-  # Download CSV
-  echo "Generating hospital & ICU export..."
-  python -m cowidev.hosp etl
-  python -m cowidev.hosp grapher-file
-  git add .
-  git commit -m "data(hosp): Automated update"
-  git push
-fi
+# hour=$(date +%H)
+# if [ $hour == 06 ] || [ $hour == 18 ] ; then
+#   # Download CSV
+#   echo "Generating hospital & ICU export..."
+#   python -m cowidev.hosp etl
+#   python -m cowidev.hosp grapher-file
+#   git add .
+#   git commit -m "data(hosp): Automated update"
+#   git push
+# fi
 
 # Always run the database update.
 # The script itself contains a check against the database
