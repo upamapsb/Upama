@@ -2,6 +2,7 @@ import os
 import time
 import importlib
 from joblib import Parallel, delayed
+import json
 
 import pandas as pd
 from pandas.api.types import is_string_dtype
@@ -11,6 +12,7 @@ from cowidev.hosp.sources import __all__ as sources
 
 
 sources = [f"cowidev.hosp.sources.{s}" for s in sources]
+OUTPUT_TMP_PATH = os.path.join(paths.SCRIPTS.OUTPUT_HOSP_MAIN, "population_latest.csv")
 POPULATION_FILE = os.path.join(paths.SCRIPTS.INPUT_UN, "population_latest.csv")
 logger = get_logger()
 
@@ -28,6 +30,17 @@ class HospETL:
         """
         t0 = time.time()
         # Get data
+        modules_execution_results = self.extract_collect(parallel, n_jobs)
+        self._execution_summary(t0, modules_execution_results)
+        # Export data (checkpoint)
+        self.extract_export_checkpoint(modules_execution_results)
+        # Process output
+        df, df_meta = self.extract_process()
+        return df, df_meta
+
+    def extract_collect(self, parallel, n_jobs):
+        """Collects data for all countries"""
+        logger.info("HOSP - Collecting data...")
         if parallel:
             modules_execution_results = Parallel(n_jobs=n_jobs, backend="threading")(
                 delayed(self._extract_entity)(
@@ -37,22 +50,58 @@ class HospETL:
             )
         else:
             modules_execution_results = [self._extract_entity(source) for source in sources]
-        # Build output
-        df = pd.concat([m[0] for m in modules_execution_results if m is not None])
-        df_meta = self._build_metadata(modules_execution_results)
+        return modules_execution_results
+
+    def extract_export_checkpoint(self, modules_execution_results):
+        """Exports downloaded data and metadata."""
+        logger.info("HOSP - Saving checkpoint data...")
+        for m in modules_execution_results:
+            if m is not None:
+                df = m[0]
+                metadata = m[1]
+                if isinstance(metadata, list):
+                    for metadata_ in metadata:
+                        df_ = df[df.entity == metadata_["entity"]]
+                        df_.to_csv(
+                            os.path.join(paths.SCRIPTS.OUTPUT_HOSP_MAIN, f"{metadata_['entity']}.csv"), index=False
+                        )
+                        with open(
+                            os.path.join(paths.SCRIPTS.OUTPUT_HOSP_META, f"{metadata_['entity']}.json"), "w"
+                        ) as outfile:
+                            json.dump(metadata_, outfile)
+                else:
+                    df.to_csv(os.path.join(paths.SCRIPTS.OUTPUT_HOSP_MAIN, f"{metadata['entity']}.csv"), index=False)
+                    with open(
+                        os.path.join(paths.SCRIPTS.OUTPUT_HOSP_META, f"{metadata['entity']}.json"), "w"
+                    ) as outfile:
+                        json.dump(metadata, outfile)
+
+    def extract_process(self):
+        """Load checkpointed data."""
+        logger.info("HOSP - Loading checkpoint data...")
+        # Load & build data
+        data_paths = [
+            os.path.join(paths.SCRIPTS.OUTPUT_HOSP_MAIN, p) for p in os.listdir(paths.SCRIPTS.OUTPUT_HOSP_MAIN)
+        ]
+        df = pd.concat([pd.read_csv(p) for p in data_paths])
+        # Load & buildmetadata
+        metadata_paths = [
+            os.path.join(paths.SCRIPTS.OUTPUT_HOSP_META, p) for p in os.listdir(paths.SCRIPTS.OUTPUT_HOSP_META)
+        ]
+        metadata = []
+        for p in metadata_paths:
+            with open(p, "r") as infile:
+                metadata.append(json.load(infile))
+        df_meta = self._build_metadata(metadata)
         # Process output
         df = df.dropna(subset=["value"])
         assert all(
             df.groupby(["entity", "date", "indicator"]).size().reset_index()[0] == 1
         ), "Some entity-date-indicator combinations are present more than once!"
-        # Execution details
-        self._execution_summary(t0, modules_execution_results)
         return df, df_meta
 
-    def _build_metadata(self, modules_execution_results):
+    def _build_metadata(self, metadata):
         """Build metadata dataframe (to be exported later to locations.csv)."""
-        # Filter out Nones
-        metadata = [m[1] for m in modules_execution_results if m is not None]
         # Flatten list
         metadata = [[m] if not isinstance(m, list) else m for m in metadata]
         metadata = [mm for m in metadata for mm in m]
@@ -73,6 +122,7 @@ class HospETL:
             df, metadata = module.main()
         except Exception as err:
             logger.error(f"HOSP - {module_name}: ❌ {err}", exc_info=True)
+            raise Exception(f"Process for {module_name} did not work! Please check.")
             return None
         else:
             self._check_fields_df(df)
@@ -117,6 +167,7 @@ class HospETL:
         print(f"Took {t_sec_1} seconds (i.e. {t_min_1} minutes).")
         print(f"Top most time consuming scripts:")
         print(df_time.head(20))
+        print("---")
 
     def pipe_metadata(self, df):
         print("Adding ISO & population…")
