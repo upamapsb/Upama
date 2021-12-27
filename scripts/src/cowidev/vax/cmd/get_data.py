@@ -33,21 +33,21 @@ class CountryDataGetter:
         t0 = time.time()
         country = module_name.split(".")[-1]
         if country.lower() in self.skip_countries:
-            logger.info(f"{module_name}: skipped! ⚠️")
+            logger.info(f"VAX - {module_name}: skipped! ⚠️")
             return {"module_name": module_name, "success": None, "skipped": True, "time": None}
         args = []
         if country == "colombia":
             args.append(self.gsheets_api)
-        logger.info(f"{module_name}: started")
+        logger.info(f"VAX - {module_name}: started")
         module = importlib.import_module(module_name)
         try:
             module.main(*args)
         except Exception as err:
             success = False
-            logger.error(f"{module_name}: ❌ {err}", exc_info=True)
+            logger.error(f"VAX - {module_name}: ❌ {err}", exc_info=True)
         else:
             success = True
-            logger.info(f"{module_name}: SUCCESS ✅")
+            logger.info(f"VAX - {module_name}: SUCCESS ✅")
         t = round(time.time() - t0, 2)
         return {"module_name": module_name, "success": success, "skipped": False, "time": t}
 
