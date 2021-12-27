@@ -6,7 +6,7 @@ import pandas as pd
 
 from cowidev.vax.batch import __all__ as batch_countries
 from cowidev.vax.incremental import __all__ as incremental_countries
-from cowidev.vax.cmd.utils import get_logger, print_eoe
+from cowidev.utils.log import get_logger, print_eoe
 
 
 # Logger
