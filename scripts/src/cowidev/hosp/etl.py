@@ -164,7 +164,9 @@ class HospETL:
         #     .drop_duplicates(subset=["location"])
         # )
         # Order columns
-        df_meta = df_meta[["location", "iso_code", "last_observation_date", "source_name", "source_website"]]
+        df_meta = df_meta[
+            ["location", "iso_code", "last_observation_date", "source_name", "source_website"]
+        ].sort_values("location")
         return df_meta
 
     def load(self, df: pd.DataFrame, output_path: str) -> None:
