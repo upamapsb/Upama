@@ -4,6 +4,8 @@ For more general information on our COVID-19 data, see our main README file in [
 
 The data is collected from official sources and collated by Our World in Data. We make it available as a [CSV 💾](covid-hospitalizations.csv).
 
+The complete list of country-by-country sources is available in [`locations.csv`](https://github.com/owid/covid-19-data/blob/master/public/data/hospitalizations/locations.csv)
+
 
 ### Fields
 
