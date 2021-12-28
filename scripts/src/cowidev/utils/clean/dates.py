@@ -30,6 +30,7 @@ def clean_date(
     minus_days: int = 0,
     unicode_norm: bool = True,
     output_fmt: str = DATE_FORMAT,
+    as_datetime: bool = False,
 ):
     """Extract a date from a `text`.
 
@@ -48,6 +49,7 @@ def clean_date(
         minus_days (int, optional): Number of days to subtract. Defaults to 0.
         unicode_norm (bool, optional): [description]. Defaults to True.
         output_fmt (str, optional): Format of the output date. By default, uses `DATE_FORMAT`.
+        as_datetime (bool, optional): Set to True to return the date as a datetime.
 
     Returns:
         str: Extracted date in format %Y-%m-%d
@@ -70,7 +72,10 @@ def clean_date(
     date_or_text = date_or_text.replace("O", "0")
     # Thread-safe extract date
     with _setlocale(loc):
-        return (datetime.strptime(date_or_text, fmt) - timedelta(days=minus_days)).strftime(output_fmt)
+        dt = datetime.strptime(date_or_text, fmt) - timedelta(days=minus_days)
+        if not as_datetime:
+            return dt.strftime(output_fmt)
+        return dt
 
 
 def extract_clean_date(
@@ -169,8 +174,11 @@ def localdate(
         sum_days (int, optional): Number of days to add to local date.
         as_datetime (bool, optional): Set to True to return the date as a datetime.
     """
-    tz = pytz.timezone(tz)
-    local_time = datetime.now(tz=tz)
+    if tz is None:
+        local_time = datetime.now()
+    else:
+        tz = pytz.timezone(tz)
+        local_time = datetime.now(tz=tz)
     if not force_today and ((hour_limit is None) or (local_time.hour < hour_limit)):
         local_time = local_time - timedelta(days=1)
     if sum_days:
