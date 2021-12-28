@@ -1,15 +1,16 @@
-from datetime import datetime
-
 import pandas as pd
 
-from utils import make_monotonic
+from cowidev.utils import clean_date_series
+from cowidev.testing import CountryTestBase
+from cowidev.testing.utils import make_monotonic
 
 
-class Austria:
-    def __init__(self):
-        self.source_url = "https://covid19-dashboard.ages.at/data/CovidFallzahlen.csv"
-        self.source_url_ref = "https://www.data.gv.at/katalog/dataset/846448a5-a26e-4297-ac08-ad7040af20f1"
-        self.location = "Austria"
+class Austria(CountryTestBase):
+    location: str = "Austria"
+    units: str = "tests performed"
+    source_url: str = "https://covid19-dashboard.ages.at/data/CovidFallzahlen.csv"
+    source_url_ref: str = "https://www.data.gv.at/katalog/dataset/846448a5-a26e-4297-ac08-ad7040af20f1"
+    source_name: str = "Federal Ministry for Social Affairs, Health, Care and Consumer Protection"
 
     def read(self):
         return pd.read_csv(self.source_url, sep=";", usecols=["Meldedat", "TestGesamt", "Bundesland"])
@@ -27,25 +28,24 @@ class Austria:
         df = df.assign(
             **{
                 "Country": self.location,
-                "Units": "tests performed",
+                "Units": self.units,
                 "Source URL": self.source_url_ref,
-                "Source label": "Federal Ministry for Social Affairs, Health, Care and Consumer Protection",
+                "Source label": self.source_name,
                 "Notes": pd.NA,
-                "Date": df.Date.apply(lambda x: datetime.strptime(x, "%d.%m.%Y").strftime("%Y-%m-%d")),
+                "Date": clean_date_series(df.Date, "%d.%m.%Y"),
             }
         )
 
         df = df.sort_values("Cumulative total").groupby("Cumulative total", as_index=False).head(1).sort_values("Date")
         return df
 
-    def to_csv(self):
-        output_path = f"automated_sheets/{self.location}.csv"
+    def export(self):
         df = self.read().pipe(self.pipeline).pipe(make_monotonic)
-        df.to_csv(output_path, index=False)
+        self.export_datafile(df)
 
 
 def main():
-    Austria().to_csv()
+    Austria().export()
 
 
 if __name__ == "__main__":
