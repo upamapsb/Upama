@@ -1,8 +1,9 @@
-import os
 import pandas as pd
 
+from cowidev.testing import CountryTestBase
 
-class Brazil:
+
+class Brazil(CountryTestBase):
     location: str = "Brazil"
     units: str = "tests performed"
     source_label: str = "Coronavírus Brasil"
@@ -44,7 +45,7 @@ class Brazil:
 
     def export(self):
         df = self.read().pipe(self.pipeline)
-        df.to_csv(os.path.join("automated_sheets", f"{self.location}.csv"), index=False)
+        self.export_datafile(df)
 
 
 def main():
