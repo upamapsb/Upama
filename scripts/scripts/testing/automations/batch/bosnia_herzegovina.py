@@ -1,19 +1,17 @@
-import requests
-from datetime import datetime
-
 import pandas as pd
-from bs4 import BeautifulSoup
 
-from utils import make_monotonic
+from cowidev.utils.web import get_soup
+from cowidev.utils.clean import clean_date
+from cowidev.testing.utils import make_monotonic
+from cowidev.testing import CountryTestBase
 
 
-class BosniaHerzegovina:
-    def __init__(self):
-        self.location = "Bosnia and Herzegovina"
-        self.source_url = [
-            "http://mcp.gov.ba/publication/read/epidemioloska-slika-covid-19?pageId=3",
-            "http://mcp.gov.ba/publication/read/epidemioloska-slika-novo?pageId=97",
-        ]
+class BosniaHerzegovina(CountryTestBase):
+    location: str = "Bosnia and Herzegovina"
+    source_url: str = [
+        "http://mcp.gov.ba/publication/read/epidemioloska-slika-covid-19?pageId=3",
+        "http://mcp.gov.ba/publication/read/epidemioloska-slika-novo?pageId=97",
+    ]
 
     def read(self):
         dfs = [self._load_data(url) for url in self.source_url]
@@ -27,7 +25,7 @@ class BosniaHerzegovina:
         return df
 
     def _get_records(self, url: str) -> dict:
-        soup = BeautifulSoup(requests.get(url).content, "html.parser")
+        soup = get_soup(url)
         elem = soup.find(id="newsContent")
         elems = elem.find_all("table")
         records = [
@@ -45,7 +43,8 @@ class BosniaHerzegovina:
         return value
 
     def _parse_date(self, elem):
-        return datetime.strptime(elem.find("p").text.strip(), "%d.%m.%Y.").strftime("%Y-%m-%d")
+        dt_raw = elem.find("p").text.strip()
+        return clean_date(dt_raw, "%d.%m.%Y.")
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.assign(
@@ -71,14 +70,13 @@ class BosniaHerzegovina:
         df = df[df.Date != "2021-08-23"]
         return df
 
-    def to_csv(self):
-        output_path = f"automated_sheets/{self.location}.csv"
+    def export(self):
         df = self.read().pipe(self.pipeline).pipe(make_monotonic)
-        df.to_csv(output_path, index=False)
+        self.export_datafile(df)
 
 
 def main():
-    BosniaHerzegovina().to_csv()
+    BosniaHerzegovina().export()
 
 
 if __name__ == "__main__":
