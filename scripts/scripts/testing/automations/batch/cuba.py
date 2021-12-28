@@ -1,17 +1,18 @@
-from datetime import datetime
-
 import requests
 
 import pandas as pd
 
+from cowidev.testing import CountryTestBase
+from cowidev.utils import clean_date
+from cowidev.utils.web import request_json
 
-class Cuba:
-    def __init__(self):
-        self.source_url = (
-            "https://raw.githubusercontent.com/covid19cubadata/covid19cubadata.github.io/master/data/covid19-cuba.json"
-        )
-        self.source_url_ref = "https://covid19cubadata.github.io/#cuba"
-        self.location = "Cuba"
+
+class Cuba(CountryTestBase):
+    source_url: str = (
+        "https://raw.githubusercontent.com/covid19cubadata/covid19cubadata.github.io/master/data/covid19-cuba.json"
+    )
+    source_url_ref: str = "https://covid19cubadata.github.io/#cuba"
+    location: str = "Cuba"
 
     def read(self):
         data = requests.get(self.source_url).json()
@@ -26,7 +27,7 @@ class Cuba:
             if "tests_total" in elem:
                 records.append(
                     {
-                        "Date": datetime.strptime(elem["fecha"], "%Y/%m/%d").strftime("%Y-%m-%d"),
+                        "Date": clean_date(elem["fecha"], "%Y/%m/%d"),
                         "Cumulative total": elem["tests_total"],
                     }
                 )
@@ -44,14 +45,13 @@ class Cuba:
         )
         return df
 
-    def to_csv(self):
-        output_path = f"automated_sheets/{self.location}.csv"
+    def export(self):
         df = self.read().pipe(self.pipeline)
-        df.to_csv(output_path, index=False)
+        self.export_datafile(df)
 
 
 def main():
-    Cuba().to_csv()
+    Cuba().export()
 
 
 if __name__ == "__main__":
