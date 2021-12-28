@@ -12,7 +12,7 @@ class Malta:
     )
     source_url_ref: str = "https://github.com/COVID19-Malta/COVID19-Cases"
     columns_rename: dict = {
-        "Date": "date",
+        "Date of Vaccination": "date",
         "Total Vaccination Doses": "total_vaccinations",
         "Fully vaccinated (2 of 2 or 1 of 1)": "people_fully_vaccinated",
         "Received one dose (1 of 2 or 1 of 1)": "people_vaccinated",
