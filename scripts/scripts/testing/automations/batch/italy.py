@@ -1,10 +1,12 @@
-import os
 import pandas as pd
 from cowidev.utils.clean import clean_date_series
 from cowidev.utils import paths
 
 
-class Italy:
+from cowidev.testing import CountryTestBase
+
+
+class Italy(CountryTestBase):
     location: str = "Italy"
     units: str = "tests performed"
     source_label: str = "Presidency of the Council of Ministers"
@@ -41,8 +43,7 @@ class Italy:
 
     def export(self):
         df = self.read().pipe(self.pipeline)
-        output_path = os.path.join(paths.SCRIPTS.OLD, "testing", "automated_sheets", f"{self.location}.csv")
-        df.to_csv(output_path, index=False)
+        self.export_datafile(df)
 
 
 def main():

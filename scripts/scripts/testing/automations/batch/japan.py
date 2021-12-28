@@ -1,9 +1,9 @@
-import os
-
 import pandas as pd
 
+from cowidev.testing import CountryTestBase
 
-class Japan:
+
+class Japan(CountryTestBase):
     location: str = "Japan"
     units: str = "people tested"
     source_label: str = "Ministry of Health, Labour and Welfare"
@@ -41,7 +41,7 @@ class Japan:
 
     def export(self):
         df = self.read().pipe(self.pipeline)
-        df.to_csv(os.path.join("automated_sheets", f"{self.location}.csv"), index=False)
+        self.export_datafile(df)
 
 
 def main():

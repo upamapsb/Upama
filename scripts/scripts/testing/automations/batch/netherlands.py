@@ -1,10 +1,9 @@
-import os
 import pandas as pd
 from cowidev.utils.web import request_json
-from cowidev.utils.utils import get_project_dir
+from cowidev.testing import CountryTestBase
 
 
-class Netherlands:
+class Netherlands(CountryTestBase):
     location: str = "Netherlands"
     units: str = "tests performed"
     source_label: str = "Dutch National Institute for Public Health and the Environment"
@@ -15,7 +14,9 @@ class Netherlands:
 
     def read(self) -> pd.DataFrame:
         data = request_json(self.source_url)
-        df = pd.DataFrame.from_records(data, columns=["Date_of_statistics", "Tested_with_result", "Security_region_name"])
+        df = pd.DataFrame.from_records(
+            data, columns=["Date_of_statistics", "Tested_with_result", "Security_region_name"]
+        )
         df = df.groupby("Date_of_statistics").sum().reset_index()
         return df
 
@@ -37,11 +38,8 @@ class Netherlands:
         return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metadata)
 
     def export(self):
-        path = os.path.join(
-            get_project_dir(), "scripts", "scripts", "testing", "automated_sheets", f"{self.location}.csv"
-        )
         df = self.read().pipe(self.pipeline)
-        df.to_csv(path, index=False)
+        self.export_datafile(df)
 
 
 def main():

@@ -4,12 +4,12 @@ Dashboard: https://www.covid19.et/covid-19/Home/DataPresentationByTable
 
 """
 
-import json
-import requests
 import datetime
 import pandas as pd
-from bs4 import BeautifulSoup
-from selenium import webdriver
+
+
+from cowidev.testing import CountryTestBase
+
 
 COUNTRY = "Ethiopia"
 UNITS = "tests performed"
@@ -54,35 +54,45 @@ sample_official_data = [
         "2020-06-13",
         {
             SERIES_TYPE: 176504,
-            "source": "https://www.ephi.gov.et/images/novel_coronavirus/confirmed-case-Press-release_June-13-Eng_V2.pdf",
+            "source": (
+                "https://www.ephi.gov.et/images/novel_coronavirus/confirmed-case-Press-release_June-13-Eng_V2.pdf"
+            ),
         },
     ),
     (
         "2020-05-30",
         {
             SERIES_TYPE: 106615,
-            "source": "https://www.ephi.gov.et/images/novel_coronavirus/confirmed-case-Press-release_May-30--Eng_V1.pdf",
+            "source": (
+                "https://www.ephi.gov.et/images/novel_coronavirus/confirmed-case-Press-release_May-30--Eng_V1.pdf"
+            ),
         },
     ),
     (
         "2020-05-11",
         {
             SERIES_TYPE: 36624,
-            "source": "https://www.ephi.gov.et/images/novel_coronavirus/confirmed-case-Press-release_May-11_-ENG-V1-1.pdf",
+            "source": (
+                "https://www.ephi.gov.et/images/novel_coronavirus/confirmed-case-Press-release_May-11_-ENG-V1-1.pdf"
+            ),
         },
     ),
     (
         "2020-04-28",
         {
             SERIES_TYPE: 15668,
-            "source": "https://www.ephi.gov.et/images/novel_coronavirus/confirmed-case-Press-release_April-28_-ENG-V1-1.pdf",
+            "source": (
+                "https://www.ephi.gov.et/images/novel_coronavirus/confirmed-case-Press-release_April-28_-ENG-V1-1.pdf"
+            ),
         },
     ),
     (
         "2020-04-25",
         {
             SERIES_TYPE: 12688,
-            "source": "https://www.ephi.gov.et/images/novel_coronavirus/confirmed-case-Press-release_April-25_-ENG-V5-1.pdf",
+            "source": (
+                "https://www.ephi.gov.et/images/novel_coronavirus/confirmed-case-Press-release_April-25_-ENG-V5-1.pdf"
+            ),
         },
     ),
     (
@@ -102,37 +112,40 @@ sample_official_data = [
 ]
 
 
-def main() -> None:
-    i = 0
-    df = None
-    while df is None and i < MAX_TRIES:
-        # print(f'retrieving COVID-19 testing data (attempt {1+i} of {MAX_TRIES})...')
-        df = get_data()
-        i += 1
-    assert df is not None, (
-        f"Failed to retrieve testing data after {i} tries. "
-        "If this problem persists, check that the URL "
-        f"is working ({DATA_URL})."
-    )
-    df.loc[:, "Source URL"] = df["Source URL"].apply(lambda x: SOURCE_URL if pd.isnull(x) else x)
-    df.loc[:, "Country"] = COUNTRY
-    df.loc[:, "Units"] = UNITS
-    df.loc[:, "Source label"] = SOURCE_LABEL
-    df.loc[:, "Notes"] = ""
-    sanity_checks(df)
-    df = df[
-        [
-            "Country",
-            "Units",
-            "Date",
-            SERIES_TYPE,
-            "Source URL",
-            "Source label",
-            "Notes",
+class Ethiopia(CountryTestBase):
+    location: str = "Ethiopia"
+
+    def export(self) -> None:
+        i = 0
+        df = None
+        while df is None and i < MAX_TRIES:
+            # print(f'retrieving COVID-19 testing data (attempt {1+i} of {MAX_TRIES})...')
+            df = get_data()
+            i += 1
+        assert df is not None, (
+            f"Failed to retrieve testing data after {i} tries. "
+            "If this problem persists, check that the URL "
+            f"is working ({DATA_URL})."
+        )
+        df.loc[:, "Source URL"] = df["Source URL"].apply(lambda x: SOURCE_URL if pd.isnull(x) else x)
+        df.loc[:, "Country"] = COUNTRY
+        df.loc[:, "Units"] = UNITS
+        df.loc[:, "Source label"] = SOURCE_LABEL
+        df.loc[:, "Notes"] = ""
+        sanity_checks(df)
+        df = df[
+            [
+                "Country",
+                "Units",
+                "Date",
+                SERIES_TYPE,
+                "Source URL",
+                "Source label",
+                "Notes",
+            ]
         ]
-    ]
-    df.to_csv("automated_sheets/Ethiopia.csv", index=False)
-    return None
+        self.export_datafile(df)
+        return None
 
 
 def get_data() -> pd.DataFrame:
@@ -201,6 +214,10 @@ def sanity_checks(df: pd.DataFrame) -> None:
         val = df_temp.loc[df_temp["Date"] == dt, SERIES_TYPE].squeeze().sum()
         assert val == d[SERIES_TYPE], f"scraped value ({val:,d}) != official value ({d[SERIES_TYPE]:,d}) on {dt}"
     return None
+
+
+def main():
+    Ethiopia().export()
 
 
 if __name__ == "__main__":

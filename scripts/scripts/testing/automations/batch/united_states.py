@@ -1,7 +1,9 @@
 import pandas as pd
 
+from cowidev.testing import CountryTestBase
 
-class UnitedStates:
+
+class UnitedStates(CountryTestBase):
     location: str = "United States"
     source_url: str = "https://healthdata.gov/api/views/j8mb-icvb/rows.csv"
     source_url_ref: str = "https://healthdata.gov/dataset/COVID-19-Diagnostic-Laboratory-Testing-PCR-Testing/j8mb-icvb"
@@ -12,6 +14,7 @@ class UnitedStates:
         return df
 
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
+        print(5)
         return df.assign(
             **{
                 "Country": self.location,
@@ -27,9 +30,8 @@ class UnitedStates:
         return df
 
     def export(self):
-        output_path = f"automated_sheets/{self.location}.csv"
         df = self.read().pipe(self.pipeline)
-        df.to_csv(output_path, index=False)
+        self.export_datafile(df)
 
 
 def pipe_rename_columns(df: pd.DataFrame) -> pd.DataFrame:

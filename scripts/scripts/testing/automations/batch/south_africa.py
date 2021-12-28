@@ -1,7 +1,9 @@
 import pandas as pd
 
+from cowidev.testing import CountryTestBase
 
-class SouthAfrica:
+
+class SouthAfrica(CountryTestBase):
     location: str = "South Africa"
     source_url: str = "https://raw.githubusercontent.com/dsfsi/covid19za/master/data/covid19za_timeline_testing.csv"
     units: str = "people tested"
@@ -48,9 +50,8 @@ class SouthAfrica:
         return df
 
     def export(self):
-        output_path = f"automated_sheets/{self.location}.csv"
         df = self.read().pipe(self.pipeline)
-        df.to_csv(output_path, index=False)
+        self.export_datafile(df)
 
 
 def pipe_rename_columns(df: pd.DataFrame):

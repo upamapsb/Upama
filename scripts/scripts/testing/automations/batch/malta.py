@@ -1,11 +1,12 @@
-import os
 import pandas as pd
 
 from cowidev.utils.clean import clean_date_series
 from cowidev.utils import paths
 
+from cowidev.testing import CountryTestBase
 
-class Malta:
+
+class Malta(CountryTestBase):
     location: str = "Malta"
     units: str = "tests performed"
     source_label: str = "COVID-19 Public Health Response Team (Ministry for Health)"
@@ -44,8 +45,7 @@ class Malta:
 
     def export(self):
         df = self.read().pipe(self.pipeline)
-        output_path = os.path.join(paths.SCRIPTS.OLD, "testing", "automated_sheets", f"{self.location}.csv")
-        df.to_csv(output_path, index=False)
+        self.export_datafile(df)
 
 
 def main():

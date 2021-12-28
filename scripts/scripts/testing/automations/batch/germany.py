@@ -4,6 +4,8 @@ import tempfile
 import pandas as pd
 import requests
 
+from cowidev.testing import CountryTestBase
+
 
 def read_xlsx_from_url(url, **kwargs):
     headers = {"User-Agent": "Mozilla/5.0 (X11; Linux i686)"}
@@ -16,10 +18,9 @@ def read_xlsx_from_url(url, **kwargs):
     return df
 
 
-class Germany:
-    def __init__(self):
-        self.location = "Germany"
-        self.source_url = "https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Testzahlen-gesamt.xlsx?__blob=publicationFile"
+class Germany(CountryTestBase):
+    location: str = "Germany"
+    source_url: str = "https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Testzahlen-gesamt.xlsx?__blob=publicationFile"
 
     def read(self):
         df = read_xlsx_from_url(self.source_url, sheet_name="1_Testzahlerfassung")
@@ -57,14 +58,13 @@ class Germany:
         ]
         return df
 
-    def to_csv(self):
-        output_path = f"automated_sheets/{self.location}.csv"
+    def export(self):
         df = self.read().pipe(self.pipeline)
-        df.to_csv(output_path, index=False)
+        self.export_datafile(df)
 
 
 def main():
-    Germany().to_csv()
+    Germany().export()
 
 
 if __name__ == "__main__":

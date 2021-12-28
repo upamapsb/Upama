@@ -1,12 +1,12 @@
-import os
-
 import pandas as pd
 
 
-class Israel:
-    def __init__(self):
-        self.location = "Israel"
-        self.source_url = "https://datadashboardapi.health.gov.il/api/queries/testResultsPerDate"
+from cowidev.testing import CountryTestBase
+
+
+class Israel(CountryTestBase):
+    location: str = "Israel"
+    source_url: str = "https://datadashboardapi.health.gov.il/api/queries/testResultsPerDate"
 
     def read(self):
         df = pd.read_json(self.source_url)[["date", "amount"]]
@@ -32,9 +32,8 @@ class Israel:
         return df
 
     def to_csv(self):
-        output_path = os.path.join(f"automated_sheets", f"{self.location}.csv")
         df = self.read().pipe(self.pipeline)
-        df.to_csv(output_path, index=False)
+        self.export_datafile(df)
 
 
 def main():

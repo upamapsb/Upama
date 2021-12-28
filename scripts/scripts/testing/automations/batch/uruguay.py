@@ -1,15 +1,11 @@
-import json
-import os
-from urllib.request import Request, urlopen
-
 import pandas as pd
 
-from cowidev.utils import paths
 from cowidev.utils.clean import clean_date_series
 from cowidev.utils.web import request_json
+from cowidev.testing import CountryTestBase
 
 
-class Uruguay:
+class Uruguay(CountryTestBase):
     location: str = "Uruguay"
     units: str = "people tested"
     source_label: str = "Ministry of Public Health"
@@ -49,7 +45,7 @@ class Uruguay:
 
     def export(self):
         df = self.read().pipe(self.pipeline)
-        df.to_csv(os.path.join(paths.SCRIPTS.OLD, "testing", "automated_sheets", f"{self.location}.csv"), index=False)
+        self.export_datafile(df)
 
 
 def main():

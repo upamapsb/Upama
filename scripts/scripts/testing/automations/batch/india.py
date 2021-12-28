@@ -1,11 +1,10 @@
-import os
 import pandas as pd
 from cowidev.utils.web import request_json
-from cowidev.utils.utils import get_project_dir
 from cowidev.utils.clean import clean_date_series
+from cowidev.testing import CountryTestBase
 
 
-class India:
+class India(CountryTestBase):
     location: str = "India"
     units: str = "samples tested"
     source_label: str = "Indian Council of Medical Research"
@@ -46,11 +45,8 @@ class India:
         return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metadata).pipe(self.pipe_filter_rows)
 
     def export(self):
-        path = os.path.join(
-            get_project_dir(), "scripts", "scripts", "testing", "automated_sheets", f"{self.location}.csv"
-        )
         df = self.read().pipe(self.pipeline)
-        df.to_csv(path, index=False)
+        self.export_datafile(df)
 
 
 def main():

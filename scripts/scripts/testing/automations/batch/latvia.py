@@ -1,8 +1,9 @@
-import os
 import pandas as pd
 
+from cowidev.testing import CountryTestBase
 
-class Latvia:
+
+class Latvia(CountryTestBase):
     location: str = "Latvia"
     units: str = "tests performed"
     source_label: str = "Center for Disease Prevention and Control"
@@ -40,9 +41,8 @@ class Latvia:
         return df.pipe(self.pipe_rename_columns).pipe(self.pipe_date).pipe(self.pipe_metadata)
 
     def export(self):
-        output_path = f"automated_sheets/{self.location}.csv"
         df = self.read().pipe(self.pipeline)
-        df.to_csv(output_path, index=False)
+        self.export_datafile(df)
 
 
 def main():

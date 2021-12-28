@@ -1,5 +1,3 @@
-import os
-
 import pandas as pd
 
 from cowidev.utils import paths
@@ -54,8 +52,7 @@ class Argentina(CountryTestBase):
 
     def export(self):
         df = self.read().pipe(self.pipeline)
-        output_path = os.path.join(paths.SCRIPTS.OLD, "testing", "automated_sheets", f"{self.location}.csv")
-        df.to_csv(output_path, index=False)
+        self.export_datafile(df)
 
 
 def main():
