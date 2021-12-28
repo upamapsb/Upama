@@ -3,9 +3,10 @@ import os
 import pandas as pd
 
 from cowidev.utils import paths
+from cowidev.testing import CountryTestBase
 
 
-class Argentina:
+class Argentina(CountryTestBase):
     location: str = "Argentina"
     units: str = "tests performed"
     source_label: str = "Government of Argentina"
