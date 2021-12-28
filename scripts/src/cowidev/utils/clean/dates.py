@@ -66,6 +66,8 @@ def clean_date(
     # Unicode
     if unicode_norm:
         date_or_text = clean_string(date_or_text)
+    # Fix possible issues
+    date_or_text = date_or_text.replace("O", "0")
     # Thread-safe extract date
     with _setlocale(loc):
         return (datetime.strptime(date_or_text, fmt) - timedelta(days=minus_days)).strftime(output_fmt)
