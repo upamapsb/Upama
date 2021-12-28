@@ -20,14 +20,14 @@ The complete list of country-by-country sources is available in [`locations.csv`
 #### Indicators
 | Indicator name | Description |
 |----------------|-------------|
-| `Daily hospital occupancy`                      | Beds occupied due to COVID-19 cases. |
-| `Daily hospital occupancy per million`          | `Daily hospital occupancy` per million people. |
-| `Daily ICU occupancy`                           | _ICU_ Beds occupied due to COVID-19 cases. |
-| `Daily ICU occupancy per million`               | `Daily ICU occupancy` per million people. |
-| `Weekly new hospital admissions`                 | Weekly new hospital admissions for COVID-19 cases. |
-| `Weekly new hospital admissions per million`     | `Weekly new hospital admissions` per million people. |
-| `Weekly new ICU admissions`                      | Weekly new _ICU_ hospital admissions for COVID-19 cases. |
-| `Weekly new ICU admissions per million`          | `Weekly new ICU admissions` per million people. |
+| `Daily hospital occupancy`                      | Number of COVID-19 patients in hospital on a given day |
+| `Daily hospital occupancy per million`          | `Daily hospital occupancy` per million people |
+| `Daily ICU occupancy`                           | Number of COVID-19 patients in ICU on a given day |
+| `Daily ICU occupancy per million`               | `Daily ICU occupancy` per million people |
+| `Weekly new hospital admissions`                 | Number of COVID-19 patients newly admitted to hospitals in a given week |
+| `Weekly new hospital admissions per million`     | `Weekly new hospital admissions` per million people |
+| `Weekly new ICU admissions`                      | Number of COVID-19 patients newly admitted to ICU in a given week |
+| `Weekly new ICU admissions per million`          | `Weekly new ICU admissions` per million people |
 
 
 ## License
