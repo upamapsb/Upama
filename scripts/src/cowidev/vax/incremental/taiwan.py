@@ -8,11 +8,6 @@ from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
 
 
-# New vaccine "Medigen" soon:
-# https://www.cdc.gov.tw/En/Bulletin/Detail/5NuaA-4jqd9nSh03MdwiWw?typeid=158
-# https://www.cdc.gov.tw/En/Bulletin/Detail/SEd8rAKMzywG_b92N6z8nA?typeid=158
-
-
 class Taiwan:
     def __init__(self):
         self.source_url = "https://www.cdc.gov.tw"
@@ -41,6 +36,7 @@ class Taiwan:
                 break
         url_pdf = f"{self.source_url}{a['href']}"
         for i in range(10):
+            print(url_pdf)
             soup = get_soup(url_pdf)
             a = soup.find(class_="viewer-button")
             if a is not None:
@@ -91,35 +87,18 @@ class Taiwan:
         return data
 
     def _parse_stats(self, df: pd.DataFrame) -> int:
-        # # Old
-        # if (
-        #     (df.shape[1] != 3 and df.shape[1] != 4)
-        #     or df.iloc[0, 0] != "廠牌"
-        #     or df.iloc[0, 1] != "劑次"
-        #     or df.iloc[-1, 0] != "總計"
-        #     or df.iloc[-2, 0] != "總計"
-        # ):
-        #     raise ValueError(f"Table 1: format has changed!")
-        # num1 = df[df[1] == "第 1劑"].tail(1).values[0][-1]
-        # num2 = df[df[1] == "第 2劑"].tail(1).values[0][-1]
 
-        # if df.shape[1] == 4:
-        #     num_dose1 = clean_count(num1)
-        #     num_dose2 = clean_count(num2)
-        # if df.shape[1] == 3:
-        #     num_dose1 = clean_count(num1.split(" ")[-1])
-        #     num_dose2 = clean_count(num2.split(" ")[-1])
-
-        if df.shape != (15, 2):
+        if df.shape != (20, 2):
             raise ValueError(f"Table 1: format has changed!")
 
-        num_dose1 = clean_count(df.loc["總計", "第 1劑"]["total"])
-        num_dose2 = clean_count(df.loc["總計", "第 2劑"]["total"])
-        num_booster = clean_count(df.loc["總計", "追加劑"]["total"])
+        num_dose1 = clean_count(df.loc["總計", "第 1 劑"]["total"])
+        num_dose2 = clean_count(df.loc["總計", "第 2 劑"]["total"])
+        num_booster1 = clean_count(df.loc["總計", "基礎加強劑"]["total"])
+        num_booster2 = clean_count(df.loc[pd.NA, "追加劑"]["total"])
         return {
-            "total_vaccinations": (num_dose1 + num_dose2),
+            "total_vaccinations": num_dose1 + num_dose2,
             "people_vaccinated": num_dose1,
-            "total_boosters": num_booster,
+            "total_boosters": num_booster1 + num_booster2,
         }
 
     def _parse_vaccines(self, df: pd.DataFrame) -> str:
