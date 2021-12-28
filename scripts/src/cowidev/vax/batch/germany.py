@@ -3,6 +3,7 @@ import re
 import pandas as pd
 
 from cowidev.vax.utils.files import export_metadata_manufacturer
+from cowidev.vax.utils.utils import build_vaccine_timeline
 from cowidev.utils import paths
 
 
@@ -72,23 +73,15 @@ class Germany:
         return df.assign(source_url=self.source_url_ref)
 
     def _vaccine_start_dates(self, df: pd.DataFrame):
-        date2vax = sorted(
-            ((df.loc[df[vaccine] > 0, "date"].min(), vaccine) for vaccine in self.vaccine_mapping.values()),
-            key=lambda x: x[0],
-            reverse=True,
+        vax_timeline = df[["date"] + [*self.vaccine_mapping.values()]].melt(id_vars="date")
+        vax_timeline = (
+            vax_timeline[vax_timeline.value > 0].drop(columns="value").groupby("variable").min().to_dict()["date"]
         )
-        return [(date2vax[i][0], ", ".join(sorted(v[1] for v in date2vax[i:]))) for i in range(len(date2vax))]
+        return vax_timeline
 
     def enrich_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
-        vax_date_mapping = self._vaccine_start_dates(df)
-
-        def _enrich_vaccine(date: str) -> str:
-            for dt, vaccines in vax_date_mapping:
-                if date >= dt:
-                    return vaccines
-            raise ValueError(f"Invalid date {date} in DataFrame!")
-
-        return df.assign(vaccine=df.date.apply(_enrich_vaccine))
+        vax_timeline = self._vaccine_start_dates(df)
+        return build_vaccine_timeline(df, vax_timeline)
 
     def select_output_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         return df[
@@ -104,8 +97,22 @@ class Germany:
             ]
         ]
 
+    def pipe_sanity_checks(self, df: pd.DataFrame) -> pd.DataFrame:
+        # There were some issues with the file on Dec 28, 2021 (all Pfizer doses have been removed)
+        # I've introduced some basic value checks here to make sure very low values can't go through
+        assert df.total_vaccinations.max() > 140000000
+        assert df.people_vaccinated.max() > 60000000
+        assert df.people_fully_vaccinated.max() > 50000000
+        assert df.people_vaccinated.max() > 25000000
+        return df
+
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self.enrich_source).pipe(self.enrich_vaccine).pipe(self.select_output_columns)
+        return (
+            df.pipe(self.enrich_source)
+            .pipe(self.enrich_vaccine)
+            .pipe(self.select_output_columns)
+            .pipe(self.pipe_sanity_checks)
+        )
 
     def melt_manufacturers(self, df: pd.DataFrame) -> pd.DataFrame:
         id_vars = ["date", "location"]
