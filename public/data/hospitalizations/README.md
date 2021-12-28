@@ -9,15 +9,16 @@ The complete list of country-by-country sources is available in [`locations.csv`
 
 ### Fields
 
-| Column field        | Description                                                                  |
-|---------------------|------------------------------------------------------------------------------|
-| `entity`            | Name of the country (or region within a country).                            |
-| `date`                | Date of the observation.                                                     |
-| `iso_code`             | ISO corresponding to `entity` value. |
-| `indicator`       | Indicator name. See below list of indicators and descriptions. |
-| `value`      | Value of the `indicator`. |
+| Column field | Description                                                                  |
+|--------------|------------------------------------------------------------------------------|
+| `entity`     | Name of the country (or region within a country)                            |
+| `iso_code`   | ISO 3166-1 alpha-3 – three-letter country code |
+| `date`       | Date of the observation                                                     |
+| `indicator`  | Indicator name. See below our list of indicators and their definition |
+| `value`      | Value of the `indicator` |
 
 #### Indicators
+
 | Indicator name | Description |
 |----------------|-------------|
 | `Daily hospital occupancy`                      | Number of COVID-19 patients in hospital on a given day |
