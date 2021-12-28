@@ -1,9 +1,9 @@
-import os
-
 import pandas as pd
 
+from cowidev.testing import CountryTestBase
 
-class Canada:
+
+class Canada(CountryTestBase):
     def __init__(self):
         self.source_url = "https://health-infobase.canada.ca/src/data/covidLive/covid19-download.csv"
         self.location = "Canada"
@@ -60,11 +60,11 @@ class Canada:
     def to_csv(self):
         df = self.read().pipe(self.pipeline_base)
         # People
-        output_path = os.path.join("automated_sheets", f"{self.location} - people tested.csv")
-        df.pipe(self.pipeline_metric, "people tested", "numtested").to_csv(output_path, index=False)
+        df_ = df.pipe(self.pipeline_metric, "people tested", "numtested")
+        self.export_datafile(df_, filename=f"{self.location} - people tested")
         # Tests
-        output_path = os.path.join("automated_sheets", f"{self.location} - tests performed.csv")
-        df.pipe(self.pipeline_metric, "tests performed", "numtests").to_csv(output_path, index=False)
+        df_ = df.pipe(self.pipeline_metric, "tests performed", "numtests")
+        self.export_datafile(df_, filename=f"{self.location} - tests performed")
 
 
 def main():
