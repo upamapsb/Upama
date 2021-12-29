@@ -12,14 +12,6 @@ class ElSalvador(CountryTestBase):
     units = "tests performed"
     source_label = "Government of El Salvador"
 
-    @property
-    def source_url(self):
-        return f"https://diario.innovacion.gob.sv/?fechaMostrar={date.strftime('%d-%m-%Y')}"
-
-    @property
-    def source_url_ref(self):
-        return self.source_url
-
     def read(self):
         df = self.load_datafile()
         date = clean_date(df.Date.max(), "%Y-%m-%d", as_datetime=True)
@@ -27,7 +19,8 @@ class ElSalvador(CountryTestBase):
         records = []
         while date < end_date:
             print(date)
-            soup = get_soup(self.source_url)
+            source_url = f"https://diario.innovacion.gob.sv/?fechaMostrar={date.strftime('%d-%m-%Y')}"
+            soup = get_soup(source_url)
             daily = clean_count(
                 soup.find("div", class_="col-4 col-sm-2 col-lg-2 align-self-center offset-lg-0")
                 .find("label")
@@ -37,6 +30,7 @@ class ElSalvador(CountryTestBase):
                 {
                     "Date": [clean_date(date, "%Y-%m-%d")],
                     "Daily change in cumulative total": daily,
+                    "Source URL": source_url,
                 }
             )
             # increment
