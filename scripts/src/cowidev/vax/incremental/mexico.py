@@ -5,7 +5,8 @@ import pandas as pd
 import requests
 import PyPDF2
 
-from cowidev.utils.clean import clean_date, clean_count
+from cowidev.utils.clean import clean_count
+from cowidev.utils.clean.dates import localdate
 from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import enrich_data, increment
 
@@ -44,11 +45,7 @@ class Mexico:
                 total_vaccinations = clean_count(
                     re.search(r"([\d,]{10,}) ?Total de dosis aplicadas reportadas", page_text).group(1)
                 )
-                date = clean_date(
-                    re.search(r"Informaci.n al (\d+ \w+ 202\d)", page_text).group(1),
-                    fmt="%d %b %Y",
-                    lang="es",
-                )
+                date = localdate("America/Mexico_City")
 
             elif "Personas vacunadas reportadas" in page_text:
                 people_vaccinated = clean_count(re.search(r"Personas vacunadas \*\s?([\d,]{10,})", page_text).group(1))
@@ -60,7 +57,6 @@ class Mexico:
         assert people_fully_vaccinated >= 41115211
         assert people_vaccinated <= total_vaccinations
         assert people_fully_vaccinated >= 0.5 * people_vaccinated
-        assert date >= "2021-09-16"
 
         return pd.Series(
             {
