@@ -19,13 +19,18 @@ def main() -> pd.DataFrame:
     url = "https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/" + url
 
     df = pd.read_csv(
-        url, usecols=["Fecha", "Unidad", "OCUPADAS_COVID19", "INGRESOS_COVID19"], encoding="Latin-1", sep=";"
+        url,
+        usecols=["Fecha", "Unidad", "OCUPADAS_COVID19", "INGRESOS_COVID19", "Provincia", "CCAA"],
+        encoding="Latin-1",
+        sep=";",
     )
     df["Fecha"] = clean_date_series(df.Fecha, "%d/%m/%Y")
+    df = df.drop_duplicates(subset=["Fecha", "Unidad", "Provincia", "CCAA"], keep="first")
     df.loc[df.Unidad.str.contains("U. Críticas"), "Unidad"] = "ICU"
 
     df = (
-        df.groupby(["Fecha", "Unidad"], as_index=False)
+        df.drop(columns=["Provincia", "CCAA"])
+        .groupby(["Fecha", "Unidad"], as_index=False)
         .sum()
         .sort_values("Unidad")
         .pivot(index="Fecha", columns="Unidad")
