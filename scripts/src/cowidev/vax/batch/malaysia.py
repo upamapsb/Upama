@@ -9,11 +9,16 @@ class Malaysia:
         self.location = "Malaysia"
         self.source_url = "https://github.com/MoH-Malaysia/covid19-public/raw/main/vaccination/vax_malaysia.csv"
         self.source_url_ref = "https://github.com/MoH-Malaysia/covid19-public"
+
+        # Dec 29, 2021 / Given the very low proportion of CanSino vaccines used in the country
+        # we infer than "pending" doses are very likely to be 2-dose protocols, and therefore use
+        # them as such in the calculations.
         self._vax_2d = [
             "pfizer",
             "astra",
             "sinovac",
             "sinopharm",
+            "pending",
         ]
         self._vax_1d = [
             "cansino",
