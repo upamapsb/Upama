@@ -17,9 +17,7 @@ class Hungary:
         self.regex = {
             "title": r"\d+ [millió]+ \d+ [ezer]+ a beoltott, [\d\s]+ az új fertőzött",
             "metrics": (
-                r"A beoltottak száma ([\d\s]+)(?: fő)?, közülük +([\d\s]+) fő már a második oltását is megkapta,"
-                r" ([\d\s(millió)(ezren)]+)"
-                r" (fő )?pedig már a harmadik oltást is felvették"
+                r"A beoltottak száma ([\d\s]+) fő, közülük ([\d\s]+) fő már a második, ([\d\s]+) fő pedig már a megerősítő harmadik oltását is felvette."
             ),
         }
 
