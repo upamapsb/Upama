@@ -36,10 +36,10 @@ class CountryTestBase:
             raise NotImplementedError("Please define class attribute `location`")
         # if self.units == None:
         #     raise NotImplementedError("Please define class attribute `units`")
-        if self.source_url_ref == None:
-            raise NotImplementedError("Please define class attribute `source_url_ref`")
-        if self.source_label == None:
-            raise NotImplementedError("Please define class attribute `source_label`")
+        # if self.source_url_ref == None:
+        #     raise NotImplementedError("Please define class attribute `source_url_ref`")
+        # if self.source_label == None:
+        #     raise NotImplementedError("Please define class attribute `source_label`")
 
     def get_output_path(self, filename=None):
         if filename is None:
@@ -66,9 +66,9 @@ class CountryTestBase:
         return pd.read_csv(self.get_output_path(filename))
 
     def _check_attributes(self, mapping):
-        for field in mapping.values():
+        for field_raw, field in mapping.items():
             if field is None:
-                raise ValueError(f"Please check class attribute {field}, it can't be None!")
+                raise ValueError(f"Please check class attribute {field_raw}, it can't be None!")
 
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
         mapping = {
