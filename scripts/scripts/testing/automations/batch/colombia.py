@@ -3,15 +3,17 @@ import requests
 import pandas as pd
 from datetime import date
 import numpy as np
+import os
 
 
 from cowidev.testing import CountryTestBase
+from cowidev.utils import paths
 
 
 class Colombia(CountryTestBase):
     location: str = "Colombia"
 
-    def main(self):
+    def export(self):
 
         ##Antigen
         url = "https://atlas.jifo.co/api/connectors/425b93dc-c055-477c-b81a-5d4d9a1275f7"
@@ -79,7 +81,8 @@ class Colombia(CountryTestBase):
         df["Notes"] = np.nan
         df.reset_index(drop=True, inplace=True)
 
-        df.to_csv("automated_sheets/Colombia.csv", index=False)
+        output_path = os.path.join(paths.SCRIPTS.OLD, "testing", "automated_sheets", f"{self.location}.csv")
+        df.to_csv(output_path, index=False)
 
 
 def main():
