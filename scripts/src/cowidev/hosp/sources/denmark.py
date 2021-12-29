@@ -42,7 +42,7 @@ def read() -> pd.DataFrame:
 def main() -> pd.DataFrame:
     flow, stock = read()
 
-    flow = flow.rename(columns={"Dato": "date"}).groupby("date", as_index=False).sum().sort_values("date")
+    flow = flow.rename(columns={"Dato": "date"}).groupby("date", as_index=False).sum().sort_values("date").head(-1)
     flow["Indlæggelser"] = flow.Indlæggelser.rolling(7).sum()
 
     stock = stock.rename(columns={"Dato": "date"}).groupby("date", as_index=False).sum()
