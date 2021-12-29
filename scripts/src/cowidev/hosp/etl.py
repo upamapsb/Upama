@@ -81,7 +81,9 @@ class HospETL:
         logger.info("HOSP - Loading checkpoint data...")
         # Load & build data
         data_paths = [
-            os.path.join(paths.SCRIPTS.OUTPUT_HOSP_MAIN, p) for p in os.listdir(paths.SCRIPTS.OUTPUT_HOSP_MAIN)
+            os.path.join(paths.SCRIPTS.OUTPUT_HOSP_MAIN, p)
+            for p in os.listdir(paths.SCRIPTS.OUTPUT_HOSP_MAIN)
+            if p[-3:] == "csv"
         ]
         df = pd.concat([pd.read_csv(p) for p in data_paths])
         # Load & buildmetadata
