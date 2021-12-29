@@ -5,14 +5,18 @@ from cowidev.testing import CountryTestBase
 
 
 class Indonesia(CountryTestBase):
-    location: str = "Indonesia"
+    location = "Indonesia"
+    units = "people tested"
+    source_url_ref = "https://covid19.go.id/peta-sebaran"
+    source_label = "Government of Indonesia"
 
-    def export(self):
+    def read(self):
         url = "https://data.covid19.go.id/public/api/pemeriksaan-vaksinasi.json"
         data = requests.get(url).json()
-
         df = pd.DataFrame(data["pemeriksaan"]["harian"])
+        return df
 
+    def pipeline(self, df: pd.DataFrame):
         df["Cumulative total"] = df.jumlah_orang_pcr_tcm_kum.apply(
             lambda x: x["value"]
         ) + df.jumlah_orang_antigen_kum.apply(lambda x: x["value"])
@@ -24,12 +28,11 @@ class Indonesia(CountryTestBase):
             .drop_duplicates(subset=["Cumulative total"], keep="first")
         )
 
-        df["Country"] = "Indonesia"
-        df["Units"] = "people tested"
-        df["Source URL"] = "https://covid19.go.id/peta-sebaran"
-        df["Source label"] = "Government of Indonesia"
-        df["Notes"] = pd.NA
+        df = df.pipe(self.pipe_metadata)
+        return df
 
+    def export(self):
+        df = self.read().pipe(self.pipeline)
         self.export_datafile(df)
 
 
