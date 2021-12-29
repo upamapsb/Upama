@@ -91,8 +91,8 @@ class Taiwan:
         if df.shape != (20, 2):
             raise ValueError(f"Table 1: format has changed!")
 
-        num_dose1 = clean_count(df.loc["總計", "第 1 劑"]["total"])
-        num_dose2 = clean_count(df.loc["總計", "第 2 劑"]["total"])
+        num_dose1 = clean_count(df.loc["總計", "第 1劑"]["total"])
+        num_dose2 = clean_count(df.loc["總計", "第 2劑"]["total"])
         num_booster1 = clean_count(df.loc["總計", "基礎加強劑"]["total"])
         num_booster2 = clean_count(df.loc[pd.NA, "追加劑"]["total"])
         return {
