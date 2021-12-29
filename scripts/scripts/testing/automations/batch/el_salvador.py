@@ -8,7 +8,17 @@ from cowidev.utils.clean.dates import clean_date, localdate
 
 
 class ElSalvador(CountryTestBase):
-    location: str = "El Salvador"
+    location = "El Salvador"
+    units = "tests performed"
+    source_label = "Government of El Salvador"
+
+    @property
+    def source_url(self):
+        return f"https://diario.innovacion.gob.sv/?fechaMostrar={date.strftime('%d-%m-%Y')}"
+
+    @property
+    def source_url_ref(self):
+        return self.source_url
 
     def read(self):
         df = self.load_datafile()
@@ -17,8 +27,7 @@ class ElSalvador(CountryTestBase):
         records = []
         while date < end_date:
             print(date)
-            source_url = f"https://diario.innovacion.gob.sv/?fechaMostrar={date.strftime('%d-%m-%Y')}"
-            soup = get_soup(source_url)
+            soup = get_soup(self.source_url)
             daily = clean_count(
                 soup.find("div", class_="col-4 col-sm-2 col-lg-2 align-self-center offset-lg-0")
                 .find("label")
@@ -35,14 +44,7 @@ class ElSalvador(CountryTestBase):
 
         # Build dataframe
         df_new = pd.DataFrame.from_records(records)
-        df_new = df_new.assign(
-            {
-                "Country": self.location,
-                "Units": "tests performed",
-                "Source label": "Government of El Salvador",
-                "Source URL": source_url,
-            }
-        )
+        df_new = df_new.pipe(self.pipe_metadata)
         df = pd.concat([df, df_new])
         df = df.drop_duplicates().dropna(subset=["Daily change in cumulative total"])
         self.export_datafile(df)
