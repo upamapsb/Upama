@@ -1,41 +1,28 @@
 import pandas as pd
 
 from cowidev.testing import CountryTestBase
+from cowidev.utils import clean_date_series
 
 
 class UnitedStates(CountryTestBase):
-    location: str = "United States"
-    source_url: str = "https://healthdata.gov/api/views/j8mb-icvb/rows.csv"
-    source_url_ref: str = "https://healthdata.gov/dataset/COVID-19-Diagnostic-Laboratory-Testing-PCR-Testing/j8mb-icvb"
-    source_label: str = "Department of Health & Human Services"
+    location = "United States"
+    source_url = "https://healthdata.gov/api/views/j8mb-icvb/rows.csv"
+    source_url_ref = "https://healthdata.gov/dataset/COVID-19-Diagnostic-Laboratory-Testing-PCR-Testing/j8mb-icvb"
+    source_label = "Department of Health & Human Services"
+    units = "tests performed"
+    rename_columns = {"date": "Date"}
 
     def read(self):
         df = pd.read_csv(self.source_url, usecols=["date", "new_results_reported"], parse_dates=["date"])
         return df
 
-    def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
-        print(5)
-        return df.assign(
-            **{
-                "Country": self.location,
-                "Units": "tests performed",
-                "Source label": self.source_label,
-                "Source URL": self.source_url_ref,
-                "Notes": pd.NA,
-            }
-        )
-
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        df = df.pipe(pipe_rename_columns).pipe(pipe_metrics).pipe(pipe_date).pipe(self.pipe_metadata)
+        df = df.pipe(self.pipe_rename_columns).pipe(pipe_metrics).pipe(pipe_date).pipe(self.pipe_metadata)
         return df
 
     def export(self):
         df = self.read().pipe(self.pipeline)
         self.export_datafile(df)
-
-
-def pipe_rename_columns(df: pd.DataFrame) -> pd.DataFrame:
-    return df.rename(columns={"date": "Date"})
 
 
 def pipe_metrics(df: pd.DataFrame) -> pd.DataFrame:
@@ -45,7 +32,7 @@ def pipe_metrics(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def pipe_date(df: pd.DataFrame) -> pd.DataFrame:
-    return df.assign(Date=df.Date.dt.strftime("%Y-%m-%d"))
+    return df.assign(Date=clean_date_series(df.Date, "%Y-%m-%d"))
 
 
 def main():

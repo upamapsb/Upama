@@ -4,7 +4,10 @@ from cowidev.testing import CountryTestBase
 
 
 class Chile(CountryTestBase):
-    location: str = "Chile"
+    location = "Chile"
+    source_url_ref = "https://github.com/MinCiencia/Datos-COVID19/tree/master/output/producto49"
+    source_label = "Chile Ministry of Health"
+    units = "tests performed"
 
     def export(self):
         pcr = pd.read_csv(
@@ -22,11 +25,7 @@ class Chile(CountryTestBase):
         df = df.rename(columns={"Fecha": "Date"})
         df = df.drop(["Ag", "pcr"], axis=1)
 
-        df["Country"] = self.location
-        df["Source URL"] = "https://github.com/MinCiencia/Datos-COVID19/tree/master/output/producto49"
-        df["Source label"] = "Chile Ministry of Health"
-        df["Units"] = "tests performed"
-        df["Notes"] = pd.NA
+        df = df.pipe(self.pipe_metadata)
 
         self.export_datafile(df)
 

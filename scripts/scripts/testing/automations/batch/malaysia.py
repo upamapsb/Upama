@@ -15,25 +15,11 @@ class Malaysia(CountryTestBase):
     def read(self) -> pd.DataFrame:
         return pd.read_csv(self.source_url)
 
-    def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.rename(columns=self.rename_columns)
-
     def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.sort_values("Date")
         daily = df["rtk-ag"] + df["pcr"]
         return df.assign(**{"Daily change in cumulative total": daily, "Cumulative total": daily.cumsum()}).drop(
             columns=["rtk-ag", "pcr"]
-        )
-
-    def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
-            **{
-                "Country": self.location,
-                "Source URL": self.source_url_ref,
-                "Source label": self.source_label,
-                "Notes": self.notes,
-                "Units": self.units,
-            }
         )
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:

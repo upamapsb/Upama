@@ -21,22 +21,8 @@ class Italy(CountryTestBase):
         df["data"] = clean_date_series(df["data"], "%Y-%m-%d %H:%M:%S")
         return df
 
-    def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.rename(columns=self.rename_columns)
-
     def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.sort_values("Date")
-
-    def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
-            **{
-                "Country": self.location,
-                "Source URL": self.source_url_ref,
-                "Source label": self.source_label,
-                "Notes": self.notes,
-                "Units": self.units,
-            }
-        )
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metrics).pipe(self.pipe_metadata)

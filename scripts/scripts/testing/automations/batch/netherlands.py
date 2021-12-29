@@ -20,20 +20,6 @@ class Netherlands(CountryTestBase):
         df = df.groupby("Date_of_statistics").sum().reset_index()
         return df
 
-    def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.rename(columns=self.rename_columns)
-
-    def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
-            **{
-                "Country": self.location,
-                "Units": self.units,
-                "Source label": self.source_label,
-                "Source URL": self.source_url_ref,
-                "Notes": self.notes,
-            }
-        )
-
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metadata)
 

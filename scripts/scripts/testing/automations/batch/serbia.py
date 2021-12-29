@@ -24,25 +24,11 @@ class Serbia(CountryTestBase):
         df = pd.read_csv(self.source_url, usecols=["ts", "tested"], parse_dates=["ts"])
         return df
 
-    def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.rename(columns=self.rename_columns)
-
     def pipe_date(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(Date=df.Date.dt.strftime("%Y-%m-%d"))
 
     def pipe_cumulative_total(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.groupby("Date", as_index=False).agg({"Cumulative total": max})
-
-    def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
-            **{
-                "Country": self.location,
-                "Units": self.units,
-                "Source label": self.source_label,
-                "Source URL": self.source_url_ref,
-                "Notes": self.notes,
-            }
-        )
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return (

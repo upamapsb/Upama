@@ -4,15 +4,17 @@ import pandas as pd
 
 from cowidev.testing import CountryTestBase
 from cowidev.utils import clean_date
-from cowidev.utils.web import request_json
 
 
 class Cuba(CountryTestBase):
-    source_url: str = (
+    source_url = (
         "https://raw.githubusercontent.com/covid19cubadata/covid19cubadata.github.io/master/data/covid19-cuba.json"
     )
-    source_url_ref: str = "https://covid19cubadata.github.io/#cuba"
-    location: str = "Cuba"
+    source_url_ref = "https://covid19cubadata.github.io/#cuba"
+    location = "Cuba"
+    units = "tests performed"
+    notes = "Made available on GitHub by covid19cubadata"
+    source_label = "Ministry of Public Health"
 
     def read(self):
         data = requests.get(self.source_url).json()
@@ -34,15 +36,7 @@ class Cuba(CountryTestBase):
         return pd.DataFrame(records)
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        df = df.assign(
-            **{
-                "Country": self.location,
-                "Source label": "Ministry of Public Health",
-                "Source URL": self.source_url_ref,
-                "Notes": "Made available on GitHub by covid19cubadata",
-                "Units": "tests performed",
-            }
-        )
+        df = df.pipe(self.pipe_metadata)
         return df
 
     def export(self):

@@ -19,9 +19,6 @@ class Lithuania(CountryTestBase):
     def read(self) -> pd.DataFrame:
         return pd.read_csv(self.source_url, usecols=["date", "dgn_pos_day", "dgn_tot_day"], parse_dates=["date"])
 
-    def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.rename(columns=self.rename_columns)
-
     def pipe_filter(self, df: pd.DataFrame) -> pd.DataFrame:
         return df[df["Daily change in cumulative total"] > 0]
 
@@ -38,20 +35,6 @@ class Lithuania(CountryTestBase):
             }
         )
 
-    def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
-            **{
-                "Country": self.location,
-                "Units": self.units,
-                "Source label": self.source_label,
-                "Source URL": self.source_url_ref,
-                "Notes": self.notes,
-            }
-        )
-
-    def pipe_out_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.drop(columns=["daily_pos"])
-
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
             df.pipe(self.pipe_rename_columns)
@@ -59,7 +42,6 @@ class Lithuania(CountryTestBase):
             .pipe(self.pipe_date)
             .pipe(self.pipe_pr)
             .pipe(self.pipe_metadata)
-            .pipe(self.pipe_out_columns)
         )
 
     def export(self):

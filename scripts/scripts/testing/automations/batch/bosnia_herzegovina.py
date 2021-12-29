@@ -1,17 +1,20 @@
 import pandas as pd
 
+from cowidev.testing import CountryTestBase
+from cowidev.testing.utils import make_monotonic
 from cowidev.utils.web import get_soup
 from cowidev.utils.clean import clean_date
-from cowidev.testing.utils import make_monotonic
-from cowidev.testing import CountryTestBase
 
 
 class BosniaHerzegovina(CountryTestBase):
-    location: str = "Bosnia and Herzegovina"
-    source_url: str = [
+    location = "Bosnia and Herzegovina"
+    source_url = [
         "http://mcp.gov.ba/publication/read/epidemioloska-slika-covid-19?pageId=3",
         "http://mcp.gov.ba/publication/read/epidemioloska-slika-novo?pageId=97",
     ]
+    source_url_ref = ", ".join(source_url)
+    source_label = "Ministry of Civil Affairs"
+    units = "tests performed"
 
     def read(self):
         dfs = [self._load_data(url) for url in self.source_url]
@@ -47,14 +50,7 @@ class BosniaHerzegovina(CountryTestBase):
         return clean_date(dt_raw, "%d.%m.%Y.")
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        df = df.assign(
-            **{
-                "Country": self.location,
-                "Source label": "Ministry of Civil Affairs",
-                "Units": "tests performed",
-                "Notes": pd.NA,
-            }
-        ).sort_values("Date")
+        df = df.pipe(self.pipe_metadata).sort_values("Date")
         df.loc[:, "Cumulative total"] = (
             df.loc[:, "Cumulative total"].astype(str).str.replace(r"\s|\*", "", regex=True).astype(int)
         )

@@ -1,6 +1,5 @@
 import pandas as pd
 
-from cowidev.utils import paths
 from cowidev.testing import CountryTestBase
 
 
@@ -20,9 +19,6 @@ class Argentina(CountryTestBase):
         )
         return df
 
-    def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.rename(columns=self.rename_columns)
-
     def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
         # Occasional errors where some lab inserts data before 2020
         df = df[df.Date >= "2020"]
@@ -35,17 +31,6 @@ class Argentina(CountryTestBase):
         # Clean
         df = df[df["Daily change in cumulative total"] > 0].drop(columns=["positive"])
         return df
-
-    def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
-            **{
-                "Country": self.location,
-                "Units": self.units,
-                "Notes": self.notes,
-                "Source URL": self.source_url_ref,
-                "Source label": self.source_label,
-            }
-        )
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metrics).pipe(self.pipe_metadata)

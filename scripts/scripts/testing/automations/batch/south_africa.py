@@ -1,6 +1,7 @@
 import pandas as pd
 
 from cowidev.testing import CountryTestBase
+from cowidev.utils import clean_date_series
 
 
 class SouthAfrica(CountryTestBase):
@@ -10,20 +11,13 @@ class SouthAfrica(CountryTestBase):
     source_label: str = "National Institute for Communicable Diseases (NICD)"
     source_url_ref: str = "https://github.com/dsfsi/covid19za"
     notes: str = "Made available by the University of Pretoria on Github"
+    rename_columns = {
+        "YYYYMMDD": "Date",
+        "cumulative_tests": "Cumulative total",
+    }
 
     def read(self):
         return pd.read_csv(self.source_url, usecols=["YYYYMMDD", "cumulative_tests"], parse_dates=["YYYYMMDD"])
-
-    def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
-            **{
-                "Country": self.location,
-                "Units": self.units,
-                "Source label": self.source_label,
-                "Source URL": self.source_url_ref,
-                "Notes": self.notes,
-            }
-        )
 
     def pipe_add_datapoint(self, df: pd.DataFrame) -> pd.DataFrame:
         # Hard-coded first point for 7 February 2020, missing from GitHub
@@ -36,11 +30,11 @@ class SouthAfrica(CountryTestBase):
             "Source URL": "https://www.nicd.ac.za/novel-coronavirus-update",
             "Notes": pd.NA,
         }
-        return df.append(datapoint, ignore_index=True).sort_values("Date")
+        return df.append(datapoint, ignore_index=True)
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         df = (
-            df.pipe(pipe_rename_columns)
+            df.pipe(self.pipe_rename_columns)
             .pipe(pipe_drop_nan)
             .pipe(pipe_metrics)
             .pipe(pipe_date)
@@ -54,15 +48,6 @@ class SouthAfrica(CountryTestBase):
         self.export_datafile(df)
 
 
-def pipe_rename_columns(df: pd.DataFrame):
-    return df.rename(
-        columns={
-            "YYYYMMDD": "Date",
-            "cumulative_tests": "Cumulative total",
-        }
-    )
-
-
 def pipe_drop_nan(df: pd.DataFrame):
     return df.dropna(subset=["Cumulative total"])
 
@@ -72,7 +57,7 @@ def pipe_metrics(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def pipe_date(df: pd.DataFrame) -> pd.DataFrame:
-    return df.assign(Date=df.Date.dt.strftime("%Y-%m-%d"))
+    return df.assign(Date=clean_date_series(df.Date, "%Y-%m-%d"))
 
 
 def main():

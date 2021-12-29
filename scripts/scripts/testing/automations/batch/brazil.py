@@ -29,17 +29,6 @@ class Brazil(CountryTestBase):
         df["Cumulative total"] = df["Cumulative total"].astype(int)
         return df
 
-    def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
-            **{
-                "Country": self.location,
-                "Source URL": self.source_url_ref,
-                "Source label": self.source_label,
-                "Notes": self.notes,
-                "Units": self.units,
-            }
-        )
-
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metrics).pipe(self.pipe_metadata)
 

@@ -1,4 +1,5 @@
 import pandas as pd
+
 from cowidev.utils.web import request_json
 from cowidev.utils.clean import clean_date_series
 from cowidev.testing import CountryTestBase
@@ -20,20 +21,6 @@ class India(CountryTestBase):
         df["report_time"] = clean_date_series(df["report_time"], "%Y-%m-%dT%H:%M:%S.%f%z")  # Clean date
         return df
 
-    def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.rename(columns=self.rename_columns)
-
-    def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
-            **{
-                "Country": self.location,
-                "Units": self.units,
-                "Source label": self.source_label,
-                "Source URL": self.source_url_ref,
-                "Notes": self.notes,
-            }
-        )
-
     def pipe_filter_rows(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
             df.drop_duplicates(subset="Cumulative total")
@@ -42,7 +29,7 @@ class India(CountryTestBase):
         )
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metadata).pipe(self.pipe_filter_rows)
+        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_filter_rows).pipe(self.pipe_metadata)
 
     def export(self):
         df = self.read().pipe(self.pipeline)

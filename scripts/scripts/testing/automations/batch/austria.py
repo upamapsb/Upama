@@ -1,8 +1,8 @@
 import pandas as pd
 
-from cowidev.utils import clean_date_series
 from cowidev.testing import CountryTestBase
 from cowidev.testing.utils import make_monotonic
+from cowidev.utils import clean_date_series
 
 
 class Austria(CountryTestBase):
@@ -10,34 +10,30 @@ class Austria(CountryTestBase):
     units: str = "tests performed"
     source_url: str = "https://covid19-dashboard.ages.at/data/CovidFallzahlen.csv"
     source_url_ref: str = "https://www.data.gv.at/katalog/dataset/846448a5-a26e-4297-ac08-ad7040af20f1"
-    source_name: str = "Federal Ministry for Social Affairs, Health, Care and Consumer Protection"
+    source_label: str = "Federal Ministry for Social Affairs, Health, Care and Consumer Protection"
+    columns: str = {
+        "Meldedat": "Date",
+        "TestGesamt": "Cumulative total",
+    }
 
     def read(self):
         return pd.read_csv(self.source_url, sep=";", usecols=["Meldedat", "TestGesamt", "Bundesland"])
 
-    def pipeline(self, df: pd.DataFrame):
+    def pipe_metrics(self, df: pd.DataFrame):
         df = df[df.Bundesland == "Alle"]
         df = df.groupby("Meldedat", as_index=False)["TestGesamt"].sum()
-        df = df.rename(
-            columns={
-                "Meldedat": "Date",
-                "TestGesamt": "Cumulative total",
-            }
-        )
+        df = df.pipe(self.pipe_rename_columns)
+        return df
 
-        df = df.assign(
-            **{
-                "Country": self.location,
-                "Units": self.units,
-                "Source URL": self.source_url_ref,
-                "Source label": self.source_name,
-                "Notes": pd.NA,
-                "Date": clean_date_series(df.Date, "%d.%m.%Y"),
-            }
-        )
+    def pipe_date(self, df: pd.DataFrame):
+        return df.assign(Date=clean_date_series(df.Date, "%d.%m.%Y"))
 
+    def pipe_filter(self, df: pd.DataFrame):
         df = df.sort_values("Cumulative total").groupby("Cumulative total", as_index=False).head(1).sort_values("Date")
         return df
+
+    def pipeline(self, df: pd.DataFrame):
+        return df.pipe(self.pipe_metrics).pipe(self.pipe_date).pipe(self.pipe_metadata).pipe(self.pipe_filter)
 
     def export(self):
         df = self.read().pipe(self.pipeline).pipe(make_monotonic)

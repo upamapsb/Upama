@@ -6,20 +6,17 @@ from cowidev.testing import CountryTestBase
 
 
 class Uruguay(CountryTestBase):
-    location: str = "Uruguay"
-    units: str = "people tested"
-    source_label: str = "Ministry of Public Health"
-    source_url: str = "https://estadisticas.msp-uy.com/data.json"
-    notes = ""
-    testing_type: str = "PCR only"
-    rename_columns: dict = {"date": "Date", "total": "Cumulative total"}
+    location = "Uruguay"
+    units = "people tested"
+    source_label = "Ministry of Public Health"
+    source_url = "https://estadisticas.msp-uy.com/data.json"
+    source_url_ref = source_url
+    testing_type = "PCR only"
+    rename_columns = {"date": "Date", "total": "Cumulative total"}
 
     def read(self) -> pd.DataFrame:
         json_dict = request_json(self.source_url)
         return pd.DataFrame.from_dict(json_dict["tests"]["historical"])
-
-    def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.rename(columns=self.rename_columns)
 
     @staticmethod
     def pipe_date(df: pd.DataFrame) -> pd.DataFrame:
@@ -28,17 +25,6 @@ class Uruguay(CountryTestBase):
     @staticmethod
     def pipe_metrics(df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(**{"Cumulative total": df["Cumulative total"].cumsum()})
-
-    def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
-            **{
-                "Country": self.location,
-                "Units": self.units,
-                "Source label": self.source_label,
-                "Source URL": self.source_url,
-                "Notes": self.notes,
-            }
-        )
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.pipe(self.pipe_rename_columns).pipe(self.pipe_date).pipe(self.pipe_metrics).pipe(self.pipe_metadata)
