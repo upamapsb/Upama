@@ -188,10 +188,16 @@ def localdate(
     return local_time.strftime(date_format)
 
 
-def clean_date_series(ds: pd.Series, format_input: str = None, format_output: str = DATE_FORMAT) -> pd.Series:
+def clean_date_series(
+    ds: Union[pd.Series, list], format_input: str = None, format_output: str = DATE_FORMAT, **kwargs
+) -> Union[pd.Series, list]:
     if format_output is None:
         format_output = DATE_FORMAT
-    return pd.to_datetime(ds, format=format_input).dt.strftime(format_output)
+    ds_new = pd.to_datetime(ds, format=format_input, **kwargs)
+    if isinstance(ds, list):
+        return pd.Series(ds_new).dt.strftime(format_output).tolist()
+    elif isinstance(ds, pd.Series):
+        return ds_new.dt.strftime(format_output)
 
 
 @contextmanager
