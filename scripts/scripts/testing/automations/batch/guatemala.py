@@ -11,17 +11,15 @@ from selenium.webdriver.chrome.options import Options
 
 from cowidev.testing import CountryTestBase
 
-COUNTRY = "Guatemala"
-UNITS = "people tested"
-SOURCE_LABEL = "Ministry of Health and Social Assistance"
-SOURCE_URL = "https://gtmvigilanciacovid.shinyapps.io/3869aac0fb95d6baf2c80f19f2da5f98"
-
 
 class Guatemala(CountryTestBase):
-    location: str = "Guatemala"
+    location = "Guatemala"
+    units = "people tested"
+    source_label = "Ministry of Health and Social Assistance"
+    source_url = "https://gtmvigilanciacovid.shinyapps.io/3869aac0fb95d6baf2c80f19f2da5f98"
+    source_url_ref = source_url
 
     def export(self):
-
         # Options for Chrome WebDriver
         op = Options()
         op.add_argument("--disable-notifications")
@@ -47,7 +45,7 @@ class Guatemala(CountryTestBase):
             }
             command_result = driver.execute("send_command", params)
 
-            driver.get(SOURCE_URL)
+            driver.get(self.source_url)
             time.sleep(3)
             driver.find_element_by_class_name("fa-file-download").click()
             time.sleep(1)
@@ -64,11 +62,7 @@ class Guatemala(CountryTestBase):
         df = df[df["value"] != 0]
         df = df.rename(columns={"variable": "Date", "value": "Daily change in cumulative total"})
 
-        df.loc[:, "Country"] = COUNTRY
-        df.loc[:, "Units"] = UNITS
-        df.loc[:, "Source label"] = SOURCE_LABEL
-        df.loc[:, "Source URL"] = SOURCE_URL
-        df.loc[:, "Notes"] = pd.NA
+        df = df.pipe(self.pipe_metadata)
 
         self.export_datafile(df)
         os.remove(file)
