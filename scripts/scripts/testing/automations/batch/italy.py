@@ -4,6 +4,7 @@ from cowidev.utils import paths
 
 
 from cowidev.testing import CountryTestBase
+from cowidev.testing.utils import make_monotonic
 
 
 class Italy(CountryTestBase):
@@ -39,7 +40,7 @@ class Italy(CountryTestBase):
         )
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metrics).pipe(self.pipe_metadata)
+        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metrics).pipe(self.pipe_metadata).pipe(make_monotonic)
 
     def export(self):
         df = self.read().pipe(self.pipeline)
