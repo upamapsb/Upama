@@ -1,21 +1,20 @@
 import pandas as pd
 
 from cowidev.utils.clean import clean_date_series
-from cowidev.utils import paths
 
 from cowidev.testing import CountryTestBase
 
 
 class Malta(CountryTestBase):
-    location: str = "Malta"
-    units: str = "tests performed"
-    source_label: str = "COVID-19 Public Health Response Team (Ministry for Health)"
-    source_url: str = (
+    location = "Malta"
+    units = "tests performed"
+    source_label = "COVID-19 Public Health Response Team (Ministry for Health)"
+    source_url = (
         "https://raw.githubusercontent.com/COVID19-Malta/COVID19-Data/master/COVID-19%20Malta%20-%20COVID%20Tests.csv"
     )
-    source_url_ref: str = "https://github.com/COVID19-Malta/COVID19-Data/"
-    notes: str = pd.NA
-    rename_columns: dict = {"Publication date": "Date", "Total NAA and rapid antigen tests": "Cumulative total"}
+    source_url_ref = "https://github.com/COVID19-Malta/COVID19-Data/"
+    notes = pd.NA
+    rename_columns = {"Publication date": "Date", "Total NAA and rapid antigen tests": "Cumulative total"}
 
     def read(self) -> pd.DataFrame:
         df = pd.read_csv(self.source_url, usecols=["Publication date", "Total NAA and rapid antigen tests"])

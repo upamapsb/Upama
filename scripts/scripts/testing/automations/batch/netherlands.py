@@ -4,13 +4,13 @@ from cowidev.testing import CountryTestBase
 
 
 class Netherlands(CountryTestBase):
-    location: str = "Netherlands"
-    units: str = "tests performed"
-    source_label: str = "Dutch National Institute for Public Health and the Environment"
-    source_url: str = "https://data.rivm.nl/covid-19/COVID-19_uitgevoerde_testen.json"
-    source_url_ref: str = "https://data.rivm.nl/covid-19/"
-    notes: str = pd.NA
-    rename_columns: dict = {"Date_of_statistics": "Date", "Tested_with_result": "Daily change in cumulative total"}
+    location = "Netherlands"
+    units = "tests performed"
+    source_label = "Dutch National Institute for Public Health and the Environment"
+    source_url = "https://data.rivm.nl/covid-19/COVID-19_uitgevoerde_testen.json"
+    source_url_ref = "https://data.rivm.nl/covid-19/"
+    notes = pd.NA
+    rename_columns = {"Date_of_statistics": "Date", "Tested_with_result": "Daily change in cumulative total"}
 
     def read(self) -> pd.DataFrame:
         data = request_json(self.source_url)

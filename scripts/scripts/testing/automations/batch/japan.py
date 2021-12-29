@@ -4,13 +4,12 @@ from cowidev.testing import CountryTestBase
 
 
 class Japan(CountryTestBase):
-    location: str = "Japan"
-    units: str = "people tested"
-    source_label: str = "Ministry of Health, Labour and Welfare"
-    source_url: str = "https://www.mhlw.go.jp/content/pcr_tested_daily.csv"
+    location = "Japan"
+    units = "people tested"
+    source_label = "Ministry of Health, Labour and Welfare"
+    source_url = "https://www.mhlw.go.jp/content/pcr_tested_daily.csv"
     source_url_ref = source_url
-    notes: str = pd.NA
-    rename_columns: dict = {"日付": "Date", "PCR 検査実施件数(単日)": "Daily change in cumulative total"}
+    rename_columns = {"日付": "Date", "PCR 検査実施件数(単日)": "Daily change in cumulative total"}
 
     def read(self) -> pd.DataFrame:
         return pd.read_csv(self.source_url, usecols=self.rename_columns.keys(), parse_dates=["日付"])
