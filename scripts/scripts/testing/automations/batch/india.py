@@ -6,13 +6,13 @@ from cowidev.testing import CountryTestBase
 
 
 class India(CountryTestBase):
-    location: str = "India"
-    units: str = "samples tested"
-    source_label: str = "Indian Council of Medical Research"
-    source_url: str = "https://raw.githubusercontent.com/datameet/covid19/master/data/icmr_testing_status.json"
-    source_url_ref: str = "https://github.com/datameet/covid19"
-    notes: str = "Made available by DataMeet on GitHub"
-    rename_columns: dict = {"report_time": "Date", "samples": "Cumulative total"}
+    location = "India"
+    units = "samples tested"
+    source_label = "Indian Council of Medical Research"
+    source_url = "https://raw.githubusercontent.com/datameet/covid19/master/data/icmr_testing_status.json"
+    source_url_ref = "https://github.com/datameet/covid19"
+    notes = "Made available by DataMeet on GitHub"
+    rename_columns = {"report_time": "Date", "samples": "Cumulative total"}
 
     def read(self) -> pd.DataFrame:
         data = request_json(self.source_url)
