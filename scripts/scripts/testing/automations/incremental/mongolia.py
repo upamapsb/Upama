@@ -1,5 +1,4 @@
-import json
-from cowidev.utils.web import get_soup
+from cowidev.utils.web.scraping import request_json
 from cowidev.testing.utils.incremental import increment
 
 
@@ -11,12 +10,12 @@ class Mongolia:
     source_url_ref = "https://www1.e-mongolia.mn/covid-19"
     notes = ""
 
-    def _parse_data(self):
-        data = json.loads(get_soup(self.source_url).text)
+    def read(self):
+        data = request_json(self.source_url)
         return {"count": data["data"]["testedPcrTotal"], "date": data["data"]["lastDataDate"]}
 
     def export(self):
-        data = self._parse_data()
+        data = self.read()
         increment(
             count=data["count"],
             sheet_name=self.location,
