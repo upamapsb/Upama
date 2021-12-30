@@ -249,7 +249,7 @@ class Denmark:
 
     def _backfill_total_vaccinations(self, df: pd.DataFrame, links: list):
         for link in links:
-            print(link)
+            # print(link)
             total_vaccinations_latest, date = self._get_total_vax(link)
             df.loc[df["date"] == date, "total_vaccinations"] = total_vaccinations_latest
         return df

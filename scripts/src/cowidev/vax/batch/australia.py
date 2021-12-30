@@ -29,9 +29,6 @@ class Australia:
     def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.rename(columns=self.columns_rename)
 
-    def pipe_date(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(date=df.date.apply(clean_date, fmt="%Y-%m-%d", minus_days=1))
-
     def pipe_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
         def _enrich_vaccine(date: str) -> str:
             if date >= "2021-03-07":
@@ -40,7 +37,12 @@ class Australia:
 
         return df.assign(vaccine=df.date.astype(str).apply(_enrich_vaccine))
 
+    def pipe_date(self, df: pd.DataFrame) -> pd.DataFrame:
+        df = df.assign(date=df.date.apply(clean_date, fmt="%Y-%m-%d", minus_days=1))
+        return df
+
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
+        print(7)
         return df.assign(location=self.location, source_url=self.source_url)
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
