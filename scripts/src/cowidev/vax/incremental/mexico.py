@@ -25,7 +25,7 @@ class Mexico:
         link = soup.find(class_="list-unstyled").find("a")["href"]
         link = "http://www.gob.mx" + link
         self.source_url = link
-        print(link)
+        # print(link)
         return link
 
     def _get_pages_relevant_pdf(self, url) -> list:

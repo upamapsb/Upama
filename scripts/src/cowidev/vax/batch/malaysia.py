@@ -30,7 +30,7 @@ class Malaysia:
     def pipe_check_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         expected_cols = 28
         if df.shape[1] > expected_cols:
-            print(df.columns)
+            # print(df.columns)
             raise Exception(
                 f"More columns ({df.shape[1]}) than expected ({expected_cols}) are present. Check for new vaccines?"
             )

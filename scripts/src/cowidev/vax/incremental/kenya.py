@@ -19,9 +19,9 @@ class Kenya:
         url_pdf = self._parse_pdf_link(self.source_url)
         pages = self._get_text_from_pdf(url_pdf)
         total_vaccinations, people_vaccinated, people_fully_vaccinated = self._parse_metrics(pages)
-        print("metrics")
+        # print("metrics")
         date = self._parse_date(pages[0])
-        print("date")
+        # print("date")
         return pd.Series(
             {
                 "total_vaccinations": total_vaccinations,
@@ -46,7 +46,7 @@ class Kenya:
 
         with tempfile.NamedTemporaryFile() as tf:
             with open(tf.name, mode="wb") as f:
-                print(url_pdf)
+                # print(url_pdf)
                 f.write(requests.get(url_pdf, verify=False).content)
             with open(tf.name, mode="rb") as f:
                 reader = PyPDF2.PdfFileReader(f)

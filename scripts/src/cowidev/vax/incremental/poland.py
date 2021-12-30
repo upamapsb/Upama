@@ -66,7 +66,7 @@ class Poland:
     def export(self):
         """Generalized."""
         data = self.read().pipe(self.pipeline)
-        print(data["total_boosters"])
+        # print(data["total_boosters"])
         increment(
             location=data["location"],
             total_vaccinations=data["total_vaccinations"],

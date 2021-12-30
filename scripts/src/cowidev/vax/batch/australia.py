@@ -42,7 +42,6 @@ class Australia:
         return df
 
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
-        print(7)
         return df.assign(location=self.location, source_url=self.source_url)
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:

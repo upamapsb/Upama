@@ -36,7 +36,7 @@ class Taiwan:
                 break
         url_pdf = f"{self.source_url}{a['href']}"
         for i in range(10):
-            print(url_pdf)
+            # print(url_pdf)
             soup = get_soup(url_pdf)
             a = soup.find(class_="viewer-button")
             if a is not None:
