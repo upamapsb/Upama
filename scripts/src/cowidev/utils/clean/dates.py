@@ -25,7 +25,7 @@ def week_to_date(year: int, week: int, output_fmt: str = DATE_FORMAT):
 def clean_date(
     date_or_text: Union[str, datetime, date],
     fmt: str = None,
-    lang: str = None,
+    lang: str = "en",
     loc: str = "",
     minus_days: int = 0,
     unicode_norm: bool = True,
@@ -82,7 +82,7 @@ def extract_clean_date(
     text: str,
     regex: str,
     date_format: str,
-    lang: str = None,
+    lang: str = "en",
     loc: str = "",
     minus_days: int = 0,
     unicode_norm: bool = True,
