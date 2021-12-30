@@ -637,6 +637,7 @@ date,indicator,value,entity
 2021-12-25,Daily ICU occupancy,329.0,Switzerland
 2021-12-26,Daily ICU occupancy,327.0,Switzerland
 2021-12-27,Daily ICU occupancy,334.0,Switzerland
+2021-12-28,Daily ICU occupancy,315.0,Switzerland
 2020-03-30,Daily hospital occupancy,1328.0,Switzerland
 2020-03-31,Daily hospital occupancy,1440.0,Switzerland
 2020-04-01,Daily hospital occupancy,1631.0,Switzerland
@@ -1275,6 +1276,7 @@ date,indicator,value,entity
 2021-12-25,Daily hospital occupancy,1623.0,Switzerland
 2021-12-26,Daily hospital occupancy,1688.0,Switzerland
 2021-12-27,Daily hospital occupancy,1721.0,Switzerland
+2021-12-28,Daily hospital occupancy,1698.0,Switzerland
 2020-03-30,Weekly new hospital admissions,1176.0,Switzerland
 2020-03-31,Weekly new hospital admissions,1122.0,Switzerland
 2020-04-01,Weekly new hospital admissions,1020.0,Switzerland
@@ -1823,13 +1825,13 @@ date,indicator,value,entity
 2021-09-26,Weekly new hospital admissions,251.0,Switzerland
 2021-09-27,Weekly new hospital admissions,250.0,Switzerland
 2021-09-28,Weekly new hospital admissions,227.0,Switzerland
-2021-09-29,Weekly new hospital admissions,207.0,Switzerland
-2021-09-30,Weekly new hospital admissions,192.0,Switzerland
-2021-10-01,Weekly new hospital admissions,184.0,Switzerland
-2021-10-02,Weekly new hospital admissions,181.0,Switzerland
-2021-10-03,Weekly new hospital admissions,177.0,Switzerland
-2021-10-04,Weekly new hospital admissions,167.0,Switzerland
-2021-10-05,Weekly new hospital admissions,169.0,Switzerland
+2021-09-29,Weekly new hospital admissions,208.0,Switzerland
+2021-09-30,Weekly new hospital admissions,193.0,Switzerland
+2021-10-01,Weekly new hospital admissions,185.0,Switzerland
+2021-10-02,Weekly new hospital admissions,182.0,Switzerland
+2021-10-03,Weekly new hospital admissions,178.0,Switzerland
+2021-10-04,Weekly new hospital admissions,168.0,Switzerland
+2021-10-05,Weekly new hospital admissions,170.0,Switzerland
 2021-10-06,Weekly new hospital admissions,176.0,Switzerland
 2021-10-07,Weekly new hospital admissions,176.0,Switzerland
 2021-10-08,Weekly new hospital admissions,174.0,Switzerland
@@ -1864,53 +1866,54 @@ date,indicator,value,entity
 2021-11-06,Weekly new hospital admissions,309.0,Switzerland
 2021-11-07,Weekly new hospital admissions,307.0,Switzerland
 2021-11-08,Weekly new hospital admissions,303.0,Switzerland
-2021-11-09,Weekly new hospital admissions,320.0,Switzerland
-2021-11-10,Weekly new hospital admissions,334.0,Switzerland
-2021-11-11,Weekly new hospital admissions,352.0,Switzerland
-2021-11-12,Weekly new hospital admissions,374.0,Switzerland
-2021-11-13,Weekly new hospital admissions,393.0,Switzerland
-2021-11-14,Weekly new hospital admissions,411.0,Switzerland
-2021-11-15,Weekly new hospital admissions,461.0,Switzerland
+2021-11-09,Weekly new hospital admissions,321.0,Switzerland
+2021-11-10,Weekly new hospital admissions,335.0,Switzerland
+2021-11-11,Weekly new hospital admissions,353.0,Switzerland
+2021-11-12,Weekly new hospital admissions,375.0,Switzerland
+2021-11-13,Weekly new hospital admissions,394.0,Switzerland
+2021-11-14,Weekly new hospital admissions,412.0,Switzerland
+2021-11-15,Weekly new hospital admissions,462.0,Switzerland
 2021-11-16,Weekly new hospital admissions,470.0,Switzerland
 2021-11-17,Weekly new hospital admissions,496.0,Switzerland
 2021-11-18,Weekly new hospital admissions,534.0,Switzerland
-2021-11-19,Weekly new hospital admissions,566.0,Switzerland
-2021-11-20,Weekly new hospital admissions,568.0,Switzerland
-2021-11-21,Weekly new hospital admissions,587.0,Switzerland
-2021-11-22,Weekly new hospital admissions,592.0,Switzerland
-2021-11-23,Weekly new hospital admissions,614.0,Switzerland
-2021-11-24,Weekly new hospital admissions,636.0,Switzerland
-2021-11-25,Weekly new hospital admissions,634.0,Switzerland
-2021-11-26,Weekly new hospital admissions,658.0,Switzerland
-2021-11-27,Weekly new hospital admissions,692.0,Switzerland
-2021-11-28,Weekly new hospital admissions,718.0,Switzerland
-2021-11-29,Weekly new hospital admissions,748.0,Switzerland
-2021-11-30,Weekly new hospital admissions,759.0,Switzerland
-2021-12-01,Weekly new hospital admissions,779.0,Switzerland
-2021-12-02,Weekly new hospital admissions,810.0,Switzerland
-2021-12-03,Weekly new hospital admissions,823.0,Switzerland
-2021-12-04,Weekly new hospital admissions,823.0,Switzerland
-2021-12-05,Weekly new hospital admissions,810.0,Switzerland
-2021-12-06,Weekly new hospital admissions,808.0,Switzerland
-2021-12-07,Weekly new hospital admissions,826.0,Switzerland
-2021-12-08,Weekly new hospital admissions,818.0,Switzerland
-2021-12-09,Weekly new hospital admissions,819.0,Switzerland
-2021-12-10,Weekly new hospital admissions,824.0,Switzerland
-2021-12-11,Weekly new hospital admissions,819.0,Switzerland
-2021-12-12,Weekly new hospital admissions,813.0,Switzerland
-2021-12-13,Weekly new hospital admissions,808.0,Switzerland
-2021-12-14,Weekly new hospital admissions,784.0,Switzerland
-2021-12-15,Weekly new hospital admissions,770.0,Switzerland
-2021-12-16,Weekly new hospital admissions,742.0,Switzerland
-2021-12-17,Weekly new hospital admissions,696.0,Switzerland
-2021-12-18,Weekly new hospital admissions,693.0,Switzerland
-2021-12-19,Weekly new hospital admissions,694.0,Switzerland
-2021-12-20,Weekly new hospital admissions,675.0,Switzerland
-2021-12-21,Weekly new hospital admissions,685.0,Switzerland
-2021-12-22,Weekly new hospital admissions,664.0,Switzerland
-2021-12-23,Weekly new hospital admissions,637.0,Switzerland
-2021-12-24,Weekly new hospital admissions,615.0,Switzerland
-2021-12-25,Weekly new hospital admissions,580.0,Switzerland
+2021-11-19,Weekly new hospital admissions,567.0,Switzerland
+2021-11-20,Weekly new hospital admissions,569.0,Switzerland
+2021-11-21,Weekly new hospital admissions,588.0,Switzerland
+2021-11-22,Weekly new hospital admissions,593.0,Switzerland
+2021-11-23,Weekly new hospital admissions,615.0,Switzerland
+2021-11-24,Weekly new hospital admissions,637.0,Switzerland
+2021-11-25,Weekly new hospital admissions,635.0,Switzerland
+2021-11-26,Weekly new hospital admissions,659.0,Switzerland
+2021-11-27,Weekly new hospital admissions,694.0,Switzerland
+2021-11-28,Weekly new hospital admissions,721.0,Switzerland
+2021-11-29,Weekly new hospital admissions,752.0,Switzerland
+2021-11-30,Weekly new hospital admissions,763.0,Switzerland
+2021-12-01,Weekly new hospital admissions,784.0,Switzerland
+2021-12-02,Weekly new hospital admissions,816.0,Switzerland
+2021-12-03,Weekly new hospital admissions,828.0,Switzerland
+2021-12-04,Weekly new hospital admissions,829.0,Switzerland
+2021-12-05,Weekly new hospital admissions,815.0,Switzerland
+2021-12-06,Weekly new hospital admissions,813.0,Switzerland
+2021-12-07,Weekly new hospital admissions,833.0,Switzerland
+2021-12-08,Weekly new hospital admissions,827.0,Switzerland
+2021-12-09,Weekly new hospital admissions,830.0,Switzerland
+2021-12-10,Weekly new hospital admissions,836.0,Switzerland
+2021-12-11,Weekly new hospital admissions,829.0,Switzerland
+2021-12-12,Weekly new hospital admissions,825.0,Switzerland
+2021-12-13,Weekly new hospital admissions,819.0,Switzerland
+2021-12-14,Weekly new hospital admissions,795.0,Switzerland
+2021-12-15,Weekly new hospital admissions,782.0,Switzerland
+2021-12-16,Weekly new hospital admissions,752.0,Switzerland
+2021-12-17,Weekly new hospital admissions,708.0,Switzerland
+2021-12-18,Weekly new hospital admissions,705.0,Switzerland
+2021-12-19,Weekly new hospital admissions,704.0,Switzerland
+2021-12-20,Weekly new hospital admissions,688.0,Switzerland
+2021-12-21,Weekly new hospital admissions,703.0,Switzerland
+2021-12-22,Weekly new hospital admissions,680.0,Switzerland
+2021-12-23,Weekly new hospital admissions,657.0,Switzerland
+2021-12-24,Weekly new hospital admissions,643.0,Switzerland
+2021-12-25,Weekly new hospital admissions,625.0,Switzerland
+2021-12-26,Weekly new hospital admissions,615.0,Switzerland
 2020-03-01,Weekly new hospital admissions,52.0,Switzerland
 2020-03-02,Weekly new hospital admissions,60.0,Switzerland
 2020-03-03,Weekly new hospital admissions,73.0,Switzerland
