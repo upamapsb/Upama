@@ -4,12 +4,12 @@ from cowidev.testing.utils.incremental import increment
 
 
 class Mongolia:
-    location: str = "Mongolia"
-    units: str = "samples tested"
-    source_label: str = "Ministry of Health"
-    source_url: str = "https://e-mongolia.mn/shared-api/api/covid-stat/daily"
-    source_url_ref: str = "https://www1.e-mongolia.mn/covid-19"
-    notes: str = ""
+    location = "Mongolia"
+    units = "samples tested"
+    source_label = "Ministry of Health"
+    source_url = "https://e-mongolia.mn/shared-api/api/covid-stat/daily"
+    source_url_ref = "https://www1.e-mongolia.mn/covid-19"
+    notes = ""
 
     def _parse_data(self):
         data = json.loads(get_soup(self.source_url).text)
