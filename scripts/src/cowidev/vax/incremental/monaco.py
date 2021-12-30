@@ -76,7 +76,7 @@ class Monaco:
 
     def parse_date(self, elem):
         date_raw = elem.parent.find(class_="date").text
-        return clean_date(date_raw, "%d %B %Y", minus_days=1, loc="fr_FR")
+        return clean_date(date_raw, "%d %B %Y", minus_days=1, lang="fr")
 
     def parse_link(self, elem):
         href = elem.a.get("href")
