@@ -13,6 +13,7 @@ from cowidev.utils.clean.strings import clean_string
 
 
 LOCALE_LOCK = threading.Lock()
+DEFAULT_LOCALE = ""  # "en_US.ISO8859-1"
 DATE_FORMAT = "%Y-%m-%d"
 
 
@@ -204,7 +205,7 @@ def clean_date_series(
 def _setlocale(name: str):
     # REF: https://stackoverflow.com/questions/18593661/how-do-i-strftime-a-date-object-in-a-different-locale
     with LOCALE_LOCK:
-        saved = locale.setlocale(locale.LC_TIME, "")
+        saved = locale.setlocale(locale.LC_TIME, DEFAULT_LOCALE)
         try:
             yield locale.setlocale(locale.LC_TIME, name)
         finally:
