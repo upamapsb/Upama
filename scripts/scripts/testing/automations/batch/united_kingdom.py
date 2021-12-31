@@ -1,115 +1,72 @@
 import pandas as pd
-import requests
-from datetime import datetime
 from uk_covid19 import Cov19API
+
+from cowidev.testing import CountryTestBase
+
+
+class UnitedKingdom(CountryTestBase):
+    location = "United Kingdom"
+    source_url_ref = "https://coronavirus.data.gov.uk/details/testing"
+    source_label = "Public Health England"
+    units = "tests performed"
+    nation_dates_min = {
+        "England": "2020-07-01",
+        "Northern Ireland": "2020-06-25",
+        "Scotland": "2020-06-14",
+        "Wales": "2020-07-13",
+    }
+
+    def _read_nation(self, nation, date_min):
+        filters = ["areaType=Nation", f"areaName={nation}"]
+        structure = {
+            "Date": "date",
+            "Country": "areaName",
+            "cumPillarOne": "cumPillarOneTestsByPublishDate",
+            "newPillarTwo": "newPillarTwoTestsByPublishDate",
+        }
+        api = Cov19API(filters=filters, structure=structure)
+        df = api.get_dataframe()
+
+        df["cumPillarTwo"] = (
+            df[pd.to_datetime(df["Date"]) > date_min]["newPillarTwo"][::-1].cumsum().fillna(method="ffill")
+        )
+        df["Cumulative total"] = df["cumPillarOne"] + df["cumPillarTwo"].fillna(0)
+        return df
+
+    def read(self):
+        countries = [self._read_nation(country, date) for country, date in self.nation_dates_min.items()]
+        df = pd.concat(countries).sort_values("Date")
+        return df
+
+    def pipe_notes(self, df: pd.DataFrame):
+        df[
+            "Notes"
+        ] = "PillarOne: England, N. Ireland, Scotland, Wales; PillarTwo: England, N. Ireland, Scotland, Wales"
+
+        df.loc[df.Date < "2020-06-15", "Notes"] = "PillarOne: England, N. Ireland, Scotland, Wales; PillarTwo: None"
+        df.loc[
+            df.Date < "2020-06-26", "Notes"
+        ] = "PillarOne: England, N. Ireland, Scotland, Wales; PillarTwo: Scotland"
+        df.loc[
+            df.Date < "2020-07-02", "Notes"
+        ] = "PillarOne: England, N. Ireland, Scotland, Wales; PillarTwo: N. Ireland, Scotland"
+        df.loc[
+            df.Date < "2020-07-14", "Notes"
+        ] = "PillarOne: England, N. Ireland, Scotland, Wales; PillarTwo: England, N. Ireland, Scotland"
+        return df
+
+    def pipeline(self, df: pd.DataFrame):
+        df = df.groupby("Date", as_index=False).agg({"Cumulative total": "sum"})
+        df = df.pipe(self.pipe_notes).pipe(self.pipe_metadata)
+        return df
+
+    def export(self):
+        df = self.read().pipe(self.pipeline)
+        self.export_datafile(df)
 
 
 def main():
-
-    # England (Include PillarTwo from 2 July 2020)
-    filters = ["areaType=Nation", "areaName=England"]
-    structure = {
-        "Date": "date",
-        "Country": "areaName",
-        "cumPillarOne": "cumPillarOneTestsByPublishDate",
-        "newPillarTwo": "newPillarTwoTestsByPublishDate",
-    }
-    api = Cov19API(filters=filters, structure=structure)
-    england = api.get_dataframe()
-
-    england["cumPillarTwo"] = (
-        england[pd.to_datetime(england["Date"]) > "2020-07-01"]["newPillarTwo"][::-1]
-        .cumsum()
-        .fillna(method="ffill")
-    )
-    england["Cumulative total"] = england["cumPillarOne"] + england[
-        "cumPillarTwo"
-    ].fillna(0)
-
-    # N ireland (Include PillarTwo from 26 June 2020)
-    filters = ["areaType=Nation", "areaName=Northern Ireland"]
-    structure = {
-        "Date": "date",
-        "Country": "areaName",
-        "cumPillarOne": "cumPillarOneTestsByPublishDate",
-        "newPillarTwo": "newPillarTwoTestsByPublishDate",
-    }
-    api = Cov19API(filters=filters, structure=structure)
-    nireland = api.get_dataframe()
-
-    nireland["cumPillarTwo"] = (
-        nireland[pd.to_datetime(nireland["Date"]) > "2020-06-25"]["newPillarTwo"][::-1]
-        .cumsum()
-        .fillna(method="ffill")
-    )
-    nireland["Cumulative total"] = nireland["cumPillarOne"] + nireland[
-        "cumPillarTwo"
-    ].fillna(0)
-
-    # Scotland (Include PillarTwo from 15 June 2020)
-    filters = ["areaType=Nation", "areaName=Scotland"]
-    structure = {
-        "Date": "date",
-        "Country": "areaName",
-        "cumPillarOne": "cumPillarOneTestsByPublishDate",
-        "newPillarTwo": "newPillarTwoTestsByPublishDate",
-    }
-    api = Cov19API(filters=filters, structure=structure)
-    scotland = api.get_dataframe()
-
-    scotland["cumPillarTwo"] = (
-        scotland[pd.to_datetime(scotland["Date"]) > "2020-06-14"]["newPillarTwo"][::-1]
-        .cumsum()
-        .fillna(method="ffill")
-    )
-    scotland["Cumulative total"] = scotland["cumPillarOne"] + scotland[
-        "cumPillarTwo"
-    ].fillna(0)
-
-    # Wales (Include PillarTwo from 14 July 2020)
-    filters = ["areaType=Nation", "areaName=Wales"]
-    structure = {
-        "Date": "date",
-        "Country": "areaName",
-        "cumPillarOne": "cumPillarOneTestsByPublishDate",
-        "newPillarTwo": "newPillarTwoTestsByPublishDate",
-    }
-    api = Cov19API(filters=filters, structure=structure)
-    wales = api.get_dataframe()
-
-    wales["cumPillarTwo"] = (
-        wales[pd.to_datetime(wales["Date"]) > "2020-07-13"]["newPillarTwo"][::-1]
-        .cumsum()
-        .fillna(method="ffill")
-    )
-    wales["Cumulative total"] = wales["cumPillarOne"] + wales["cumPillarTwo"].fillna(0)
-
-    countries = [england, nireland, scotland, wales]
-    uk = pd.concat(countries).sort_values("Date")
-    uk = uk.groupby("Date", as_index=False).agg({"Cumulative total": "sum"})
-
-    uk["Country"] = "United Kingdom"
-    uk["Source URL"] = "https://coronavirus.data.gov.uk/details/testing"
-    uk["Source label"] = "Public Health England"
-    uk["Units"] = "tests performed"
-    uk[
-        "Notes"
-    ] = "PillarOne: England, N. Ireland, Scotland, Wales; PillarTwo: England, N. Ireland, Scotland, Wales"
-
-    uk.loc[
-        uk.Date < "2020-06-15", "Notes"
-    ] = "PillarOne: England, N. Ireland, Scotland, Wales; PillarTwo: None"
-    uk.loc[
-        uk.Date < "2020-06-26", "Notes"
-    ] = "PillarOne: England, N. Ireland, Scotland, Wales; PillarTwo: Scotland"
-    uk.loc[
-        uk.Date < "2020-07-02", "Notes"
-    ] = "PillarOne: England, N. Ireland, Scotland, Wales; PillarTwo: N. Ireland, Scotland"
-    uk.loc[
-        uk.Date < "2020-07-14", "Notes"
-    ] = "PillarOne: England, N. Ireland, Scotland, Wales; PillarTwo: England, N. Ireland, Scotland"
-
-    uk.to_csv("automated_sheets/United Kingdom.csv", index=False)
+    UnitedKingdom().export()
 
 
 if __name__ == "__main__":
