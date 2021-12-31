@@ -1,4 +1,3 @@
-import os
 import re
 from datetime import datetime, timedelta
 from urllib.error import HTTPError
@@ -8,24 +7,28 @@ import pandas as pd
 
 from cowidev.utils.clean import clean_date
 from cowidev.vax.utils.incremental import merge_with_current_data
-from cowidev.utils import paths
+from cowidev.utils import paths, clean_count
 
 
 class Spain:
-    location: str = "Spain"
-    vaccine_mapping: dict = {
+    location = "Spain"
+    vaccine_mapping = {
         "Pfizer": "Pfizer/BioNTech",
         "Moderna": "Moderna",
         "AstraZeneca": "Oxford/AstraZeneca",
         "Janssen": "Johnson&Johnson",
     }
-    _date_field_raw: str = "Fecha de la última vacuna registrada (2)"
-    _max_days_back: int = 20
+    _date_field_raw = "Fecha de la última vacuna registrada (2)"
+    _max_days_back = 20
 
     def read(self, last_update: str) -> pd.Series:
         return self._parse_data(last_update)
 
     def _parse_data(self, last_update: str):
+        """Goes back _max_days_back days to retrieve data.
+
+        Does not exceed `last_update` date.
+        """
         records = []
         for days in range(self._max_days_back):
             date_it = clean_date(datetime.now() - timedelta(days=days))
@@ -36,11 +39,11 @@ class Spain:
                 try:
                     df_ = pd.read_excel(source, index_col=0, parse_dates=[self._date_field_raw])
                 except HTTPError:
-                    print("No available!")
+                    print(f"Date {date_it} not available!")
                 else:
                     # print("Adding!")
                     self._check_vaccine_names(df_)
-                    ds = self._parse_ds_data(df_, source)
+                    ds = self._parse_data_day(df_, source)
                     records.append(ds)
             else:
                 # print("End!")
@@ -50,12 +53,13 @@ class Spain:
         print("No data being added to Spain")
         return None
 
-    def _parse_ds_data(self, df: pd.DataFrame, source: str) -> pd.Series:
+    def _parse_data_day(self, df: pd.DataFrame, source: str) -> pd.Series:
+        """Parse data for a single day"""
         df.loc[~df.index.isin(["Sanidad Exterior"]), self._date_field_raw].dropna().max()
         data = {
-            "total_vaccinations": df.loc["Totales", "Dosis administradas (2)"].item(),
-            "people_vaccinated": df.loc["Totales", "Nº Personas con al menos 1 dosis"].item(),
-            "people_fully_vaccinated": df.loc["Totales", "Nº Personas vacunadas(pauta completada)"].item(),
+            "total_vaccinations": clean_count(df.loc["Totales", "Dosis administradas (2)"]),
+            "people_vaccinated": clean_count(df.loc["Totales", "Nº Personas con al menos 1 dosis"]),
+            "people_fully_vaccinated": clean_count(df.loc["Totales", "Nº Personas vacunadas(pauta completada)"]),
             "date": clean_date(
                 df.loc[
                     ~df.index.isin(["Sanidad Exterior"]),
@@ -67,10 +71,9 @@ class Spain:
             "source_url": source,
             "vaccine": ", ".join(self._get_vaccine_names(df, translate=True)),
         }
-        col_boosters = "Nº Personas con dosis adicional"
-        if col_boosters in df.columns:
+        if (col_boosters := "Nº Personas con dosis adicional") in df.columns:
             # print("EEE")
-            data["total_boosters"] = df.loc["Totales", col_boosters].item()
+            data["total_boosters"] = clean_count(df.loc["Totales", col_boosters])
         return pd.Series(data=data)
 
     def _get_source_url(self, dt_str):
@@ -121,3 +124,7 @@ class Spain:
 
 def main():
     Spain().export()
+
+
+if __name__ == "__main__":
+    main()
