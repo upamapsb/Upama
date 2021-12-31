@@ -20,8 +20,11 @@ def main_source_table_html(url):
     with open(path, "r") as f:
         html = f.read()
     logger.info("Redirecting to owid editing platform...")
-    pyperclip.copy(html)
-    webbrowser.open(url)
+    try:
+        pyperclip.copy(html)
+        webbrowser.open(url)
+    except:
+        print(f"Can't copy content and open browser. Please visit {url} and copy the content from {path}")
 
 
 def main_megafile():
