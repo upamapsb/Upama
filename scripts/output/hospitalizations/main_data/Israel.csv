@@ -656,19 +656,20 @@ date,indicator,value,entity
 2021-12-16,Daily hospital occupancy,145.0,Israel
 2021-12-17,Daily hospital occupancy,145.0,Israel
 2021-12-18,Daily hospital occupancy,146.0,Israel
-2021-12-19,Daily hospital occupancy,152.0,Israel
-2021-12-20,Daily hospital occupancy,155.0,Israel
-2021-12-21,Daily hospital occupancy,143.0,Israel
-2021-12-22,Daily hospital occupancy,146.0,Israel
-2021-12-23,Daily hospital occupancy,158.0,Israel
-2021-12-24,Daily hospital occupancy,157.0,Israel
-2021-12-25,Daily hospital occupancy,159.0,Israel
-2021-12-26,Daily hospital occupancy,176.0,Israel
-2021-12-27,Daily hospital occupancy,167.0,Israel
-2021-12-28,Daily hospital occupancy,173.0,Israel
-2021-12-29,Daily hospital occupancy,175.0,Israel
-2021-12-30,Daily hospital occupancy,185.0,Israel
-2021-12-31,Daily hospital occupancy,169.0,Israel
+2021-12-19,Daily hospital occupancy,153.0,Israel
+2021-12-20,Daily hospital occupancy,156.0,Israel
+2021-12-21,Daily hospital occupancy,144.0,Israel
+2021-12-22,Daily hospital occupancy,147.0,Israel
+2021-12-23,Daily hospital occupancy,160.0,Israel
+2021-12-24,Daily hospital occupancy,159.0,Israel
+2021-12-25,Daily hospital occupancy,161.0,Israel
+2021-12-26,Daily hospital occupancy,179.0,Israel
+2021-12-27,Daily hospital occupancy,170.0,Israel
+2021-12-28,Daily hospital occupancy,176.0,Israel
+2021-12-29,Daily hospital occupancy,180.0,Israel
+2021-12-30,Daily hospital occupancy,196.0,Israel
+2021-12-31,Daily hospital occupancy,211.0,Israel
+2022-01-01,Daily hospital occupancy,185.0,Israel
 2020-08-17,Daily ICU occupancy,112.0,Israel
 2020-08-18,Daily ICU occupancy,121.0,Israel
 2020-08-19,Daily ICU occupancy,116.0,Israel
@@ -1170,7 +1171,8 @@ date,indicator,value,entity
 2021-12-28,Daily ICU occupancy,47.0,Israel
 2021-12-29,Daily ICU occupancy,45.0,Israel
 2021-12-30,Daily ICU occupancy,45.0,Israel
-2021-12-31,Daily ICU occupancy,44.0,Israel
+2021-12-31,Daily ICU occupancy,45.0,Israel
+2022-01-01,Daily ICU occupancy,42.0,Israel
 2020-03-08,Weekly new hospital admissions,22.0,Israel
 2020-03-09,Weekly new hospital admissions,35.0,Israel
 2020-03-10,Weekly new hospital admissions,54.0,Israel
@@ -1822,19 +1824,20 @@ date,indicator,value,entity
 2021-12-16,Weekly new hospital admissions,88.0,Israel
 2021-12-17,Weekly new hospital admissions,90.0,Israel
 2021-12-18,Weekly new hospital admissions,82.0,Israel
-2021-12-19,Weekly new hospital admissions,84.0,Israel
-2021-12-20,Weekly new hospital admissions,90.0,Israel
-2021-12-21,Weekly new hospital admissions,85.0,Israel
-2021-12-22,Weekly new hospital admissions,88.0,Israel
-2021-12-23,Weekly new hospital admissions,98.0,Israel
-2021-12-24,Weekly new hospital admissions,109.0,Israel
-2021-12-25,Weekly new hospital admissions,112.0,Israel
-2021-12-26,Weekly new hospital admissions,121.0,Israel
-2021-12-27,Weekly new hospital admissions,129.0,Israel
-2021-12-28,Weekly new hospital admissions,153.0,Israel
-2021-12-29,Weekly new hospital admissions,165.0,Israel
-2021-12-30,Weekly new hospital admissions,172.0,Israel
-2021-12-31,Weekly new hospital admissions,148.0,Israel
+2021-12-19,Weekly new hospital admissions,85.0,Israel
+2021-12-20,Weekly new hospital admissions,91.0,Israel
+2021-12-21,Weekly new hospital admissions,86.0,Israel
+2021-12-22,Weekly new hospital admissions,89.0,Israel
+2021-12-23,Weekly new hospital admissions,100.0,Israel
+2021-12-24,Weekly new hospital admissions,111.0,Israel
+2021-12-25,Weekly new hospital admissions,114.0,Israel
+2021-12-26,Weekly new hospital admissions,123.0,Israel
+2021-12-27,Weekly new hospital admissions,131.0,Israel
+2021-12-28,Weekly new hospital admissions,155.0,Israel
+2021-12-29,Weekly new hospital admissions,169.0,Israel
+2021-12-30,Weekly new hospital admissions,182.0,Israel
+2021-12-31,Weekly new hospital admissions,187.0,Israel
+2022-01-01,Weekly new hospital admissions,179.0,Israel
 2020-03-14,Weekly new ICU admissions,555.0,Israel
 2020-03-15,Weekly new ICU admissions,720.0,Israel
 2020-03-16,Weekly new ICU admissions,880.0,Israel
@@ -2480,16 +2483,17 @@ date,indicator,value,entity
 2021-12-16,Weekly new ICU admissions,659.0,Israel
 2021-12-17,Weekly new ICU admissions,657.0,Israel
 2021-12-18,Weekly new ICU admissions,635.0,Israel
-2021-12-19,Weekly new ICU admissions,621.0,Israel
-2021-12-20,Weekly new ICU admissions,615.0,Israel
-2021-12-21,Weekly new ICU admissions,609.0,Israel
-2021-12-22,Weekly new ICU admissions,607.0,Israel
-2021-12-23,Weekly new ICU admissions,617.0,Israel
-2021-12-24,Weekly new ICU admissions,636.0,Israel
-2021-12-25,Weekly new ICU admissions,666.0,Israel
-2021-12-26,Weekly new ICU admissions,703.0,Israel
-2021-12-27,Weekly new ICU admissions,742.0,Israel
-2021-12-28,Weekly new ICU admissions,810.0,Israel
-2021-12-29,Weekly new ICU admissions,887.0,Israel
-2021-12-30,Weekly new ICU admissions,961.0,Israel
-2021-12-31,Weekly new ICU admissions,1000.0,Israel
+2021-12-19,Weekly new ICU admissions,622.0,Israel
+2021-12-20,Weekly new ICU admissions,617.0,Israel
+2021-12-21,Weekly new ICU admissions,612.0,Israel
+2021-12-22,Weekly new ICU admissions,611.0,Israel
+2021-12-23,Weekly new ICU admissions,623.0,Israel
+2021-12-24,Weekly new ICU admissions,644.0,Israel
+2021-12-25,Weekly new ICU admissions,676.0,Israel
+2021-12-26,Weekly new ICU admissions,714.0,Israel
+2021-12-27,Weekly new ICU admissions,754.0,Israel
+2021-12-28,Weekly new ICU admissions,823.0,Israel
+2021-12-29,Weekly new ICU admissions,903.0,Israel
+2021-12-30,Weekly new ICU admissions,985.0,Israel
+2021-12-31,Weekly new ICU admissions,1061.0,Israel
+2022-01-01,Weekly new ICU admissions,1126.0,Israel
