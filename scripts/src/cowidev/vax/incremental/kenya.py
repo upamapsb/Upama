@@ -1,3 +1,4 @@
+import os
 import tempfile
 import re
 
@@ -6,36 +7,47 @@ import pandas as pd
 import PyPDF2
 
 from cowidev.utils.clean import clean_count
-from cowidev.vax.utils.incremental import enrich_data, increment
+from cowidev.vax.utils.incremental import increment, merge_with_current_data
 from cowidev.utils.web import get_soup
+from cowidev.utils import paths
 
 
 class Kenya:
     def __init__(self):
         self.location = "Kenya"
         self.source_url = "https://www.health.go.ke"
+        self.output_file = os.path.join(f"{paths.SCRIPTS.OUTPUT_VAX_MAIN}", f"{self.location}.csv")
+        self.last_update = self.get_last_update()
 
     def read(self):
-        url_pdf = self._parse_pdf_link(self.source_url)
-        pages = self._get_text_from_pdf(url_pdf)
-        total_vaccinations, people_vaccinated, people_fully_vaccinated = self._parse_metrics(pages)
-        # print("metrics")
-        date = self._parse_date(pages[0])
-        # print("date")
-        return pd.Series(
-            {
-                "total_vaccinations": total_vaccinations,
-                "people_vaccinated": people_vaccinated,
-                "people_fully_vaccinated": people_fully_vaccinated,
-                "date": date,
-                "source_url": url_pdf,
-            }
-        )
+        links = self._get_list_pdf_urls()
+        records = []
+        for link in links:
+            pages = self._get_text_from_pdf(link)
+            date = self._parse_date(pages[0])
+            print(date, link)
+            if date <= self.last_update:
+                print("exit")
+                break
+            total_vaccinations, people_vaccinated, people_fully_vaccinated, booster_doses = self._parse_metrics(pages)
+            records.append(
+                {
+                    "total_vaccinations": total_vaccinations,
+                    "people_vaccinated": people_vaccinated,
+                    "people_fully_vaccinated": people_fully_vaccinated,
+                    "total_boosters": booster_doses,
+                    "date": date,
+                    "source_url": link,
+                }
+            )
+        return pd.DataFrame(records)
 
-    def _parse_pdf_link(self, url: str) -> str:
-        soup = get_soup(url, verify=False)
-        url_pdf = soup.find("a", {"href": re.compile(".*IMMUNIZATION.*pdf$")})["href"]
-        return url_pdf
+    def _get_list_pdf_urls(self):
+        soup = get_soup(self.source_url, verify=False)
+        links = list(
+            map(lambda x: x.get("href"), soup.findAll("a", text=re.compile("MINISTRY OF HEALTH KENYA COVID-19")))
+        )
+        return links
 
     def _get_text_from_pdf(self, url_pdf: str) -> str:
         def _extract_pdf_text(reader, n):
@@ -62,24 +74,32 @@ class Kenya:
 
     def _parse_metrics(self, pages: list):
         regex = (
-            r"doses administered above 18 ye?a?rs ([\d,.]+) partially vaccinated above 18 ye?a?rs"
-            r" ([\d,.]+) fully vaccinated above 18 yrs ([\d,.]+)"
+            r"total doses administered ([\d,.]+) "
+            r"doses administered above 18 ye?a?rs(?:\(primary schedule\))? ([\d,.]+) "
+            r"partially vaccinated above 18 ye?a?rs ([\d,.]+) "
+            r"fully vaccinated above 18 yrs ([\d,.]+)"
+            r".*"
+            r"doses administered 15-18yrs ([\d,.]+) "
+            r"booster doses ([\d,.]+)"
         )
         data = re.search(regex, pages[0])
-        adults_total_vaccinations = clean_count(data.group(1))
-        adults_partially_vaccinated = clean_count(data.group(2))
-        people_fully_vaccinated = clean_count(data.group(3))
+        total_vaccinations = clean_count(data.group(1))
+        total_vaccinations_adults = clean_count(data.group(2))
+        partially_vaccinated_adults = clean_count(data.group(3))
+        fully_vaccinated_adults = clean_count(data.group(4))
+        total_vaccinations_teenagers = clean_count(data.group(5))
+        booster_doses = clean_count(data.group(6))
 
-        regex = r"15-18.*received first dose \(pfizer vaccine\) ([\d,]+)"
-        data = re.search(regex, pages[0])
-        teenagers_first_doses = clean_count(data.group(1))
+        if not total_vaccinations_adults + total_vaccinations_teenagers + booster_doses == total_vaccinations:
+            raise ValueError(
+                f"Assumptions do not hold. Assumptions made were: "
+                r"1) doses administered 15-18 yrs = first doses 15-18 yrs"
+            )
 
-        total_vaccinations = adults_total_vaccinations + teenagers_first_doses
+        # Correct people vaccinated with JJ doses and add teenager data
+        people_vaccinated = partially_vaccinated_adults + self._extract_jj_doses(pages) + total_vaccinations_teenagers
 
-        # Correct people vaccinated with JJ doses
-        people_vaccinated = adults_partially_vaccinated + self._extract_jj_doses(pages) + teenagers_first_doses
-
-        return total_vaccinations, people_vaccinated, people_fully_vaccinated
+        return total_vaccinations, people_vaccinated, fully_vaccinated_adults, booster_doses
 
     def _extract_jj_doses(self, pages):
         rex_header = (
@@ -94,27 +114,25 @@ class Kenya:
                 doses_jj = re.search(rex_jj, page).group(1)
         return clean_count(doses_jj)
 
-    def pipe_location(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(ds, "location", self.location)
-
-    def pipe_vaccine(self, ds: pd.Series) -> pd.Series:
-        return enrich_data(ds, "vaccine", "Oxford/AstraZeneca, Sputnik V")
+    def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
+        return df.assign(location=self.location, vaccine="Oxford/AstraZeneca, Sputnik V")
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return ds.pipe(self.pipe_location).pipe(self.pipe_vaccine)
+        return ds.pipe(self.pipe_metadata)
 
-    def to_csv(self):
-        data = self.read().pipe(self.pipeline)
-        increment(
-            location=data["location"],
-            total_vaccinations=data["total_vaccinations"],
-            people_vaccinated=data["people_vaccinated"],
-            people_fully_vaccinated=data["people_fully_vaccinated"],
-            date=data["date"],
-            source_url=data["source_url"],
-            vaccine=data["vaccine"],
-        )
+    def get_last_update(self):
+        return pd.read_csv(self.output_file).date.max()
+
+    def export(self):
+        df = self.read().pipe(self.pipeline)
+        df = merge_with_current_data(df, self.output_file)
+        df.to_csv(self.output_file, index=False)
 
 
 def main():
-    Kenya().to_csv()
+    Kenya().export()
+
+
+if __name__ == "__main__":
+
+    main()
