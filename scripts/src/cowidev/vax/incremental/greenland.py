@@ -1,10 +1,10 @@
-import datetime
+from datetime import datetime
 import re
 
 import pandas as pd
 
-from cowidev.utils.clean import clean_count, extract_clean_date
-from cowidev.utils.web.scraping import get_soup
+from cowidev.utils import clean_count, get_soup
+from cowidev.utils.clean.dates import localdate, extract_clean_date
 from cowidev.vax.utils.incremental import enrich_data, increment
 
 
@@ -30,9 +30,15 @@ class Greenland:
         return {"people_vaccinated": dose_1, "people_fully_vaccinated": dose_2}
 
     def _parse_data_date(self, soup) -> dict:
-        date = soup.find(class_="text-gray-500").text
-        date = date.strip() + str(datetime.date.today().year)
-        date = extract_clean_date(date, self.regex["date"], "%d. %B%Y", lang="en")
+        date_raw = soup.find(class_="text-gray-500").text
+        date = extract_clean_date(
+            date_raw.strip() + str(datetime.now().year), self.regex["date"], "%d. %B%Y", lang="en"
+        )
+        if date > localdate("America/Havana", force_today=True):
+            date = extract_clean_date(
+                date_raw.strip() + str(datetime.now().year - 1), self.regex["date"], "%d. %B%Y", lang="en"
+            )
+
         return {"date": date}
 
     def pipe_source(self, ds: pd.Series) -> pd.Series:
