@@ -123,5 +123,11 @@ def check_for_default_profile():
         )
 
 
+def get_metadata(s3_path: str, bucket_name: str = "covid-19"):
+    client = connect()
+    response = client.head_object(Bucket=bucket_name, Key=s3_path)
+    return response
+
+
 class UploadError(Exception):
     pass
