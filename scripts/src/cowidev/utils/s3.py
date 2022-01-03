@@ -69,6 +69,35 @@ def upload_to_s3(
     return None
 
 
+def download_from_s3(
+    s3_path: Union[str, list], local_path: Union[str, list], bucket_name: str = "covid-19"
+) -> Optional[str]:
+    print("Downloading from S3…")
+    client = connect()
+    try:
+        client.download_file(bucket_name, s3_path, local_path)
+    except ClientError as e:
+        logging.error(e)
+        raise UploadError(e)
+
+
+def df_from_s3(
+    s3_path: Union[str, list],
+    bucket_name: str = "covid-19",
+    extension: str = "csv",
+    **kwargs,
+) -> Optional[str]:
+    with tempfile.TemporaryDirectory() as f:
+        output_path = os.path.join(f, f"file.{extension}")
+        download_from_s3(s3_path, output_path, bucket_name)
+        if extension == "csv":
+            return pd.read_csv(output_path, **kwargs)
+        elif extension == "xlsx":
+            return pd.read_excel(output_path, **kwargs)
+        else:
+            raise ValueError(f"Unknown extension {extension}. Only use csv or xlsx!")
+
+
 def connect(profile_name="default"):
     "Return a connection to Walden's DigitalOcean space."
     check_for_default_profile()
