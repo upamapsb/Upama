@@ -16,10 +16,10 @@ class Estonia(CountryTestBase):
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.groupby("StatisticsDate", as_index=False).sum().sort_values("StatisticsDate")
-        df = df.pipe(self.pipe_rename_columns).pipe(self.pipe_metadata)
+        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metadata)
 
     def export(self):
-        df = self.read()
+        df = self.read().pipe(self.pipeline)
         self.export_datafile(df)
 
 
