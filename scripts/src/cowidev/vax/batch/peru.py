@@ -23,6 +23,8 @@ class Peru:
             "PFIZER": "Pfizer/BioNTech",
             "ASTRAZENECA": "Oxford/AstraZeneca",
         }
+        # Based on https://github.com/jmcastagnetto/covid-19-peru-vacunas/issues/5
+        self.date_start = "2021-02-08"
 
     def read(self):
         return pd.read_csv(
@@ -36,6 +38,9 @@ class Peru:
     def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.rename(columns={"fecha_vacunacion": "date", "fabricante": "vaccine"})
         return df.dropna(subset=["vaccine"])
+
+    def pipe_filter_bydate(self, df: pd.DataFrame) -> pd.DataFrame:
+        return df[df.date >= self.date_start]
 
     def pipe_checks(self, df: pd.DataFrame) -> pd.DataFrame:
         # Check vaccine names
@@ -74,6 +79,7 @@ class Peru:
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
             df.pipe(self.pipe_rename_columns)
+            .pipe(self.pipe_filter_bydate)
             .pipe(self.pipe_checks)
             .pipe(self.pipe_rename_vaccines)
             .pipe(self.pipe_format)
