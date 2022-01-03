@@ -243,3 +243,12 @@ if [ $hour == 20 ] ; then
   git commit -m "data(variants): automated update"
   git push
 fi
+
+# =====================================================================
+# VAX ICER
+# This basically download the vaccination data needed for some countries
+# The idea is that here we put extremely slow scripts, so their updates are managed separately
+if [ $hour == 3 ] ; then
+  echo "Generating ICE vaccination data..."
+  python -m cowidev.vax.icer
+fi

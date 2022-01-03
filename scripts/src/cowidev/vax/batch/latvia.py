@@ -1,7 +1,11 @@
 import pandas as pd
 
 from cowidev.vax.utils.files import export_metadata_manufacturer
+from cowidev.vax.utils.base import CountryVaxBase
 from cowidev.utils import paths
+from cowidev.utils.log import get_logger
+
+logger = get_logger()
 
 
 vaccine_mapping = {
@@ -22,12 +26,11 @@ vaccine_mapping = {
 one_dose_vaccines = ["Johnson&Johnson"]
 
 
-class Latvia:
-    def __init__(self):
-        self.location = "Latvia"
-        self.source_page = "https://data.gov.lv/dati/eng/dataset/covid19-vakcinacijas"
-        self.source_url_1 = "https://data.gov.lv/dati/datastore/dump/51725018-49f3-40d1-9280-2b13219e026f"
-        self.source_url_2 = "https://data.gov.lv/dati/datastore/dump/9320d913-a4a2-4172-b521-73e58c2cfe83"
+class Latvia(CountryVaxBase):
+    location = "Latvia"
+    source_page = "https://data.gov.lv/dati/eng/dataset/covid19-vakcinacijas"
+    source_url_1 = "https://data.gov.lv/dati/datastore/dump/51725018-49f3-40d1-9280-2b13219e026f"
+    source_url_2 = "https://data.gov.lv/dati/datastore/dump/9320d913-a4a2-4172-b521-73e58c2cfe83"
 
     def _read_one(self, url: str):
         return pd.read_csv(
@@ -41,7 +44,9 @@ class Latvia:
         )
 
     def read(self):
-        return pd.concat([self._read_one(self.source_url_1), self._read_one(self.source_url_2)], ignore_index=True)
+        df_1 = self._read_one(self.source_url_1)
+        df_2 = self._read_one(self.source_url_2)
+        return pd.concat([df_1, df_2], ignore_index=True)
 
     def pipe_base(self, df: pd.DataFrame) -> pd.DataFrame:
         df["Vakcinācijas datums"] = df["Vakcinācijas datums"].str.slice(0, 10)
@@ -154,10 +159,14 @@ class Latvia:
         return df
 
     def export(self):
-        df = self.read()
+        logger.info("read")
+        # df = self.read()
+        df = self.from_ice()  # temporary
+        logger.info("pipe_base")
         df_base = df.pipe(self.pipe_base)
 
         # Main data
+        logger.info("pipeline")
         df_base.pipe(self.pipeline).to_csv(paths.out_vax(self.location), index=False)
 
         # Manufacturer data

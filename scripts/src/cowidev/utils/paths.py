@@ -11,6 +11,12 @@ def _get_project_dir(err: bool = False):
     return project_dir
 
 
+def _get_s3_dir():
+    _s3_dir = {"INTERNAL": "internal", "INTERNAL_VAX": "internal/vax", "VAX_ICE": "internal/vax/ice"}
+    B = make_dataclass("Bucket", _s3_dir.keys(), frozen=True)
+    return B(**_s3_dir)
+
+
 def _get_scripts_dir(project_dir: str):
     # SCRIPTS DIRECTORY
     _SCRIPTS_DIR = os.path.join(project_dir, "scripts")
@@ -112,6 +118,7 @@ def _get_data_dir(project_dir: str):
 PROJECT_DIR = _get_project_dir()
 SCRIPTS = _get_scripts_dir(PROJECT_DIR)
 DATA = _get_data_dir(PROJECT_DIR)
+S3 = _get_s3_dir()
 
 
 def out_vax(country: str, public=False, age=False, manufacturer=False, proposal=False):
