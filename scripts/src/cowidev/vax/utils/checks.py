@@ -191,8 +191,12 @@ class CountryChecker:
                 raise ValueError(f"{self.location} -- total_vaccinations can't be < total_boosters!")
         if ("people_vaccinated" in df.columns) and ("people_fully_vaccinated" in df.columns):
             df_ = df[["people_vaccinated", "people_fully_vaccinated"]].dropna().copy()
-            if (df_["people_vaccinated"] < df_["people_fully_vaccinated"]).any():
-                raise ValueError(f"{self.location} -- people_vaccinated can't be < people_fully_vaccinated!")
+            msk = df_["people_vaccinated"] < df_["people_fully_vaccinated"]
+            if (msk).any():
+                raise ValueError(
+                    f"{self.location} -- people_vaccinated can't be <"
+                    f" people_fully_vaccinated!\n{df.loc[msk[msk].index]}"
+                )
 
     def _check_metrics_anomalies(self, df):
         for metric in self.metrics_present:
