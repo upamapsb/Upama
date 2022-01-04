@@ -60,8 +60,8 @@ class Taiwan:
             raise ValueError(f"There are some unknown columns: {cols}")
 
         # Fix index
-        df["劑次"] = df["劑次"].str.replace("\s+", "")
-        index_ = df["廠牌"].shift().fillna(method="bfill")
+        df["劑次"] = df["劑次"].str.replace("\s+", "", regex=True)
+        index_ = df["廠牌"].shift(periods=2).fillna(method="bfill")
         df["廠牌"] = index_
         df = df.set_index(["廠牌", "劑次"])
         # Drop NaNs
@@ -95,7 +95,8 @@ class Taiwan:
         num_dose1 = clean_count(df.loc["總計", "第1劑"]["total"])
         num_dose2 = clean_count(df.loc["總計", "第2劑"]["total"])
         num_booster1 = clean_count(df.loc["總計", "基礎加強劑"]["total"])
-        num_booster2 = clean_count(df.loc[pd.NA, "追加劑"]["total"])
+        num_booster2 = clean_count(df.loc["總計", "追加劑"]["total"])
+
         return {
             "total_vaccinations": num_dose1 + num_dose2,
             "people_vaccinated": num_dose1,
@@ -113,7 +114,7 @@ class Taiwan:
         date_raw = soup.find(class_="download").text
         regex = r"(\d{4})\sCOVID-19疫苗"
         date_str = re.search(regex, date_raw).group(1)
-        date_str = clean_date(f"2021{date_str}", fmt="%Y%m%d")
+        date_str = clean_date(f"2022{date_str}", fmt="%Y%m%d")
         return date_str
 
     def pipe_metrics(self, ds: pd.Series) -> pd.Series:
