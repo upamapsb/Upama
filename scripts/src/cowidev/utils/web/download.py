@@ -26,8 +26,16 @@ def read_xlsx_from_url(url: str, as_series: bool = False, **kwargs) -> pd.DataFr
     return df
 
 
-def download_file_from_url(url, save_path, chunk_size=128):
-    r = requests.get(url, stream=True)
+def read_csv_from_url(url, timeout=30, **kwargs):
+    with tempfile.NamedTemporaryFile(mode="w+", delete=False) as tmp:
+        download_file_from_url(url, tmp.name, timeout=timeout)
+        df = pd.read_csv(tmp.name, **kwargs)
+    # df = df.dropna(how="all")
+    return df
+
+
+def download_file_from_url(url, save_path, chunk_size=1024 * 1024, timeout=30):
+    r = requests.get(url, stream=True, timeout=timeout)
     with open(save_path, "wb") as fd:
         for chunk in r.iter_content(chunk_size=chunk_size):
             fd.write(chunk)
