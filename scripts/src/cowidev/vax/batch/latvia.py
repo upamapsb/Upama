@@ -162,11 +162,9 @@ class Latvia(CountryVaxBase):
         logger.info("read")
         # df = self.read()
         df = self.from_ice()  # temporary
-        logger.info("pipe_base")
         df_base = df.pipe(self.pipe_base)
 
         # Main data
-        logger.info("pipeline")
         df_base.pipe(self.pipeline).to_csv(paths.out_vax(self.location), index=False)
 
         # Manufacturer data
