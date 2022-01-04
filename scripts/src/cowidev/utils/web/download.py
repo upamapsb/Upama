@@ -3,7 +3,7 @@ import tempfile
 import pandas as pd
 
 
-def read_xlsx_from_url(url: str, as_series: bool = False, **kwargs) -> pd.DataFrame:
+def read_xlsx_from_url(url: str, timeout=30, as_series: bool = False, drop=False, **kwargs) -> pd.DataFrame:
     """Download and load xls file from URL.
 
     Args:
@@ -15,14 +15,13 @@ def read_xlsx_from_url(url: str, as_series: bool = False, **kwargs) -> pd.DataFr
     Returns:
         pandas.DataFrame: Data loaded.
     """
-    headers = {"User-Agent": "Mozilla/5.0 (X11; Linux i686)"}
-    response = requests.get(url, headers=headers)
     with tempfile.NamedTemporaryFile() as tmp:
-        with open(tmp.name, "wb") as f:
-            f.write(response.content)
+        download_file_from_url(url, tmp.name, timeout=timeout)
         df = pd.read_excel(tmp.name, **kwargs)
     if as_series:
         return df.T.squeeze()
+    if drop:
+        df = df.dropna(how="all")
     return df
 
 
