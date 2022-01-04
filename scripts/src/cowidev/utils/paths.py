@@ -63,6 +63,7 @@ def _get_scripts_dir(project_dir: str):
         "OUTPUT_VAX_META_AGE": os.path.join(_SCRIPTS_OUTPUT_VAX_DIR, "metadata", "locations_age.csv"),
         "OUTPUT_VAX_META_MANUFACT": os.path.join(_SCRIPTS_OUTPUT_VAX_DIR, "metadata", "locations_manufacturer.csv"),
         "OUTPUT_VAX_PROPOSALS": os.path.join(_SCRIPTS_OUTPUT_VAX_DIR, "proposals"),
+        "OUTPUT_VAX_LOG": os.path.join(_SCRIPTS_OUTPUT_VAX_DIR, "log"),
         "OUTPUT_TEST": _SCRIPTS_OUTPUT_TEST_DIR,
         "DOCS": _SCRIPTS_DOCS_DIR,
         "DOCS_VAX": os.path.join(_SCRIPTS_DOCS_DIR, "vaccination"),
