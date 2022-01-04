@@ -172,6 +172,7 @@ def _subset_and_rename_columns(df):
     df2 = df[index_cols]
     for row in MAPPING[MAPPING.keep & ~MAPPING.derived].itertuples():
         df2.loc[:, row.code_name] = df[row.label]
+    df2 = df2.dropna(subset=["date"])
     return df2
 
 
