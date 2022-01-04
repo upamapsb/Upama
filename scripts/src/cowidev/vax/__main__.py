@@ -2,9 +2,9 @@ import argparse
 
 from cowidev.vax.cmd import main_get_data, main_process_data
 from cowidev.vax.cmd.get_data import (
-    modules_name,
-    modules_name_batch,
-    modules_name_incremental,
+    MODULES_NAME,
+    MODULES_NAME_BATCH,
+    MODULES_NAME_INCREMENTAL,
     country_to_module,
 )
 
@@ -12,11 +12,11 @@ from cowidev.vax.cmd.get_data import (
 def _parse_args():
     def _countries_to_modules(s):
         if s == "all":
-            return modules_name
+            return MODULES_NAME
         elif s == "incremental":
-            return modules_name_batch
+            return MODULES_NAME_BATCH
         elif s == "batch":
-            return modules_name_incremental
+            return MODULES_NAME_INCREMENTAL
         # Comma separated string to list of strings
         countries = [ss.strip().replace(" ", "_").lower() for ss in s.split(",")]
         # Verify validity of countries
