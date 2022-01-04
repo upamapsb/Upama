@@ -35,9 +35,9 @@ class Cuba:
     def _parse_date(self, soup):
         match = re.search(self.regex["title"], soup.text)
         date_str = match.group(1).replace("ro", "")
-        date = clean_date(f"{date_str} {datetime.now().year}", "%d de %B %Y", lang="es")
+        date = clean_date(f"{date_str} {datetime.now().year}", "%d de %b %Y", lang="es")
         if date > localdate("America/Havana", force_today=True):
-            date = clean_date(f"{date_str} {datetime.now().year-1}", "%d de %B %Y", lang="es")
+            date = clean_date(f"{date_str} {datetime.now().year-1}", "%d de %b %Y", lang="es")
         return date
 
     def _parse_metrics(self, soup):
