@@ -88,7 +88,7 @@ class ECDC:
         self.vaccine_mapping = {**ECDC_VACCINES, "UNK": "Unknown"}
 
     def read(self):
-        return pd.read_csv(self.source_url)
+        return pd.read_csv(self.source_url, encoding="utf-8", engine="c")
 
     def _load_country_mapping(self, iso_path: str):
         country_mapping = pd.read_csv(iso_path)
