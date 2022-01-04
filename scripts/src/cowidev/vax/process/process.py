@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import pandas as pd
 
 from cowidev.vax.utils.checks import country_df_sanity_checks
@@ -9,6 +9,8 @@ def process_location(df: pd.DataFrame, monotonic_check_skip: list = [], anomaly_
     # print(df.tail(1))
     # Only report up to previous day to avoid partial reporting
     df = df.assign(date=pd.to_datetime(df.date, dayfirst=True))
+    if df.date.max().date() > (datetime.now().date() + timedelta(days=1)):
+        raise ValueError(f"{df.location.values[0]} -- Date in the future!")
     df = df[df.date.dt.date < datetime.now().date()]
     # Default columns for second doses
     if "people_vaccinated" not in df:
