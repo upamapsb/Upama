@@ -94,7 +94,7 @@ def extract_clean_date(
     Example:
 
     ```python
-    >>> from cowidev.vax.utils.utils import extract_clean_date
+    >>> from cowidev.utils import extract_clean_date
     >>> text = "Something irrelevant. This page was last updated on 25 May 2021 at 09:05hrs."
     >>> date_str = extract_clean_date(
         text=text,
@@ -206,9 +206,12 @@ def _setlocale(name: str):
     # REF: https://stackoverflow.com/questions/18593661/how-do-i-strftime-a-date-object-in-a-different-locale
     with LOCALE_LOCK:
         saved = locale.setlocale(locale.LC_TIME, DEFAULT_LOCALE)
+        print("DEBUG -- init", saved)
         try:
+            print("DEBUG -- try", name)
             yield locale.setlocale(locale.LC_TIME, name)
         finally:
+            print("DEBUG -- finally", saved)
             locale.setlocale(locale.LC_TIME, saved)
 
 
