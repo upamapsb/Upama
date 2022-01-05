@@ -66,15 +66,14 @@ class TrinidadTobago:
 
     def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
         df["people_fully_vaccinated"] = df.people_fully_vaccinated.fillna(method="ffill")
-        df["people_vaccinated"] = df.people_vaccinated_2dosevax.fillna(method="ffill") + df.d1_jj.fillna(
+        df["people_vaccinated"] = df.people_vaccinated_2dosevax.fillna(method="ffill").fillna(0) + df.d1_jj.fillna(
             method="ffill"
-        )
+        ).fillna(0)
         df["total_vaccinations"] = (
-            df.people_vaccinated.fillna(method="ffill")
-            + df.people_fully_vaccinated_2dosevax.fillna(method="ffill")
-            + df.total_boosters.fillna(method="ffill")
+            df.people_vaccinated.fillna(method="ffill").fillna(0)
+            + df.people_fully_vaccinated_2dosevax.fillna(method="ffill").fillna(0)
+            + df.total_boosters.fillna(method="ffill").fillna(0)
         )
-        df["total_boosters"] = df.total_boosters.fillna(method="ffill")
         return df
 
     def pipe_location(self, df: pd.DataFrame) -> pd.DataFrame:
