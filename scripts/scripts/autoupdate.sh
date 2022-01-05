@@ -32,29 +32,6 @@ git reset --hard origin/master
 git pull
 
 # =====================================================================
-# ECDC
-
-# Attempt to download ECDC CSV
-# run_python 'import ecdc; ecdc.download_csv()'
-
-# If there are any unstaged changes in the repo, then the
-# CSV has changed, and we need to run the update script.
-# if has_changed ./scripts/input/ecdc/releases/latest.csv; then
-#   echo "Generating ECDC files..."
-#   python $SCRIPTS_DIR/scripts/ecdc.py latest.csv --skip-download
-#   git add .
-#   git commit -m "Automated ECDC update"
-#   git push
-# else
-#   echo "ECDC export is up to date"
-# fi
-
-# Always run the database update.
-# The script itself contains a check against the database
-# to make sure it doesn't run unnecessarily.
-# run_python 'import ecdc; ecdc.update_db()'
-
-# =====================================================================
 # JHU
 
 # Attempt to download JHU CSVs
@@ -68,7 +45,7 @@ if has_changed './scripts/input/jhu/*'; then
   python -m cowidev.jhu etl --skip-download
   # python $SCRIPTS_DIR/scripts/jhu.py --skip-download
   git add .
-  git commit -m "Automated JHU update"
+  git commit -m "data(jhu): automated update"
   git push
 else
   echo "JHU export is up to date"
@@ -101,7 +78,7 @@ if [ $(expr $CURRENT_TIME - $UPDATED_TIME) -gt $UPDATE_INTERVAL_SECONDS ]; then
     echo "Generating OxCGRT export..."
     python -m cowidev.oxcgrt grapher-file
     git add .
-    git commit -m "Automated OxCGRT update"
+    git commit -m "data(oxcgrt): automated update"
     git push
   else
     echo "OxCGRT export is up to date"
@@ -140,7 +117,7 @@ python -m cowidev.vax.us_states etl
 python -m cowidev.vax.us_states grapher-file
 if has_changed './public/data/vaccinations/us_state_vaccinations.csv'; then
   git add .
-  git commit -m "data(vax,us-states): update"
+  git commit -m "data(us-vax): update"
   git push
 else
   echo "US vaccination export is up to date"
@@ -157,7 +134,7 @@ if has_changed './scripts/input/sweden/sweden_deaths_per_day.csv'; then
   echo "Generating Swedish Public Health Agency dataset..."
   run_python 'import sweden; sweden.generate_dataset()'
   git add .
-  git commit -m "Automated Swedish Public Health Agency update"
+  git commit -m "data(sweden): automated update"
   git push
 else
   echo "Swedish Public Health Agency export is up to date"
@@ -178,7 +155,7 @@ if [ $hour == 06 ] || [ $hour == 18 ] ; then
   python -m cowidev.hosp etl
   python -m cowidev.hosp grapher-file
   git add .
-  git commit -m "data(hosp): Automated update"
+  git commit -m "data(hosp): automated update"
   git push
 fi
 
@@ -196,7 +173,7 @@ if [ $hour == 17 ] ; then
   echo "Generating UK subnational export..."
   run_python 'import uk_nations; uk_nations.generate_dataset()'
   git add .
-  git commit -m "Automated UK subnational update"
+  git commit -m "data(uk): automated update"
   git push
 fi
 
@@ -219,7 +196,7 @@ if [ $hour == 15 ] ; then
 
   if has_changed './scripts/grapher/Google Mobility Trends (2020).csv'; then
     git add .
-    git commit -m "Automated Google Mobility update"
+    git commit -m "data(mobility): automated update"
     git push
   fi
 
