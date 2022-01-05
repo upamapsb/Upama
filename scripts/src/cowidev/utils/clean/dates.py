@@ -60,7 +60,7 @@ def clean_date(
     # If lang is given, map language to a locale
     if fmt is None:
         raise ValueError("Input date format is required!")
-    if lang is not None:
+    if loc == "" and lang is not None:
         if lang in locale.locale_alias:
             loc = locale.locale_alias[lang]
     if platform == "win32":
