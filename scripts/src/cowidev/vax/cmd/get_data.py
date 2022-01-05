@@ -7,9 +7,8 @@ import pandas as pd
 
 from cowidev.vax.batch import __all__ as batch_countries
 from cowidev.vax.incremental import __all__ as incremental_countries
-from cowidev.utils import paths
-from cowidev.utils.log import get_logger, print_eoe
-from cowidev.utils.s3 import df_from_s3, df_to_s3
+from cowidev.utils.log import get_logger, print_eoe, system_details
+from cowidev.utils.s3 import df_from_s3, df_to_s3, dict_from_s3, dict_to_s3
 from cowidev.utils.clean.dates import localdate
 
 
@@ -26,6 +25,11 @@ country_to_module = {
 MODULES_NAME_BATCH = list(country_to_module_batch.values())
 MODULES_NAME_INCREMENTAL = list(country_to_module_incremental.values())
 MODULES_NAME = MODULES_NAME_BATCH + MODULES_NAME_INCREMENTAL
+
+# S3 paths
+LOG_MACHINES = "log/machines.json"
+LOG_GET_COUNTRIES = "log/vax-get-data-countries.csv"
+LOG_GET_GLOBAL = "log/vax-get-data-global.csv"
 
 
 class CountryDataGetter:
@@ -92,13 +96,15 @@ def main_get_data(
     # Get timing dataframe
     df_exec = _build_df_execution(modules_execution_results)
     # Retry failed modules
-    _retry_modules_failes(modules_execution_results, country_data_getter)
+    _retry_modules_failed(modules_execution_results, country_data_getter)
     # Print timing details
-    _print_timing(t0, t_sec_1, df_exec)
+    t_sec_1, t_min_1, t_sec_2, t_min_2 = _print_timing(t0, t_sec_1, df_exec)
+    # Export log info
+    _export_log_info(df_exec, t_sec_1, t_sec_2)
 
 
 def _build_df_execution(modules_execution_results):
-    df_new = (
+    df_exec = (
         pd.DataFrame(
             [
                 {"module": m["module_name"], "execution_time (sec)": m["time"], "success": m["success"]}
@@ -108,25 +114,44 @@ def _build_df_execution(modules_execution_results):
         .set_index("module")
         .sort_values(by="execution_time (sec)", ascending=False)
     )
-    date_now = localdate(force_today=True)
-    df_new = df_new.assign(date=date_now)
-    print(len(df_new), len(MODULES_NAME), len(df_new) == len(MODULES_NAME))
-    if len(df_new) == len(MODULES_NAME):
-        # df = pd.read_csv(os.path.join(paths.SCRIPTS.OUTPUT_VAX_LOG, "get-data.csv"))
-        df = df_from_s3("log/vax-get-data.csv")
-        df = df[df.date != date_now]
-        df = pd.concat([df, df_new.reset_index()])
-        df_to_s3(df, "log/vax-get-data.csv")
-    return df_new
+    return df_exec
 
 
-os.path.join(paths.SCRIPTS.OUTPUT_VAX_LOG, "get-data.csv")
+def _export_log_info(df_exec, t_sec_1, t_sec_2):
+    # print(len(df_new), len(MODULES_NAME), len(df_new) == len(MODULES_NAME))
+    if len(df_exec) == len(MODULES_NAME):
+        details = system_details()
+        date_now = localdate(force_today=True)
+        machine = details["id"]
+        # Export timings per country
+        df_exec = df_exec.assign(date=date_now, machine=machine)
+        df = df_from_s3(LOG_GET_COUNTRIES)
+        df = df[df.date + df.machine != date_now + machine]
+        df = pd.concat([df, df_exec.reset_index()])
+        df_to_s3(df, LOG_GET_COUNTRIES)
+        # Export machine info
+        data = dict_from_s3(LOG_MACHINES)
+        if details["id"] not in data:
+            data = {**details, **data}
+            dict_to_s3(data, LOG_MACHINES)
+        # Export overall timing
+        report = {"machine": machine, "date": date_now, "t_sec": t_sec_1, "t_sec_retry": t_sec_2}
+        df_new = pd.DataFrame([report])
+        df = df_from_s3(LOG_GET_GLOBAL)
+        df = df[df.date + df.machine != date_now + machine]
+        df = pd.concat([df, df_new])
+        df_to_s3(df, LOG_GET_GLOBAL)
 
 
 def _load_modules_order(modules_name):
     if len(modules_name) < 10:
         return modules_name
-    df = df_from_s3("log/vax-get-data.csv")
+    df = df_from_s3(LOG_GET_COUNTRIES)
+    # Filter by machine
+    # details = system_details()
+    # machine = details["id"]
+    # if machine in df.machine:
+    #     df = df[df.machine == machine]
     # df = pd.read_csv(os.path.join(paths.SCRIPTS.OUTPUT_VAX_LOG, "get-data.csv"))
     module_order_all = (
         df.sort_values("date")
@@ -137,7 +162,7 @@ def _load_modules_order(modules_name):
     return [m for m in module_order_all if m in modules_name]
 
 
-def _retry_modules_failes(modules_execution_results, country_data_getter):
+def _retry_modules_failed(modules_execution_results, country_data_getter):
     modules_failed = [m["module_name"] for m in modules_execution_results if m["success"] is False]
     logger.info(f"\n---\n\nRETRIES ({len(modules_failed)})")
     modules_execution_results = []
@@ -157,6 +182,7 @@ def _print_timing(t0, t_sec_1, df_time):
     print("TIMING DETAILS")
     print(f"Took {t_sec_1} seconds (i.e. {t_min_1} minutes).")
     print(f"Top 20 most time consuming scripts:")
-    print(df_time.head(20))
+    print(df_time[["execution_time (sec)"]].head(20))
     print(f"\nTook {t_sec_2} seconds (i.e. {t_min_2} minutes) [AFTER RETRIALS].")
     print_eoe()
+    return t_sec_1, t_min_1, t_sec_2, t_min_2
