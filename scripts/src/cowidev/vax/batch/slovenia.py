@@ -6,10 +6,11 @@ from cowidev.utils import paths, clean_date
 class Slovenia:
     location = "Slovenia"
     source_url = "https://api.sledilnik.org/api/vaccinations"
+    source_url_ref = "https://covid-19.sledilnik.org/sl/stats"
     vaccine_mapping = {
         "pfizer": "Pfizer/BioNTech",
         "az": "Oxford/AstraZeneca",
-        "moderna": "Modderna",
+        "moderna": "Moderna",
         "janssen": "Johnson&Johnson",
     }
 
@@ -40,7 +41,7 @@ class Slovenia:
         df = df.dropna(subset=["total_vaccinations", "people_vaccinated", "people_fully_vaccinated"], how="all")
         df = df.assign(
             location=self.location,
-            source_url=self.source_url,
+            source_url=self.source_url_ref,
         )
         return df
 
