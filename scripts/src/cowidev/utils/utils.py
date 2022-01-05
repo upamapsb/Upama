@@ -1,12 +1,13 @@
-import os
-import pytz
-import ntpath
-import tempfile
-import json
-
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
+import json
+import ntpath
+import os
+import pytz
+import tempfile
+
 from xlsx2csv import Xlsx2csv
+import pandas as pd
 
 from cowidev.utils.web.download import download_file_from_url
 
@@ -72,3 +73,9 @@ def dict_to_compact_json(d: dict):
         # By having this False, an error will be thrown if a NaN exists in the data.
         allow_nan=False,
     )
+
+
+def check_known_columns(df: pd.DataFrame, known_cols: list) -> None:
+    unknown_cols = set(df.columns).difference(set(known_cols))
+    if len(unknown_cols) > 0:
+        raise Exception(f"Unknown column(s) found: {unknown_cols}")
