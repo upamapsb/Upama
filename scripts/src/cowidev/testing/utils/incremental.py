@@ -35,13 +35,14 @@ def increment(
                 "Country": country,
                 "Units": units,
                 "Date": date,
-                "Cumulative total": count,
                 "Source URL": source_url,
                 "Source label": source_label,
                 "Notes": notes,
             }
         ]
     )
+    if count is not None:
+        df["Cumulative total"] = count
     if daily_change is not None:
         df["Daily change in cumulative total"] = daily_change
 
