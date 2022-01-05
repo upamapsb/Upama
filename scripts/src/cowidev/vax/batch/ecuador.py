@@ -1,10 +1,11 @@
 import pandas as pd
 
+from cowidev.utils import paths
 from cowidev.utils.clean import clean_date_series
+from cowidev.utils.utils import check_known_columns
 from cowidev.vax.utils.checks import VACCINES_ONE_DOSE
 from cowidev.vax.utils.files import export_metadata_manufacturer
 from cowidev.vax.utils.utils import make_monotonic
-from cowidev.utils import paths
 
 
 class Ecuador:
@@ -35,12 +36,10 @@ class Ecuador:
         }
 
     def read(self, source_url: str) -> pd.DataFrame:
-        return pd.read_csv(source_url)
-
-    def pipe_check_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        n_columns = df.shape[1]
-        if n_columns != 6:
-            raise ValueError(f"The provided input does not have {n_columns} columns. It has n_columns columns")
+        df = pd.read_csv(source_url)
+        check_known_columns(
+            df, ["zona", "fabricante", "dosis_total", "primera_dosis", "segunda_dosis", "administered_at"]
+        )
         return df
 
     def pipe_column_rename(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -75,8 +74,7 @@ class Ecuador:
 
     def pipeline_base(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
-            df.pipe(self.pipe_check_columns)
-            .pipe(self.pipe_column_rename)
+            df.pipe(self.pipe_column_rename)
             .pipe(self.pipe_vaccines)
             .pipe(self.pipe_date, "date")
             .pipe(self.pipe_check_metrics)

@@ -1,8 +1,9 @@
 import pandas as pd
 from typing import List, Tuple
 
-from cowidev.vax.utils.files import export_metadata_manufacturer
 from cowidev.utils import paths
+from cowidev.utils.utils import check_known_columns
+from cowidev.vax.utils.files import export_metadata_manufacturer
 
 
 class Italy:
@@ -33,7 +34,27 @@ class Italy:
     vax_date_mapping = None
 
     def read(self) -> pd.DataFrame:
-        return pd.read_csv(self.source_url, usecols=self.columns)
+        df = pd.read_csv(self.source_url)
+        check_known_columns(
+            df,
+            [
+                "data_somministrazione",
+                "fornitore",
+                "area",
+                "fascia_anagrafica",
+                "sesso_maschile",
+                "sesso_femminile",
+                "prima_dose",
+                "seconda_dose",
+                "pregressa_infezione",
+                "dose_addizionale_booster",
+                "codice_NUTS1",
+                "codice_NUTS2",
+                "codice_regione_ISTAT",
+                "nome_area",
+            ],
+        )
+        return df[self.columns]
 
     def _check_vaccines(self, df: pd.DataFrame) -> pd.DataFrame:
         vax_wrong = set(df["fornitore"]).difference(self.vaccine_mapping.keys())

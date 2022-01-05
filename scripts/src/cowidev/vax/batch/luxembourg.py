@@ -1,11 +1,21 @@
 import pandas as pd
 
-from cowidev.vax.utils.utils import make_monotonic
-from cowidev.utils import paths
+from cowidev.utils.utils import check_known_columns
 
 
 def read(source: str) -> pd.DataFrame:
-    return pd.read_excel(source)
+    df = pd.read_excel(source)
+    check_known_columns(
+        df,
+        [
+            "Date",
+            "Nombre de dose 1",
+            "Nombre de dose 2",
+            "Nombre de Dose complémentaire par rapport à schéma complet",
+            "Nombre total de doses",
+        ],
+    )
+    return df
 
 
 def rename_columns(df: pd.DataFrame) -> pd.DataFrame:

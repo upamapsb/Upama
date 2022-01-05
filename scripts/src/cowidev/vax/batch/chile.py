@@ -26,7 +26,9 @@ class Chile:
 
     # Generalized methods
     def read(self, url: str) -> pd.DataFrame:
-        return pd.read_csv(url)
+        df = pd.read_csv(url)
+        assert set(df.Dosis) == {"Primera", "Segunda"}, f"New doses found! Check {set(df.Dosis)}"
+        return df
 
     def pipe_melt(self, df: pd.DataFrame, id_vars: list) -> pd.DataFrame:
         return df.melt(id_vars, var_name="date", value_name="value")

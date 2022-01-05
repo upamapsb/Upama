@@ -2,11 +2,12 @@ import os
 
 import pandas as pd
 
+from cowidev.utils import paths
 from cowidev.utils.clean.dates import clean_date, localdate
+from cowidev.utils.utils import check_known_columns
+from cowidev.utils.web.download import read_csv_from_url
 from cowidev.vax.utils.files import export_metadata_manufacturer, export_metadata_age
 from cowidev.vax.utils.orgs import ECDC_VACCINES
-from cowidev.utils import paths
-from cowidev.utils.web.download import read_csv_from_url
 
 
 age_groups_known = {
@@ -106,12 +107,7 @@ class ECDC:
         vaccines_wrong = set(df.Vaccine).difference(self.vaccine_mapping)
         if vaccines_wrong:
             raise ValueError(f"Unknown vaccines found. Check {vaccines_wrong}")
-        columns_wrong = df.columns.difference(columns).tolist()
-        if columns_wrong:
-            raise ValueError(
-                "Unknown columns! If new breakdown groups have been added, unexpected errors may appear."
-                f"Please review: {columns_wrong}"
-            )
+        check_known_columns(df, columns)
         return df
 
     def pipe_base(self, df: pd.DataFrame) -> pd.DataFrame:

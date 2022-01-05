@@ -1,8 +1,9 @@
 import pandas as pd
 
-from cowidev.utils.clean.dates import localdate, localdatenow
-from cowidev.vax.utils.files import export_metadata_age
 from cowidev.utils import paths
+from cowidev.utils.clean.dates import localdate
+from cowidev.utils.utils import check_known_columns
+from cowidev.vax.utils.files import export_metadata_age
 
 
 class Peru:
@@ -27,10 +28,9 @@ class Peru:
         self.date_start = "2021-02-08"
 
     def read(self):
-        return pd.read_csv(
-            self.source_url,
-            usecols=["fecha_vacunacion", "fabricante", "dosis", "n_reg"],
-        )
+        df = pd.read_csv(self.source_url)
+        check_known_columns(df, ["fecha_corte", "fecha_vacunacion", "fabricante", "dosis", "n_reg"])
+        return df[["fecha_vacunacion", "fabricante", "dosis", "n_reg"]]
 
     def read_manufacturer(self):
         return pd.read_csv(self.source_url_manufacturer)

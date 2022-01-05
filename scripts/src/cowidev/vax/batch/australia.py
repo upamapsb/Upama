@@ -3,9 +3,10 @@ import requests
 
 import pandas as pd
 
-from cowidev.vax.utils.utils import make_monotonic
-from cowidev.utils.clean import clean_date
 from cowidev.utils import paths
+from cowidev.utils.clean import clean_date
+from cowidev.utils.utils import check_known_columns
+from cowidev.vax.utils.utils import make_monotonic
 
 
 class Australia:
@@ -21,7 +22,9 @@ class Australia:
 
     def read(self) -> pd.DataFrame:
         response = requests.get("https://covidbaseau.com/people-vaccinated.csv")
-        return pd.read_csv(io.StringIO(response.content.decode()))
+        df = pd.read_csv(io.StringIO(response.content.decode()))
+        check_known_columns(df, ["date", "dose_1", "dose_2", "dose_3"])
+        return df
 
     def pipe_total_vaccinations(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(total_vaccinations=df.dose_1 + df.dose_2 + df.dose_3)

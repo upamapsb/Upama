@@ -1,7 +1,8 @@
 import pandas as pd
 
-from cowidev.vax.utils.utils import build_vaccine_timeline
 from cowidev.utils import paths
+from cowidev.utils.utils import check_known_columns
+from cowidev.vax.utils.utils import build_vaccine_timeline
 
 
 class Malaysia:
@@ -25,7 +26,43 @@ class Malaysia:
         ]
 
     def read(self) -> pd.DataFrame:
-        return pd.read_csv(self.source_url)
+        df = pd.read_csv(self.source_url)
+        check_known_columns(
+            df,
+            [
+                "date",
+                "daily_partial",
+                "daily_full",
+                "daily",
+                "daily_partial_child",
+                "daily_full_child",
+                "daily_booster",
+                "cumul_partial",
+                "cumul_full",
+                "cumul",
+                "cumul_partial_child",
+                "cumul_full_child",
+                "cumul_booster",
+                "pfizer1",
+                "pfizer2",
+                "pfizer3",
+                "sinovac1",
+                "sinovac2",
+                "sinovac3",
+                "astra1",
+                "astra2",
+                "astra3",
+                "sinopharm1",
+                "sinopharm2",
+                "sinopharm3",
+                "cansino",
+                "cansino3",
+                "pending1",
+                "pending2",
+                "pending3",
+            ],
+        )
+        return df
 
     def pipe_check_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         expected_cols = 28

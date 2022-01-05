@@ -1,5 +1,7 @@
 import pandas as pd
+
 from cowidev.utils import paths
+from cowidev.utils.utils import check_known_columns
 
 
 class Belgium:
@@ -9,7 +11,9 @@ class Belgium:
         self.source_url_ref = "https://epistat.wiv-isp.be/covid/"
 
     def read(self) -> pd.DataFrame:
-        return pd.read_csv(self.source_url, usecols=["DATE", "DOSE", "COUNT"])
+        df = pd.read_csv(self.source_url)
+        check_known_columns(df, ["DATE", "REGION", "AGEGROUP", "SEX", "BRAND", "DOSE", "COUNT"])
+        return df[["DATE", "DOSE", "COUNT"]]
 
     def pipe_dose_check(self, df: pd.DataFrame) -> pd.DataFrame:
         doses_wrong = set(df.DOSE).difference(["A", "B", "C", "E"])

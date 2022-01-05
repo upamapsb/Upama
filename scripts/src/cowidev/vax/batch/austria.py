@@ -1,5 +1,7 @@
 import pandas as pd
+
 from cowidev.utils import paths
+from cowidev.utils.utils import check_known_columns
 
 
 class Austria:
@@ -15,11 +17,11 @@ class Austria:
     one_dose_vaccines: str = ["Janssen"]
 
     def read(self) -> pd.DataFrame:
-        return pd.read_csv(
-            self.source_url,
-            sep=";",
-            usecols=["date", "state_name", "vaccine", "dose_number", "doses_administered_cumulative"],
+        df = pd.read_csv(self.source_url, sep=";")
+        check_known_columns(
+            df, ["date", "state_id", "state_name", "vaccine", "dose_number", "doses_administered_cumulative"]
         )
+        return df[["date", "state_name", "vaccine", "dose_number", "doses_administered_cumulative"]]
 
     def pipe_filter_rows(self, df: pd.DataFrame) -> pd.DataFrame:
         return df[(df["state_name"] == "Österreich") & (df.vaccine != "Other")].drop(columns="state_name")

@@ -1,5 +1,7 @@
 import pandas as pd
+
 from cowidev.utils import paths
+from cowidev.utils.utils import check_known_columns
 from cowidev.vax.utils.checks import VACCINES_ONE_DOSE
 from cowidev.vax.utils.utils import build_vaccine_timeline
 
@@ -29,10 +31,11 @@ class Slovakia:
     column_rename: dict = {"Date": "date"}
 
     def read(self):
-        return pd.read_csv(
-            self.source_url,
-            sep=";",
+        df = pd.read_csv(self.source_url, sep=";")
+        check_known_columns(
+            df, ["Date", "Region", "Region_code", "Vaccine_name", "first_dose", "second_dose", "third_dose"]
         )
+        return df
 
     def pipe_vaccine_rename(self, df: pd.DataFrame) -> pd.DataFrame:
         vax_wrong = set(df["Vaccine_name"]).difference(self.vaccine_rename.keys())

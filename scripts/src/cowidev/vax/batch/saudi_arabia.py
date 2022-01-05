@@ -1,7 +1,8 @@
 import pandas as pd
 
-from cowidev.utils.web import request_json
 from cowidev.utils import paths
+from cowidev.utils.utils import check_known_columns
+from cowidev.utils.web import request_json
 
 
 def main():
@@ -11,6 +12,20 @@ def main():
     data = request_json(url)
 
     df = pd.DataFrame.from_records(elem["attributes"] for elem in data["features"])
+    check_known_columns(
+        df,
+        [
+            "Reportdt",
+            "Total_Vaccinations",
+            "Total_Individuals",
+            "LastValue",
+            "ObjectId",
+            "Elderly",
+            "FirstDose",
+            "SecondDose",
+            "BoosterDose",
+        ],
+    )
 
     df = df.drop(columns=["ObjectId", "LastValue", "Total_Individuals"])
 

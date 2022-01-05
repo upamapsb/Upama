@@ -1,13 +1,9 @@
-"""Czechia.
-
-Since we need to translate vaccine names, we'll check that no new
-manufacturers were added, so that we can maintain control over this.
-"""
 import pandas as pd
 
+from cowidev.utils import paths
+from cowidev.utils.utils import check_known_columns
 from cowidev.vax.utils.files import export_metadata_manufacturer
 from cowidev.vax.utils.utils import build_vaccine_timeline
-from cowidev.utils import paths
 
 
 vaccine_mapping = {
@@ -23,23 +19,21 @@ one_dose_vaccines = ["Johnson&Johnson"]
 
 
 def read(source: str) -> pd.DataFrame:
-    return pd.read_csv(source)
-
-
-def check_columns(df: pd.DataFrame) -> pd.DataFrame:
-    expected = [
-        "id",
-        "datum",
-        "vakcina",
-        "kraj_nuts_kod",
-        "kraj_nazev",
-        "vekova_skupina",
-        "prvnich_davek",
-        "druhych_davek",
-        "celkem_davek",
-    ]
-    if list(df.columns) != expected:
-        raise ValueError("Wrong columns. Was expecting {} and got {}".format(expected, list(df.columns)))
+    df = pd.read_csv(source)
+    check_known_columns(
+        df,
+        [
+            "id",
+            "datum",
+            "vakcina",
+            "kraj_nuts_kod",
+            "kraj_nazev",
+            "vekova_skupina",
+            "prvnich_davek",
+            "druhych_davek",
+            "celkem_davek",
+        ],
+    )
     return df
 
 
@@ -68,7 +62,7 @@ def enrich_metadata(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def base_pipeline(df: pd.DataFrame) -> pd.DataFrame:
-    return df.pipe(check_columns).pipe(check_vaccine_names).pipe(translate_vaccine_names)
+    return df.pipe(check_vaccine_names).pipe(translate_vaccine_names)
 
 
 def breakdown_per_vaccine(df: pd.DataFrame) -> pd.DataFrame:
