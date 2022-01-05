@@ -7,7 +7,7 @@ import pandas as pd
 import PyPDF2
 
 from cowidev.utils.clean import clean_count
-from cowidev.vax.utils.incremental import increment, merge_with_current_data
+from cowidev.vax.utils.incremental import merge_with_current_data
 from cowidev.utils.web import get_soup
 from cowidev.utils import paths
 
@@ -27,7 +27,6 @@ class Kenya:
             date = self._parse_date(pages[0])
             print(date, link)
             if date <= self.last_update:
-                print("exit")
                 break
             total_vaccinations, people_vaccinated, people_fully_vaccinated, booster_doses = self._parse_metrics(pages)
             records.append(
@@ -40,6 +39,7 @@ class Kenya:
                     "source_url": link,
                 }
             )
+        assert len(records) > 0, f"No new record found after {self.last_update}"
         return pd.DataFrame(records)
 
     def _get_list_pdf_urls(self):
@@ -58,11 +58,9 @@ class Kenya:
 
         with tempfile.NamedTemporaryFile() as tf:
             with open(tf.name, mode="wb") as f:
-                # print(url_pdf)
                 f.write(requests.get(url_pdf, verify=False).content)
             with open(tf.name, mode="rb") as f:
                 reader = PyPDF2.PdfFileReader(f)
-                page = reader.getPage(0)
                 pages = [_extract_pdf_text(reader, n) for n in range(reader.numPages)]
         return pages
 
