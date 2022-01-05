@@ -57,7 +57,7 @@ class Spain:
         """Parse data for a single day"""
         df.loc[~df.index.isin(["Sanidad Exterior"]), self._date_field_raw].dropna().max()
         data = {
-            "total_vaccinations": clean_count(df.loc["Totales", "Dosis administradas (2)"]),
+            "total_vaccinations": clean_count(round(df.loc["Totales", "Dosis administradas (2)"])),
             "people_vaccinated": clean_count(df.loc["Totales", "Nº Personas con al menos 1 dosis"]),
             "people_fully_vaccinated": clean_count(df.loc["Totales", "Nº Personas vacunadas(pauta completada)"]),
             "date": clean_date(
