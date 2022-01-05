@@ -2,6 +2,7 @@ import pandas as pd
 
 from cowidev.vax.utils.files import export_metadata_manufacturer
 from cowidev.vax.utils.utils import build_vaccine_timeline
+from cowidev.utils.web.download import read_csv_from_url
 from cowidev.utils import paths
 
 
@@ -17,7 +18,8 @@ def main():
 
     source = "https://www.data.gouv.fr/fr/datasets/r/b273cf3b-e9de-437c-af55-eda5979e92fc"
 
-    df = pd.read_csv(source, sep=";")
+    df = read_csv_from_url(source, sep=";")
+    # df = pd.read_csv(source, sep=";")
     assert "n_cum_dose5" not in df.columns, "Update the script for handle dose #5"
     df = df[["vaccin", "jour", "n_cum_dose1", "n_cum_dose2", "n_cum_dose3", "n_cum_dose4"]]
 
