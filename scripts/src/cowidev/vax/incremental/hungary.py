@@ -17,7 +17,8 @@ class Hungary:
         self.regex = {
             "title": r"\d+ [millió]+ \d+ [ezer]+ a beoltott, [\d\s]+ az új fertőzött",
             "metrics": (
-                r"A beoltottak száma ([\d\s]+) fő, közülük ([\d\s]+) fő már a második, ([\d\s]+) fő pedig már a megerősítő harmadik oltását is felvette."
+                r"A beoltottak száma ([\d\s]+) fő, közülük ([\d\s]+) fő már a második, ([\d\s]+) fő pedig már a"
+                r" megerősítő harmadik oltását is felvette."
             ),
         }
 
@@ -85,7 +86,8 @@ class Hungary:
                 soup.find("p").text,
                 regex="(202\d. .* \d+.) - .*",
                 date_format="%Y. %B %d.",
-                loc="hu_HU.UTF-8",
+                # loc="hu_HU.UTF-8",
+                lang="hu",
                 minus_days=1,
             ),
         }

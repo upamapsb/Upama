@@ -13,7 +13,7 @@ from cowidev.utils.clean.strings import clean_string
 
 
 LOCALE_LOCK = threading.Lock()
-DEFAULT_LOCALE = ""  # "en_US.ISO8859-1"
+DEFAULT_LOCALE = "C"  # "en_US.ISO8859-1"
 DATE_FORMAT = "%Y-%m-%d"
 
 
@@ -60,7 +60,7 @@ def clean_date(
     # If lang is given, map language to a locale
     if fmt is None:
         raise ValueError("Input date format is required!")
-    if lang is not None:
+    if loc == "" and lang is not None:
         if lang in locale.locale_alias:
             loc = locale.locale_alias[lang]
     if platform == "win32":
@@ -94,7 +94,7 @@ def extract_clean_date(
     Example:
 
     ```python
-    >>> from cowidev.vax.utils.utils import extract_clean_date
+    >>> from cowidev.utils import extract_clean_date
     >>> text = "Something irrelevant. This page was last updated on 25 May 2021 at 09:05hrs."
     >>> date_str = extract_clean_date(
         text=text,
@@ -204,12 +204,23 @@ def clean_date_series(
 @contextmanager
 def _setlocale(name: str):
     # REF: https://stackoverflow.com/questions/18593661/how-do-i-strftime-a-date-object-in-a-different-locale
+    # with LOCALE_LOCK:
+    #     saved = locale.setlocale(locale.LC_TIME, DEFAULT_LOCALE)
+    #     try:
+    #         print("DEBUG -- try", name)
+    #         yield locale.setlocale(locale.LC_TIME, name)
+    #     finally:
+    #         print("DEBUG -- finally", saved)
+    #         locale.setlocale(locale.LC_TIME, saved)
     with LOCALE_LOCK:
-        saved = locale.setlocale(locale.LC_TIME, DEFAULT_LOCALE)
+        saved = locale.setlocale(locale.LC_ALL)
+        # print("DEBUG -- init", saved)
         try:
-            yield locale.setlocale(locale.LC_TIME, name)
+            # print("DEBUG -- try", name)
+            yield locale.setlocale(locale.LC_ALL, name)
         finally:
-            locale.setlocale(locale.LC_TIME, saved)
+            # print("DEBUG -- finally", saved)
+            locale.setlocale(locale.LC_ALL, saved)
 
 
 def from_tz_to_tz(dt: datetime, from_tz: str = "UTC", to_tz: str = None):

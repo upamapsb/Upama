@@ -6,9 +6,9 @@ from itertools import chain
 
 from cowidev.vax.utils.gsheets import GSheetApi
 from cowidev.vax.cmd.get_data import (
-    modules_name,
-    modules_name_batch,
-    modules_name_incremental,
+    MODULES_NAME,
+    MODULES_NAME_BATCH,
+    MODULES_NAME_INCREMENTAL,
     country_to_module,
 )
 from cowidev.vax.cmd._parser import _parse_args, CHOICES
@@ -30,9 +30,7 @@ class ConfigParamsStep(object):
             secret_keys = ["id", "token", "credentials", "credential", "secret"]
             return any(x in name for x in secret_keys)
 
-        return f"\n".join(
-            [f"* {k}: {v}" for k, v in self._dict.items() if not _is_secret(k)]
-        )
+        return f"\n".join([f"* {k}: {v}" for k, v in self._dict.items() if not _is_secret(k)])
 
 
 class ConfigParams(object):
@@ -91,9 +89,7 @@ class ConfigParams(object):
         if field in self._credentials:
             return self._credentials[field]
         else:
-            raise ValueError(
-                f"Field 'google_credentials' not found in credentials file. Please check."
-            )
+            raise ValueError(f"Field 'google_credentials' not found in credentials file. Please check.")
 
     @property
     def gsheets_api(self):
@@ -131,14 +127,10 @@ class ConfigParams(object):
         """Use `_token`/`id`/`secret` for variables that are secret"""
         return ConfigParamsStep(
             {
-                "parallel": self._return_value_pipeline(
-                    "get-data", "parallel", self._parallel
-                ),
+                "parallel": self._return_value_pipeline("get-data", "parallel", self._parallel),
                 "njobs": self._return_value_pipeline("get-data", "njobs", self._njobs),
                 "countries": _countries_to_modules(
-                    self._return_value_pipeline(
-                        "get-data", "countries", self._countries
-                    )
+                    self._return_value_pipeline("get-data", "countries", self._countries)
                 ),
                 "skip_countries": list(
                     map(
@@ -153,14 +145,10 @@ class ConfigParams(object):
         """Use `_token`/`id`/`secret` for variables that are secret"""
         return ConfigParamsStep(
             {
-                "parallel": self._return_value_pipeline(
-                    "get-data", "parallel", self._parallel
-                ),
+                "parallel": self._return_value_pipeline("get-data", "parallel", self._parallel),
                 "njobs": self._return_value_pipeline("get-data", "njobs", self._njobs),
                 "countries": _countries_to_modules(
-                    self._return_value_pipeline(
-                        "get-data", "countries", self._countries
-                    )
+                    self._return_value_pipeline("get-data", "countries", self._countries)
                 ),
                 "skip_countries": list(
                     map(
@@ -175,9 +163,7 @@ class ConfigParams(object):
         """Use `_token`/`id`/`secret` for variables that are secret"""
         return ConfigParamsStep(
             {
-                "skip_complete": self._return_value_pipeline(
-                    "process-data", "skip_complete", []
-                ),
+                "skip_complete": self._return_value_pipeline("process-data", "skip_complete", []),
                 "skip_monotonic_check": self._get_skip_check("skip_monotonic_check"),
                 "skip_anomaly_check": self._get_skip_check("skip_anomaly_check"),
             }
@@ -188,21 +174,11 @@ class ConfigParams(object):
         return ConfigParamsStep(
             {
                 "greece_api_token": self._return_value_credentials("greece_api_token"),
-                "owid_cloud_table_post": self._return_value_credentials(
-                    "owid_cloud_table_post"
-                ),
-                "google_credentials": self._return_value_credentials(
-                    "google_credentials"
-                ),
-                "google_spreadsheet_vax_id": self._return_value_credentials(
-                    "google_spreadsheet_vax_id"
-                ),
-                "twitter_consumer_key": self._return_value_credentials(
-                    "twitter_consumer_key"
-                ),
-                "twitter_consumer_secret": self._return_value_credentials(
-                    "twitter_consumer_secret"
-                ),
+                "owid_cloud_table_post": self._return_value_credentials("owid_cloud_table_post"),
+                "google_credentials": self._return_value_credentials("google_credentials"),
+                "google_spreadsheet_vax_id": self._return_value_credentials("google_spreadsheet_vax_id"),
+                "twitter_consumer_key": self._return_value_credentials("twitter_consumer_key"),
+                "twitter_consumer_secret": self._return_value_credentials("twitter_consumer_secret"),
             }
         )
 
@@ -211,9 +187,7 @@ class ConfigParams(object):
             v = self._credentials[feature_name]
             if v:
                 return v
-        raise AttributeError(
-            f"Missing field {feature_name} or value was None in credentials"
-        )
+        raise AttributeError(f"Missing field {feature_name} or value was None in credentials")
 
     def _get_skip_check(self, metric):
         def _valid_value(x):
@@ -273,19 +247,17 @@ class ConfigParams(object):
 def _countries_to_modules(countries):
     if len(countries) == 1:
         if countries[0] == "all":
-            return modules_name
+            return MODULES_NAME
         elif countries[0] == "incremental":
-            return modules_name_incremental
+            return MODULES_NAME_INCREMENTAL
         elif countries[0] == "batch":
-            return modules_name_batch
+            return MODULES_NAME_BATCH
     if len(countries) >= 1:
         # Verify validity of countries
         countries_wrong = [c for c in countries if c not in country_to_module]
         countries_valid = sorted(list(country_to_module.keys()))
         if countries_wrong:
-            print(
-                f"Invalid countries: {countries_wrong}. Valid countries are: {countries_valid}"
-            )
+            print(f"Invalid countries: {countries_wrong}. Valid countries are: {countries_valid}")
             raise ValueError("Invalid country")
         # Get module equivalent names
         modules = [country_to_module[country] for country in countries]

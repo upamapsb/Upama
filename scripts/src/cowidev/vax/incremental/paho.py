@@ -179,7 +179,7 @@ class PAHO:
                 source_url=row["source_url"],
             )
             country = row["location"]
-            logger.info(f"\tvax.incremental.paho.{country}: SUCCESS ✅")
+            logger.info(f"\tVAX - vax.incremental.paho.{country}: SUCCESS ✅")
 
     def export(self):
         df = self.read().pipe(self.pipeline)

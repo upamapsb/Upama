@@ -6,6 +6,7 @@ from cowidev.utils.clean.dates import clean_date, localdate
 from cowidev.vax.utils.files import export_metadata_manufacturer, export_metadata_age
 from cowidev.vax.utils.orgs import ECDC_VACCINES
 from cowidev.utils import paths
+from cowidev.utils.web.download import read_csv_from_url
 
 
 age_groups_known = {
@@ -88,7 +89,7 @@ class ECDC:
         self.vaccine_mapping = {**ECDC_VACCINES, "UNK": "Unknown"}
 
     def read(self):
-        return pd.read_csv(self.source_url)
+        return read_csv_from_url(self.source_url, timeout=20)
 
     def _load_country_mapping(self, iso_path: str):
         country_mapping = pd.read_csv(iso_path)
