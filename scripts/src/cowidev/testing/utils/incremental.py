@@ -11,23 +11,22 @@ UNITS_ACCEPTED = {"people tested", "samples tested", "tests performed", "units u
 
 
 def increment(
-    count: int,
     sheet_name: str,
     country: str,
     units: str,
     date: str,
     source_url: str,
     source_label: str,
-    testing_type=None,
     notes=None,
     daily_change=None,
+    count=None,
 ):
     # Read current dataframe
     output_path = os.path.join(paths.SCRIPTS.OLD, "testing", "automated_sheets", f"{sheet_name}.csv")
     df_current = pd.read_csv(output_path)
 
     # Sanity checks
-    _check_fields(df_current, country, source_url, source_label, units, date, count)
+    _check_fields(df_current, country, source_url, source_label, units, date, count, daily_change)
 
     # Create new df
     df = pd.DataFrame(
@@ -36,13 +35,14 @@ def increment(
                 "Country": country,
                 "Units": units,
                 "Date": date,
-                "Cumulative total": count,
                 "Source URL": source_url,
                 "Source label": source_label,
                 "Notes": notes,
             }
         ]
     )
+    if count is not None:
+        df["Cumulative total"] = count
     if daily_change is not None:
         df["Daily change in cumulative total"] = daily_change
 
@@ -63,6 +63,7 @@ def _check_fields(
     units: str,
     date,
     cumulative_total: numbers.Number,
+    daily_change: numbers.Number,
 ):
     # Check location, vaccine, source_url
     if not isinstance(location, str):
@@ -81,14 +82,20 @@ def _check_fields(
         raise ValueError(f"Value for `units` is not accepted ({units}). Should be one of {UNITS_ACCEPTED}")
 
     # Check metrics
-    if not isinstance(cumulative_total, numbers.Number):
-        type_wrong = type(location).__name__
-        raise TypeError(
-            f"Check `cumulative_total` type! Should be numeric, found {type_wrong}. Value was {cumulative_total}"
-        )
-    if df_current["Cumulative total"].max() > cumulative_total:
-        raise ValueError(f"`cumulative_total` can't be lower than currently highers 'Cumulative total' value.")
-
+    if (daily_change is None) or (cumulative_total is not None):
+        if not isinstance(cumulative_total, numbers.Number):
+            type_wrong = type(location).__name__
+            raise TypeError(
+                f"Check `cumulative_total` type! Should be numeric, found {type_wrong}. Value was {cumulative_total}"
+            )
+        if df_current["Cumulative total"].max() > cumulative_total:
+            raise ValueError(f"`cumulative_total` can't be lower than currently highers 'Cumulative total' value.")
+    if (cumulative_total is None) or (daily_change is not None):
+        if not isinstance(daily_change, numbers.Number):
+            type_wrong = type(location).__name__
+            raise TypeError(
+                f"Check `cumulative_total` type! Should be numeric, found {type_wrong}. Value was {cumulative_total}"
+            )
     # Check date
     if not isinstance(date, str):
         type_wrong = type(date).__name__
