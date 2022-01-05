@@ -7,10 +7,10 @@ import pandas as pd
 
 from cowidev.vax.batch import __all__ as batch_countries
 from cowidev.vax.incremental import __all__ as incremental_countries
-from cowidev.utils.log import get_logger, print_eoe
 from cowidev.utils import paths
-from cowidev.utils.clean.dates import localdate
+from cowidev.utils.log import get_logger, print_eoe
 from cowidev.utils.s3 import df_from_s3, df_to_s3
+from cowidev.utils.clean.dates import localdate
 
 
 # Logger
@@ -26,12 +26,6 @@ country_to_module = {
 MODULES_NAME_BATCH = list(country_to_module_batch.values())
 MODULES_NAME_INCREMENTAL = list(country_to_module_incremental.values())
 MODULES_NAME = MODULES_NAME_BATCH + MODULES_NAME_INCREMENTAL
-
-TIMEOUT = 10
-
-
-class TimeoutException(Exception):
-    pass
 
 
 class CountryDataGetter:
@@ -130,6 +124,8 @@ os.path.join(paths.SCRIPTS.OUTPUT_VAX_LOG, "get-data.csv")
 
 
 def _load_modules_order(modules_name):
+    if len(modules_name) < 10:
+        return modules_name
     df = df_from_s3("log/vax-get-data.csv")
     # df = pd.read_csv(os.path.join(paths.SCRIPTS.OUTPUT_VAX_LOG, "get-data.csv"))
     module_order_all = (
