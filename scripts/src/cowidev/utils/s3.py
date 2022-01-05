@@ -3,6 +3,7 @@ https://github.com/owid/walden/blob/master/owid/walden/owid_cache.py
 """
 
 import os
+import json
 import tempfile
 from os import path
 from typing import Optional, Type, Union
@@ -14,6 +15,19 @@ from botocore.exceptions import ClientError
 
 
 SPACES_ENDPOINT = "https://nyc3.digitaloceanspaces.com"
+
+
+def dict_to_s3(
+    data: dict,
+    relative_path: Union[str, list],
+    bucket_name: str = "covid-19",
+    public: bool = False,
+) -> Optional[str]:
+    with tempfile.TemporaryDirectory() as f:
+        output_path = os.path.join(f, f"file.json")
+        with open(output_path, "w") as f:
+            json.dump(data, f)
+        upload_to_s3(output_path, relative_path, bucket_name, public)
 
 
 def df_to_s3(
@@ -79,6 +93,17 @@ def download_from_s3(
     except ClientError as e:
         logging.error(e)
         raise UploadError(e)
+
+
+def dict_from_s3(
+    s3_path: Union[str, list],
+    bucket_name: str = "covid-19",
+) -> dict:
+    with tempfile.TemporaryDirectory() as f:
+        output_path = os.path.join(f, f"file.json")
+        download_from_s3(s3_path, output_path, bucket_name)
+        with open(output_path) as json_file:
+            return json.load(json_file)
 
 
 def df_from_s3(
