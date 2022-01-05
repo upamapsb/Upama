@@ -13,7 +13,7 @@ from cowidev.utils.clean.strings import clean_string
 
 
 LOCALE_LOCK = threading.Lock()
-DEFAULT_LOCALE = ""  # "en_US.ISO8859-1"
+DEFAULT_LOCALE = "C"  # "en_US.ISO8859-1"
 DATE_FORMAT = "%Y-%m-%d"
 
 
