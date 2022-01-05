@@ -102,6 +102,8 @@ def main_get_data(
     # Export log info
     _export_log_info(df_exec, t_sec_1, t_sec_2)
 
+    print_eoe()
+
 
 def _build_df_execution(modules_execution_results):
     df_exec = (
@@ -118,6 +120,7 @@ def _build_df_execution(modules_execution_results):
 
 
 def _export_log_info(df_exec, t_sec_1, t_sec_2):
+    print("EXPORTING LOG DETAILS")
     # print(len(df_new), len(MODULES_NAME), len(df_new) == len(MODULES_NAME))
     if len(df_exec) == len(MODULES_NAME):
         details = system_details()
@@ -184,5 +187,5 @@ def _print_timing(t0, t_sec_1, df_time):
     print(f"Top 20 most time consuming scripts:")
     print(df_time[["execution_time (sec)"]].head(20))
     print(f"\nTook {t_sec_2} seconds (i.e. {t_min_2} minutes) [AFTER RETRIALS].")
-    print_eoe()
+    print("---")
     return t_sec_1, t_min_1, t_sec_2, t_min_2
