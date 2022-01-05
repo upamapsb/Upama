@@ -204,15 +204,23 @@ def clean_date_series(
 @contextmanager
 def _setlocale(name: str):
     # REF: https://stackoverflow.com/questions/18593661/how-do-i-strftime-a-date-object-in-a-different-locale
+    # with LOCALE_LOCK:
+    #     saved = locale.setlocale(locale.LC_TIME, DEFAULT_LOCALE)
+    #     try:
+    #         print("DEBUG -- try", name)
+    #         yield locale.setlocale(locale.LC_TIME, name)
+    #     finally:
+    #         print("DEBUG -- finally", saved)
+    #         locale.setlocale(locale.LC_TIME, saved)
     with LOCALE_LOCK:
-        saved = locale.setlocale(locale.LC_TIME, DEFAULT_LOCALE)
-        print("DEBUG -- init", saved)
+        saved = locale.setlocale(locale.LC_ALL)
+        # print("DEBUG -- init", saved)
         try:
-            print("DEBUG -- try", name)
-            yield locale.setlocale(locale.LC_TIME, name)
+            # print("DEBUG -- try", name)
+            yield locale.setlocale(locale.LC_ALL, name)
         finally:
-            print("DEBUG -- finally", saved)
-            locale.setlocale(locale.LC_TIME, saved)
+            # print("DEBUG -- finally", saved)
+            locale.setlocale(locale.LC_ALL, saved)
 
 
 def from_tz_to_tz(dt: datetime, from_tz: str = "UTC", to_tz: str = None):
