@@ -81,7 +81,7 @@ def _check_fields(
         raise ValueError(f"Value for `units` is not accepted ({units}). Should be one of {UNITS_ACCEPTED}")
 
     # Check metrics
-    if daily_change is None:
+    if (daily_change is None) or (cumulative_total is not None):
         if not isinstance(cumulative_total, numbers.Number):
             type_wrong = type(location).__name__
             raise TypeError(
@@ -89,7 +89,12 @@ def _check_fields(
             )
         if df_current["Cumulative total"].max() > cumulative_total:
             raise ValueError(f"`cumulative_total` can't be lower than currently highers 'Cumulative total' value.")
-
+    if (cumulative_total is None) or (daily_change is not None):
+        if not isinstance(daily_change, numbers.Number):
+            type_wrong = type(location).__name__
+            raise TypeError(
+                f"Check `cumulative_total` type! Should be numeric, found {type_wrong}. Value was {cumulative_total}"
+            )
     # Check date
     if not isinstance(date, str):
         type_wrong = type(date).__name__
