@@ -1,13 +1,33 @@
 # Data on SARS-CoV-2 variants by _Our World in Data_
+
 > For more general information on our COVID-19 data, see our main README file in [`/public/data`](https://github.com/owid/covid-19-data/tree/master/public/data).
 
 Enabled by data from <a href="https://gisaid.org"><img src="https://www.gisaid.org/fileadmin/gisaid/img/schild.png"
 width="50"/></a>
 
-Our data on SARS-CoV-2 sequencing and variants is sourced from [GISAID](https://gisaid.org), a global science initiative that provides open-access to genomic data of SARS-CoV-2. We download aggregate-level data via [CoVariants.org](https://CoVariants.org), and we make it available as a [CSV file](covid-variants.csv).
+Our data on SARS-CoV-2 sequencing and variants is sourced from [GISAID](https://gisaid.org), a global science initiative that provides open-access to genomic data of SARS-CoV-2.
+
+We recognize the work of the authors and laboratories responsible for producing this data and sharing it via the GISAID initiative:
+
+```
+Khare, S., et al (2021) GISAID’s Role in Pandemic Response. China CDC Weekly, 3(49): 1049-1051. doi: 10.46234/ccdcw2021.255  PMCID: 8668406
+
+Elbe, S. and Buckland-Merrett, G. (2017) Data, disease and diplomacy: GISAID’s innovative contribution to global health. Global Challenges, 1:33-46. doi:10.1002/gch2.1018  PMCID: 31565258
+
+Shu, Y. and McCauley, J. (2017) GISAID: from vision to reality. EuroSurveillance, 22(13) doi:10.2807/1560-7917.ES.2017.22.13.30494 PMCID: PMC5388101
+```
+
+We download aggregate-level data via [CoVariants.org](https://www.covariants.org), and we make it available as a [CSV file](covid-variants.csv).
 
 
-### Fields
+## License
+
+All visualizations, data, and code produced by _Our World in Data_ are completely open access under the [Creative Commons BY license](https://creativecommons.org/licenses/by/4.0/). You have the permission to use, distribute, and reproduce these in any medium, provided the source and authors are credited.
+
+The data produced by third parties and made available by _Our World in Data_ is subject to the license terms from the original third-party authors. We will always indicate the original source of the data in our database, and you should always check the license of any such third-party data before use.
+
+
+## Fields
 
 | Column field        | Description                                                                  |
 |---------------------|------------------------------------------------------------------------------|
@@ -18,7 +38,8 @@ Our data on SARS-CoV-2 sequencing and variants is sourced from [GISAID](https://
 | `perc_sequences`      | Percentage of the sequenced samples that fall into the category `variant`. |
 | `num_sequences_total` | Total number of samples sequenced in the last two weeks. |
 
-#### Special `variant` values
+
+### Special `variant` values
 
 - `others`: All variants/mutations other than the ones specified (i.e. not listed [in this table](https://covariants.org/variants)).
 - `non_who`: All variants/mutations without WHO label.
@@ -27,7 +48,9 @@ Note that `non_who` includes `others` and other variants. For instance, variant 
 
 As a consequence, for a given date, the sum of `perc_sequences` will exceed 1. In order to sum 1, you should exclude `non_who` category.
 
+
 ### Example
+
 |location |date      |variant       |num_sequences|perc_sequences|num_sequences_total|
 |---------|----------|--------------|-------------|--------------|-------------------|
 |United Kingdom|2021-03-08|B.1.160       |4.0 |0.01 |29598|
@@ -52,15 +75,3 @@ As a consequence, for a given date, the sum of `perc_sequences` will exceed 1. I
 
 In this extract, we have that during the two weeks prior to 2021-03-08, in the UK, a total of 29598 samples were
 sequenced. From these, 28,772 correspond to Alpha variant and 647 are variants without WHO label.
-
-
-## License
-
-All visualizations, data, and code produced by _Our World in Data_ are completely open access under the [Creative Commons BY license](https://creativecommons.org/licenses/by/4.0/). You have the permission to use, distribute, and reproduce these in any medium, provided the source and authors are credited.
-
-As our source, [CoVariants](https://CoVariants.org), we also recognize the great work of the Authors and laboratories
-responsible for producing this data and sharing it via the GISAID Initiative:
-
-```
-Elbe, S., and Buckland-Merrett, G. (2017) Data, disease and diplomacy: GISAID’s innovative contribution to global health. Global Challenges, 1:33-46. DOI: 10.1002/gch2.1018PMCID: 31565258
-```
