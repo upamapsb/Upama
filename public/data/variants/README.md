@@ -12,7 +12,7 @@ Our data on SARS-CoV-2 sequencing and variants is sourced from [GISAID](https://
 >
 > Shu, Y. and McCauley, J. (2017) GISAID: from vision to reality. EuroSurveillance, 22(13) doi:10.2807/1560-7917.ES.2017.22.13.30494 PMCID: PMC5388101
 
-We download aggregate-level data via [CoVariants.org](https://www.covariants.org), and we make it available as a [CSV file](covid-variants.csv).
+We download aggregate-level data via [CoVariants.org](https://covariants.org), and we make it available as a [CSV file](covid-variants.csv).
 
 
 ## License
