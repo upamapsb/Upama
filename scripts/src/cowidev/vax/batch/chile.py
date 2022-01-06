@@ -1,7 +1,8 @@
 import pandas as pd
 
-from cowidev.vax.utils.files import export_metadata_manufacturer
 from cowidev.utils import paths
+from cowidev.utils.utils import check_known_columns
+from cowidev.vax.utils.files import export_metadata_manufacturer
 
 
 vaccine_mapping = {
@@ -27,7 +28,6 @@ class Chile:
     # Generalized methods
     def read(self, url: str) -> pd.DataFrame:
         df = pd.read_csv(url)
-        assert set(df.Dosis) == {"Primera", "Segunda"}, f"New doses found! Check {set(df.Dosis)}"
         return df
 
     def pipe_melt(self, df: pd.DataFrame, id_vars: list) -> pd.DataFrame:
@@ -41,6 +41,7 @@ class Chile:
         return df[(df[colname] == "Total") & (df.value > 0)]
 
     def pipe_calculate_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
+        check_known_columns(df, ["Region", "date", "Primera", "Refuerzo", "Segunda", "Unica"])
         df = df.fillna(0)
         return df.assign(
             people_vaccinated=df.Primera + df.Unica,
