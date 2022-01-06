@@ -37,12 +37,12 @@ class Ecuador:
 
     def read(self, source_url: str) -> pd.DataFrame:
         df = pd.read_csv(source_url)
-        check_known_columns(
-            df, ["zona", "fabricante", "dosis_total", "primera_dosis", "segunda_dosis", "administered_at"]
-        )
         return df
 
     def pipe_column_rename(self, df: pd.DataFrame) -> pd.DataFrame:
+        check_known_columns(
+            df, ["zona", "fabricante", "dosis_total", "primera_dosis", "segunda_dosis", "administered_at"]
+        )
         if self.columns_rename:
             return df.rename(columns=self.columns_rename)
         return df
@@ -82,6 +82,7 @@ class Ecuador:
         )
 
     def pipeline_boosters(self, df: pd.DataFrame) -> pd.DataFrame:
+        check_known_columns(df, ["fecha", "dosis_total", "primera_dosis", "segunda_dosis", "refuerzo"])
         return df.pipe(self.pipe_date, "fecha")[["date", "refuerzo"]].rename(columns={"refuerzo": "total_boosters"})
 
     def pipeline_manufacturer(self, df: pd.DataFrame) -> pd.DataFrame:
