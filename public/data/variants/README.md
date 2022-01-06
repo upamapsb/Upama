@@ -4,8 +4,7 @@
 Enabled by data from <a href="https://gisaid.org"><img src="https://www.gisaid.org/fileadmin/gisaid/img/schild.png"
 width="50"/></a>
 
-The data is sourced from [GISAID](https://gisaid.org), via [CoVariants](https://CoVariants.org), and we make it available as a [CSV
-💾](covid-variants.csv).
+Our data on SARS-CoV-2 sequencing and variants is sourced from [GISAID](https://gisaid.org), a global science initiative that provides open-access to genomic data of SARS-CoV-2. We download aggregate-level data via [CoVariants.org](https://CoVariants.org), and we make it available as a [CSV file](covid-variants.csv).
 
 
 ### Fields
