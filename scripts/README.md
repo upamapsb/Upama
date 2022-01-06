@@ -55,7 +55,7 @@ to run the vaccination data pipeline.
 
 ### Required configuration
 
-#### Environment varilables
+#### Environment variables
 - `{OWID_COVID_PROJECT_DIR}`: Path to the local project directory. E.g. `/Users/username/projects/covid-19-data`.
 - `{OWID_COVID_VAX_CREDENTIALS_FILE}` (vaccinations): Path to the credentials file (this is internal). See next section
   for a more details explanation.
@@ -77,10 +77,10 @@ The environment variable `${OWID_COVID_VAX_CREDENTIALS_FILE}` references to the 
 ```
 
 Most of the fields are self-explanatory, but if you need help setting them up please contact us or create an issue. Note
-hat Google-related fields require a valid OAuth JSON credentials file (see [gsheets documentation](https://gsheets.readthedocs.io/en/stable/#quickstart)).
+that Google-related fields require a valid OAuth JSON credentials file (see [gsheets documentation](https://gsheets.readthedocs.io/en/stable/#quickstart)).
 
 **IMPORTANT**: This is an internal file, so we won't be sharing it. This file is needed to run the complete pipeline, but is
-ot necessary if you just want to run the scraping process for a country (e.g. for vaccinations `$ cowid-vax get -c
+not necessary if you just want to run the scraping process for a country (e.g. for vaccinations `$ cowid-vax get -c
 kenya`).
 
 
@@ -116,7 +116,7 @@ overview](scripts/docs/vaccinations/README.md) and the [vaccination data contrib
 Currently, the testing data is not included in the library, but in the folder [`scripts/testing/`](scripts/testing).
 
 It resembles very much the architecture of the vaccination pipeline, but differs in some key points. The most noticeable
-difference is that it contains both R and python code. We currently prefer contributions in Python.
+difference is that it contains both R and Python code. We currently prefer contributions in Python.
 
 
 _More info:_
