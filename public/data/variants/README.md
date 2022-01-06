@@ -2,7 +2,7 @@
 > For more general information on our COVID-19 data, see our main README file in [`/public/data`](https://github.com/owid/covid-19-data/tree/master/public/data).
 
 Enabled by data from <a href="https://gisaid.org"><img src="https://www.gisaid.org/fileadmin/gisaid/img/schild.png"
-width="50"/></a>. 
+width="50"/></a>
 
 The data is sourced from [GISAID](https://gisaid.org), via [CoVariants](https://CoVariants.org), and we make it available as a [CSV
 💾](covid-variants.csv).
