@@ -13,13 +13,11 @@ Consequently, the dataset is updated multiple times a day, using the currently a
 ### Our sub-processes
 Find below a diagram with the different sub-processes, their approximate update frequency and intermediate generated datasets.
 
-[here](../../scripts/src/cowidev/jhu)
-
 <pre>
         ┌──────────────────────────────────────────────────────────┐
         │ Cases & Deaths (JHU)                                     │
         │                                                          │
-        │  module: <a href="../../scripts/src/cowidev/jhu">cowidev.jhu</a>                                     │
+        │  module: <a href="../../scripts/src/cowidev/jhu/__main__.py">cowidev.jhu</a>                                     │
         │  update: every hour (if new data)                        │
         │                                                          │
         │           ┌───┐    ┌────────────┐                        │
@@ -34,7 +32,7 @@ Find below a diagram with the different sub-processes, their approximate update 
         ┌──────────────────────────────────────────────────────────┐          │
         │ Vaccination                                              │          │
         │                                                          │          │
-        │  module: cowidev.vax                                     │          │
+        │  module: <a href="../../scripts/src/cowidev/vax/__main__.py">cowidev.vax</a>                                     │          │
         │  update: 12h UTC                                         │          │
         │                                                          │          │
         │           ┌───┐     ┌───────┐     ┌────────┐    ┌──────┐ │          │
@@ -50,7 +48,7 @@ Find below a diagram with the different sub-processes, their approximate update 
         ┌──────────────────────────────────────────────────────────┐          │
         │ Hospitalization & ICU                                    │          │
         │                                                          │          │
-        │  module: cowidev.hosp                                    │          │
+        │  module: <a href="../../scripts/src/cowidev/hosp/__main__.py">cowidev.hosp</a>                                    │          │
         │  update: 6h and 18h UTC                                  │          │
         │                                                          │          │
         │           ┌───┐     ┌────────────┐     ┌──────────┐      │          │
@@ -64,8 +62,8 @@ Find below a diagram with the different sub-processes, their approximate update 
                                                                               │          ┌───────────────────────────────┐
         ┌──────────────────────────────────────────────────────────┐          │          │ Megafile                      │
         │ Testing                                                  │          │          │                               │
-        │                                                          │          │          │  module: cowidev.megafile     │
-        │  module: scripts/scripts/uk_nations.py                   │          ├─────────►│  update: 6h, 18h UTC          │
+        │                                                          │          │          │  module: <a href="../../scripts/src/cowidev/megafile/__main__.py">cowidev.megafile</a>     │
+        │  module: <a href="../../scripts/scripts/testing/">scripts/scripts/testing/</a>                   │          ├─────────►│  update: 6h, 18h UTC          │
         │  update: every day                                       │          │          │                               │
         │                                                          │          │          │  output:  owid-covid-data.csv │
         │           ┌─────────────────┐     ┌────────────────┐     │          │          │                               │
@@ -80,7 +78,7 @@ Find below a diagram with the different sub-processes, their approximate update 
         ┌──────────────────────────────────────────────────────────┐          │
         │ Policy responses (OXCGRT)                                │          │
         │                                                          │          │
-        │  module: cowidev.oxcgrt                                  │          │
+        │  module: <a href="../../scripts/src/cowidev/oxcgrt/__main__.py">cowidev.oxcgrt</a>                                  │          │
         │  update: every 24 hours                                  │          │
         │                                                          │          │
         │           ┌───┐    ┌────────────┐    ┌──────────┐        │          │
@@ -95,7 +93,7 @@ Find below a diagram with the different sub-processes, their approximate update 
         ┌──────────────────────────────────────────────────────────┐          │
         │ Variants                                                 │          │
         │                                                          │          │
-        │  module: cowidev.variants                                │          │
+        │  module: <a href="../../scripts/src/cowidev/variants/__main__.py">cowidev.variants</a>                                │          │
         │  update: 20h UTC                                         │          │
         │                                                          │          │
         │           ┌───┐     ┌────────────┐     ┌─────────────┐   │          │
@@ -110,7 +108,7 @@ Find below a diagram with the different sub-processes, their approximate update 
         ┌──────────────────────────────────────────────────────────┐          │
         │ Excess Mortality                                         │          │
         │                                                          │          │
-        │  module: cowidev.xm                                      │          │
+        │  module: <a href="../../scripts/src/cowidev/xm/__main__.py">cowidev.xm</a>                                      │          │
         │  update: 6h and 18h UTC                                  │          │
         │                                                          │          │
         │           ┌───┐                                          │          │
@@ -118,16 +116,17 @@ Find below a diagram with the different sub-processes, their approximate update 
         │           └───┘                                          │          │
         │                                                          │          │
         │                                                          │          │
-        │  output:  excess_mortality.csv ────────────────────────── ──────────┤
-        │           excess_mortality_economist_estimates.csv ────── ──────────┤
+        │  output:  <a href="excess_mortality/excess_mortality.csv">excess_mortality.csv</a> ────────────────────────── ──────────┤
+        │           <a href="excess_mortality/excess_mortality_economist_estimates.csv">excess_mortality_economist_estimates.csv</a> ────── ──────────┤
         │                                                          │          │
         └──────────────────────────────────────────────────────────┘          │
                                                                               │
         ┌──────────────────────────────────────────────────────────┐          │
         │ Reproduction rate                                        │          │
         │                                                          │          │
-        │  remote file ──────────────────────────────────────────── ──────────┘
+        │  <a href="https://github.com/crondonm/TrackingR/raw/main/Estimates-Database/database.csv">remote file</a> ──────────────────────────────────────────── ──────────┘
         │                                                          │
         └──────────────────────────────────────────────────────────┘
-
 </pre>
+
+
