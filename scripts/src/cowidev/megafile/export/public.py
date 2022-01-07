@@ -3,7 +3,7 @@ from datetime import date, timedelta
 
 import pandas as pd
 
-from cowidev.utils.s3 import upload_to_s3, df_to_s3
+from cowidev.utils.s3 import upload_to_s3, df_to_s3, dict_to_s3
 from cowidev.utils.utils import get_project_dir, dict_to_compact_json
 
 
@@ -24,13 +24,12 @@ def create_dataset(df, macro_variables):
     df_to_s3(df, "public/owid-covid-data.xlsx", public=True, extension="xlsx")
 
     print("Writing to JSON…")
-    filename = os.path.join(DATA_DIR, "owid-covid-data.json")
-    df_to_json(
+    data = df_to_dict(
         df,
-        os.path.join(DATA_DIR, "owid-covid-data.json"),
         macro_variables.keys(),
+        valid_json=True,
     )
-    upload_to_s3(filename, "public/owid-covid-data.json", public=True)
+    dict_to_s3(data, "public/owid-covid-data.json", public=True)
 
 
 def create_latest(df):
@@ -59,7 +58,7 @@ def create_latest(df):
     )
 
 
-def df_to_json(complete_dataset, output_path, static_columns):
+def df_to_dict(complete_dataset, static_columns, valid_json=False):
     """
     Writes a JSON version of the complete dataset, with the ISO code at the root.
     NA values are dropped from the output.
@@ -79,6 +78,17 @@ def df_to_json(complete_dataset, output_path, static_columns):
             {k: v for k, v in r.items() if pd.notnull(v)}
             for r in country_df.drop(columns=static_columns).to_dict("records")
         ]
+    if valid_json:
+        megajson = dict_to_compact_json(megajson)
+    return megajson
 
+
+def df_to_json(complete_dataset, output_path, static_columns):
+    """
+    Writes a JSON version of the complete dataset, with the ISO code at the root.
+    NA values are dropped from the output.
+    Macro variables are normalized by appearing only once, at the root of each ISO code.
+    """
+    megajson = df_to_dict(complete_dataset, static_columns, valid_json=True)
     with open(output_path, "w") as file:
-        file.write(dict_to_compact_json(megajson))
+        file.write(megajson)
