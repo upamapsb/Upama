@@ -120,9 +120,9 @@ def _build_df_execution(modules_execution_results):
 
 
 def _export_log_info(df_exec, t_sec_1, t_sec_2):
-    print("EXPORTING LOG DETAILS")
     # print(len(df_new), len(MODULES_NAME), len(df_new) == len(MODULES_NAME))
     if len(df_exec) == len(MODULES_NAME):
+        print("EXPORTING LOG DETAILS")
         details = system_details()
         date_now = localdate(force_today=True)
         machine = details["id"]
@@ -134,8 +134,8 @@ def _export_log_info(df_exec, t_sec_1, t_sec_2):
         df_to_s3(df, LOG_GET_COUNTRIES)
         # Export machine info
         data = dict_from_s3(LOG_MACHINES)
-        if details["id"] not in data:
-            data = {**details, **data}
+        if machine not in data:
+            data = {**details, machine: details["info"]}
             dict_to_s3(data, LOG_MACHINES)
         # Export overall timing
         report = {"machine": machine, "date": date_now, "t_sec": t_sec_1, "t_sec_retry": t_sec_2}
