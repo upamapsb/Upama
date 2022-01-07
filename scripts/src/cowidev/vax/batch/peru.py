@@ -1,35 +1,34 @@
 import pandas as pd
 
-from cowidev.utils.clean.dates import localdate, localdatenow
+from cowidev.utils.clean.dates import localdate
 from cowidev.vax.utils.files import export_metadata_age
+from cowidev.vax.utils.utils import build_vaccine_timeline
 from cowidev.utils import paths
 
 
 class Peru:
-    def __init__(self) -> None:
-        self.location = "Peru"
-        self.source_url = (
-            "https://github.com/jmcastagnetto/covid-19-peru-vacunas/raw/main/datos/vacunas_covid_resumen.csv"
-        )
-        self.source_url_age = (
-            "https://github.com/jmcastagnetto/covid-19-peru-vacunas/raw/main/datos/vacunas_covid_rangoedad_owid.csv"
-        )
-        self.source_url_manufacturer = (
-            "https://github.com/jmcastagnetto/covid-19-peru-vacunas/raw/main/datos/vacunas_covid_fabricante.csv"
-        )
-        self.source_url_ref = "https://www.datosabiertos.gob.pe/dataset/vacunacion"
-        self.vaccine_mapping = {
-            "SINOPHARM": "Sinopharm/Beijing",
-            "PFIZER": "Pfizer/BioNTech",
-            "ASTRAZENECA": "Oxford/AstraZeneca",
-        }
-        # Based on https://github.com/jmcastagnetto/covid-19-peru-vacunas/issues/5
-        self.date_start = "2021-02-08"
+    location = "Peru"
+    source_url = "https://github.com/jmcastagnetto/covid-19-peru-vacunas/raw/main/datos/vacunas_covid_resumen.csv"
+    source_url_age = (
+        "https://github.com/jmcastagnetto/covid-19-peru-vacunas/raw/main/datos/vacunas_covid_rangoedad_owid.csv"
+    )
+    source_url_manufacturer = (
+        "https://github.com/jmcastagnetto/covid-19-peru-vacunas/raw/main/datos/vacunas_covid_fabricante.csv"
+    )
+    source_url_ref = "https://www.datosabiertos.gob.pe/dataset/vacunacion"
+    vaccine_mapping = {
+        "SINOPHARM": "Sinopharm/Beijing",
+        "PFIZER": "Pfizer/BioNTech",
+        "ASTRAZENECA": "Oxford/AstraZeneca",
+    }
+    # Based on https://github.com/jmcastagnetto/covid-19-peru-vacunas/issues/5
+    date_start = "2021-02-08"
+    vax_timeline = None
 
     def read(self):
         return pd.read_csv(
             self.source_url,
-            usecols=["fecha_vacunacion", "fabricante", "dosis", "n_reg"],
+            # usecols=["fecha_vacunacion", "fabricante", "dosis", "n_reg"],
         )
 
     def read_manufacturer(self):
@@ -39,8 +38,8 @@ class Peru:
         df = df.rename(columns={"fecha_vacunacion": "date", "fabricante": "vaccine"})
         return df.dropna(subset=["vaccine"])
 
-    def pipe_filter_bydate(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df[df.date >= self.date_start]
+    def pipe_filter_only_campaign(self, df: pd.DataFrame) -> pd.DataFrame:
+        return df[df.flag_vacunacion_general]
 
     def pipe_checks(self, df: pd.DataFrame) -> pd.DataFrame:
         # Check vaccine names
@@ -49,8 +48,10 @@ class Peru:
             raise ValueError("Found unknown vaccines: {}".format(unknown_vaccines))
         return df
 
-    def pipe_rename_vaccines(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.replace(self.vaccine_mapping)
+    def pipe_get_vax_timeline(self, df: pd.DataFrame) -> pd.DataFrame:
+        df = df.replace(self.vaccine_mapping)
+        self.vax_timeline = df.groupby("vaccine").date.min().to_dict()
+        return df
 
     def pipe_format(self, df: pd.DataFrame) -> pd.DataFrame:
         df.loc[df.dosis >= 3, "dosis"] = 3  # All doses from 3 onwards are boosters
@@ -66,23 +67,27 @@ class Peru:
             .reset_index()
         )
 
+    def pipe_vaccine(self, df: pd.DataFrame) -> pd.DataFrame:
+        df = build_vaccine_timeline(df, self.vax_timeline)
+        return df
+
     def pipe_total_vaccinations(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(total_vaccinations=df.people_vaccinated + df.people_fully_vaccinated + df.total_boosters)
 
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(
             location=self.location,
-            vaccine=", ".join(sorted(self.vaccine_mapping.values())),
             source_url=self.source_url_ref,
         )
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return (
             df.pipe(self.pipe_rename_columns)
-            .pipe(self.pipe_filter_bydate)
+            .pipe(self.pipe_filter_only_campaign)
             .pipe(self.pipe_checks)
-            .pipe(self.pipe_rename_vaccines)
+            .pipe(self.pipe_get_vax_timeline)
             .pipe(self.pipe_format)
+            .pipe(self.pipe_vaccine)
             .pipe(self.pipe_total_vaccinations)
             .pipe(self.pipe_metadata)
         )
@@ -105,7 +110,7 @@ class Peru:
         df.loc[df.complete_epi_week == 0, "date"] = localdate("America/Lima")
         return df
 
-    def pipe_columns_out(self, df: pd.DataFrame) -> pd.DataFrame:
+    def pipe_age_columns_out(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.rename(columns={"people_recieving_booster_per_hundred": "people_with_booster_per_hundred"})[
             [
                 "location",
@@ -119,9 +124,10 @@ class Peru:
         ]
 
     def pipeline_age(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self.pipe_age_checks).pipe(self.pipe_age_date).pipe(self.pipe_columns_out)
+        return df.pipe(self.pipe_age_checks).pipe(self.pipe_age_date).pipe(self.pipe_age_columns_out)
 
     def pipeline_manufacturer(self, df: pd.DataFrame) -> pd.DataFrame:
+        df = df.pipe(self.pipe_filter_only_campaign)
         df = df.sort_values(["location", "date", "vaccine"])[["location", "date", "vaccine", "total_vaccinations"]]
         if not df.groupby("vaccine")["total_vaccinations"].is_monotonic_increasing.all():
             raise ValueError("Manufacturer data for Peru is not monotonically increasing!")
