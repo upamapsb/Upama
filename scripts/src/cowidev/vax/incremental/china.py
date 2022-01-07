@@ -14,7 +14,7 @@ class China:
     source_url: str = "http://www.nhc.gov.cn/xcs/yqjzqk/list_gzbd.shtml"
     regex: dict = {
         "date": r"截至(20\d{2})年(\d{1,2})月(\d{1,2})日",
-        "total_vaccinations": "([\d\.]+万)剂次。",
+        "total_vaccinations": "([\d\.]+\s*万)剂次",
     }
 
     def read(self, last_update: str):
@@ -26,7 +26,6 @@ class China:
             for link in links:
                 data_ = self._parse_data(driver, link)
                 if data_["date"] <= last_update:
-                    # print(data_["date"], "<", last_update)
                     break
                 data.append(data_)
         return pd.DataFrame(data)
