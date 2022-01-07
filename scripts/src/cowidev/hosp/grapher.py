@@ -51,8 +51,7 @@ def run_db_updater(input_path: str):
     GrapherBaseUpdater(
         dataset_name=dataset_name,
         source_name=(
-            "European CDC for EU countries, government sources for other countries – Last updated"
-            f" {time_str_grapher()} (London time)"
+            "Official data collated by Our World in Data – Last updated" f" {time_str_grapher()} (London time)"
         ),
         zero_day=ZERO_DAY,
         slack_notifications=True,
