@@ -51,6 +51,13 @@ class Switzerland:
             people_url,
             usecols=["geoRegion", "date", "sumTotal", "type", "age_group"],
         )
+        assert set(people.type) == {
+            "COVID19AtLeastOneDosePersons",
+            "COVID19FullyVaccPersons",
+            "COVID19PartiallyVaccPersons",
+            "COVID19FirstBoosterPersons",
+            "COVID19NotVaccPersons",
+        }, "New type found! Check people.type"
         people = people[people.age_group == "total_population"].drop(columns=["age_group"])
         manufacturer = pd.read_csv(
             manufacturer_url,

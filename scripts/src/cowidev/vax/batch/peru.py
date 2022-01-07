@@ -1,9 +1,10 @@
 import pandas as pd
 
+from cowidev.utils import paths
 from cowidev.utils.clean.dates import localdate
 from cowidev.vax.utils.files import export_metadata_age
+from cowidev.utils.utils import check_known_columns
 from cowidev.vax.utils.utils import build_vaccine_timeline
-from cowidev.utils import paths
 
 
 class Peru:
@@ -26,10 +27,11 @@ class Peru:
     vax_timeline = None
 
     def read(self):
-        return pd.read_csv(
-            self.source_url,
-            # usecols=["fecha_vacunacion", "fabricante", "dosis", "n_reg"],
+        df = pd.read_csv(self.source_url)
+        check_known_columns(
+            df, ["fecha_corte", "fecha_vacunacion", "fabricante", "dosis", "n_reg", "flag_vacunacion_general"]
         )
+        return df[["fecha_vacunacion", "fabricante", "dosis", "n_reg", "flag_vacunacion_general"]]
 
     def read_manufacturer(self):
         return pd.read_csv(self.source_url_manufacturer)
@@ -39,7 +41,7 @@ class Peru:
         return df.dropna(subset=["vaccine"])
 
     def pipe_filter_only_campaign(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df[df.flag_vacunacion_general]
+        return df[df.flag_vacunacion_general].drop(columns=["flag_vacunacion_general"])
 
     def pipe_checks(self, df: pd.DataFrame) -> pd.DataFrame:
         # Check vaccine names

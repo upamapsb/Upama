@@ -1,10 +1,10 @@
 import json
-
 import requests
+
 import pandas as pd
 
-from cowidev.vax.utils.utils import make_monotonic
 from cowidev.utils import paths
+from cowidev.vax.utils.utils import make_monotonic
 
 
 class Lithuania:
@@ -45,7 +45,8 @@ class Lithuania:
         res = requests.get(url, params=params)
         if res.ok:
             data = [elem["attributes"] for elem in json.loads(res.content)["features"]]
-            return pd.DataFrame.from_records(data)
+            df = pd.DataFrame.from_records(data)
+            return df
         raise ValueError("Source not valid/available!")
 
     def pipe_parse_dates(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -53,6 +54,9 @@ class Lithuania:
         return df
 
     def pipe_clean_doses(self, df: pd.DataFrame) -> pd.DataFrame:
+        known_vaccines = set(list(self.vaccine_mapping.keys()) + ["visos"])
+        if set(df.vaccine_name) != known_vaccines:
+            raise Exception(f"New vaccines found! Check {known_vaccines.difference(set(self.vaccine_mapping.keys()))}")
         self.vaccine_start_dates = (
             df[(df.vaccines_used_cum > 0) & (df.vaccine_name != "visos")]
             .replace(self.vaccine_mapping)
@@ -67,6 +71,7 @@ class Lithuania:
         )
 
     def pipe_clean_coverage(self, df: pd.DataFrame) -> pd.DataFrame:
+        assert set(df.vaccination_state) == {"00visos", "03pakartotinai", "02pilnai"}
         df = (
             df.pivot(index="date", columns="vaccination_state", values="all_cum")
             .reset_index()

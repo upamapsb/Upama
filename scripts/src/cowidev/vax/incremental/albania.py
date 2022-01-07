@@ -14,7 +14,7 @@ class Albania:
         self.source_url = "https://shendetesia.gov.al/category/lajme/page"
         self._num_max_pages = 3
         self.regex = {
-            "title": r"Vaksinimi antiCOVID\/ Kryhen [0-9,]+ vaksinime",
+            "title": r"Vaksinimi antiCOVID\/( Kryhen)? [0-9,]+ vaksinime",
             "date": r"Postuar më: (\d{1,2}\/\d{1,2}\/202\d)",
             "people_vaccinated": r"([\d,]+) doza të para",
             "people_fully_vaccinated": r"([\d,]+) doza të dyta",

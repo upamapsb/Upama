@@ -1,5 +1,7 @@
 import pandas as pd
+
 from cowidev.utils import paths
+from cowidev.utils.utils import check_known_columns
 
 
 class Norway:
@@ -9,7 +11,37 @@ class Norway:
         self.source_url_ref = "https://github.com/folkehelseinstituttet/surveillance_data"
 
     def read(self):
-        return pd.read_csv(self.source_url)
+        df = pd.read_csv(self.source_url)
+        check_known_columns(
+            df,
+            [
+                "granularity_time",
+                "granularity_geo",
+                "location_code",
+                "border",
+                "age",
+                "sex",
+                "year",
+                "week",
+                "yrwk",
+                "season",
+                "x",
+                "date",
+                "n_dose_1",
+                "n_dose_2",
+                "n_dose_3_all",
+                "cum_n_dose_1",
+                "cum_n_dose_2",
+                "cum_n_dose_3_all",
+                "cum_pr100_dose_1",
+                "cum_pr100_dose_2",
+                "cum_pr100_dose_3_all",
+                "pop",
+                "location_name",
+                "date_of_publishing",
+            ],
+        )
+        return df
 
     def pipe_filter_rows(self, df: pd.DataFrame) -> pd.DataFrame:
         return df[df.granularity_geo == "nation"]

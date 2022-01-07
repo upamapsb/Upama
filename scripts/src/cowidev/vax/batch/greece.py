@@ -2,8 +2,9 @@ import requests
 
 import pandas as pd
 
-from cowidev.utils.clean import clean_date_series
 from cowidev.utils import paths
+from cowidev.utils.clean import clean_date_series
+from cowidev.utils.utils import check_known_columns
 
 
 class Greece:
@@ -16,6 +17,24 @@ class Greece:
     def read(self) -> pd.DataFrame:
         data = requests.get(self.source_url, headers={"Authorization": f"Token {self.token}"}).json()
         df = pd.DataFrame.from_records(data)
+        check_known_columns(
+            df,
+            [
+                "area",
+                "areaid",
+                "dailydose1",
+                "dailydose2",
+                "dailydose3",
+                "daydiff",
+                "daytotal",
+                "referencedate",
+                "totaldistinctpersons",
+                "totaldose1",
+                "totaldose2",
+                "totaldose3",
+                "totalvaccinations",
+            ],
+        )
         return (
             df.rename(
                 columns={

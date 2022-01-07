@@ -1,5 +1,7 @@
 import pandas as pd
+
 from cowidev.utils import paths
+from cowidev.utils.utils import check_known_columns
 from cowidev.vax.utils.utils import build_vaccine_timeline
 
 
@@ -15,6 +17,18 @@ class Estonia:
 
     def _parse_data(self) -> pd.DataFrame:
         df = pd.read_json(self.source_url)
+        check_known_columns(
+            df,
+            [
+                "StatisticsDate",
+                "TargetDiseaseCode",
+                "TargetDisease",
+                "MeasurementType",
+                "DailyCount",
+                "TotalCount",
+                "PopulationCoverage",
+            ],
+        )
         df = (
             df[["StatisticsDate", "MeasurementType", "TotalCount"]]
             .pivot(index="StatisticsDate", columns="MeasurementType", values="TotalCount")

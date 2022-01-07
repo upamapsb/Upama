@@ -1,11 +1,12 @@
-import os
 from glob import glob
+import os
 
 import pandas as pd
 
-from cowidev.vax.utils.files import export_metadata_manufacturer
 from cowidev.utils import paths
 from cowidev.utils.clean.dates import clean_date_series
+from cowidev.utils.utils import check_known_columns
+from cowidev.vax.utils.files import export_metadata_manufacturer
 from cowidev.vax.utils.utils import build_vaccine_timeline
 
 
@@ -21,9 +22,32 @@ class UnitedStates:
     ### Main processing ###
 
     def read(self) -> pd.DataFrame:
-        return pd.read_csv(
-            self.source_url,
-            usecols=[
+        df = pd.read_csv(self.source_url)
+        check_known_columns(
+            df,
+            [
+                "Date",
+                "MMWR_week",
+                "Location",
+                "Administered_Daily",
+                "Administered_Cumulative",
+                "Administered_7_Day_Rolling_Average",
+                "Admin_Dose_1_Daily",
+                "Admin_Dose_1_Cumulative",
+                "Admin_Dose_1_Day_Rolling_Average",
+                "date_type",
+                "Administered_daily_change_report",
+                "Administered_daily_change_report_7dayroll",
+                "Series_Complete_Daily",
+                "Series_Complete_Cumulative",
+                "Series_Complete_Day_Rolling_Average",
+                "Booster_Daily",
+                "Booster_Cumulative",
+                "Booster_7_Day_Rolling_Average",
+            ],
+        )
+        return df[
+            [
                 "Date",
                 "Location",
                 "Administered_Cumulative",
@@ -31,8 +55,8 @@ class UnitedStates:
                 "date_type",
                 "Series_Complete_Cumulative",
                 "Booster_Cumulative",
-            ],
-        )
+            ]
+        ]
 
     def pipe_filter_rows(self, df: pd.DataFrame) -> pd.DataFrame:
         return df[(df.Location == "US") & (df.date_type == "Admin")]

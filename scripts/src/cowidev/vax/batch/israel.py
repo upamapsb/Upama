@@ -1,13 +1,12 @@
 import datetime
-import json
 
-import requests
 import pandas as pd
 
-from cowidev.vax.utils.files import export_metadata_age
-from cowidev.utils.clean import clean_date_series
 from cowidev.utils import paths
+from cowidev.utils.clean import clean_date_series
+from cowidev.utils.utils import check_known_columns
 from cowidev.utils.web import request_json
+from cowidev.vax.utils.files import export_metadata_age
 
 
 class Israel:
@@ -21,7 +20,26 @@ class Israel:
 
     def read(self) -> pd.DataFrame:
         data = request_json(self.source_url)
-        return pd.DataFrame.from_records(data)
+        df = pd.DataFrame.from_records(data)
+        check_known_columns(
+            df,
+            [
+                "Day_Date",
+                "vaccinated",
+                "vaccinated_cum",
+                "vaccinated_population_perc",
+                "vaccinated_seconde_dose",
+                "vaccinated_seconde_dose_cum",
+                "vaccinated_seconde_dose_population_perc",
+                "vaccinated_third_dose",
+                "vaccinated_third_dose_cum",
+                "vaccinated_third_dose_population_perc",
+                "vaccinated_validity_perc",
+                "vaccinated_expired_perc",
+                "not_vaccinated_perc",
+            ],
+        )
+        return df
 
     def read_age(self):
         return pd.read_csv(self.source_url_age)

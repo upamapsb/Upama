@@ -1,9 +1,10 @@
 import pandas as pd
 
+from cowidev.utils import paths
+from cowidev.utils.utils import check_known_columns
+from cowidev.utils.web import request_json
 from cowidev.vax.utils.files import export_metadata_manufacturer
 from cowidev.vax.utils.utils import make_monotonic
-from cowidev.utils.web import request_json
-from cowidev.utils import paths
 
 
 class Romania:
@@ -24,16 +25,31 @@ class Romania:
 
     def read(self) -> pd.DataFrame:
         data = request_json(self.source_url)
-        return (
-            pd.DataFrame.from_dict(
-                data["historicalData"],
-                orient="index",
-                columns=["vaccines", "numberTotalDosesAdministered"],
-            )
-            .reset_index()
-            .dropna()
-            .sort_values(by="index")
+        df = pd.DataFrame.from_dict(data["historicalData"], orient="index")
+        check_known_columns(
+            df,
+            [
+                "parsedOn",
+                "parsedOnString",
+                "fileName",
+                "complete",
+                "averageAge",
+                "numberInfected",
+                "numberCured",
+                "numberDeceased",
+                "percentageOfWomen",
+                "percentageOfMen",
+                "percentageOfChildren",
+                "numberTotalDosesAdministered",
+                "distributionByAge",
+                "countyInfectionsNumbers",
+                "incidence",
+                "large_cities_incidence",
+                "small_cities_incidence",
+                "vaccines",
+            ],
         )
+        return df[["vaccines", "numberTotalDosesAdministered"]].reset_index().dropna().sort_values(by="index")
 
     def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.rename(columns=self.columns_rename)

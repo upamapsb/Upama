@@ -1,8 +1,9 @@
 import pandas as pd
 
-from cowidev.utils.clean import clean_date_series
-from cowidev.vax.utils.utils import make_monotonic
 from cowidev.utils import paths
+from cowidev.utils.clean import clean_date_series
+from cowidev.utils.utils import check_known_columns
+from cowidev.vax.utils.utils import make_monotonic
 
 
 class Malta:
@@ -20,7 +21,18 @@ class Malta:
     }
 
     def read(self) -> pd.DataFrame:
-        return pd.read_csv(self.source_url)
+        df = pd.read_csv(self.source_url)
+        check_known_columns(
+            df,
+            [
+                "Date of Vaccination",
+                "Total Vaccination Doses",
+                "Fully vaccinated (2 of 2 or 1 of 1)",
+                "Received one dose (1 of 2 or 1 of 1)",
+                "Total Booster doses",
+            ],
+        )
+        return df
 
     def pipe_check_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         columns_wrong = set(df.columns).difference(self.columns_rename)
