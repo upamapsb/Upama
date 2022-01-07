@@ -127,10 +127,10 @@ def _export_log_info(df_exec, t_sec_1, t_sec_2):
         date_now = localdate(force_today=True)
         machine = details["id"]
         # Export timings per country
-        df_exec = df_exec.assign(date=date_now, machine=machine)
+        df_exec = df_exec.reset_index().assign(date=date_now, machine=machine)
         df = df_from_s3(LOG_GET_COUNTRIES)
         df = df[df.date + df.machine != date_now + machine]
-        df = pd.concat([df, df_exec.reset_index()])
+        df = pd.concat([df, df_exec])
         df_to_s3(df, LOG_GET_COUNTRIES)
         # Export machine info
         data = dict_from_s3(LOG_MACHINES)
