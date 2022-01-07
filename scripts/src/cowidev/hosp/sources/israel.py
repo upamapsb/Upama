@@ -22,7 +22,7 @@ def main():
     df.loc[df.date < "2020-08-17", "CountCriticalStatus"] = np.nan
 
     df["new_hospitalized"] = df.new_hospitalized.rolling(7).sum()
-    df["serious_critical_new"] = df.new_hospitalized.rolling(7).sum()
+    df["serious_critical_new"] = df.serious_critical_new.rolling(7).sum()
 
     df = (
         df[["date", "Counthospitalized", "CountCriticalStatus", "new_hospitalized", "serious_critical_new"]]
