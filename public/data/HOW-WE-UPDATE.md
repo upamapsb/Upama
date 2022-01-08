@@ -2,16 +2,20 @@
 We share the complete dataset as [CSV](https://covid.ourworldindata.org/data/owid-covid-data.csv),
 [JSON](https://covid.ourworldindata.org/data/owid-covid-data.json)
 and [XLSX](https://covid.ourworldindata.org/data/owid-covid-data.xlsx) files. This dataset contains several metrics, ranging
-from vaccination to hospitalization.
+from vaccination to hospitalization. More details about the dataset can be found [hrere](https://github.com/owid/covid-19-data/tree/master/public/data).
 
-We create it by first running several _sub-processes_ that generate intermidiate datasets and then jointly processing and merging all these intermediate datasets into a final and complete dataset.  
+We produce this dataset by
 
-Consequently, the dataset is updated multiple times a day, using the currently available intermediate datasets. That is, for the vaccination data to be updated in our complete dataset, the vaccination intermediate dataset needs first to be updated.
+1. Running several _sub-processes_ that generate intermidiate datasets.
+2. Jointly processing and merging all these intermediate datasets into the final and complete dataset.  
+
+Consequently, the dataset is updated multiple times a day (_at least_ at 6h and 18h UTC), using the latest generated intermediate datasets. That is, for the vaccination data to be updated in the complete dataset, the vaccination intermediate dataset needs first to be updated.
 
 
-
-### Our sub-processes
-Find below a diagram with the different sub-processes, their approximate update frequency and intermediate generated datasets.
+### Dataset sub-processes
+Find below a diagram with the different sub-processes, their approximate update frequency and intermediate generated
+datasets. This diagram only shows the sub-processes relevant for the production of the complete dataset, as there are
+other sub-processes producing data that may appear on our website (Grapher) but that is not present in the complete dataset.
 
 <pre>
   ┌──────────────────────────────────────────────────────────┐
@@ -63,7 +67,7 @@ Find below a diagram with the different sub-processes, their approximate update 
   ┌──────────────────────────────────────────────────────────┐          │          │ Megafile                      │
   │ Testing                                                  │          │          │                               │
   │                                                          │          │          │  module: <a href="../../scripts/src/cowidev/megafile/__main__.py">cowidev.megafile</a>     │
-  │  module: <a href="../../scripts/scripts/testing/">scripts/scripts/testing/</a>                        │          ├─────────►│  update: 6h, 18h UTC          │
+  │  module: <a href="../../scripts/scripts/testing/">scripts/scripts/testing/</a>                        │          ├─────────►│  update: 6h and 18h UTC          │
   │  update: every day                                       │          │          │                               │
   │                                                          │          │          │  output:  owid-covid-data.csv │
   │           ┌─────────────────┐     ┌────────────────┐     │          │          │                               │
@@ -130,3 +134,53 @@ Find below a diagram with the different sub-processes, their approximate update 
 </pre>
 
 
+### Other subprocesses
+The following sub-processes generate other data relevant for our Grapher and Explorer charts.
+
+<pre>
+  ┌──────────────────────────────────────────────────────────┐
+  │ Vaccination US States                                    │
+  │                                                          │
+  │  module: <a href="../../scripts/src/cowidev/vax/us_states/__main__.py">cowidev.vax.us_states</a>                           │
+  │  update: every hour                                      │
+  │                                                          │
+  │           ┌───┐     ┌────────────┐                       │
+  │  steps:   │<a href="../../scripts/src/cowidev/vax/us_states/etl.py">etl</a>├────►│<a href="../../scripts/src/cowidev/vax/us_states/grapher.py">grapher-file</a>│                       │
+  │           └───┘     └────────────┘                       │
+  │                                                          │
+  │                                                          │
+  │  output:  <a href="vaccinations/us_state_vaccinations.csv">us_state_vaccinations.csv</a>                      │
+  │                                                          │
+  └──────────────────────────────────────────────────────────┘
+
+  ┌──────────────────────────────────────────────────────────┐
+  │ Vaccination UK States                                    │
+  │                                                          │
+  │  module: <a href="../../scripts/scripts/uk_nations.py">uk_nations.py</a>                                   │
+  │  update: 17h UTC                                         │
+  │                                                          │
+  │           ┌────────────────┐    ┌─────────┐              │
+  │  steps:   │<a href="../../scripts/scripts/uk_nations.py">generate_dataset</a>├───►│<a href="../../scripts/scripts/uk_nations.py">update_db</a>│              │
+  │           └────────────────┘    └─────────┘              │
+  │                                                          │
+  │                                                          │
+  │  output:  <a href="../../scripts/grapher/uk_covid_data.csv">uk_covid_data.csv</a>                              │
+  │                                                          │
+  └──────────────────────────────────────────────────────────┘
+
+  ┌──────────────────────────────────────────────────────────┐
+  │ Google Mobility                                          │
+  │                                                          │
+  │  module: <a href="../../scripts/src/cowidev/gmobility/__main__.py">cowidev.gmobility</a>                               │
+  │  update: 15h UTC                                         │
+  │                                                          │
+  │           ┌───┐     ┌────────────┐                       │
+  │  steps:   │<a href="../../scripts/src/cowidev/gmobility/etl.py">etl</a>├────►│<a href="../../scripts/src/cowidev/gmobility/grapher.py">grapher-file</a>│                       │
+  │           └───┘     └────────────┘                       │
+  │                                                          │
+  │                                                          │
+  │  output:  <a href="../../scripts/grapher/Google Mobility Trends (2020).csv">Google Mobility Trends (2020).csv</a>                      │
+  │                                                          │
+  └──────────────────────────────────────────────────────────┘
+
+</pre>
