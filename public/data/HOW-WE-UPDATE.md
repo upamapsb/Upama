@@ -36,13 +36,13 @@ Find below a diagram with the different sub-processes, their approximate update 
   │  update: 12h UTC                                         │          │
   │                                                          │          │
   │           ┌───┐     ┌───────┐     ┌────────┐    ┌──────┐ │          │
-  │  steps:   │<a href="../../scripts/src/cowidev/vax/cmd/get_data.py">get</a>├────►│<a href="../../scripts/src/cowidev/vax/cmd/process_data.py">process</a>├────►│<a href="../../scripts/src/cowidev/vax/cmd/generate.py">generate</a>├───►│<a href="../../scripts/src/cowidev/vax/cmd/export.py">export</a>│ │          │
+  │  steps:   │<a href="../../scripts/src/cowidev/vax/cmd/get_data.py">get</a>├────►│<a href="../../scripts/src/cowidev/vax/cmd/process_data.py">process</a>├────►│<a href="../../scripts/src/cowidev/vax/cmd/generate_dataset.py">generate</a>├───►│<a href="../../scripts/src/cowidev/vax/cmd/export.py">export</a>│ │          │
   │           └───┘     └───────┘     └────────┘    └──────┘ │          │
   │                                                          │          │
   │                                                          │          │
-  │  output:  vaccinations.csv ────────────────────────────── ──────────│
-  │           vaccinations-by-manufacturer.csv               │          │
-  │           vaccinations-by-age-group.csv                  │          │
+  │  output:  <a href="vaccinations/vaccinations.csv">vaccinations.csv</a> ────────────────────────────── ──────────│
+  │           <a href="vaccinations/vaccinations.csv">vaccinations-by-manufacturer.csv</a>               │          │
+  │           <a href="vaccinations/vaccinations.csv">vaccinations-by-age-group.csv</a>                  │          │
   └──────────────────────────────────────────────────────────┘          │
                                                                         │
   ┌──────────────────────────────────────────────────────────┐          │
@@ -56,7 +56,7 @@ Find below a diagram with the different sub-processes, their approximate update 
   │           └───┘     └────────────┘     └──────────┘      │          │
   │                                                          │          │
   │                                                          │          │
-  │  output:  covid-hospitalizations.csv ──────────────────── ──────────┤
+  │  output:  <a href="hospitalizations/covid-hospitalizations.csv">covid-hospitalizations.csv</a> ──────────────────── ──────────┤
   │                                                          │          │
   └──────────────────────────────────────────────────────────┘          │
                                                                         │          ┌───────────────────────────────┐
@@ -67,11 +67,11 @@ Find below a diagram with the different sub-processes, their approximate update 
   │  update: every day                                       │          │          │                               │
   │                                                          │          │          │  output:  owid-covid-data.csv │
   │           ┌─────────────────┐     ┌────────────────┐     │          │          │                               │
-  │  steps:   │<a href="../../scripts/scripts/testing/run_python_script.py">run_python_script</a>├────►│<a href="../../scripts/scripts/testing/generate_dataset.R">generate_dataset</a>│     │          │          └───────────────────────────────┘
-  │           │<a href="../../scripts/scripts/testing/run_R_scripts.R">run_R_scripts</a>    │     └────────────────┘     │          │
+  │  steps:   │<a href="../../scripts/scripts/testing/run_python_scripts.py">run_python_script</a>├────►│<a href="../../scripts/scripts/testing/generate_dataset.R">generate_dataset</a>│     │          │          └───────────────────────────────┘
+  │           │<a href="../../scripts/scripts/testing/run_r_scripts.R">run_R_scripts</a>    │     └────────────────┘     │          │
   │           └─────────────────┘                            │          │
   │                                                          │          │
-  │  output:  covid-testing-all-observations.csv ──────────── ──────────┤
+  │  output:  <a href="testing/covid-testing-all-observations.csv">covid-testing-all-observations.csv</a> ──────────── ──────────┤
   │                                                          │          │
   └──────────────────────────────────────────────────────────┘          │
                                                                         │
@@ -86,7 +86,7 @@ Find below a diagram with the different sub-processes, their approximate update 
   │           └───┘    └────────────┘    └──────────┘        │          │
   │                                                          │          │
   │                                                          │          │
-  │  output:  latest.csv ──────────────────────────────────── ──────────┤
+  │  output:  <a href="../../scripts/input/bsg/latest.csv">latest.csv</a> ──────────────────────────────────── ──────────┤
   │                                                          │          │
   └──────────────────────────────────────────────────────────┘          │
                                                                         │
@@ -97,12 +97,12 @@ Find below a diagram with the different sub-processes, their approximate update 
   │  update: 20h UTC                                         │          │
   │                                                          │          │
   │           ┌───┐     ┌────────────┐     ┌─────────────┐   │          │
-  │  steps:   │<a href="../../scripts/src/cowidev/variants/etl.py">etl</a>├────►│<a href="../../scripts/src/cowidev/variants/grapher.py">grapher-file</a>├────►│<a href="../../scripts/src/cowidev/variants/explorer.py">explorer-file</a>│   │          │
+  │  steps:   │<a href="../../scripts/src/cowidev/variants/etl.py">etl</a>├────►│<a href="../../scripts/src/cowidev/variants/grapher.py">grapher-file</a>├────►│<a href="../../scripts/src/cowidev/variants/grapher.py">explorer-file</a>│   │          │
   │           └───┘     └────────────┘     └─────────────┘   │          │
   │                                                          │          │
   │                                                          │          │
-  │  output:  covid-variants.csv ──────────────────────────── ──────────┤
-  │           covid-sequencing.csv                           │          │
+  │  output:  <a href="variants/covid-variants.csv">covid-variants.csv</a> ──────────────────────────── ──────────┤
+  │           <a href="variants/covid-sequencing.csv">covid-sequencing.csv</a>                           │          │
   └──────────────────────────────────────────────────────────┘          │
                                                                         │
   ┌──────────────────────────────────────────────────────────┐          │
