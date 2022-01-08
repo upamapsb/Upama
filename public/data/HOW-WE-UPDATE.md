@@ -67,7 +67,7 @@ other sub-processes producing data that may appear on our website (Grapher) but 
   ┌──────────────────────────────────────────────────────────┐          │          │ Megafile                      │
   │ Testing                                                  │          │          │                               │
   │                                                          │          │          │  module: <a href="../../scripts/src/cowidev/megafile/__main__.py">cowidev.megafile</a>     │
-  │  module: <a href="../../scripts/scripts/testing/">scripts/scripts/testing/</a>                        │          ├─────────►│  update: 6h and 18h UTC          │
+  │  module: <a href="../../scripts/scripts/testing/">scripts/scripts/testing/</a>                        │          ├─────────►│  update: 6h and 18h UTC       │
   │  update: every day                                       │          │          │                               │
   │                                                          │          │          │  output:  owid-covid-data.csv │
   │           ┌─────────────────┐     ┌────────────────┐     │          │          │                               │
