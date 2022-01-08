@@ -1,18 +1,19 @@
-## How do we update our dataset?
+# How do we update our dataset?
+
 We share the complete dataset as [CSV](https://covid.ourworldindata.org/data/owid-covid-data.csv),
 [JSON](https://covid.ourworldindata.org/data/owid-covid-data.json)
-and [XLSX](https://covid.ourworldindata.org/data/owid-covid-data.xlsx) files. This dataset contains several metrics, ranging
-from vaccination to hospitalization. More details about the dataset can be found [hrere](https://github.com/owid/covid-19-data/tree/master/public/data).
+and [XLSX](https://covid.ourworldindata.org/data/owid-covid-data.xlsx) files. This dataset contains many metrics. More details about the dataset can be found [hrere](https://github.com/owid/covid-19-data/tree/master/public/data).
 
 We produce this dataset by
 
-1. Running several _sub-processes_ that generate intermidiate datasets.
+1. Running several _sub-processes_ that generate intermediate datasets.
 2. Jointly processing and merging all these intermediate datasets into the final and complete dataset.  
 
-Consequently, the dataset is updated multiple times a day (_at least_ at 6h and 18h UTC), using the latest generated intermediate datasets. That is, for the vaccination data to be updated in the complete dataset, the vaccination intermediate dataset needs first to be updated.
+Consequently, the dataset is updated multiple times a day (_at least_ at 06:00 and 18:00 UTC), using the latest generated intermediate datasets.
 
 
-### Dataset sub-processes
+## Dataset sub-processes
+
 Find below a diagram with the different sub-processes, their approximate update frequency and intermediate generated
 datasets. This diagram only shows the sub-processes relevant for the production of the complete dataset, as there are
 other sub-processes producing data that may appear on our website (Grapher) but that is not present in the complete dataset.
@@ -37,7 +38,7 @@ other sub-processes producing data that may appear on our website (Grapher) but 
   │ <a href="vaccination/">Vaccination</a>                                              │          │
   │                                                          │          │
   │  module: <a href="../../scripts/src/cowidev/vax/__main__.py">cowidev.vax</a>                                     │          │
-  │  update: 12h UTC                                         │          │
+  │  update: 12:00 UTC                                       │          │
   │                                                          │          │
   │           ┌───┐     ┌───────┐     ┌────────┐    ┌──────┐ │          │
   │  steps:   │<a href="../../scripts/src/cowidev/vax/cmd/get_data.py">get</a>├────►│<a href="../../scripts/src/cowidev/vax/cmd/process_data.py">process</a>├────►│<a href="../../scripts/src/cowidev/vax/cmd/generate_dataset.py">generate</a>├───►│<a href="../../scripts/src/cowidev/vax/cmd/export.py">export</a>│ │          │
@@ -53,7 +54,7 @@ other sub-processes producing data that may appear on our website (Grapher) but 
   │ <a href="hospitalizations/">Hospitalization & ICU</a>                                    │          │
   │                                                          │          │
   │  module: <a href="../../scripts/src/cowidev/hosp/__main__.py">cowidev.hosp</a>                                    │          │
-  │  update: 6h and 18h UTC                                  │          │
+  │  update: 06:00 and 18:00 UTC                             │          │
   │                                                          │          │
   │           ┌───┐     ┌────────────┐     ┌──────────┐      │          │
   │  steps:   │<a href="../../scripts/src/cowidev/hosp/etl.py">etl</a>├────►│<a href="../../scripts/src/cowidev/hosp/grapher.py">grapher-file</a>├────►│<a href="../../scripts/src/cowidev/hosp/grapher.py">grapher-db</a>│      │          │
@@ -68,7 +69,7 @@ other sub-processes producing data that may appear on our website (Grapher) but 
   │ Testing                                                  │          │          │                               │
   │                                                          │          │          │  module: <a href="../../scripts/src/cowidev/megafile/__main__.py">cowidev.megafile</a>     │
   │  module: <a href="../../scripts/scripts/testing/">scripts/scripts/testing/</a>                        │          ├─────────►│  update: 6h and 18h UTC       │
-  │  update: every day                                       │          │          │                               │
+  │  update: 3 times per week                                │          │          │                               │
   │                                                          │          │          │  output:  <a href="owid-covid-data.csv">owid-covid-data.csv</a> │
   │           ┌─────────────────┐     ┌────────────────┐     │          │          │                               │
   │  steps:   │<a href="../../scripts/scripts/testing/run_python_scripts.py">run_python_script</a>├────►│<a href="../../scripts/scripts/testing/generate_dataset.R">generate_dataset</a>│     │          │          └───────────────────────────────┘
@@ -83,7 +84,7 @@ other sub-processes producing data that may appear on our website (Grapher) but 
   │ Policy responses (OxCGRT)                                │          │
   │                                                          │          │
   │  module: <a href="../../scripts/src/cowidev/oxcgrt/__main__.py">cowidev.oxcgrt</a>                                  │          │
-  │  update: every 24 hours                                  │          │
+  │  update: once per day                                    │          │
   │                                                          │          │
   │           ┌───┐    ┌────────────┐    ┌──────────┐        │          │
   │  steps:   │<a href="../../scripts/src/cowidev/oxcgrt/etl.py">etl</a>├───►│<a href="../../scripts/src/cowidev/oxcgrt/grapher.py">grapher-file</a>├───►│<a href="../../scripts/src/cowidev/oxcgrt/grapher.py">grapher-db</a>│        │          │
@@ -98,7 +99,7 @@ other sub-processes producing data that may appear on our website (Grapher) but 
   │ <a href="variants/">Variants</a>                                                 │          │
   │                                                          │          │
   │  module: <a href="../../scripts/src/cowidev/variants/__main__.py">cowidev.variants</a>                                │          │
-  │  update: 20h UTC                                         │          │
+  │  update: 20:00 UTC                                       │          │
   │                                                          │          │
   │           ┌───┐     ┌────────────┐     ┌─────────────┐   │          │
   │  steps:   │<a href="../../scripts/src/cowidev/variants/etl.py">etl</a>├────►│<a href="../../scripts/src/cowidev/variants/grapher.py">grapher-file</a>├────►│<a href="../../scripts/src/cowidev/variants/grapher.py">explorer-file</a>│   │          │
@@ -110,10 +111,10 @@ other sub-processes producing data that may appear on our website (Grapher) but 
   └──────────────────────────────────────────────────────────┘          │
                                                                         │
   ┌──────────────────────────────────────────────────────────┐          │
-  │ <a href="excess_mortality/">Excess Mortality</a>                                         │          │
+  │ <a href="excess_mortality/">Excess mortality</a>                                         │          │
   │                                                          │          │
   │  module: <a href="../../scripts/src/cowidev/xm/__main__.py">cowidev.xm</a>                                      │          │
-  │  update: 6h and 18h UTC                                  │          │
+  │  update: 06:00 and 18:00 UTC                             │          │
   │                                                          │          │
   │           ┌───┐                                          │          │
   │  steps:   │<a href="../../scripts/src/cowidev/xm/etl.py">etl</a>│                                          │          │
@@ -134,9 +135,10 @@ other sub-processes producing data that may appear on our website (Grapher) but 
 </pre>
 
 
-### Other subprocesses
+## Other subprocesses
+
 The following sub-processes generate other intermediate datasets relevant for our Grapher and Explorer charts (their
-metrics are not present in the compelete dataset.).
+metrics are not present in the compelete dataset).
 
 <pre>
   ┌──────────────────────────────────────────────────────────┐
@@ -155,10 +157,10 @@ metrics are not present in the compelete dataset.).
   └──────────────────────────────────────────────────────────┘
 
   ┌──────────────────────────────────────────────────────────┐
-  │ <a href="vaccination/">Vaccination US Nations</a>                                   │
+  │ <a href="vaccination/">Local UK Data</a>                                   │
   │                                                          │
   │  module: <a href="../../scripts/scripts/uk_nations.py">uk_nations.py</a>                                   │
-  │  update: 17h UTC                                         │
+  │  update: 17:00 UTC                                       │
   │                                                          │
   │           ┌────────────────┐    ┌─────────┐              │
   │  steps:   │<a href="../../scripts/scripts/uk_nations.py">generate_dataset</a>├───►│<a href="../../scripts/scripts/uk_nations.py">update_db</a>│              │
@@ -173,7 +175,7 @@ metrics are not present in the compelete dataset.).
   │ Google Mobility                                          │
   │                                                          │
   │  module: <a href="../../scripts/src/cowidev/gmobility/__main__.py">cowidev.gmobility</a>                               │
-  │  update: 15h UTC                                         │
+  │  update: 15:00 UTC                                         │
   │                                                          │
   │           ┌───┐     ┌────────────┐                       │
   │  steps:   │<a href="../../scripts/src/cowidev/gmobility/etl.py">etl</a>├────►│<a href="../../scripts/src/cowidev/gmobility/grapher.py">grapher-file</a>│                       │
