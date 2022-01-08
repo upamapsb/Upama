@@ -15,7 +15,7 @@ SEARCH_RE = re.compile(r"新型コロナウイルス感染症患者の療養状�
 
 
 def process_file(url: str, date: str) -> dict:
-    print(url)
+    # print(url)
     df = pd.read_excel(url)
 
     for col in df:
