@@ -2,7 +2,7 @@
 
 We share the complete dataset as [CSV](https://covid.ourworldindata.org/data/owid-covid-data.csv),
 [JSON](https://covid.ourworldindata.org/data/owid-covid-data.json)
-and [XLSX](https://covid.ourworldindata.org/data/owid-covid-data.xlsx) files. This dataset contains many metrics. More details about the dataset can be found [hrere](https://github.com/owid/covid-19-data/tree/master/public/data).
+and [XLSX](https://covid.ourworldindata.org/data/owid-covid-data.xlsx) files. This dataset contains many metrics. More details about the dataset can be found [here](https://github.com/owid/covid-19-data/tree/master/public/data).
 
 We produce this dataset by
 
@@ -157,7 +157,7 @@ metrics are not present in the compelete dataset).
   └──────────────────────────────────────────────────────────┘
 
   ┌──────────────────────────────────────────────────────────┐
-  │ <a href="vaccination/">Local UK Data</a>                                   │
+  │ <a href="vaccination/">Local UK Data</a>                                            │
   │                                                          │
   │  module: <a href="../../scripts/scripts/uk_nations.py">uk_nations.py</a>                                   │
   │  update: 17:00 UTC                                       │
@@ -175,7 +175,7 @@ metrics are not present in the compelete dataset).
   │ Google Mobility                                          │
   │                                                          │
   │  module: <a href="../../scripts/src/cowidev/gmobility/__main__.py">cowidev.gmobility</a>                               │
-  │  update: 15:00 UTC                                         │
+  │  update: 15:00 UTC                                       │
   │                                                          │
   │           ┌───┐     ┌────────────┐                       │
   │  steps:   │<a href="../../scripts/src/cowidev/gmobility/etl.py">etl</a>├────►│<a href="../../scripts/src/cowidev/gmobility/grapher.py">grapher-file</a>│                       │
