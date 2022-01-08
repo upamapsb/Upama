@@ -21,11 +21,11 @@ Find below a diagram with the different sub-processes, their approximate update 
   │  update: every hour (if new data)                        │
   │                                                          │
   │           ┌───┐    ┌────────────┐                        │
-  │  steps:   │etl├───►│grapher-file│                        │
+  │  steps:   │<a href="../../scripts/src/cowidev/jhu/__main__.py">etl</a>├───►│<a href="../../scripts/src/cowidev/jhu/__main__.py">grapher-file</a>│                        │
   │           └───┘    └────────────┘                        │
   │                                                          │
   │                                                          │
-  │  output:  jhu/─────────────────────────────────────────── ──────────┐
+  │  output:  <a href="jhu/">jhu/</a>─────────────────────────────────────────── ──────────┐
   │                                                          │          │
   └──────────────────────────────────────────────────────────┘          │
                                                                         │
@@ -36,7 +36,7 @@ Find below a diagram with the different sub-processes, their approximate update 
   │  update: 12h UTC                                         │          │
   │                                                          │          │
   │           ┌───┐     ┌───────┐     ┌────────┐    ┌──────┐ │          │
-  │  steps:   │get├────►│process├────►│generate├───►│export│ │          │
+  │  steps:   │<a href="../../scripts/src/cowidev/vax/cmd/get_data.py">get</a>├────►│<a href="../../scripts/src/cowidev/vax/cmd/process_data.py">process</a>├────►│<a href="../../scripts/src/cowidev/vax/cmd/generate.py">generate</a>├───►│<a href="../../scripts/src/cowidev/vax/cmd/export.py">export</a>│ │          │
   │           └───┘     └───────┘     └────────┘    └──────┘ │          │
   │                                                          │          │
   │                                                          │          │
@@ -52,7 +52,7 @@ Find below a diagram with the different sub-processes, their approximate update 
   │  update: 6h and 18h UTC                                  │          │
   │                                                          │          │
   │           ┌───┐     ┌────────────┐     ┌──────────┐      │          │
-  │  steps:   │etl├────►│grapher-file├────►│grapher-db│      │          │
+  │  steps:   │<a href="../../scripts/src/cowidev/hosp/etl.py">etl</a>├────►│<a href="../../scripts/src/cowidev/hosp/grapher.py">grapher-file</a>├────►│<a href="../../scripts/src/cowidev/hosp/grapher.py">grapher-db</a>│      │          │
   │           └───┘     └────────────┘     └──────────┘      │          │
   │                                                          │          │
   │                                                          │          │
@@ -67,8 +67,8 @@ Find below a diagram with the different sub-processes, their approximate update 
   │  update: every day                                       │          │          │                               │
   │                                                          │          │          │  output:  owid-covid-data.csv │
   │           ┌─────────────────┐     ┌────────────────┐     │          │          │                               │
-  │  steps:   │run_python_script├────►│generate_dataset│     │          │          └───────────────────────────────┘
-  │           │run_R_scripts    │     └────────────────┘     │          │
+  │  steps:   │<a href="../../scripts/scripts/testing/run_python_script.py">run_python_script</a>├────►│<a href="../../scripts/scripts/testing/generate_dataset.R">generate_dataset</a>│     │          │          └───────────────────────────────┘
+  │           │<a href="../../scripts/scripts/testing/run_R_scripts.R">run_R_scripts</a>    │     └────────────────┘     │          │
   │           └─────────────────┘                            │          │
   │                                                          │          │
   │  output:  covid-testing-all-observations.csv ──────────── ──────────┤
@@ -76,13 +76,13 @@ Find below a diagram with the different sub-processes, their approximate update 
   └──────────────────────────────────────────────────────────┘          │
                                                                         │
   ┌──────────────────────────────────────────────────────────┐          │
-  │ Policy responses (OXCGRT)                                │          │
+  │ Policy responses (OxCGRT)                                │          │
   │                                                          │          │
   │  module: <a href="../../scripts/src/cowidev/oxcgrt/__main__.py">cowidev.oxcgrt</a>                                  │          │
   │  update: every 24 hours                                  │          │
   │                                                          │          │
   │           ┌───┐    ┌────────────┐    ┌──────────┐        │          │
-  │  steps:   │etl├───►│grapher-file├───►│grapher-db│        │          │
+  │  steps:   │<a href="../../scripts/src/cowidev/oxcgrt/etl.py">etl</a>├───►│<a href="../../scripts/src/cowidev/oxcgrt/grapher.py">grapher-file</a>├───►│<a href="../../scripts/src/cowidev/oxcgrt/grapher.py">grapher-db</a>│        │          │
   │           └───┘    └────────────┘    └──────────┘        │          │
   │                                                          │          │
   │                                                          │          │
@@ -97,7 +97,7 @@ Find below a diagram with the different sub-processes, their approximate update 
   │  update: 20h UTC                                         │          │
   │                                                          │          │
   │           ┌───┐     ┌────────────┐     ┌─────────────┐   │          │
-  │  steps:   │etl├────►│grapher-file├────►│explorer-file│   │          │
+  │  steps:   │<a href="../../scripts/src/cowidev/variants/etl.py">etl</a>├────►│<a href="../../scripts/src/cowidev/variants/grapher.py">grapher-file</a>├────►│<a href="../../scripts/src/cowidev/variants/explorer.py">explorer-file</a>│   │          │
   │           └───┘     └────────────┘     └─────────────┘   │          │
   │                                                          │          │
   │                                                          │          │
@@ -112,7 +112,7 @@ Find below a diagram with the different sub-processes, their approximate update 
   │  update: 6h and 18h UTC                                  │          │
   │                                                          │          │
   │           ┌───┐                                          │          │
-  │  steps:   │etl│                                          │          │
+  │  steps:   │<a href="../../scripts/src/cowidev/xm/etl.py">etl</a>│                                          │          │
   │           └───┘                                          │          │
   │                                                          │          │
   │                                                          │          │
