@@ -41,8 +41,8 @@ Find below a diagram with the different sub-processes, their approximate update 
   │                                                          │          │
   │                                                          │          │
   │  output:  <a href="vaccinations/vaccinations.csv">vaccinations.csv</a> ────────────────────────────── ──────────│
-  │           <a href="vaccinations/vaccinations.csv">vaccinations-by-manufacturer.csv</a>               │          │
-  │           <a href="vaccinations/vaccinations.csv">vaccinations-by-age-group.csv</a>                  │          │
+  │           <a href="vaccinations/vaccinations-by-manufacturer.csv">vaccinations-by-manufacturer.csv</a>               │          │
+  │           <a href="vaccinations/vaccinations-by-age-group.csv">vaccinations-by-age-group.csv</a>                  │          │
   └──────────────────────────────────────────────────────────┘          │
                                                                         │
   ┌──────────────────────────────────────────────────────────┐          │
@@ -124,7 +124,7 @@ Find below a diagram with the different sub-processes, their approximate update 
   ┌──────────────────────────────────────────────────────────┐          │
   │ Reproduction rate                                        │          │
   │                                                          │          │
-  │  <a href="https://github.com/crondonm/TrackingR/raw/main/Estimates-Database/database.csv">remote file</a> ──────────────────────────────────────────── ──────────┘
+  │  <a href="https://github.com/crondonm/TrackingR/blob/main/Estimates-Database/database.csv">remote file</a> ──────────────────────────────────────────── ──────────┘
   │                                                          │
   └──────────────────────────────────────────────────────────┘
 </pre>
