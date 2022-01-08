@@ -3,7 +3,7 @@ from datetime import date, timedelta
 
 import pandas as pd
 
-from cowidev.utils.s3 import upload_to_s3, df_to_s3, dict_to_s3
+from cowidev.utils.s3 import upload_to_s3, df_to_s3, str_to_s3
 from cowidev.utils.utils import get_project_dir, dict_to_compact_json
 
 
@@ -29,7 +29,7 @@ def create_dataset(df, macro_variables):
         macro_variables.keys(),
         valid_json=True,
     )
-    dict_to_s3(data, "public/owid-covid-data.json", public=True)
+    str_to_s3(data, "public/owid-covid-data.json", public=True)
 
 
 def create_latest(df):
