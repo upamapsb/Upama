@@ -1,18 +1,19 @@
-## How do we update our dataset?
+# How do we update our dataset?
+
 We share the complete dataset as [CSV](https://covid.ourworldindata.org/data/owid-covid-data.csv),
 [JSON](https://covid.ourworldindata.org/data/owid-covid-data.json)
-and [XLSX](https://covid.ourworldindata.org/data/owid-covid-data.xlsx) files. This dataset contains several metrics, ranging
-from vaccination to hospitalization. More details about the dataset can be found [hrere](https://github.com/owid/covid-19-data/tree/master/public/data).
+and [XLSX](https://covid.ourworldindata.org/data/owid-covid-data.xlsx) files. This dataset contains many metrics. More details about the dataset can be found [hrere](https://github.com/owid/covid-19-data/tree/master/public/data).
 
 We produce this dataset by
 
-1. Running several _sub-processes_ that generate intermidiate datasets.
+1. Running several _sub-processes_ that generate intermediate datasets.
 2. Jointly processing and merging all these intermediate datasets into the final and complete dataset.  
 
-Consequently, the dataset is updated multiple times a day (_at least_ at 6h and 18h UTC), using the latest generated intermediate datasets. That is, for the vaccination data to be updated in the complete dataset, the vaccination intermediate dataset needs first to be updated.
+Consequently, the dataset is updated multiple times a day (_at least_ at 06:00 and 18:00 UTC), using the latest generated intermediate datasets.
 
 
-### Dataset sub-processes
+## Dataset sub-processes
+
 Find below a diagram with the different sub-processes, their approximate update frequency and intermediate generated
 datasets. This diagram only shows the sub-processes relevant for the production of the complete dataset, as there are
 other sub-processes producing data that may appear on our website (Grapher) but that is not present in the complete dataset.
@@ -134,9 +135,10 @@ other sub-processes producing data that may appear on our website (Grapher) but 
 </pre>
 
 
-### Other subprocesses
+## Other subprocesses
+
 The following sub-processes generate other intermediate datasets relevant for our Grapher and Explorer charts (their
-metrics are not present in the compelete dataset.).
+metrics are not present in the compelete dataset).
 
 <pre>
   ┌──────────────────────────────────────────────────────────┐
