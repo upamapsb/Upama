@@ -34,7 +34,7 @@ other sub-processes producing data that may appear on our website (Grapher) but 
   └──────────────────────────────────────────────────────────┘          │
                                                                         │
   ┌──────────────────────────────────────────────────────────┐          │
-  │ Vaccination                                              │          │
+  │ <a href="vaccination/">Vaccination</a>                                              │          │
   │                                                          │          │
   │  module: <a href="../../scripts/src/cowidev/vax/__main__.py">cowidev.vax</a>                                     │          │
   │  update: 12h UTC                                         │          │
@@ -50,7 +50,7 @@ other sub-processes producing data that may appear on our website (Grapher) but 
   └──────────────────────────────────────────────────────────┘          │
                                                                         │
   ┌──────────────────────────────────────────────────────────┐          │
-  │ Hospitalization & ICU                                    │          │
+  │ <a href="hospitalizations/">Hospitalization & ICU</a>                                    │          │
   │                                                          │          │
   │  module: <a href="../../scripts/src/cowidev/hosp/__main__.py">cowidev.hosp</a>                                    │          │
   │  update: 6h and 18h UTC                                  │          │
@@ -95,7 +95,7 @@ other sub-processes producing data that may appear on our website (Grapher) but 
   └──────────────────────────────────────────────────────────┘          │
                                                                         │
   ┌──────────────────────────────────────────────────────────┐          │
-  │ Variants                                                 │          │
+  │ <a href="variants/">Variants</a>                                                 │          │
   │                                                          │          │
   │  module: <a href="../../scripts/src/cowidev/variants/__main__.py">cowidev.variants</a>                                │          │
   │  update: 20h UTC                                         │          │
@@ -110,7 +110,7 @@ other sub-processes producing data that may appear on our website (Grapher) but 
   └──────────────────────────────────────────────────────────┘          │
                                                                         │
   ┌──────────────────────────────────────────────────────────┐          │
-  │ Excess Mortality                                         │          │
+  │ <a href="excess_mortality/">Excess Mortality</a>                                         │          │
   │                                                          │          │
   │  module: <a href="../../scripts/src/cowidev/xm/__main__.py">cowidev.xm</a>                                      │          │
   │  update: 6h and 18h UTC                                  │          │
@@ -139,7 +139,7 @@ The following sub-processes generate other data relevant for our Grapher and Exp
 
 <pre>
   ┌──────────────────────────────────────────────────────────┐
-  │ Vaccination US States                                    │
+  │ <a href="vaccination/">Vaccination US States</a>                                    │
   │                                                          │
   │  module: <a href="../../scripts/src/cowidev/vax/us_states/__main__.py">cowidev.vax.us_states</a>                           │
   │  update: every hour                                      │
@@ -154,7 +154,7 @@ The following sub-processes generate other data relevant for our Grapher and Exp
   └──────────────────────────────────────────────────────────┘
 
   ┌──────────────────────────────────────────────────────────┐
-  │ Vaccination UK States                                    │
+  │ <a href="vaccination/">Vaccination US Nations</a>                                   │
   │                                                          │
   │  module: <a href="../../scripts/scripts/uk_nations.py">uk_nations.py</a>                                   │
   │  update: 17h UTC                                         │
@@ -179,7 +179,7 @@ The following sub-processes generate other data relevant for our Grapher and Exp
   │           └───┘     └────────────┘                       │
   │                                                          │
   │                                                          │
-  │  output:  <a href="../../scripts/grapher/Google Mobility Trends (2020).csv">Google Mobility Trends (2020).csv</a>                      │
+  │  output:  <a href="../../scripts/grapher/Google Mobility Trends (2020).csv">Google Mobility Trends (2020).csv</a>              │
   │                                                          │
   └──────────────────────────────────────────────────────────┘
 
