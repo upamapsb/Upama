@@ -135,7 +135,8 @@ other sub-processes producing data that may appear on our website (Grapher) but 
 
 
 ### Other subprocesses
-The following sub-processes generate other data relevant for our Grapher and Explorer charts.
+The following sub-processes generate other intermediate datasets relevant for our Grapher and Explorer charts (their
+metrics are not present in the compelete dataset.).
 
 <pre>
   ┌──────────────────────────────────────────────────────────┐
