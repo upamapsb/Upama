@@ -30,6 +30,20 @@ def dict_to_s3(
         upload_to_s3(output_path, relative_path, bucket_name, public)
 
 
+def str_to_s3(
+    text: str,
+    relative_path: Union[str, list],
+    bucket_name: str = "covid-19",
+    public: bool = False,
+) -> Optional[str]:
+    with tempfile.TemporaryDirectory() as f:
+        # f = "/home/lucas/repos/covid-19-data"
+        output_path = os.path.join(f, f"file.json")
+        with open(output_path, "w") as file:
+            file.write(text)
+        upload_to_s3(output_path, relative_path, bucket_name, public)
+
+
 def df_to_s3(
     df: pd.DataFrame,
     relative_path: Union[str, list],
