@@ -1,5 +1,5 @@
 import re
-
+import math
 import pandas as pd
 import tabula
 
@@ -46,11 +46,14 @@ class Taiwan:
     def _parse_table(self, url_pdf: str):
         dfs = self._parse_tables_all(url_pdf)
         df = dfs[0]
+        cols = df.columns
+
+        if df.shape != (20, 4):
+            raise ValueError(f"Table 1: format has changed!")
 
         # Sanity check
-        cols = df.columns
         if not (
-            len(cols := df.columns) == 4
+            len(cols) == 4
             and cols[0] == "廠牌"
             and cols[1] == "劑次"
             and cols[2].endswith("接種人次")
@@ -59,19 +62,25 @@ class Taiwan:
         ):
             raise ValueError(f"There are some unknown columns: {cols}")
 
-        # Fix index
+        if df.iloc[16][0] != "總計":
+            raise ValueError(f"Unexpected value in the key cell: {df.iloc[16][0]}")
+
+        # The last few columns may be left-shifted and require this small surgery.
+        # If math.isnan() raise exception that means the table is changed.
+        for i in range(17,20):
+            if math.isnan( df.iloc[i][3] ):
+                df.iloc[i][[3,2,1]] = df.iloc[i][[2,1,0]]
+                df.iloc[i][0] = float("nan")
+
         df["劑次"] = df["劑次"].str.replace("\s+", "", regex=True)
-        index_ = df["廠牌"].shift(periods=2).fillna(method="bfill")
-        df["廠牌"] = index_
+        df["廠牌"] = df["廠牌"].fillna(method="ffill")
         df = df.set_index(["廠牌", "劑次"])
-        # Drop NaNs
-        df = df.dropna()
         df.columns = ["daily", "total"]
         return df
 
     def _parse_tables_all(self, url_pdf: str) -> int:
-        kwargs = {"pandas_options": {"dtype": str, "header": 0}}
-        dfs = tabula.read_pdf(url_pdf, pages="all", **kwargs)
+        kwargs = {"pandas_options": {"dtype": str, "header": 0}, "lattice": True}
+        dfs = tabula.read_pdf(url_pdf, pages=1, **kwargs)
         return dfs
 
     def parse_data(self, df: pd.DataFrame, soup):
@@ -88,10 +97,6 @@ class Taiwan:
         return data
 
     def _parse_stats(self, df: pd.DataFrame) -> int:
-
-        if df.shape != (20, 2):
-            raise ValueError(f"Table 1: format has changed!")
-
         num_dose1 = clean_count(df.loc["總計", "第1劑"]["total"])
         num_dose2 = clean_count(df.loc["總計", "第2劑"]["total"])
         num_booster1 = clean_count(df.loc["總計", "基礎加強劑"]["total"])
