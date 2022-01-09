@@ -77,7 +77,7 @@ class UnitedStates:
             )
             .sort_values("date")
         )
-        return df[df.total_vaccinations > 0]
+        return df[df.total_vaccinations > 0].drop_duplicates(subset=["date"], keep=False)
 
     def pipe_add_source(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(source_url=self.source_url_ref)
