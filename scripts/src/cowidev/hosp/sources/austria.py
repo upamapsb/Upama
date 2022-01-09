@@ -11,7 +11,7 @@ from cowidev.utils.clean import clean_date_series
 METADATA = {
     "source_url": "https://covid19-dashboard.ages.at/data/data.zip",
     "source_url_ref": "https://covid19-dashboard.ages.at/",
-    "source_name": "Austrian Agency for Food Security",
+    "source_name": "Austrian Agency for Health and Food Safety",
     "entity": "Austria",
 }
 
