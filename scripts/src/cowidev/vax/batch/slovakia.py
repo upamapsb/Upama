@@ -52,7 +52,6 @@ class Slovakia:
     def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
         single_dose = df.first_dose.copy()
         single_dose.loc[~df.vaccine.isin(VACCINES_ONE_DOSE)] = 0
-        single_dose = 0
         df = df.assign(
             total_vaccinations=df.first_dose + df.second_dose + df.third_dose,
             people_vaccinated=df.first_dose,
