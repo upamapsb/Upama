@@ -225,7 +225,8 @@ fi
 # VAX ICER
 # This basically download the vaccination data needed for some countries
 # The idea is that here we put extremely slow scripts, so their updates are managed separately
-if [ $hour == 3 ] ; then
+hour=$(date +%H)
+if [ $hour == 03 ] ; then
   echo "Generating ICE vaccination data..."
   python -m cowidev.vax.icer
 fi
