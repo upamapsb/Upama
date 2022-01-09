@@ -128,6 +128,6 @@ We welcome contributions for all of our processes. There are two types of contri
 
 - **Maintenance/Enhancements**: Improve processes currently available in the library. E.g. add a new country scrapper for
   the vaccinations data. There are no generic guidelines for our contributions except for
-  [vaccination](docs/vaccination/CONTRIBUTE.md) and [testing](scripts/testing/CONTRIBUTE.md) processes.
+  [vaccination](docs/vaccinations/CONTRIBUTE.md) and [testing](scripts/testing/CONTRIBUTE.md) processes.
 - **New features**: Create a new process in the library. An ongoing example for this is the [testing](scripts/testing),
   for which we are moving its logic to the library. For more details on this, check discussion #2099.
