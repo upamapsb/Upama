@@ -23,7 +23,7 @@ def main():
     )
     df["date"] = clean_date_series(df.date, "%Y/%m/%d")
     df = df[df.date >= "2020-07-15"]
-    df = df.groupby("date", as_index=False).sum().sort_values("date")
+    df = df.groupby("date", as_index=False).sum().sort_values("date").head(-2)
 
     df["total_hospital_stock"] = df.total_adult_patients_hospitalized_confirmed_covid.fillna(0).add(
         df.total_pediatric_patients_hospitalized_confirmed_covid.fillna(0)
