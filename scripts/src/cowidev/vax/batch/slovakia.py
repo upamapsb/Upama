@@ -15,6 +15,9 @@ class Slovakia:
     source_url_ref: str = "https://github.com/Institut-Zdravotnych-Analyz/covid19-data"
     vaccine_rename: dict = {
         "Comirnaty koncentrát na injekčnú disperziu": "Pfizer/BioNTech",
+        "Comirnaty 10 mikrogramov/dávka koncentrát na injekčnú disperziu, con dsi 10x1,3 ml (liek.inj.skl.)": (
+            "Pfizer/BioNTech"
+        ),
         "Spikevax injekčná disperzia (pôvodne COVID-19 Vaccine Moderna)dis inj 10x5 ml (liek.inj.skl.)": "Moderna",
         "Vaxzevria injekčná suspenzia sus inj 10x5 ml (liek.inj.skl.) (pôvodne COVID-19 Vaccine AstraZeneca)": (
             "Oxford/AstraZeneca"
