@@ -65,7 +65,7 @@ def process_esp() -> pd.DataFrame:
         )
         .groupby("date", as_index=False)
         .sum()
-        .assign(entity="Spain")
+        .assign(Country="Spain")
         .sort_values("date")
         .head(-8)
     )
@@ -102,7 +102,7 @@ def process_isr() -> pd.DataFrame:
             }
         )
         .sort_values("date")
-        .assign(entity="Israel")
+        .assign(Country="Israel")
         .head(-1)
     )
 
@@ -126,9 +126,9 @@ def process_isr() -> pd.DataFrame:
 def main():
     spain = process_esp()
     israel = process_isr()
-    df = pd.concat([spain, israel], ignore_index=True).rename(columns={"date": "year"})
-    df["year"] = (pd.to_datetime(df.year) - pd.to_datetime(ZERO_DAY)).dt.days
-    df = df[["entity", "year", "confirmed_cases", "hospital_flow", "icu_flow", "confirmed_deaths"]]
+    df = pd.concat([spain, israel], ignore_index=True).rename(columns={"date": "Year"})
+    df["Year"] = (pd.to_datetime(df.Year) - pd.to_datetime(ZERO_DAY)).dt.days
+    df = df[["Country", "Year", "confirmed_cases", "hospital_flow", "icu_flow", "confirmed_deaths"]]
     df.to_csv(os.path.join(GRAPHER_PATH, f"{DATASET_NAME}.csv"), index=False)
 
 
