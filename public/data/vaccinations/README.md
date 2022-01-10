@@ -62,6 +62,8 @@ Stored in [`us_state_vaccinations.csv`](us_state_vaccinations.csv). State-by-sta
 * `total_distributed`: cumulative counts of COVID-19 vaccine doses recorded as shipped in CDC's Vaccine Tracking System.
 * `total_distributed_per_hundred`: cumulative counts of COVID-19 vaccine doses recorded as shipped in CDC's Vaccine Tracking System per 100 people in the total population of the state.
 * `share_doses_used`: share of vaccination doses administered among those recorded as shipped in CDC's Vaccine Tracking System.
+* `total_boosters`: total number of COVID-19 vaccination booster doses administered (doses administered beyond the number prescribed by the vaccination protocol)
+* `total_boosters_per_hundred`: Total number of COVID-19 vaccination booster doses administered per 100 people in the total population.
 
 
 ## An example of how we calculate our metrics

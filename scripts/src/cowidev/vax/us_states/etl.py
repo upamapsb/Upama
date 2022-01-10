@@ -42,6 +42,7 @@ class USStatesETL:
                 "Administered_Dose2_Recip",
                 "Administered_Dose2",
             ],
+            "total_boosters": ["additional_doses"],
         }
         # Mapping
         for k, v in variable_matching.items():
@@ -91,9 +92,10 @@ def pipe_per_capita(df):
     df["total_vaccinations_per_hundred"] = df.total_vaccinations.div(df.Census2019).mul(100)
     df["people_vaccinated_per_hundred"] = df.people_vaccinated.div(df.Census2019).mul(100)
     df["distributed_per_hundred"] = df.total_distributed.div(df.Census2019).mul(100)
+    df["total_boosters_per_hundred"] = df.total_boosters.div(df.Census2019).mul(100)
     for var in df.columns:
         if "per_hundred" in var:
-            df.loc[df[var].notnull(), var] = df[var].round(2)
+            df.loc[df[var].notnull(), var] = df.loc[df[var].notnull(), var].astype(float).round(2)
     return df
 
 
@@ -142,6 +144,8 @@ def pipe_select_columns(df: pd.DataFrame) -> pd.DataFrame:
             "daily_vaccinations",
             "daily_vaccinations_per_million",
             "share_doses_used",
+            "total_boosters",
+            "total_boosters_per_hundred",
         ]
     ]
 
@@ -154,3 +158,7 @@ def pipe_checks(df: pd.DataFrame) -> pd.DataFrame:
 def run_etl(output_path: str):
     etl = USStatesETL()
     etl.run(output_path)
+
+
+if __name__ == "__main__":
+    run_etl("here.csv")
