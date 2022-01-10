@@ -25,6 +25,7 @@ EXCLUDED_COUNTRIES = [
     "Germany",
     "Italy",
     "Netherlands",
+    "Portugal",
     "Spain",
 ]
 
