@@ -17,7 +17,7 @@ class Singapore:
         self.source_url = "https://storage.data.gov.sg/covid-19-vaccination/covid-19-vaccination.zip"
         self.source_url_ref = "https://data.gov.sg/dataset/covid-19-vaccination"
         self.vaccine_timeline = {
-            "Pfizer/BioNTech": "2021-01-11",
+            "Pfizer/BioNTech": "2020-12-01",
             "Moderna": "2021-03-15",
             "Sinovac": "2021-06-28",
             "Sinopharm/Beijing": "2021-12-03",
@@ -67,7 +67,9 @@ class Singapore:
         )
 
     def pipe_metadata(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(location=self.location).pipe(build_vaccine_timeline, self.vaccine_timeline)
+        return df.assign(location=self.location, source_url=self.source_url_ref).pipe(
+            build_vaccine_timeline, self.vaccine_timeline
+        )
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metrics).pipe(self.pipe_metadata)
