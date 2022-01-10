@@ -122,6 +122,7 @@ if has_changed './public/data/vaccinations/us_state_vaccinations.csv'; then
 else
   echo "US vaccination export is up to date"
 fi
+
 # =====================================================================
 # Swedish Public Health Agency
 
@@ -230,3 +231,20 @@ if [ $hour == 03 ] ; then
   echo "Generating ICE vaccination data..."
   python -m cowidev.vax.icer
 fi
+
+# =====================================================================
+# Decoupling charts
+
+hour=$(date +%H)
+if [ $hour == 02 ] ; then
+  echo "Generating decoupling dataset..."
+  run_python 'import decoupling; decoupling.main()'
+  git add .
+  git commit -m "data(decoupling): automated update"
+  git push
+fi
+
+# Always run the database update.
+# The script itself contains a check against the database
+# to make sure it doesn't run unnecessarily.
+run_python 'import decoupling; decoupling.update_db()'
