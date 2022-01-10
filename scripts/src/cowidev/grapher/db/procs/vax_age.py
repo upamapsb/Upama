@@ -13,5 +13,5 @@ class GrapherVaxAgeUpdater(GrapherBaseUpdater):
             dataset_name="COVID-19 - Vaccinations by age group",
             source_name="Official data collated by Our World in Data",
             zero_day="2021-01-01",
-            slack_notifications=True,
+            slack_notifications=False,
         )
