@@ -1,373 +1,497 @@
 date,people_vaccinated,people_fully_vaccinated,total_boosters,total_vaccinations,location,source_url,vaccine
-2020-12-30,119,0,,119.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2020-12-31,124,0,,124.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-01,130,0,,130.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-02,134,0,,134.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-03,142,0,,142.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-04,164,0,,164.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-05,175,2,,177.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-06,184,2,,186.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-07,197,3,,200.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-08,923,6,,929.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-09,1323,8,,1331.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-10,1433,8,,1441.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-11,3520,10,,3530.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-12,6333,12,,6345.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-13,10429,13,,10442.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-14,15228,14,,15242.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-15,20603,17,,20620.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-16,22344,19,,22363.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-17,22986,22,,23008.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-18,30524,22,,30546.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-19,38771,31,,38802.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-20,47977,71,,48048.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-21,55468,74,,55542.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-22,63258,76,,63334.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-23,68041,79,,68120.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-24,72543,80,,72623.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-25,84600,96,,84696.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-26,97248,105,,97353.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-27,111161,112,,111273.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-28,125718,130,,125848.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-29,139764,858,,140622.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-30,146925,1187,,148112.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-01-31,152563,1315,,153878.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-01,161622,3428,,165050.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-02,171264,5950,,177214.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-03,182748,9687,,192435.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-04,191479,14118,,205597.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-05,200913,19393,,220306.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-06,205251,21072,,226323.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-07,207521,21751,,229272.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-08,211489,29354,,240843.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-09,215071,37697,,252768.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-10,218047,46877,,264924.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-11,219395,49871,,269266.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-12,219411,49877,,269288.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-13,219421,49883,,269304.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-14,219934,53866,,273800.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-15,221054,64882,,285936.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-16,223352,79069,,302421.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-17,226690,94751,,321441.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-18,230916,109247,,340163.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-19,236679,123733,,360412.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-20,240500,131423,,371923.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-21,242526,137426,,379952.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-22,248753,149268,,398021.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-23,256903,161296,,418199.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-24,264530,173205,,437735.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-25,273191,183305,,456496.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-26,283290,194226,,477516.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-27,291702,199795,,491497.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-02-28,297876,202418,,500294.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-03-01,307584,205829,,513413.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-03-02,317514,209285,,526799.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-03-03,328524,212115,,540639.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-03-04,340716,213855,,554571.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-03-05,354229,214802,,569031.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-03-06,362977,215460,,578437.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-03-07,367778,215893,,583671.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-03-08,381363,217381,,598744.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-03-09,398162,219340,,617502.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-03-10,417107,222151,,639258.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-03-11,439368,225577,,664945.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-03-12,464270,230530,,694800.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-03-13,488225,233999,,722224.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-03-14,508560,235816,,744376.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
-2021-03-15,536323,241851,,778174.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-03-16,565469,249101,,814570.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-03-17,598911,256732,,855643.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-03-18,632044,264521,,896565.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-03-19,668562,274192,,942754.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-03-20,698663,282591,,981254.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-03-21,726012,288300,,1014312.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-03-22,756558,298403,,1054961.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-03-23,784498,308193,,1092691.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-03-24,808112,318922,,1127034.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-03-25,829003,331158,,1160161.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-03-26,851845,345525,,1197370.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-03-27,874734,354337,,1229071.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-03-28,891181,359367,,1250548.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-03-29,925981,372606,,1298587.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-03-30,953375,388615,,1341990.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-03-31,976176,407456,,1383632.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-01,998621,427085,,1425706.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-02,1016911,443653,,1460564.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-03,1036218,465915,,1502133.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-04,1052758,482662,,1535420.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-05,1081107,508064,,1589171.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-06,1108299,533414,,1641713.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-07,1133177,561657,,1694834.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-08,1156140,591104,,1747244.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-09,1176693,627288,,1803981.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-10,1194464,659700,,1854164.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-11,1214100,685647,,1899747.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-12,1230756,714773,,1945529.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-13,1248857,738891,,1987748.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-14,1268284,759948,,2028232.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-15,1286363,780829,,2067192.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-16,1305945,804734,,2110679.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-17,1321991,826994,,2148985.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-18,1336568,842709,,2179277.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-19,1353313,873559,,2226872.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-20,1374879,898099,,2272978.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-21,1399651,918621,,2318272.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-22,1424127,938229,,2362356.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-23,1448482,959951,,2408433.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-24,1466926,984752,,2451678.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-25,1486786,1003696,,2490482.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-26,1505823,1030636,,2536459.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-27,1527105,1056079,,2583184.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-28,1549252,1078091,,2627343.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-29,1575256,1097930,,2673186.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-04-30,1599213,1121094,,2720307.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-01,1622813,1134780,,2757593.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-02,1642988,1151696,,2794684.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-03,1664283,1163574,,2827857.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-04,1686312,1175608,,2861920.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-05,1707199,1189989,,2897188.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-06,1731442,1203200,,2934642.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-07,1753805,1219989,,2973794.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-08,1772188,1236077,,3008265.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-09,1789993,1249920,,3039913.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-10,1819444,1267346,,3086790.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-11,1846232,1288219,,3134451.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-12,1856947,1307727,,3164674.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-13,1857138,1307830,,3164968.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-14,1873593,1347739,,3221332.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-15,1895636,1373870,,3269506.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-16,1915551,1397385,,3312936.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-17,1932195,1420543,,3352738.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-18,1950641,1442539,,3393180.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-19,1968955,1464454,,3433409.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-20,1992743,1487602,,3480345.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-21,2013861,1515711,,3529572.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-22,2030693,1547036,,3577729.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-23,2048584,1572530,,3621114.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-24,2075807,1593102,,3668909.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-25,2105596,1614267,,3719863.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-26,2131872,1628350,,3760222.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-27,2154712,1650610,,3805322.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-28,2179502,1674083,,3853585.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-29,2203480,1694849,,3898329.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-30,2223787,1712785,,3936572.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-05-31,2241314,1742304,,3983618.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-01,2266709,1763124,,4029833.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-02,2298993,1774076,,4073069.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-03,2344109,1782771,,4126880.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-04,2382116,1802093,,4184209.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-05,2410716,1826063,,4236779.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-06,2436262,1846875,,4283137.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-07,2462299,1862106,,4324405.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-08,2483105,1878265,,4361370.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-09,2510168,1893427,,4403595.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-10,2541320,1905066,,4446386.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-11,2572164,1923603,,4495767.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-12,2598645,1939207,,4537852.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-13,2625049,1951676,,4576725.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-14,2657634,1967099,,4624733.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-15,2694916,1982873,,4677789.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-16,2737159,1997917,,4735076.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-17,2778424,2012211,,4790635.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-18,2818627,2030229,,4848856.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-19,2857302,2047278,,4904580.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-20,2891148,2059776,,4950924.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-21,2933427,2071878,,5005305.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-22,2973623,2084079,,5057702.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-23,3014672,2095468,,5110140.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-24,3053943,2106172,,5160115.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-25,3092361,2117551,,5209912.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-26,3147449,2127270,,5274719.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-27,3197616,2134671,,5332287.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
-2021-06-28,3247907,2144951,,5392858.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-06-29,3285847,2154198,,5440045.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-06-30,3345865,2165029,,5510894.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-01,3409463,2183627,,5593090.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-02,3473040,2203554,,5676594.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-03,3535628,2221737,,5757365.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-04,3593819,2240223,,5834042.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-05,3656555,2257302,,5913857.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-06,3716850,2273519,,5990369.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-07,3776495,2291371,,6067866.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-08,3833773,2310443,,6144216.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-09,3887893,2337430,,6225323.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-10,3936576,2364211,,6300787.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-11,3976207,2393013,,6369220.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-12,4018807,2424659,,6443466.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-13,4050192,2457850,,6508042.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-14,4074773,2497537,,6572310.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-15,4097376,2542454,,6639830.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-16,4120891,2601267,,6722158.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-17,4140043,2658958,,6799001.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-18,4156836,2709941,,6866777.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-19,4169412,2740719,,6910131.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-20,4170086,2741150,,6911236.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-21,4189754,2795111,,6984865.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-22,4207401,2846919,,7054320.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-23,4223846,2910751,,7134597.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-24,4236984,2967890,,7204874.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-25,4249342,3016860,,7266202.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-26,4262448,3067999,,7330447.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-27,4276062,3104849,,7380911.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-28,4288113,3154059,,7442172.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-29,4300367,3206119,,7506486.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-30,4310654,3272039,,7582693.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-07-31,4319065,3335440,,7654505.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-01,4325034,3391104,,7716138.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-02,4333800,3448089,,7781889.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-03,4342923,3502402,,7845325.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-04,4351003,3558569,,7909572.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-05,4358564,3617360,,7975924.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-06,4366423,3684233,,8050656.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-07,4375047,3746851,,8121898.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-08,4383325,3800280,,8183605.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-09,4390451,3834605,,8225056.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-10,4401464,3872758,,8274222.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-11,4411661,3910463,,8322124.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-12,4420518,3946833,,8367351.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-13,4431211,3993247,,8424458.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-14,4441785,4038862,,8480647.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-15,4449477,4070017,,8519494.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-16,4457380,4088741,,8546121.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-17,4464247,4103565,,8567812.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-18,4470250,4118791,,8589041.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-19,4475779,4132542,,8608321.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-20,4483834,4151091,,8634925.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-21,4490654,4165861,,8656515.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-22,4494617,4173900,,8668517.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-23,4499328,4185806,,8685134.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-24,4503272,4195766,,8699038.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-25,4507604,4205339,,8712943.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-26,4511474,4214722,,8726196.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-27,4517052,4228610,,8745662.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-28,4521637,4240880,,8762517.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-29,4524245,4248643,,8772888.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-30,4528321,4257217,,8785538.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-08-31,4532130,4267204,,8799334.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-01,4535906,4276112,,8812018.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-02,4539597,4284500,,8824097.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-03,4544307,4297732,,8842039.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-04,4548096,4311314,,8859410.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-05,4550253,4320349,,8870602.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-06,4553521,4327443,,8880964.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-07,4556858,4333778,,8890636.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-08,4560199,4339729,,8899928.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-09,4563189,4345413,,8908602.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-10,4566351,4355784,,8922135.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-11,4569181,4365069,,8934250.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-12,4570798,4370872,,8941670.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-13,4573428,4375522,,8948950.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-14,4576080,4379744,183.0,8956007.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-15,4579235,4384040,5038.0,8968313.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-16,4582042,4388245,8219.0,8978506.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-17,4585803,4395035,16678.0,8997516.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-18,4588407,4400911,29999.0,9019317.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-19,4589768,4404322,38284.0,9032374.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-20,4592477,4408862,50460.0,9051799.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-21,4594984,4412475,58887.0,9066346.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-22,4597208,4416296,74463.0,9087967.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-23,4599875,4419667,91769.0,9111311.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-24,4603120,4425212,115729.0,9144061.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-25,4605297,4430313,137984.0,9173594.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-26,4606686,4433023,153535.0,9193244.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-27,4608979,4436520,176144.0,9221643.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-28,4611350,4439859,200812.0,9252021.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-29,4613588,4443127,221301.0,9278016.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-09-30,4615727,4446741,242818.0,9305286.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-01,4618167,4450265,264396.0,9332828.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-02,4619765,4453381,286578.0,9359724.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-03,4620803,4455240,305540.0,9381583.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-04,4622763,4457995,327856.0,9408614.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-05,4624984,4461022,348266.0,9434272.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-06,4627356,4464368,364207.0,9455931.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-07,4629533,4467494,379069.0,9476096.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-08,4632131,4471921,400213.0,9504265.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-09,4634738,4475617,419696.0,9530051.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-10,4637049,4477711,446392.0,9561152.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-11,4640756,4481140,473291.0,9595187.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-12,4643946,4484495,496115.0,9624556.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-13,4646648,4487496,515687.0,9649831.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-14,4649003,4490804,533595.0,9673402.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-15,4652164,4495289,562974.0,9710427.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-16,4654540,4498303,586212.0,9739055.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-17,4655919,4499989,597842.0,9753750.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-18,4657949,4502944,614231.0,9775124.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-19,4659722,4505602,632366.0,9797690.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-20,4661345,4508319,647333.0,9816997.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-21,4662935,4510884,665020.0,9838839.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-22,4664694,4514184,691354.0,9870232.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-23,4666019,4516593,710105.0,9892717.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-24,4666990,4517938,720103.0,9905031.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-25,4668552,4520576,735596.0,9924724.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-26,4670129,4523404,756479.0,9950012.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-27,4671485,4526177,771915.0,9969577.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-28,4672942,4529193,790510.0,9992645.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-29,4674759,4533115,823034.0,10030908.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-30,4676315,4536805,847807.0,10060927.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-10-31,4677558,4539603,863033.0,10080194.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-01,4679364,4543648,881486.0,10104498.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-02,4680865,4547258,904270.0,10132393.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-03,4682124,4550623,920258.0,10153005.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-04,4682251,4551283,920691.0,10154225.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-05,4684472,4557344,950744.0,10192560.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-06,4685799,4561384,974512.0,10221695.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-07,4686701,4563512,989167.0,10239380.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-08,4687940,4567453,1007099.0,10262492.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-09,4689633,4570932,1030973.0,10291538.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-10,4691161,4574345,1051697.0,10317203.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-11,4692771,4577629,1071744.0,10342144.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-12,4694634,4581492,1100563.0,10376689.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-13,4696072,4584487,1126154.0,10406713.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-14,4697012,4586361,1143075.0,10426448.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-15,4698571,4589805,1161799.0,10450175.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-16,4700080,4592927,1183139.0,10476146.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-17,4701293,4595524,1199792.0,10496609.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-18,4702467,4598056,1217072.0,10517595.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-19,4703964,4601598,1243238.0,10548800.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-20,4705119,4604290,1267366.0,10576775.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-21,4705924,4605686,1284406.0,10596016.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-22,4707183,4608527,1302354.0,10618064.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-23,4708245,4610874,1318913.0,10638032.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-24,4709313,4613037,1332844.0,10655194.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-25,4710455,4614888,1346980.0,10672323.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-26,4711759,4618056,1372761.0,10702576.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-27,4712684,4620361,1396057.0,10729102.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-28,4713458,4622229,1410014.0,10745701.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-29,4714624,4625078,1425155.0,10764857.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-11-30,4715726,4628022,1447286.0,10791034.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-12-01,4716715,4630552,1462099.0,10809366.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-12-02,4717816,4633423,1475754.0,10826993.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
-2021-12-03,4719000,4637675,1498647.0,10855322.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-04,4719804,4641143,1520039.0,10880986.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-05,4720414,4643194,1534880.0,10898488.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-06,4721517,4647238,1550798.0,10919553.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-07,4722529,4650882,1570410.0,10943821.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-08,4723525,4654381,1586057.0,10963963.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-09,4724433,4657747,1600311.0,10982491.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-10,4725332,4661661,1623806.0,11010799.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-11,4725969,4664605,1645571.0,11036145.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-12,4726443,4666475,1659957.0,11052875.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-13,4727228,4669830,1676829.0,11073887.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-14,4727986,4672797,1702624.0,11103407.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-15,4728662,4675831,1722620.0,11127113.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-16,4729379,4678933,1744257.0,11152569.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-17,4730067,4682401,1770420.0,11182888.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-18,4730601,4684786,1795479.0,11210866.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-19,4731032,4686336,1815125.0,11232493.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-20,4731817,4689385,1843861.0,11265063.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-21,4732490,4692043,1874072.0,11298605.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-22,4733160,4694600,1906732.0,11334492.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-23,4733826,4697055,1942489.0,11373370.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-24,4734160,4698498,1965470.0,11398128.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-25,4734189,4698740,1965811.0,11398740.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-26,4734771,4700744,2008768.0,11444283.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-27,4738842,4704125,2049868.0,11492835.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-28,4742962,4707183,2096232.0,11546377.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-29,4748811,4709957,2139947.0,11598715.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-30,4754992,4713027,2183354.0,11651373.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2021-12-31,4758601,4714655,2207341.0,11680597.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2022-01-01,4758624,4714843,2207682.0,11681149.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2022-01-02,4765579,4716190,2248986.0,11730755.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2022-01-03,4775363,4718532,2287515.0,11781410.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2022-01-04,4779932,4720606,2324956.0,11825494.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
-2022-01-05,4781888,4722366,2360305.0,11864559.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2020-12-30,119.0,0.0,,119.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2020-12-31,124.0,0.0,,124.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-01,130.0,0.0,,130.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-02,134.0,0.0,,134.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-03,142.0,0.0,,142.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-04,164.0,0.0,,164.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-05,175.0,2.0,,177.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-06,187.0,3.0,,190.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-07,200.0,4.0,,204.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-08,926.0,7.0,,933.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-09,1326.0,9.0,,1335.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-10,1436.0,9.0,,1445.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-11,3523.0,11.0,,3534.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-12,6335.0,13.0,,6348.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-13,10431.0,14.0,,10445.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-14,15231.0,15.0,,15246.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-15,20606.0,18.0,,20624.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-16,22347.0,20.0,,22367.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-17,22989.0,23.0,,23012.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-18,30526.0,23.0,,30549.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-19,38773.0,32.0,,38805.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-20,47979.0,72.0,,48051.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-21,55470.0,75.0,,55545.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-22,63260.0,77.0,,63337.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-23,68043.0,80.0,,68123.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-24,72545.0,81.0,,72626.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-25,84602.0,97.0,,84699.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-26,97250.0,106.0,,97356.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-27,111162.0,113.0,,111275.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-28,125719.0,131.0,,125850.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-29,139765.0,859.0,,140624.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-30,146926.0,1188.0,,148114.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-01-31,152564.0,1316.0,,153880.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-01,161623.0,3429.0,,165052.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-02,171265.0,5951.0,,177216.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-03,182749.0,9687.0,,192436.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-04,191480.0,14118.0,,205598.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-05,200914.0,19393.0,,220307.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-06,205251.0,21072.0,,226323.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-07,207521.0,21751.0,,229272.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-08,211489.0,29352.0,,240841.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-09,215071.0,37695.0,,252766.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-10,218047.0,46875.0,,264922.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-11,219395.0,49869.0,,269264.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-12,219411.0,49875.0,,269286.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-13,219421.0,49881.0,,269302.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-14,219934.0,53864.0,,273798.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-15,221054.0,64880.0,,285934.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-16,223352.0,79067.0,,302419.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-17,226690.0,94746.0,,321436.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-18,230916.0,109242.0,,340158.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-19,236679.0,123727.0,,360406.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-20,240500.0,131417.0,,371917.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-21,242526.0,137420.0,,379946.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-22,248753.0,149262.0,,398015.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-23,256903.0,161289.0,,418192.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-24,264530.0,173198.0,,437728.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-25,273191.0,183298.0,,456489.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-26,283290.0,194219.0,,477509.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-27,291702.0,199787.0,,491489.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-02-28,297876.0,202410.0,,500286.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-03-01,307584.0,205821.0,,513405.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-03-02,317514.0,209277.0,,526791.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-03-03,328524.0,212107.0,,540631.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-03-04,340716.0,213847.0,,554563.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-03-05,354229.0,214794.0,,569023.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-03-06,362977.0,215452.0,,578429.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-03-07,367778.0,215885.0,,583663.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-03-08,381363.0,217373.0,,598736.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-03-09,398162.0,219332.0,,617494.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-03-10,417107.0,222143.0,,639250.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-03-11,439367.0,225569.0,,664936.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-03-12,464269.0,230522.0,,694791.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-03-13,488223.0,233991.0,,722214.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-03-14,508558.0,235808.0,,744366.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,Pfizer/BioNTech
+2021-03-15,536321.0,241843.0,,778164.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-03-16,565468.0,249093.0,,814561.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-03-17,598910.0,256724.0,,855634.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-03-18,632043.0,264513.0,,896556.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-03-19,668560.0,274184.0,,942744.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-03-20,698661.0,282583.0,,981244.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-03-21,726010.0,288291.0,,1014301.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-03-22,756556.0,298394.0,,1054950.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-03-23,784497.0,308184.0,,1092681.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-03-24,808111.0,318913.0,,1127024.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-03-25,829002.0,331147.0,,1160149.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-03-26,851844.0,345514.0,,1197358.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-03-27,874733.0,354325.0,,1229058.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-03-28,891180.0,359355.0,,1250535.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-03-29,925980.0,372594.0,,1298574.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-03-30,953375.0,388603.0,,1341978.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-03-31,976176.0,407443.0,,1383619.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-01,998621.0,427070.0,,1425691.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-02,1016911.0,443637.0,,1460548.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-03,1036218.0,465898.0,,1502116.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-04,1052758.0,482645.0,,1535403.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-05,1081107.0,508047.0,,1589154.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-06,1108299.0,533398.0,,1641697.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-07,1133176.0,561641.0,,1694817.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-08,1156139.0,591087.0,,1747226.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-09,1176692.0,627270.0,,1803962.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-10,1194464.0,659682.0,,1854146.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-11,1214100.0,685628.0,,1899728.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-12,1230756.0,714751.0,,1945507.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-13,1248858.0,738869.0,,1987727.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-14,1268286.0,759926.0,,2028212.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-15,1286366.0,780805.0,,2067171.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-16,1305948.0,804710.0,,2110658.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-17,1321994.0,826970.0,,2148964.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-18,1336571.0,842685.0,,2179256.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-19,1353315.0,873535.0,,2226850.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-20,1374881.0,898072.0,,2272953.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-21,1399653.0,918594.0,,2318247.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-22,1424129.0,938201.0,,2362330.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-23,1448484.0,959923.0,,2408407.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-24,1466928.0,984724.0,,2451652.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-25,1486788.0,1003668.0,,2490456.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-26,1505824.0,1030608.0,,2536432.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-27,1527106.0,1056048.0,,2583154.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-28,1549253.0,1078058.0,,2627311.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-29,1575257.0,1097896.0,,2673153.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-04-30,1599214.0,1121059.0,,2720273.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-01,1622815.0,1134745.0,,2757560.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-02,1642991.0,1151662.0,,2794653.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-03,1664286.0,1163540.0,,2827826.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-04,1686315.0,1175575.0,,2861890.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-05,1707202.0,1189956.0,,2897158.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-06,1731446.0,1203167.0,,2934613.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-07,1753809.0,1219956.0,,2973765.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-08,1772191.0,1236044.0,,3008235.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-09,1789996.0,1249888.0,,3039884.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-10,1819448.0,1267312.0,,3086760.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-11,1846236.0,1288184.0,,3134420.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-12,1856952.0,1307691.0,,3164643.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-13,1857143.0,1307794.0,,3164937.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-14,1873598.0,1347703.0,,3221301.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-15,1895641.0,1373834.0,,3269475.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-16,1915556.0,1397349.0,,3312905.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-17,1932201.0,1420506.0,,3352707.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-18,1950647.0,1442501.0,,3393148.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-19,1968961.0,1464416.0,,3433377.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-20,1992748.0,1487564.0,,3480312.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-21,2013866.0,1515672.0,,3529538.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-22,2030698.0,1546996.0,,3577694.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-23,2048589.0,1572489.0,,3621078.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-24,2075812.0,1593057.0,,3668869.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-25,2105601.0,1614222.0,,3719823.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-26,2131877.0,1628305.0,,3760182.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-27,2154718.0,1650566.0,,3805284.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-28,2179509.0,1674039.0,,3853548.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-29,2203487.0,1694805.0,,3898292.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-30,2223794.0,1712740.0,,3936534.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-05-31,2241319.0,1742258.0,,3983577.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-01,2266713.0,1763079.0,,4029792.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-02,2298995.0,1774031.0,,4073026.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-03,2344111.0,1782725.0,,4126836.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-04,2382119.0,1802047.0,,4184166.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-05,2410720.0,1826016.0,,4236736.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-06,2436267.0,1846828.0,,4283095.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-07,2462303.0,1862060.0,,4324363.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-08,2483108.0,1878219.0,,4361327.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-09,2510170.0,1893381.0,,4403551.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-10,2541323.0,1905019.0,,4446342.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-11,2572167.0,1923555.0,,4495722.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-12,2598648.0,1939159.0,,4537807.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-13,2625050.0,1951628.0,,4576678.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-14,2657635.0,1967048.0,,4624683.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-15,2694917.0,1982819.0,,4677736.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-16,2737159.0,1997849.0,,4735008.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-17,2778425.0,2012137.0,,4790562.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-18,2818628.0,2030121.0,,4848749.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-19,2857305.0,2047152.0,,4904457.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-20,2891153.0,2059602.0,,4950755.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-21,2933431.0,2071679.0,,5005110.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-22,2973628.0,2083866.0,,5057494.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-23,3014676.0,2095245.0,,5109921.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-24,3053949.0,2105944.0,,5159893.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-25,3092366.0,2117307.0,,5209673.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-26,3147454.0,2127016.0,,5274470.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-27,3197621.0,2134409.0,,5332030.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech"
+2021-06-28,3247913.0,2144681.0,,5392594.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-06-29,3285853.0,2153919.0,,5439772.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-06-30,3345872.0,2164747.0,,5510619.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-01,3409472.0,2183341.0,,5592813.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-02,3473047.0,2203263.0,,5676310.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-03,3535633.0,2221441.0,,5757074.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-04,3593819.0,2239926.0,,5833745.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-05,3656549.0,2257001.0,,5913550.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-06,3716843.0,2273219.0,,5990062.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-07,3776486.0,2291070.0,,6067556.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-08,3833759.0,2310143.0,,6143902.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-09,3887880.0,2337126.0,,6225006.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-10,3936560.0,2363907.0,,6300467.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-11,3976187.0,2392709.0,,6368896.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-12,4018785.0,2424353.0,,6443138.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-13,4050168.0,2457540.0,,6507708.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-14,4074750.0,2497223.0,,6571973.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-15,4097354.0,2542133.0,,6639487.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-16,4120870.0,2600947.0,,6721817.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-17,4140020.0,2658633.0,,6798653.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-18,4156813.0,2709615.0,,6866428.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-19,4169389.0,2740389.0,,6909778.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-20,4170064.0,2740819.0,,6910883.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-21,4189732.0,2794774.0,,6984506.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-22,4207377.0,2846576.0,,7053953.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-23,4223822.0,2910397.0,,7134219.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-24,4236961.0,2967534.0,,7204495.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-25,4249318.0,3016494.0,,7265812.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-26,4262425.0,3067625.0,,7330050.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-27,4276037.0,3104462.0,,7380499.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-28,4288088.0,3153665.0,,7441753.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-29,4300342.0,3205715.0,,7506057.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-30,4310630.0,3271622.0,,7582252.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-07-31,4319043.0,3335013.0,,7654056.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-01,4325013.0,3390671.0,,7715684.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-02,4333779.0,3447637.0,,7781416.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-03,4342901.0,3501928.0,,7844829.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-04,4350978.0,3558079.0,,7909057.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-05,4358542.0,3616850.0,,7975392.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-06,4366401.0,3683710.0,,8050111.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-07,4375025.0,3746312.0,,8121337.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-08,4383304.0,3799731.0,,8183035.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-09,4390432.0,3834052.0,,8224484.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-10,4401446.0,3872188.0,,8273634.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-11,4411643.0,3909881.0,,8321524.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-12,4420502.0,3946231.0,,8366733.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-13,4431196.0,3992635.0,,8423831.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-14,4441771.0,4038242.0,,8480013.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-15,4449464.0,4069391.0,,8518855.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-16,4457369.0,4088103.0,,8545472.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-17,4464239.0,4102923.0,,8567162.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-18,4470244.0,4118139.0,,8588383.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-19,4475775.0,4131881.0,,8607656.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-20,4483830.0,4150411.0,,8634241.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-21,4490650.0,4165175.0,,8655825.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-22,4494614.0,4173207.0,,8667821.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-23,4499328.0,4185109.0,,8684437.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-24,4503272.0,4195058.0,,8698330.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-25,4507603.0,4204620.0,,8712223.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-26,4511473.0,4213997.0,,8725470.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-27,4517053.0,4227874.0,,8744927.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-28,4521638.0,4240141.0,,8761779.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-29,4524247.0,4247901.0,,8772148.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-30,4528323.0,4256475.0,,8784798.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-08-31,4532132.0,4266456.0,,8798588.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-01,4535908.0,4275357.0,,8811265.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-02,4539599.0,4283741.0,,8823340.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-03,4544309.0,4296970.0,,8841279.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-04,4548099.0,4310543.0,,8858642.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-05,4550256.0,4319571.0,,8869827.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-06,4553524.0,4326658.0,,8880182.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-07,4556861.0,4332986.0,,8889847.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-08,4560204.0,4338930.0,,8899134.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-09,4563194.0,4344612.0,,8907806.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-10,4566357.0,4354983.0,,8921340.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-11,4569188.0,4364268.0,,8933456.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-12,4570805.0,4370072.0,,8940877.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-13,4573436.0,4374719.0,,8948155.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-14,4576088.0,4378937.0,,8955025.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-15,4579244.0,4383231.0,,8962475.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-16,4582052.0,4387437.0,,8969489.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-17,4585813.0,4394227.0,,8980040.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-18,4588417.0,4400105.0,,8988522.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-19,4589778.0,4403516.0,,8993294.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-20,4592487.0,4408055.0,,9000542.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-21,4594993.0,4411662.0,,9006655.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-22,4597217.0,4415479.0,,9012696.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-23,4599885.0,4418839.0,,9018724.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-24,4603130.0,4424381.0,,9027511.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-25,4605308.0,4429480.0,,9034788.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-26,4606696.0,4432192.0,,9038888.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-27,4608989.0,4435679.0,,9044668.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-28,4611362.0,4439011.0,,9050373.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-29,4613601.0,4442268.0,,9055869.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-09-30,4615741.0,4445863.0,,9061604.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-01,4618181.0,4449375.0,,9067556.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-02,4619779.0,4452489.0,,9072268.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-03,4620816.0,4454348.0,,9075164.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-04,4622776.0,4457077.0,,9079853.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-05,4624997.0,4460067.0,,9085064.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-06,4627369.0,4463363.0,,9090732.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-07,4629546.0,4466447.0,,9095993.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-08,4632144.0,4470854.0,,9102998.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-09,4634753.0,4474551.0,,9109304.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-10,4637065.0,4476645.0,,9113710.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-11,4640772.0,4480073.0,,9120845.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-12,4643963.0,4483427.0,,9127390.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-13,4646665.0,4486423.0,,9133088.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-14,4649020.0,4489728.0,,9138748.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-15,4652181.0,4494214.0,,9146395.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-16,4654557.0,4497228.0,,9151785.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-17,4655937.0,4498913.0,,9154850.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-18,4657967.0,4501868.0,,9159835.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-19,4659740.0,4504527.0,,9164267.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-20,4661363.0,4507246.0,,9168609.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-21,4662954.0,4509814.0,,9172768.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-22,4664714.0,4513115.0,,9177829.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-23,4666039.0,4515524.0,,9181563.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-24,4667011.0,4516868.0,,9183879.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-25,4668573.0,4519504.0,,9188077.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-26,4670150.0,4522331.0,,9192481.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-27,4671506.0,4525103.0,,9196609.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-28,4672963.0,4528117.0,,9201080.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-29,4674781.0,4532042.0,,9206823.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-30,4676337.0,4535733.0,,9212070.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-10-31,4677581.0,4538531.0,,9216112.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-01,4679386.0,4542578.0,,9221964.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-02,4680887.0,4546187.0,,9227074.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-03,4682146.0,4549554.0,,9231700.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-04,4682273.0,4550214.0,,9232487.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-05,4684493.0,4556274.0,,9240767.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-06,4685819.0,4560316.0,,9246135.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-07,4686721.0,4562444.0,,9249165.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-08,4687960.0,4566385.0,,9254345.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-09,4689653.0,4569864.0,,9259517.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-10,4691181.0,4573277.0,,9264458.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-11,4692793.0,4576561.0,,9269354.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-12,4694657.0,4580424.0,,9275081.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-13,4696095.0,4583418.0,,9279513.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-14,4697034.0,4585293.0,,9282327.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-15,4698595.0,4588741.0,,9287336.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-16,4700104.0,4591862.0,,9291966.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-17,4701317.0,4594459.0,,9295776.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-18,4702493.0,4596992.0,,9299485.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-19,4703990.0,4600534.0,,9304524.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-20,4705146.0,4603228.0,,9308374.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-21,4705951.0,4604624.0,,9310575.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-22,4707210.0,4607464.0,,9314674.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-23,4708273.0,4609815.0,,9318088.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-24,4709343.0,4611978.0,,9321321.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-25,4710486.0,4613832.0,,9324318.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-26,4711792.0,4617000.0,,9328792.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-27,4712717.0,4619304.0,,9332021.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-28,4713491.0,4621173.0,,9334664.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-29,4714658.0,4624023.0,,9338681.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-11-30,4715760.0,4626970.0,,9342730.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-12-01,4716750.0,4629501.0,,9346251.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-12-02,4717851.0,4632373.0,,9350224.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinovac"
+2021-12-03,4719035.0,4636625.0,,9355660.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-04,4719839.0,4640083.0,,9359922.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-05,4720449.0,4642134.0,,9362583.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-06,4721552.0,4646178.0,,9367730.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-07,4722565.0,4649822.0,,9372387.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-08,4723561.0,4653323.0,,9376884.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-09,4724469.0,4656686.0,,9381155.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-10,4725369.0,4660600.0,,9385969.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-11,4726006.0,4663546.0,,9389552.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-12,4726480.0,4665415.0,,9391895.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-13,4727265.0,4668771.0,,9396036.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-14,4728024.0,4671738.0,,9399762.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-15,4728701.0,4674772.0,,9403473.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-16,4729418.0,4677874.0,,9407292.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-17,4730107.0,4681344.0,,9411451.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-18,4730641.0,4683728.0,,9414369.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-19,4731071.0,4685278.0,,9416349.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-20,4731856.0,4688328.0,,9420184.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-21,4732528.0,4690986.0,,9423514.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-22,4733199.0,4693543.0,,9426742.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-23,4733865.0,4695997.0,,9429862.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-24,4734199.0,4697441.0,,9431640.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-25,4734228.0,4697683.0,,9431911.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-26,4734811.0,4699687.0,,9434498.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-27,4738882.0,4703068.0,,9441950.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-28,4743002.0,4706125.0,,9449127.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-29,4748851.0,4708899.0,,9457750.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-30,4755032.0,4711967.0,,9466999.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2021-12-31,4758643.0,4713597.0,,9472240.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2022-01-01,4758666.0,4713785.0,,9472451.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2022-01-02,4765621.0,4715132.0,,9480753.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2022-01-03,4775406.0,4717475.0,,9492881.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2022-01-04,4779975.0,4719553.0,,9499528.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2022-01-05,4781941.0,4721345.0,,9503286.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2022-01-06,4788029.0,4723113.0,,9511142.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2022-01-07,4796986.0,4724079.0,,9521065.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2022-01-08,4807545.0,4723343.0,,9530888.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2022-01-09,4816884.0,4724372.0,,9541256.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+2022-01-10,4821829.0,4726199.0,,9548028.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+14-Sep-21,,,183.0,183.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+15-Sep-21,,,5038.0,5038.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+16-Sep-21,,,8219.0,8219.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+17-Sep-21,,,16681.0,16681.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+18-Sep-21,,,30001.0,30001.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+19-Sep-21,,,38285.0,38285.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+20-Sep-21,,,50463.0,50463.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+21-Sep-21,,,58890.0,58890.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+22-Sep-21,,,74466.0,74466.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+23-Sep-21,,,91772.0,91772.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+24-Sep-21,,,115732.0,115732.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+25-Sep-21,,,137988.0,137988.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+26-Sep-21,,,153538.0,153538.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+27-Sep-21,,,176147.0,176147.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+28-Sep-21,,,200815.0,200815.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+29-Sep-21,,,221304.0,221304.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+30-Sep-21,,,242821.0,242821.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+1-Oct-21,,,264398.0,264398.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+2-Oct-21,,,286581.0,286581.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+3-Oct-21,,,305543.0,305543.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+4-Oct-21,,,327859.0,327859.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+5-Oct-21,,,348269.0,348269.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+6-Oct-21,,,364210.0,364210.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+7-Oct-21,,,379074.0,379074.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+8-Oct-21,,,400219.0,400219.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+9-Oct-21,,,419702.0,419702.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+10-Oct-21,,,446397.0,446397.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+11-Oct-21,,,473295.0,473295.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+12-Oct-21,,,496119.0,496119.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+13-Oct-21,,,515691.0,515691.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+14-Oct-21,,,533599.0,533599.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+15-Oct-21,,,562977.0,562977.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+16-Oct-21,,,586212.0,586212.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+17-Oct-21,,,597843.0,597843.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+18-Oct-21,,,614231.0,614231.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+19-Oct-21,,,632367.0,632367.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+20-Oct-21,,,647335.0,647335.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+21-Oct-21,,,665024.0,665024.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+22-Oct-21,,,691376.0,691376.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+23-Oct-21,,,710128.0,710128.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+24-Oct-21,,,720125.0,720125.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+25-Oct-21,,,735619.0,735619.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+26-Oct-21,,,756494.0,756494.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+27-Oct-21,,,771935.0,771935.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+28-Oct-21,,,790531.0,790531.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+29-Oct-21,,,823054.0,823054.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+30-Oct-21,,,847826.0,847826.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+31-Oct-21,,,863050.0,863050.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+1-Nov-21,,,881500.0,881500.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+2-Nov-21,,,904284.0,904284.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+3-Nov-21,,,920272.0,920272.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+4-Nov-21,,,920705.0,920705.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+5-Nov-21,,,950755.0,950755.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+6-Nov-21,,,974521.0,974521.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+7-Nov-21,,,989177.0,989177.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+8-Nov-21,,,1007107.0,1007107.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+9-Nov-21,,,1030981.0,1030981.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+10-Nov-21,,,1051704.0,1051704.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+11-Nov-21,,,1071750.0,1071750.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+12-Nov-21,,,1100571.0,1100571.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+13-Nov-21,,,1126162.0,1126162.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+14-Nov-21,,,1143084.0,1143084.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+15-Nov-21,,,1161808.0,1161808.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+16-Nov-21,,,1183150.0,1183150.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+17-Nov-21,,,1199803.0,1199803.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+18-Nov-21,,,1217083.0,1217083.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+19-Nov-21,,,1243250.0,1243250.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+20-Nov-21,,,1267379.0,1267379.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+21-Nov-21,,,1284419.0,1284419.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+22-Nov-21,,,1302369.0,1302369.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+23-Nov-21,,,1318930.0,1318930.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+24-Nov-21,,,1332862.0,1332862.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+25-Nov-21,,,1346999.0,1346999.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+26-Nov-21,,,1372780.0,1372780.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+27-Nov-21,,,1396077.0,1396077.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+28-Nov-21,,,1410034.0,1410034.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+29-Nov-21,,,1425176.0,1425176.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+30-Nov-21,,,1447310.0,1447310.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+1-Dec-21,,,1462125.0,1462125.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+2-Dec-21,,,1475782.0,1475782.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+3-Dec-21,,,1498677.0,1498677.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+4-Dec-21,,,1520068.0,1520068.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+5-Dec-21,,,1534906.0,1534906.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+6-Dec-21,,,1550826.0,1550826.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+7-Dec-21,,,1570439.0,1570439.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+8-Dec-21,,,1586089.0,1586089.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+9-Dec-21,,,1600343.0,1600343.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+10-Dec-21,,,1623840.0,1623840.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+11-Dec-21,,,1645604.0,1645604.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+12-Dec-21,,,1659991.0,1659991.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+13-Dec-21,,,1676863.0,1676863.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+14-Dec-21,,,1702659.0,1702659.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+15-Dec-21,,,1722656.0,1722656.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+16-Dec-21,,,1744290.0,1744290.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+17-Dec-21,,,1770454.0,1770454.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+18-Dec-21,,,1795511.0,1795511.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+19-Dec-21,,,1815158.0,1815158.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+20-Dec-21,,,1843894.0,1843894.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+21-Dec-21,,,1874107.0,1874107.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+22-Dec-21,,,1906771.0,1906771.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+23-Dec-21,,,1942525.0,1942525.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+24-Dec-21,,,1965504.0,1965504.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+25-Dec-21,,,1965845.0,1965845.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+26-Dec-21,,,2008796.0,2008796.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+27-Dec-21,,,2049896.0,2049896.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+28-Dec-21,,,2096262.0,2096262.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+29-Dec-21,,,2139968.0,2139968.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+30-Dec-21,,,2183377.0,2183377.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+31-Dec-21,,,2207363.0,2207363.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+1-Jan-22,,,2207704.0,2207704.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+2-Jan-22,,,2249000.0,2249000.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,
+3-Jan-22,,,2287525.0,2287525.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+4-Jan-22,,,2324965.0,2324965.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+5-Jan-22,,,2360318.0,2360318.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+6-Jan-22,,,2400940.0,2400940.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+7-Jan-22,,,2451783.0,2451783.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+8-Jan-22,,,2501117.0,2501117.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+9-Jan-22,,,2542705.0,2542705.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,"Moderna, Pfizer/BioNTech, Sinopharm/Beijing, Sinovac"
+10-Jan-22,,,2584347.0,2584347.0,Singapore,https://data.gov.sg/dataset/covid-19-vaccination,

@@ -36,15 +36,19 @@ class Singapore:
                     "vacc_date",
                     "received_at_least_one_dose",
                     "received_at_least_two_doses",
-                    "received_at_least_one_pcttakeup",
-                    "received_at_least_two_doses_pcttakeup",
+                    "received_one_dose_pcttakeup",
+                    "received_two_doses_pcttakeup",
                 ],
             )
 
             boosters = pd.read_csv(os.path.join(tf, "progress-of-vaccine-booster-programme.csv"))
             check_known_columns(
                 boosters,
-                ["vacc_date", "received_booster_or_three_or_more_doses", "received_booster_or_three_or_more_doses_pc"],
+                [
+                    "vacc_date",
+                    "received_booster_or_three_doses",
+                    "booster_or_three_doses_pcttakeup",
+                ],
             )
 
         return pd.merge(initial, boosters, on="vacc_date", how="outer", validate="one_to_one")
@@ -55,7 +59,7 @@ class Singapore:
                 "vacc_date": "date",
                 "received_at_least_one_dose": "people_vaccinated",
                 "received_at_least_two_doses": "people_fully_vaccinated",
-                "received_booster_or_three_or_more_doses": "total_boosters",
+                "received_booster_or_three_doses": "total_boosters",
             }
         )[["date", "people_vaccinated", "people_fully_vaccinated", "total_boosters"]]
 
