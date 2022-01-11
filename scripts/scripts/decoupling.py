@@ -67,7 +67,7 @@ def process_esp() -> pd.DataFrame:
         .sum()
         .assign(Country="Spain")
         .sort_values("date")
-        .head(-8)
+        .head(-7)
     )
 
     df[["confirmed_cases", "confirmed_deaths", "hospital_flow", "icu_flow"]] = (
