@@ -1,5 +1,5 @@
 from cowidev.utils import paths
-from cowidev.utils.s3 import df_from_s3, get_metadata
+from cowidev.utils.s3 import S3, obj_from_s3
 from cowidev.utils.clean.dates import localdate
 
 
@@ -10,12 +10,12 @@ class CountryVaxBase:
         """Loads single CSV `location.csv` from S3 as DataFrame."""
         path = f"{paths.S3.VAX_ICE}/{self.location}.csv"
         _check_last_update(path, self.location)
-        df = df_from_s3(path)
+        df = obj_from_s3(path)
         return df
 
 
 def _check_last_update(path, country):
-    metadata = get_metadata(path)
+    metadata = S3().get_metadata(path)
     last_update = metadata["LastModified"]
     now = localdate(force_today=True, as_datetime=True)
     num_days = (now - last_update).days
