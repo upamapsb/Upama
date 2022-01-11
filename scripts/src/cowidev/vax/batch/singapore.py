@@ -6,9 +6,10 @@ import zipfile
 
 import pandas as pd
 
-from cowidev.utils import clean, paths, clean_date_series
+from cowidev.utils import paths, clean_date_series
+from cowidev.utils import paths, clean_date_series
 from cowidev.utils.utils import check_known_columns
-from cowidev.vax.utils.utils import build_vaccine_timeline
+from cowidev.vax.utils.utils import build_vaccine_timeline, make_monotonic
 
 
 class Singapore:
@@ -54,9 +55,11 @@ class Singapore:
         return df
 
     def _merge_primary_and_boosters(self, df_primary, df_boosters):
-        df_primary = df_primary.assign(date=clean_date_series(df_primary.vacc_date, "%Y-%m-%d"))
-        df_boosters = df_boosters.assign(date=clean_date_series(df_boosters.vacc_date, "%d-%b-%y"))
-        df = pd.merge(df_primary, df_boosters, on="date", how="outer", validate="one_to_one")
+        if not df_boosters.vacc_date.str.match(r"\d{4}-\d{2}-\d{2}").all():
+            df_boosters["vacc_date"] = clean_date_series(df_boosters.vacc_date, "%d-%b-%y")
+        if not df_primary.vacc_date.str.match(r"\d{4}-\d{2}-\d{2}").all():
+            df_primary["vacc_date"] = clean_date_series(df_primary.vacc_date, "%d-%b-%y")
+        df = pd.merge(df_primary, df_boosters, on="vacc_date", how="outer", validate="one_to_one")
         return df
 
     def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -82,7 +85,7 @@ class Singapore:
         )
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metrics).pipe(self.pipe_metadata)
+        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metrics).pipe(self.pipe_metadata).pipe(make_monotonic)
 
     def export(self):
         df = self.read()
