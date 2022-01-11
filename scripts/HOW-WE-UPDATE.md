@@ -106,8 +106,8 @@ other sub-processes producing data that may appear on our website (Grapher) but 
   │           └───┘     └────────────┘     └─────────────┘   │          │
   │                                                          │          │
   │                                                          │          │
-  │  output:  <a href="variants/covid-variants.csv">covid-variants.csv</a> ──────────────────────────── ──────────┤
-  │           <a href="variants/covid-sequencing.csv">covid-sequencing.csv</a>                           │          │
+  │  output:  covid-variants.csv ──────────────────────────── ──────────┤
+  │           covid-sequencing.csv                           │          │
   └──────────────────────────────────────────────────────────┘          │
                                                                         │
   ┌──────────────────────────────────────────────────────────┐          │
