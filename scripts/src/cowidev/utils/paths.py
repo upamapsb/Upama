@@ -12,7 +12,7 @@ def _get_project_dir(err: bool = False):
 
 
 def _get_s3_dir():
-    _s3_dir = {"INTERNAL": "internal", "INTERNAL_VAX": "internal/vax", "VAX_ICE": "internal/vax/ice"}
+    _s3_dir = {"INTERNAL": "internal", "INTERNAL_VAX": "internal/vax", "VAX_ICE": "s3://covid-19/internal/vax/ice"}
     B = make_dataclass("Bucket", _s3_dir.keys(), frozen=True)
     return B(**_s3_dir)
 
