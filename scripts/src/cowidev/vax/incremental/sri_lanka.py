@@ -2,12 +2,14 @@ import re
 import requests
 import tempfile
 import itertools
+from datetime import timedelta
 
 from bs4 import BeautifulSoup
 import pandas as pd
 import PyPDF2
 
 from cowidev.utils.clean import clean_count, clean_date
+from cowidev.utils.clean.dates import localdatenow
 from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import increment
 
@@ -37,14 +39,20 @@ class SriLanka:
         self.location = "Sri Lanka"
 
     def read(self):
-        soup = get_soup(self.source_url)
-        data = self.parse_data(soup)
+        print(1)
+        # Get landing page
+        # soup = get_soup(self.source_url)
+        # Get path to newest pdf
+        # pdf_path = self._parse_last_pdf_link(soup)
+        pdf_path = self._parse_last_pdf_link_fix()
+        print(2)
+        # Parse pdf to data
+        data = self.parse_data(pdf_path)
         # print(data)
+        print(3)
         return pd.Series(data=data)
 
-    def parse_data(self, soup: BeautifulSoup) -> pd.Series:
-        # Get path to newest pdf
-        pdf_path = self._parse_last_pdf_link(soup)
+    def parse_data(self, pdf_path: str) -> pd.Series:
         # Get text from pdf
         text = self._extract_text_from_pdf(pdf_path)
         # Get vaccine table from text
@@ -69,6 +77,23 @@ class SriLanka:
             "vaccine": vaccine,
             "location": self.location,
         }
+
+    def _parse_last_pdf_link_fix(self):
+        dt = localdatenow("Asia/Colombo", as_datetime=True)
+        for i in range(3):
+            link = self._build_link_pdf(dt)
+            response = requests.get(link)
+            print(link, response.status_code)
+            if response.status_code == 200:
+                return link
+            else:
+                dt = dt - timedelta(days=i)
+        raise ValueError("No link could be found!")
+
+    def _build_link_pdf(self, date):
+        dt_str = date.strftime("%d-%m_10_%y")
+        link = f"https://www.epid.gov.lk/web/images/pdf/Circulars/Corona_virus/sitrep-sl-en-{dt_str}.pdf"
+        return link
 
     def _parse_last_pdf_link(self, soup):
         links = soup.find(class_="rt-article").find_all("a")
