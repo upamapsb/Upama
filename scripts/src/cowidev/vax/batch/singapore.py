@@ -6,7 +6,7 @@ import zipfile
 
 import pandas as pd
 
-from cowidev.utils import paths
+from cowidev.utils import clean, paths, clean_date_series
 from cowidev.utils.utils import check_known_columns
 from cowidev.vax.utils.utils import build_vaccine_timeline
 
@@ -29,9 +29,9 @@ class Singapore:
             z = zipfile.ZipFile(io.BytesIO(r.content))
             z.extractall(tf)
 
-            initial = pd.read_csv(os.path.join(tf, "primary-series-vaccination-take-up-by-population.csv"))
+            df_primary = pd.read_csv(os.path.join(tf, "primary-series-vaccination-take-up-by-population.csv"))
             check_known_columns(
-                initial,
+                df_primary,
                 [
                     "vacc_date",
                     "received_at_least_one_dose",
@@ -41,17 +41,23 @@ class Singapore:
                 ],
             )
 
-            boosters = pd.read_csv(os.path.join(tf, "progress-of-vaccine-booster-programme.csv"))
+            df_boosters = pd.read_csv(os.path.join(tf, "progress-of-vaccine-booster-programme.csv"))
             check_known_columns(
-                boosters,
+                df_boosters,
                 [
                     "vacc_date",
                     "received_booster_or_three_doses",
                     "booster_or_three_doses_pcttakeup",
                 ],
             )
+        df = self._merge_primary_and_boosters(df_primary, df_boosters)
+        return df
 
-        return pd.merge(initial, boosters, on="vacc_date", how="outer", validate="one_to_one")
+    def _merge_primary_and_boosters(self, df_primary, df_boosters):
+        df_primary = df_primary.assign(date=clean_date_series(df_primary.vacc_date, "%Y-%m-%d"))
+        df_boosters = df_boosters.assign(date=clean_date_series(df_boosters.vacc_date, "%d-%b-%y"))
+        df = pd.merge(df_primary, df_boosters, on="date", how="outer", validate="one_to_one")
+        return df
 
     def pipe_rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.rename(
