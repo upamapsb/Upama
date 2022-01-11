@@ -39,17 +39,14 @@ class SriLanka:
         self.location = "Sri Lanka"
 
     def read(self):
-        print(1)
         # Get landing page
         # soup = get_soup(self.source_url)
         # Get path to newest pdf
         # pdf_path = self._parse_last_pdf_link(soup)
         pdf_path = self._parse_last_pdf_link_fix()
-        print(2)
         # Parse pdf to data
         data = self.parse_data(pdf_path)
         # print(data)
-        print(3)
         return pd.Series(data=data)
 
     def parse_data(self, pdf_path: str) -> pd.Series:
