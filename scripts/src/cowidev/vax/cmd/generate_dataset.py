@@ -302,6 +302,7 @@ class DatasetGenerator:
         df.loc[df.people_fully_vaccinated.isnull(), "people_fully_vaccinated_per_hundred"] = pd.NA
         df.loc[:, "total_boosters"] = df.total_boosters.replace({0: pd.NA})
         df.loc[df.total_boosters.isnull(), "total_boosters_per_hundred"] = pd.NA
+        df["people_unvaccinated"] = df.population - df.people_vaccinated
         return df.drop(columns=["population"])
 
     def pipe_vax_checks(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -543,7 +544,7 @@ class DatasetGenerator:
         columns_first = ["Country", "Year"]
         columns_rest = [col for col in df.columns if col not in columns_first]
         col_order = columns_first + columns_rest
-        df = df[col_order].sort_values(col_order)
+        df = df[col_order].sort_values(["Country", "Year"])
         if fillna:
             filled = df.groupby(["Country"])[columns_rest].fillna(method="ffill")
             if fillna_0:
