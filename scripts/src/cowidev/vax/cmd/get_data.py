@@ -162,7 +162,9 @@ def _load_modules_order(modules_name):
         .sort_values("execution_time (sec)", ascending=False)
         .module.tolist()
     )
-    return [m for m in module_order_all if m in modules_name]
+    modules_name_order = [m for m in module_order_all if m in modules_name]
+    missing = [m for m in modules_name if m not in modules_name_order]
+    return modules_name_order + missing
 
 
 def _retry_modules_failed(modules_execution_results, country_data_getter):
