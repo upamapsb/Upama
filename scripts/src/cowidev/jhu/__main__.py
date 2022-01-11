@@ -5,7 +5,7 @@ import numpy as np
 import pytz
 from datetime import datetime
 from termcolor import colored
-from cowidev.utils.s3 import df_to_s3
+from cowidev.utils.s3 import obj_to_s3
 
 CURRENT_DIR = os.path.dirname(__file__)
 sys.path.append(CURRENT_DIR)
@@ -344,7 +344,7 @@ def create_subnational():
     filename = "subnational_cases_deaths"
     compression = {"method": "zip", "archive_name": f"{filename}.csv"}
     # df.to_csv(os.path.join(OUTPUT_PATH, f"{filename}.zip"), index=False, compression=compression)
-    df_to_s3(df, f"public/jhu/{filename}.zip", extension="csv", compression=compression, public=True)
+    obj_to_s3(df, s3_path="s3://covid-19/public/jhu/{filename}.zip", compression=compression, public=True)
 
 
 def main(skip_download=False):
