@@ -1,4 +1,3 @@
-import os
 import time
 import importlib
 
@@ -8,7 +7,7 @@ import pandas as pd
 from cowidev.vax.batch import __all__ as batch_countries
 from cowidev.vax.incremental import __all__ as incremental_countries
 from cowidev.utils.log import get_logger, print_eoe, system_details
-from cowidev.utils.s3 import df_from_s3, df_to_s3, dict_from_s3, dict_to_s3
+from cowidev.utils.s3 import obj_from_s3, obj_to_s3
 from cowidev.utils.clean.dates import localdate
 
 
@@ -27,9 +26,9 @@ MODULES_NAME_INCREMENTAL = list(country_to_module_incremental.values())
 MODULES_NAME = MODULES_NAME_BATCH + MODULES_NAME_INCREMENTAL
 
 # S3 paths
-LOG_MACHINES = "log/machines.json"
-LOG_GET_COUNTRIES = "log/vax-get-data-countries.csv"
-LOG_GET_GLOBAL = "log/vax-get-data-global.csv"
+LOG_MACHINES = "s3://covid-19/log/machines.json"
+LOG_GET_COUNTRIES = "s3://covid-19/log/vax-get-data-countries.csv"
+LOG_GET_GLOBAL = "s3://covid-19/log/vax-get-data-global.csv"
 
 
 class CountryDataGetter:
@@ -128,28 +127,28 @@ def _export_log_info(df_exec, t_sec_1, t_sec_2):
         machine = details["id"]
         # Export timings per country
         df_exec = df_exec.reset_index().assign(date=date_now, machine=machine)
-        df = df_from_s3(LOG_GET_COUNTRIES)
+        df = obj_from_s3(LOG_GET_COUNTRIES)
         df = df[df.date + df.machine != date_now + machine]
         df = pd.concat([df, df_exec])
-        df_to_s3(df, LOG_GET_COUNTRIES)
+        obj_to_s3(df, LOG_GET_COUNTRIES)
         # Export machine info
-        data = dict_from_s3(LOG_MACHINES)
+        data = obj_from_s3(LOG_MACHINES)
         if machine not in data:
             data = {**details, machine: details["info"]}
-            dict_to_s3(data, LOG_MACHINES)
+            obj_to_s3(data, LOG_MACHINES)
         # Export overall timing
         report = {"machine": machine, "date": date_now, "t_sec": t_sec_1, "t_sec_retry": t_sec_2}
         df_new = pd.DataFrame([report])
-        df = df_from_s3(LOG_GET_GLOBAL)
+        df = obj_from_s3(LOG_GET_GLOBAL)
         df = df[df.date + df.machine != date_now + machine]
         df = pd.concat([df, df_new])
-        df_to_s3(df, LOG_GET_GLOBAL)
+        obj_to_s3(df, LOG_GET_GLOBAL)
 
 
 def _load_modules_order(modules_name):
     if len(modules_name) < 10:
         return modules_name
-    df = df_from_s3(LOG_GET_COUNTRIES)
+    df = obj_from_s3(LOG_GET_COUNTRIES)
     # Filter by machine
     # details = system_details()
     # machine = details["id"]
