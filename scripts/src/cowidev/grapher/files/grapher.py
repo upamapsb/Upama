@@ -4,6 +4,8 @@ from typing import Callable
 
 import pandas as pd
 
+from cowidev.utils.s3 import obj_from_s3
+
 
 @dataclass
 class Grapheriser:
@@ -111,8 +113,9 @@ class Grapheriser:
         return df
 
     def read(self, input_path: str):
-        df = pd.read_csv(input_path, parse_dates=[self.date])
-        return df
+        if input_path.startswith("s3://"):
+            return obj_from_s3(input_path, parse_dates=[self.date])
+        return pd.read_csv(input_path, parse_dates=[self.date])
 
     def pipeline(self, df: pd.DataFrame):
         df = (
