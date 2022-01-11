@@ -6,9 +6,9 @@ import zipfile
 
 import pandas as pd
 
-from cowidev.utils import paths
+from cowidev.utils import paths, clean_date_series
 from cowidev.utils.utils import check_known_columns
-from cowidev.vax.utils.utils import build_vaccine_timeline
+from cowidev.vax.utils.utils import build_vaccine_timeline, make_monotonic
 
 
 class Singapore:
@@ -40,6 +40,8 @@ class Singapore:
                     "received_two_doses_pcttakeup",
                 ],
             )
+            if not initial.vacc_date.str.match(r"\d{4}-\d{2}-\d{2}").all():
+                initial["vacc_date"] = clean_date_series(initial.vacc_date, "%d-%b-%y")
 
             boosters = pd.read_csv(os.path.join(tf, "progress-of-vaccine-booster-programme.csv"))
             check_known_columns(
@@ -50,6 +52,8 @@ class Singapore:
                     "booster_or_three_doses_pcttakeup",
                 ],
             )
+            if not boosters.vacc_date.str.match(r"\d{4}-\d{2}-\d{2}").all():
+                boosters["vacc_date"] = clean_date_series(boosters.vacc_date, "%d-%b-%y")
 
         return pd.merge(initial, boosters, on="vacc_date", how="outer", validate="one_to_one")
 
@@ -76,7 +80,7 @@ class Singapore:
         )
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metrics).pipe(self.pipe_metadata)
+        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metrics).pipe(self.pipe_metadata).pipe(make_monotonic)
 
     def export(self):
         df = self.read()
