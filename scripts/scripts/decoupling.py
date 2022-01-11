@@ -42,10 +42,10 @@ def adjust_x_and_y(
     df[icu_variable] = df[icu_variable].shift(-icu_shift)
     df["confirmed_deaths"] = df.confirmed_deaths.shift(-death_shift)
 
-    df["confirmed_cases"] = 100 * df.confirmed_cases / case_peak
-    df[hosp_variable] = 100 * df[hosp_variable] / hosp_peak
-    df[icu_variable] = 100 * df[icu_variable] / icu_peak
-    df["confirmed_deaths"] = 100 * df.confirmed_deaths / death_peak
+    df["confirmed_cases"] = (100 * df.confirmed_cases / case_peak).round(1)
+    df[hosp_variable] = (100 * df[hosp_variable] / hosp_peak).round(1)
+    df[icu_variable] = (100 * df[icu_variable] / icu_peak).round(1)
+    df["confirmed_deaths"] = (100 * df.confirmed_deaths / death_peak).round(1)
 
     return df
 
