@@ -134,7 +134,10 @@ class VariantsETL:
 
     def load(self, df: pd.DataFrame, output_path: str) -> None:
         # Export data
-        obj_to_s3(df, s3_path=output_path, public=False)  # df, output_path, public=True)
+        if output_path.startswith("s3://"):
+            obj_to_s3(df, s3_path=output_path, public=False)  # df, output_path, public=True)
+        else:
+            df.to_csv(output_path, index=False)
 
     def json_to_df(self, data: dict) -> pd.DataFrame:
         df = pd.json_normalize(data, record_path=["distribution"], meta=["country"]).melt(
