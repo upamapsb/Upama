@@ -1,40 +1,33 @@
 import pandas as pd
-import numpy as np
-
-from cowidev.utils.clean import clean_date_series
 
 
 METADATA = {
-    "source_url": "https://datadashboardapi.health.gov.il/api/queries/patientsPerDate",
+    "source_url": "https://raw.githubusercontent.com/dancarmoz/israel_moh_covid_dashboard_data/master/hospitalized_and_infected.csv",
     "source_url_ref": "https://datadashboard.health.gov.il/COVID-19/",
-    "source_name": "Ministry of Health",
+    "source_name": "Ministry of Health, via dancarmoz on GitHub",
     "entity": "Israel",
 }
 
 
 def main():
-    url = "https://datadashboardapi.health.gov.il/api/queries/patientsPerDate"
-    df = pd.read_json(url)
-
-    df["date"] = clean_date_series(df.date, "%Y-%m-%dT%H:%M:%S.%fZ")
-    df = df.sort_values("date")
-
-    df.loc[df.date < "2020-08-17", "CountCriticalStatus"] = np.nan
-
-    df["new_hospitalized"] = df.new_hospitalized.rolling(7).sum()
-    df["serious_critical_new"] = df.serious_critical_new.rolling(7).sum()
-
     df = (
-        df[["date", "Counthospitalized", "CountCriticalStatus", "new_hospitalized", "serious_critical_new"]]
-        .melt("date", var_name="indicator")
-        .dropna(subset=["value"])
+        pd.read_csv(
+            METADATA["source_url"], usecols=["Date", "Hospitalized", "Critical", "New hosptialized", "New serious"]
+        )
+        .rename(columns={"Date": "date"})
+        .sort_values("date")
     )
+
+    df["New hosptialized"] = df["New hosptialized"].rolling(7).sum()
+    df["New serious"] = df["New serious"].rolling(7).sum()
+
+    df = df.melt("date", var_name="indicator").dropna(subset=["value"])
     df["indicator"] = df.indicator.replace(
         {
-            "Counthospitalized": "Daily hospital occupancy",
-            "CountCriticalStatus": "Daily ICU occupancy",
-            "new_hospitalized": "Weekly new hospital admissions",
-            "serious_critical_new": "Weekly new ICU admissions",
+            "Hospitalized": "Daily hospital occupancy",
+            "Critical": "Daily ICU occupancy",
+            "New hosptialized": "Weekly new hospital admissions",
+            "New serious": "Weekly new ICU admissions",
         }
     )
 
