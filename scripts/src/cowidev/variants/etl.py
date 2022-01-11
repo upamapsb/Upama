@@ -7,6 +7,7 @@ from cowidev.utils.utils import get_project_dir
 from cowidev.utils.clean.dates import clean_date, DATE_FORMAT
 from cowidev.utils.web import request_json
 from cowidev.utils import paths
+from cowidev.utils.s3 import obj_to_s3
 
 
 class VariantsETL:
@@ -39,6 +40,7 @@ class VariantsETL:
             "21I (Delta)": {"rename": "Delta", "who": True},
             "21J (Delta)": {"rename": "Delta", "who": True},
             "21K (Omicron)": {"rename": "Omicron", "who": True},
+            "21L (Omicron)": {"rename": "Omicron", "who": True},
             "S:677H.Robin1": {"rename": "S:677H.Robin1", "who": False},
             "S:677P.Pelican": {"rename": "S:677P.Pelican", "who": False},
         }
@@ -132,7 +134,7 @@ class VariantsETL:
 
     def load(self, df: pd.DataFrame, output_path: str) -> None:
         # Export data
-        df.to_csv(output_path, index=False)
+        obj_to_s3(df, s3_path=output_path, public=False)  # df, output_path, public=True)
 
     def json_to_df(self, data: dict) -> pd.DataFrame:
         df = pd.json_normalize(data, record_path=["distribution"], meta=["country"]).melt(
