@@ -3,7 +3,7 @@ from datetime import date, timedelta
 
 import pandas as pd
 
-from cowidev.utils.s3 import upload_to_s3, df_to_s3, str_to_s3
+from cowidev.utils.s3 import S3, obj_to_s3
 from cowidev.utils.utils import get_project_dir, dict_to_compact_json
 
 
@@ -15,13 +15,13 @@ def create_dataset(df, macro_variables):
     print("Writing to CSV…")
     filename = os.path.join(DATA_DIR, "owid-covid-data.csv")
     df.to_csv(filename, index=False)
-    upload_to_s3(filename, "public/owid-covid-data.csv", public=True)
+    S3().upload_to_s3(filename, "s3://covid-19/public/owid-covid-data.csv", public=True)
 
     print("Writing to XLSX…")
     # filename = os.path.join(DATA_DIR, "owid-covid-data.xlsx")
     # all_covid.to_excel(os.path.join(DATA_DIR, "owid-covid-data.xlsx"), index=False, engine="xlsxwriter")
     # upload_to_s3(filename, "public/owid-covid-data.xlsx", public=True)
-    df_to_s3(df, "public/owid-covid-data.xlsx", public=True, extension="xlsx")
+    obj_to_s3(df, s3_path="s3://covid-19/public/owid-covid-data.xlsx", public=True)
 
     print("Writing to JSON…")
     data = df_to_dict(
@@ -29,7 +29,7 @@ def create_dataset(df, macro_variables):
         macro_variables.keys(),
         valid_json=True,
     )
-    str_to_s3(data, "public/owid-covid-data.json", public=True)
+    obj_to_s3(data, "s3://covid-19/public/owid-covid-data.json", public=True)
 
 
 def create_latest(df):
@@ -44,17 +44,21 @@ def create_latest(df):
     print("Writing latest version…")
     # CSV
     latest.to_csv(os.path.join(DATA_DIR, "latest", "owid-covid-latest.csv"), index=False)
-    upload_to_s3(
-        os.path.join(DATA_DIR, "latest", "owid-covid-latest.csv"), "public/latest/owid-covid-latest.csv", public=True
+    S3().upload_to_s3(
+        os.path.join(DATA_DIR, "latest", "owid-covid-latest.csv"),
+        "s3://covid-19/public/latest/owid-covid-latest.csv",
+        public=True,
     )
     # XLSX
-    df_to_s3(latest, "public/latest/owid-covid-latest.xlsx", public=True, extension="xlsx")
+    obj_to_s3(latest, s3_path="s3://covid-19/public/latest/owid-covid-latest.xlsx", public=True)
     # JSON
     latest.dropna(subset=["iso_code"]).set_index("iso_code").to_json(
         os.path.join(DATA_DIR, "latest", "owid-covid-latest.json"), orient="index"
     )
-    upload_to_s3(
-        os.path.join(DATA_DIR, "latest", "owid-covid-latest.json"), "public/latest/owid-covid-latest.json", public=True
+    S3().upload_to_s3(
+        os.path.join(DATA_DIR, "latest", "owid-covid-latest.json"),
+        "s3://covid-19/public/latest/owid-covid-latest.json",
+        public=True,
     )
 
 
