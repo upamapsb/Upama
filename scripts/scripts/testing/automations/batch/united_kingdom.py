@@ -26,14 +26,15 @@ class UnitedKingdom(CountryTestBase):
         }
         api = Cov19API(filters=filters, structure=structure)
         df = api.get_dataframe()
-        df = df.assign(**{
-            "cumPillarTwo": (
-                df[pd.to_datetime(df["Date"]) > date_min]["newPillarTwo"][::-1].cumsum().fillna(method="ffill")
-            ),
-            "Cumulative total": df["cumPillarOne"] + df["cumPillarTwo"].fillna(0)
-        })
-        
-        df["
+        df = df.assign(
+            **{
+                "cumPillarTwo": (
+                    df[pd.to_datetime(df["Date"]) > date_min]["newPillarTwo"][::-1].cumsum().fillna(method="ffill")
+                ),
+                "Cumulative total": df["cumPillarOne"] + df["cumPillarTwo"].fillna(0),
+            }
+        )
+
         return df
 
     def read(self):
