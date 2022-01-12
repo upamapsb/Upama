@@ -143,10 +143,12 @@ class Israel:
         # Ignore agr group 10-19
         df = df[(df.age_group_min != "10") | (df.age_group_max != "19")]
         # Final column creations
-        df = df.assign(
-            location=self.location,
-            people_vaccinated_per_hundred=df["1st perc"],
-            people_fully_vaccinated_per_hundred=df["2nd perc"],
+        df = df.assign(location=self.location).rename(
+            columns={
+                "1st perc": "people_vaccinated_per_hundred",
+                "2nd perc": "people_fully_vaccinated_per_hundred",
+                "3rd perc": "people_with_booster_per_hundred",
+            }
         )
         # Select output columns
         df = df[
@@ -157,6 +159,7 @@ class Israel:
                 "age_group_max",
                 "people_vaccinated_per_hundred",
                 "people_fully_vaccinated_per_hundred",
+                "people_with_booster_per_hundred",
             ]
         ]
         return df
