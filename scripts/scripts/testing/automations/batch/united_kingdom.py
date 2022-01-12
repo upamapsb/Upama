@@ -26,6 +26,9 @@ class UnitedKingdom(CountryTestBase):
         }
         api = Cov19API(filters=filters, structure=structure)
         df = api.get_dataframe()
+        df["cumPillarTwo"] = (
+            df[pd.to_datetime(df["Date"]) > "2020-07-01"]["newPillarTwo"][::-1].cumsum().fillna(method="ffill")
+        )
         df = df.assign(
             **{
                 "cumPillarTwo": (
