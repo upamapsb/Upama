@@ -46,7 +46,8 @@ class SouthKorea:
 
 
 def main():
-    SouthKorea().export()
+    print("South Korea skipped")
+    # SouthKorea().export()
 
 
 if __name__ == "__main__":
