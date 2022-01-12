@@ -1,8 +1,8 @@
 import re
-import requests
 import datetime
-from bs4 import BeautifulSoup
 import pandas as pd
+
+from cowidev.utils import get_soup
 
 COUNTRY = "Andorra"
 PATH = f"automated_sheets/{COUNTRY}.csv"
@@ -86,11 +86,7 @@ def main():
     data = pd.read_csv(PATH)
 
     # Retrieve HTML page (using fake header, otherwise 404 error)
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"
-    }
-    req = requests.get(URL, headers=headers)
-    soup = BeautifulSoup(req.content, "html.parser")
+    soup = get_soup(URL)
 
     if not is_404(soup):
         date = get_date(soup)

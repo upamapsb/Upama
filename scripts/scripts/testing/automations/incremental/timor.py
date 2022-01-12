@@ -1,23 +1,22 @@
 import os
-from datetime import date
-
-import requests
-import pandas as pd
-from bs4 import BeautifulSoup
-from cowidev.utils.clean import clean_count
 import re
+
+import pandas as pd
+
+from cowidev.utils import get_soup
+from cowidev.utils.clean.dates import localdatenow
+
 
 def main():
     output_file = "automated_sheets/Timor.csv"
     url = "https://covid19.gov.tl/dashboard/"
-    req = requests.get(url)
-    soup = BeautifulSoup(req.text, "html.parser")
+    soup = get_soup(url, "html.parser")
 
     stats = soup.select("#testing .c-green .wdt-column-sum")[0].text
-    count = int("".join(re.findall("[0-9]",stats)))
+    count = int("".join(re.findall("[0-9]", stats)))
     # print(count)
 
-    date_str = date.today().strftime("%Y-%m-%d")
+    date_str = localdatenow("Asia/Dili")
     df = pd.DataFrame(
         {
             "Country": "Timor",

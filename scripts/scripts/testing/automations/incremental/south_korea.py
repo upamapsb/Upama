@@ -1,7 +1,6 @@
-import requests
 import pandas as pd
 
-from cowidev.utils.web import get_soup
+from cowidev.utils.web.scraping import get_soup, request_text
 from cowidev.utils.clean import extract_clean_date
 from cowidev.testing.utils.incremental import increment
 
@@ -22,8 +21,8 @@ class SouthKorea:
         }
 
     def _parse_metric(self):
-        quests = requests.get(self.source_url)
-        table = pd.read_html(quests.text, index_col=0)[6]
+        text = request_text(self.source_url, mode="raw")
+        table = pd.read_html(text, index_col=0)[6]
         daily_change = int(table["Total"])
         return daily_change
 

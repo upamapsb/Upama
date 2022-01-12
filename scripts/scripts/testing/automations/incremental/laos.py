@@ -1,10 +1,10 @@
-import datetime
 import time
 
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
+from cowidev.utils.clean.dates import localdate
 
 SOURCE_URL = "https://app.powerbi.com/view?r=eyJrIjoiM2JkZWRhNTQtNDY5YS00YWM3LWI4ZjUtNmExM2VmZDM4YjU5IiwidCI6ImNkOWNiOGVjLWU2MjEtNDcyYS05NzlhLTU0OWFiNWJhMjQ3MCIsImMiOjF9"
 
@@ -21,7 +21,7 @@ def get_tests_snapshot():
     assert "K" in tests_cumul
     tests_cumul = float(tests_cumul.replace(",", ".").replace("K", "")) * 1000
 
-    date = str(datetime.date.today() - datetime.timedelta(days=1))
+    date = localdate("Asia/Vientiane")
     return date, tests_cumul
 
 

@@ -5,6 +5,8 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 
+from cowidev.utils.clean.dates import localdatenow
+
 
 def main():
     url = "https://koronavirus.gov.mk/"
@@ -15,7 +17,7 @@ def main():
     count = int(soup.find_all("td")[7].text.replace(",", ""))
     # print(count)
 
-    date_str = date.today().strftime("%Y-%m-%d")
+    date_str = localdatenow("Europe/Skopje")
     df = pd.DataFrame(
         {
             "Country": location,

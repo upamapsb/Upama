@@ -1,9 +1,7 @@
-import os
-from datetime import date
-import urllib.request
-
 import pandas as pd
-from bs4 import BeautifulSoup
+
+from cowidev.utils import get_soup
+from cowidev.utils.clean.dates import localdatenow
 
 
 def main():
@@ -11,13 +9,12 @@ def main():
     data = pd.read_csv("automated_sheets/Benin.csv")
 
     url = "https://www.gouv.bj/coronavirus/"
-    req = urllib.request.urlopen(url)
-    soup = BeautifulSoup(req.read(), "html.parser")
+    soup = get_soup(url)
 
     stats = soup.find_all("h2", attrs={"class", "h1 adapt white regular"})
 
     count = int(stats[0].text) + int(stats[1].text)
-    date_str = date.today().strftime("%Y-%m-%d")
+    date_str = localdatenow("Africa/Porto-Novo")
 
     if count > data["Cumulative total"].max() and date_str > data["Date"].max():
 

@@ -1,9 +1,9 @@
 import os
 from datetime import date
 
-import requests
 import pandas as pd
-from bs4 import BeautifulSoup
+
+from cowidev.utils import get_soup, clean_count
 
 
 def main():
@@ -11,10 +11,9 @@ def main():
     location = "Gabon"
     output_file = f"automated_sheets/{location}.csv"
 
-    req = requests.get(url)
-    soup = BeautifulSoup(req.text, "html.parser")
+    soup = get_soup(url)
     stats = soup.find_all("h3")
-    count = int(stats[2].text)
+    count = clean_count(stats[2].text)
     # print(count)
 
     date_str = date.today().strftime("%Y-%m-%d")

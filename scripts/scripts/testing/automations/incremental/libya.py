@@ -1,21 +1,15 @@
 import re
-import requests
-import datetime
-from bs4 import BeautifulSoup
 import pandas as pd
 import dateparser
 
+from cowidev.utils import get_soup
 
 SOURCE_URL = "https://ncdc.org.ly/Ar"
 
 
 def libya_get_tests_snapshot():
     url = SOURCE_URL
-    headers = {
-        "User-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.80 Safari/537.36"
-    }
-    res = requests.get(url, headers=headers)
-    soup = BeautifulSoup(res.content, "html.parser")
+    soup = get_soup(url)
     # retrieves the daily testing figure.
     s = "عدد العينات"
     tests_today_str = None

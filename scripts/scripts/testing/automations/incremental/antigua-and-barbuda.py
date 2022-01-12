@@ -1,23 +1,21 @@
 import os
-from datetime import date
-
-import requests
 import pandas as pd
-from bs4 import BeautifulSoup
+
+from cowidev.utils import get_soup
+from cowidev.utils.clean.dates import localdatenow
 
 
 def main():
     url = "https://covid19.gov.ag"
     location = "Antigua and Barbuda"
     output_file = f"automated_sheets/{location}.csv"
-    req = requests.get(url)
-    soup = BeautifulSoup(req.text, "html.parser")
+    soup = get_soup(url)
 
     stats = soup.find_all("p", attrs={"class": "case-Number"})
     count = int(stats[3].text)
     # print(count)
 
-    date_str = date.today().strftime("%Y-%m-%d")
+    date_str = localdatenow("America/St_Johns")
     df = pd.DataFrame(
         {
             "Country": location,
@@ -32,15 +30,8 @@ def main():
 
     if os.path.isfile(output_file):
         existing = pd.read_csv(output_file)
-        if (
-            count > existing["Cumulative total"].max()
-            and date_str > existing["Date"].max()
-        ):
-            df = (
-                pd.concat([df, existing])
-                .sort_values("Date", ascending=False)
-                .drop_duplicates()
-            )
+        if count > existing["Cumulative total"].max() and date_str > existing["Date"].max():
+            df = pd.concat([df, existing]).sort_values("Date", ascending=False).drop_duplicates()
             df.to_csv(output_file, index=False)
 
 
