@@ -16,15 +16,31 @@ class Liechtenstein(CountryTestBase):
 
     def read(self) -> pd.DataFrame:
         json_dict = request_json(self.source_url)
-        df = pd.DataFrame(json_dict)[["datum", "entries", "geoRegion"]]
+        df = pd.DataFrame(json_dict)[["datum", "entries", "entries_pos", "nachweismethode", "geoRegion"]]
+        # [["datum", "entries", "geoRegion"]]
         df = df[df.geoRegion == "FL"]
         return df
 
     def pipe_filter_rows(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.dropna(subset=["entries"])
 
+    def pipe_groupby(self, df: pd.DataFrame) -> pd.DataFrame:
+        return df.groupby("Date", as_index=False)[["Daily change in cumulative total", "entries_pos"]].sum()
+
+    def pipe_positive_rate(self, df: pd.DataFrame) -> pd.DataFrame:
+        df["Positive rate"] = (
+            df.entries_pos.rolling(7).mean() / df["Daily change in cumulative total"].rolling(7).mean()
+        ).round(3)
+        return df
+
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self.pipe_filter_rows).pipe(self.pipe_rename_columns).pipe(self.pipe_metadata)
+        return (
+            df.pipe(self.pipe_filter_rows)
+            .pipe(self.pipe_rename_columns)
+            .pipe(self.pipe_groupby)
+            .pipe(self.pipe_positive_rate)
+            .pipe(self.pipe_metadata)
+        )
 
     def export(self):
         df = self.read().pipe(self.pipeline)
