@@ -2,6 +2,7 @@ import pandas as pd
 from uk_covid19 import Cov19API
 
 from cowidev.testing import CountryTestBase
+from cowidev.testing.utils import make_monotonic
 
 
 class UnitedKingdom(CountryTestBase):
@@ -22,6 +23,8 @@ class UnitedKingdom(CountryTestBase):
         df["Cumulative total"] = df.cumPillarOne.fillna(method="ffill").fillna(0) + df.cumPillarTwo.fillna(
             method="ffill"
         ).fillna(0)
+        # Filter invalid
+        df = df.pipe(make_monotonic)
         return df
 
     def pipeline(self, df: pd.DataFrame):
