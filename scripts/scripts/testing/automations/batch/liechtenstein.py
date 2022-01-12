@@ -20,8 +20,11 @@ class Liechtenstein(CountryTestBase):
         df = df[df.geoRegion == "FL"]
         return df
 
+    def pipe_filter_rows(self, df: pd.DataFrame) -> pd.DataFrame:
+        return df.dropna(subset=["entries"])
+
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metadata)
+        return df.pipe(self.pipe_filter_rows).pipe(self.pipe_rename_columns).pipe(self.pipe_metadata)
 
     def export(self):
         df = self.read().pipe(self.pipeline)
