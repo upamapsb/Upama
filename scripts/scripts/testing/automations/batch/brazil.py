@@ -26,6 +26,8 @@ class Brazil(CountryTestBase):
             .dropna()
             .drop_duplicates(subset=["Cumulative total"])
         )
+        # remove non-monotonically increasing values between 2021-02-04 and 2021-02-07
+        df = df[(df["Date"] < "2021-02-04") | (df["Date"] > "2021-02-07")]
         df["Cumulative total"] = df["Cumulative total"].astype(int)
         return df
 
