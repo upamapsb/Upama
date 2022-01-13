@@ -44,7 +44,7 @@ def get_base_dataset():
 
     print("Fetching variants dataset…")
     variants = get_variants(
-        variants_file=os.path.join(DATA_DIR, "variants", "covid-variants.csv"),
+        variants_file="s3://covid-19/internal/variants/covid-variants.csv",
         cases_file=os.path.join(DATA_DIR, "jhu", "full_data.csv"),
     )
 
