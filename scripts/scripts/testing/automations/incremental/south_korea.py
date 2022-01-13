@@ -7,7 +7,7 @@ from cowidev.testing.utils.incremental import increment
 
 class SouthKorea:
     location = "South Korea"
-    units = "tests performed"
+    units = "people tested"
     source_label = "Ministry of Health"
     source_url = (
         "http://ncov.mohw.go.kr/en/bdBoardList.do?brdId=16&brdGubun=161&dataGubun=&ncvContSeq=&contSeq=&board_id="
@@ -46,8 +46,7 @@ class SouthKorea:
 
 
 def main():
-    print("South Korea skipped")
-    # SouthKorea().export()
+    SouthKorea().export()
 
 
 if __name__ == "__main__":
