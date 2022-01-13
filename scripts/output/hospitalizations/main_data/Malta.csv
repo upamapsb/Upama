@@ -295,9 +295,9 @@ Malta,Daily hospital occupancy,2020-12-30,63.0
 Malta,Daily hospital occupancy,2020-12-31,66.0
 Malta,Daily hospital occupancy,2021-01-01,67.0
 Malta,Daily hospital occupancy,2021-01-02,70.0
-Malta,Daily hospital occupancy,2021-01-03,66.0
-Malta,Daily hospital occupancy,2021-01-04,68.0
-Malta,Daily hospital occupancy,2021-01-05,69.0
+Malta,Daily hospital occupancy,2021-01-03,124.0
+Malta,Daily hospital occupancy,2021-01-04,124.0
+Malta,Daily hospital occupancy,2021-01-05,121.0
 Malta,Daily hospital occupancy,2021-01-06,63.0
 Malta,Daily hospital occupancy,2021-01-07,54.0
 Malta,Daily hospital occupancy,2021-01-08,55.0
@@ -609,6 +609,7 @@ Malta,Daily hospital occupancy,2021-11-27,15.0
 Malta,Daily hospital occupancy,2021-11-28,15.0
 Malta,Daily hospital occupancy,2021-11-30,23.0
 Malta,Daily hospital occupancy,2021-12-01,11.0
+Malta,Daily hospital occupancy,2021-12-02,683.0
 Malta,Daily hospital occupancy,2021-12-03,21.0
 Malta,Daily hospital occupancy,2021-12-07,26.0
 Malta,Daily hospital occupancy,2021-12-08,27.0
@@ -621,6 +622,25 @@ Malta,Daily hospital occupancy,2021-12-15,16.0
 Malta,Daily hospital occupancy,2021-12-16,20.0
 Malta,Daily hospital occupancy,2021-12-17,22.0
 Malta,Daily hospital occupancy,2021-12-18,30.0
+Malta,Daily hospital occupancy,2021-12-19,30.0
+Malta,Daily hospital occupancy,2021-12-20,49.0
+Malta,Daily hospital occupancy,2021-12-21,40.0
+Malta,Daily hospital occupancy,2021-12-22,47.0
+Malta,Daily hospital occupancy,2021-12-23,52.0
+Malta,Daily hospital occupancy,2021-12-24,70.0
+Malta,Daily hospital occupancy,2021-12-25,683.0
+Malta,Daily hospital occupancy,2021-12-26,80.0
+Malta,Daily hospital occupancy,2021-12-27,83.0
+Malta,Daily hospital occupancy,2021-12-28,82.0
+Malta,Daily hospital occupancy,2021-12-30,94.0
+Malta,Daily hospital occupancy,2022-01-02,110.0
+Malta,Daily hospital occupancy,2022-01-03,122.0
+Malta,Daily hospital occupancy,2022-01-04,124.0
+Malta,Daily hospital occupancy,2022-01-05,121.0
+Malta,Daily hospital occupancy,2022-01-06,123.0
+Malta,Daily hospital occupancy,2022-01-07,127.0
+Malta,Daily hospital occupancy,2022-01-08,15.0
+Malta,Daily hospital occupancy,2022-01-09,131.0
 Malta,Daily ICU occupancy,2020-03-05,0.0
 Malta,Daily ICU occupancy,2020-03-06,0.0
 Malta,Daily ICU occupancy,2020-03-07,0.0
@@ -917,9 +937,9 @@ Malta,Daily ICU occupancy,2020-12-30,12.0
 Malta,Daily ICU occupancy,2020-12-31,12.0
 Malta,Daily ICU occupancy,2021-01-01,11.0
 Malta,Daily ICU occupancy,2021-01-02,12.0
-Malta,Daily ICU occupancy,2021-01-03,13.0
-Malta,Daily ICU occupancy,2021-01-04,11.0
-Malta,Daily ICU occupancy,2021-01-05,15.0
+Malta,Daily ICU occupancy,2021-01-03,5.0
+Malta,Daily ICU occupancy,2021-01-04,5.0
+Malta,Daily ICU occupancy,2021-01-05,5.0
 Malta,Daily ICU occupancy,2021-01-06,15.0
 Malta,Daily ICU occupancy,2021-01-07,13.0
 Malta,Daily ICU occupancy,2021-01-08,13.0
@@ -1222,6 +1242,7 @@ Malta,Daily ICU occupancy,2021-11-27,1.0
 Malta,Daily ICU occupancy,2021-11-28,2.0
 Malta,Daily ICU occupancy,2021-11-30,3.0
 Malta,Daily ICU occupancy,2021-12-01,2.0
+Malta,Daily ICU occupancy,2021-12-02,4.0
 Malta,Daily ICU occupancy,2021-12-03,2.0
 Malta,Daily ICU occupancy,2021-12-09,3.0
 Malta,Daily ICU occupancy,2021-12-10,3.0
@@ -1232,6 +1253,28 @@ Malta,Daily ICU occupancy,2021-12-15,3.0
 Malta,Daily ICU occupancy,2021-12-16,3.0
 Malta,Daily ICU occupancy,2021-12-17,3.0
 Malta,Daily ICU occupancy,2021-12-18,4.0
+Malta,Daily ICU occupancy,2021-12-19,4.0
+Malta,Daily ICU occupancy,2021-12-20,5.0
+Malta,Daily ICU occupancy,2021-12-21,4.0
+Malta,Daily ICU occupancy,2021-12-22,4.0
+Malta,Daily ICU occupancy,2021-12-23,3.0
+Malta,Daily ICU occupancy,2021-12-24,5.0
+Malta,Daily ICU occupancy,2021-12-25,4.0
+Malta,Daily ICU occupancy,2021-12-26,5.0
+Malta,Daily ICU occupancy,2021-12-27,5.0
+Malta,Daily ICU occupancy,2021-12-28,5.0
+Malta,Daily ICU occupancy,2021-12-29,7.0
+Malta,Daily ICU occupancy,2021-12-30,6.0
+Malta,Daily ICU occupancy,2021-12-31,7.0
+Malta,Daily ICU occupancy,2022-01-01,7.0
+Malta,Daily ICU occupancy,2022-01-02,7.0
+Malta,Daily ICU occupancy,2022-01-03,7.0
+Malta,Daily ICU occupancy,2022-01-04,5.0
+Malta,Daily ICU occupancy,2022-01-05,5.0
+Malta,Daily ICU occupancy,2022-01-06,7.0
+Malta,Daily ICU occupancy,2022-01-07,6.0
+Malta,Daily ICU occupancy,2022-01-08,7.0
+Malta,Daily ICU occupancy,2022-01-09,7.0
 Malta,Weekly new hospital admissions,2020-04-26,0.0
 Malta,Weekly new hospital admissions,2020-05-03,1.002985051422173
 Malta,Weekly new hospital admissions,2020-05-10,1.002985051422173
@@ -1381,3 +1424,5 @@ Malta,Weekly new hospital admissions,2020-04-12,14.041790719910441
 Malta,Weekly new hospital admissions,2020-04-19,2.005970102844351
 Malta,Weekly new hospital admissions,2022-01-02,70.2089535995522
 Malta,Weekly new ICU admissions,2022-01-02,4.011940205688702
+Malta,Weekly new hospital admissions,2022-01-09,68.2029834967078
+Malta,Weekly new ICU admissions,2022-01-09,4.011940205688702
