@@ -1,10 +1,9 @@
 import pandas as pd
 
+from cowidev.utils import clean_count
 from cowidev.utils.clean.dates import localdate
-from cowidev.utils.clean import clean_count
 from cowidev.utils.web import request_json
 from cowidev.testing.utils.incremental import increment
-
 
 
 class FaeroeIslands:
@@ -17,12 +16,11 @@ class FaeroeIslands:
 
     def _parse_data(self) -> pd.Series:
         data = request_json(self.source_url)["stats"]
-        data = pd.DataFrame.from_records(data, columns = ["tested"]).iloc[0]
+        data = pd.DataFrame.from_records(data, columns=["tested"]).iloc[0]
         return {
             "count": clean_count(data[0]),
             "date": localdate("Atlantic/Faeroe"),
         }
-
 
     def export(self):
         data = self._parse_data()

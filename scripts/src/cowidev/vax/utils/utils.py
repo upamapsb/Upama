@@ -14,6 +14,8 @@ def make_monotonic(df: pd.DataFrame, max_removed_rows=10) -> pd.DataFrame:
     # The algorithm assumes that the most recent values are the correct ones,
     # and therefore removes previous higher values.
     n_rows_before = len(df)
+    dates_before = set(df.date)
+    df_before = df.copy()
 
     df = df.sort_values("date")
     metrics = ("total_vaccinations", "people_vaccinated", "people_fully_vaccinated")
@@ -21,13 +23,16 @@ def make_monotonic(df: pd.DataFrame, max_removed_rows=10) -> pd.DataFrame:
         while not df[metric].ffill().fillna(0).is_monotonic:
             diff = df[metric].ffill().shift(-1) - df[metric].ffill()
             df = df[(diff >= 0) | (diff.isna())]
+    dates_now = set(df.date)
 
     if max_removed_rows is not None:
         num_removed_rows = n_rows_before - len(df)
         if num_removed_rows > max_removed_rows:
+            dates_wrong = dates_before.difference(dates_now)
+            df_wrong = df_before[df_before.date.isin(dates_wrong)]
             raise Exception(
                 f"{num_removed_rows} rows have been removed. That is more than maximum allowed ({max_removed_rows}) by"
-                " make_monotonic() - check the data."
+                f" make_monotonic() - check the data. Check \n{df_wrong}"  # {', '.join(sorted(dates_wrong))}"
             )
 
     return df

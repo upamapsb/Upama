@@ -1,7 +1,5 @@
-import json
 import os
 import sys
-import requests
 
 import pandas as pd
 
@@ -153,12 +151,13 @@ def process_esp() -> pd.DataFrame:
 def process_isr() -> pd.DataFrame:
 
     df = (
-        pd.read_csv(SOURCE_ISRAEL, usecols=["Date", "New infected", "New hosptialized", "New serious", "New deaths"])
+        pd.read_csv(
+            SOURCE_ISRAEL, usecols=["Date", "New infected", "New serious", "New deaths", "Easy", "Medium", "Hard"]
+        )
         .rename(
             columns={
                 "Date": "date",
                 "New infected": "confirmed_cases",
-                "New hosptialized": "hospital_flow",
                 "New serious": "icu_flow",
                 "New deaths": "confirmed_deaths",
             }
@@ -168,7 +167,9 @@ def process_isr() -> pd.DataFrame:
         .head(-1)
     )
 
-    vars = ["confirmed_cases", "hospital_flow", "icu_flow", "confirmed_deaths"]
+    df["hospital_stock"] = df.Easy + df.Medium + df.Hard
+
+    vars = ["confirmed_cases", "icu_flow", "confirmed_deaths"]
     df[vars] = df[vars].rolling(7).sum()
 
     df = adjust_x_and_y(
@@ -178,7 +179,7 @@ def process_isr() -> pd.DataFrame:
         hosp_peak_date="2021-01-17",
         icu_peak_date="2021-01-19",
         death_peak_date="2021-01-28",
-        hosp_variable="hospital_flow",
+        hosp_variable="hospital_stock",
         icu_variable="icu_flow",
     )
 
@@ -191,7 +192,18 @@ def main():
     israel = process_isr()
     df = pd.concat([spain, israel, germany], ignore_index=True).rename(columns={"date": "Year"})
     df["Year"] = (pd.to_datetime(df.Year) - pd.to_datetime(ZERO_DAY)).dt.days
-    df = df[["Country", "Year", "confirmed_cases", "hospital_flow", "icu_flow", "icu_stock", "confirmed_deaths"]]
+    df = df[
+        [
+            "Country",
+            "Year",
+            "confirmed_cases",
+            "hospital_flow",
+            "hospital_stock",
+            "icu_flow",
+            "icu_stock",
+            "confirmed_deaths",
+        ]
+    ]
     df.to_csv(os.path.join(GRAPHER_PATH, f"{DATASET_NAME}.csv"), index=False)
 
 

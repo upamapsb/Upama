@@ -24,12 +24,18 @@ class TrinidadTobago:
         records = [
             {
                 "date": x["attributes"]["report_date_str"],
+                # ppl vaxxed with 2-dose vax fd
                 "people_vaccinated_2dosevax": x["attributes"]["total_vaccinated"],
+                # ppl vaxxed with second dose of a 2-dose vax
                 "people_fully_vaccinated_2dosevax": x["attributes"]["sd_total_second_dose"],
+                # ppl fully vaxxed (second dose of a 2-dose vax or single shot)
                 "people_fully_vaccinated": x["attributes"]["total_second_dose"],
+                # doses of specific brands
                 "d1_jj": x["attributes"]["fd_j_and_j"],
                 "d1_pfizer": x["attributes"]["fd_pfizer"],
                 "d1_sinopharm": x["attributes"]["fd_sinopharm"],
+                # "d1_astrazeneca": x["attributes"]["fd_astrazeneca"],
+                # booster doses
                 "total_boosters": x["attributes"]["additional_primary_dose"],
             }
             for x in data["features"]
@@ -77,7 +83,7 @@ class TrinidadTobago:
         return df
 
     def pipe_location(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(location="Trinidad and Tobago")
+        return df.assign(location=self.location)
 
     def pipe_source(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.assign(source_url=self.source)
@@ -86,6 +92,10 @@ class TrinidadTobago:
         df_legacy = load_data("trinidad-and-tobago-legacy")
         df_legacy = df_legacy[~df_legacy.date.isin(df.date)]
         return pd.concat([df, df_legacy]).sort_values("date")
+
+    def pipe_filter_dp(self, df: pd.DataFrame) -> pd.DataFrame:
+        dates_exclude = ["2022-01-10"]
+        return df[~df.date.isin(dates_exclude)]
 
     def pipe_out_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         return df[
@@ -110,6 +120,7 @@ class TrinidadTobago:
             .pipe(self.pipe_location)
             .pipe(self.pipe_source)
             .pipe(self.pipe_legacy)
+            .pipe(self.pipe_filter_dp)
             .pipe(self.pipe_out_columns)
             .pipe(make_monotonic)
         )

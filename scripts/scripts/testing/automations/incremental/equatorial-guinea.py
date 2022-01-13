@@ -1,9 +1,9 @@
 import os
 from datetime import date
 
-import requests
 import pandas as pd
-from bs4 import BeautifulSoup
+
+from cowidev.utils import get_soup, clean_count
 
 
 def main():
@@ -11,10 +11,9 @@ def main():
     location = "Equatorial Guinea"
     output_file = f"automated_sheets/{location}.csv"
 
-    req = requests.get(url)
-    soup = BeautifulSoup(req.text, "html.parser")
+    soup = get_soup(url)
     stats = soup.find_all("tr")
-    count = int(stats[9].find_all("td")[-1].text.replace(".", ""))
+    count = clean_count(stats[9].find_all("td")[-1].text)
 
     date_str = date.today().strftime("%Y-%m-%d")
     df = pd.DataFrame(
@@ -31,15 +30,8 @@ def main():
 
     if os.path.isfile(output_file):
         existing = pd.read_csv(output_file)
-        if (
-            count > existing["Cumulative total"].max()
-            and date_str > existing["Date"].max()
-        ):
-            df = (
-                pd.concat([df, existing])
-                .sort_values("Date", ascending=False)
-                .drop_duplicates()
-            )
+        if count > existing["Cumulative total"].max() and date_str > existing["Date"].max():
+            df = pd.concat([df, existing]).sort_values("Date", ascending=False).drop_duplicates()
             df.to_csv(output_file, index=False)
 
 

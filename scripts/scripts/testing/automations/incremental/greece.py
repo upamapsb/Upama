@@ -1,8 +1,8 @@
 import re
 
 import pandas as pd
-import requests
-from bs4 import BeautifulSoup
+
+from cowidev.utils import get_soup, clean_count
 
 
 def main():
@@ -10,13 +10,10 @@ def main():
     data = pd.read_csv("automated_sheets/Greece.csv")
 
     url = "https://covid19.gov.gr/"
-    req = requests.get(url)
-    soup = BeautifulSoup(req.content, "html.parser")
+    soup = get_soup(url)
 
-    count = int(
-        soup.select(".elementor-element-9df72a6 .elementor-size-default")[0]
-        .text.replace("ΣΥΝΟΛΟ: ", "")
-        .replace(".", "")
+    count = clean_count(
+        soup.select(".elementor-element-9df72a6 .elementor-size-default")[0].text.replace("ΣΥΝΟΛΟ: ", "")
     )
 
     date_str = re.search(r"Τελευταία ενημέρωση\: ([\d/]{,10})", soup.text).group(1)

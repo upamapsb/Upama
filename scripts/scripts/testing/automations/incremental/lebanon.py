@@ -1,9 +1,10 @@
 import os
-from cowidev.utils.utils import get_project_dir
-from cowidev.utils.web import get_soup
-from cowidev.utils.clean import clean_count
-from cowidev.utils.clean import extract_clean_date
+
 import pandas as pd
+
+from cowidev.utils import clean_count, get_soup
+from cowidev.utils.utils import get_project_dir
+from cowidev.utils.clean import extract_clean_date
 
 
 def main():

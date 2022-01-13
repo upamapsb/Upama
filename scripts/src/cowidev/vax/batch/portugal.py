@@ -59,6 +59,7 @@ class Portugal:
                 "reforço_50_59_novas",
                 "vacinação_iniciada_05_11",
                 "vacinação_iniciada_05_11_novas",
+                "pessoas_inoculadas_12mais",
             ],
         )
         return df[self.columns_rename.keys()]
