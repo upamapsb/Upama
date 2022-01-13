@@ -11,14 +11,13 @@ METADATA = {
 def main():
     df = pd.read_csv(METADATA["source_url"])
 
-    df = df.melt("date",
-                 var_name="indicator",
-                 value_vars=["hospitalized",
-                             "require_ventilator_or_in_icu"]).dropna()
-    df["indicator"] = df.indicator.replace({
-        "hospitalized": "Daily hospital occupancy",
-        "require_ventilator_or_in_icu": "Daily ICU occupancy",
-    })
+    df = df.melt("date", var_name="indicator", value_vars=["hospitalized", "require_ventilator_or_in_icu"]).dropna()
+    df["indicator"] = df.indicator.replace(
+        {
+            "hospitalized": "Daily hospital occupancy",
+            "require_ventilator_or_in_icu": "Daily ICU occupancy",
+        }
+    )
 
     df["entity"] = METADATA["entity"]
 
