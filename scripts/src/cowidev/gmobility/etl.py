@@ -1,31 +1,16 @@
 import pandas as pd
+from cowidev.gmobility.dtypes import dtype
 
 
 class GMobilityETL:
-    def __init__(self) -> None:
-        self.source_url = (
-            "https://www.gstatic.com/covid19/mobility/Global_Mobility_Report.csv"
-        )
+    source_url = "https://www.gstatic.com/covid19/mobility/Global_Mobility_Report.csv"
 
     def extract(self):
         return pd.read_csv(
             self.source_url,
-            usecols=[
-                "country_region",
-                "sub_region_1",
-                "sub_region_2",
-                "metro_area",
-                "iso_3166_2_code",
-                "census_fips_code",
-                "date",
-                "retail_and_recreation_percent_change_from_baseline",
-                "grocery_and_pharmacy_percent_change_from_baseline",
-                "parks_percent_change_from_baseline",
-                "transit_stations_percent_change_from_baseline",
-                "workplaces_percent_change_from_baseline",
-                "residential_percent_change_from_baseline",
-            ],
-            low_memory=False,
+            usecols=dtype.keys(),
+            # low_memory=False,
+            dtype=dtype,
         )
 
     def load(self, df: pd.DataFrame, output_path: str) -> None:

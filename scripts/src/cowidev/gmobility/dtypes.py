@@ -1,0 +1,15 @@
+dtype = {
+    "retail_and_recreation_percent_change_from_baseline": "float64",
+    "grocery_and_pharmacy_percent_change_from_baseline": "float64",
+    "parks_percent_change_from_baseline": "float64",
+    "transit_stations_percent_change_from_baseline": "float64",
+    "workplaces_percent_change_from_baseline": "float64",
+    "residential_percent_change_from_baseline": "float64",
+    "census_fips_code": "float64",
+    "country_region": "category",
+    "sub_region_1": "category",
+    "sub_region_2": "category",
+    "metro_area": "category",
+    "iso_3166_2_code": "category",
+    "date": "string",
+}

@@ -5,13 +5,14 @@ import pandas as pd
 from cowidev.grapher.db.base import GrapherBaseUpdater
 from cowidev.utils.utils import time_str_grapher, get_filename
 from cowidev.utils.clean.dates import DATE_FORMAT
+from cowidev.gmobility.dtypes import dtype
 
 ZERO_DAY = "2020-01-01"
 zero_day = datetime.strptime(ZERO_DAY, DATE_FORMAT)
 
 
 def run_grapheriser(input_path: str, input_path_country_std: str, output_path: str):
-    mobility = pd.read_csv(input_path, low_memory=False)
+    mobility = pd.read_csv(input_path, dtype=dtype)
 
     # Convert date column to days since zero_day
     mobility["date"] = pd.to_datetime(mobility["date"], format="%Y/%m/%d").map(lambda date: (date - zero_day).days)
