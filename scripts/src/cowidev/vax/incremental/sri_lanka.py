@@ -1,3 +1,4 @@
+from multiprocessing.sharedctypes import Value
 import re
 import requests
 import tempfile
@@ -43,7 +44,7 @@ class SriLanka:
         # soup = get_soup(self.source_url)
         # Get path to newest pdf
         # pdf_path = self._parse_last_pdf_link(soup)
-        pdf_path = self._parse_last_pdf_link_fix()
+        pdf_path = self._parse_last_pdf_link()
         # Parse pdf to data
         data = self.parse_data(pdf_path)
         # print(data)
@@ -77,22 +78,35 @@ class SriLanka:
 
     def _parse_last_pdf_link_fix(self):
         dt = localdatenow("Asia/Colombo", as_datetime=True)
-        for i in range(3):
-            link = self._build_link_pdf(dt)
-            response = requests.get(link)
-            print(link, response.status_code)
-            if response.status_code == 200:
+        for i in range(1, 4):
+            link = self._build_link_pdf(dt, mode=0)
+            if self._is_link_valid(link):
                 return link
             else:
-                dt = dt - timedelta(days=i)
+                link = self._build_link_pdf(dt, mode=1)
+                if self._is_link_valid(link):
+                    return link
+                else:
+                    dt = dt - timedelta(days=i)
         raise ValueError("No link could be found!")
 
-    def _build_link_pdf(self, date):
-        dt_str = date.strftime("%d-%m_10_%y")
-        link = f"https://www.epid.gov.lk/web/images/pdf/Circulars/Corona_virus/sitrep-sl-en-{dt_str}.pdf"
-        return link
+    def _is_link_valid(self, link):
+        response = requests.get(link)
+        print(link, response.status_code)
+        if response.status_code == 200:
+            return True
+        return False
 
-    def _parse_last_pdf_link(self, soup):
+    def _build_link_pdf(self, date, mode=0):
+        dt_str = date.strftime("%d-%m_10_%y")
+        if mode == 0:
+            return f"https://www.epid.gov.lk/web/images/pdf/Circulars/Corona_virus/sitrep-sl-en-{dt_str}.pdf"
+        elif mode == 1:
+            return f"https://www.epid.gov.lk/web/images/pdf/corona_virus_report/sitrep-sl-en-{dt_str}.pdf"
+        raise ValueError(f"Invalid `mode` value ({mode}). Must be 0 or 1.")
+
+    def _parse_last_pdf_link(self):
+        soup = get_soup(self.source_url)
         links = soup.find(class_="rt-article").find_all("a")
         for link in links:
             if "sitrep-sl-en" in link["href"]:
