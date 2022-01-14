@@ -27,7 +27,7 @@ Stored in [`excess_mortality.csv`](https://github.com/owid/covid-19-data/blob/ma
 As of 28 September 2021, the data columns are:
 
 - `location`: name of the country or region
-- `date`: date on which a reporting week or month ended in 2020 and 2021 only (week dates according to [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date)). These dates do not apply to other years, such as "deaths_2019_all_ages"; instead, the deaths data across years is organized according to the week or month number in that year — see the "time" and "time_unit" columns below.
+- `date`: date on which a reporting week or month ended in 2020–2022 only (week dates according to [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date)). These dates do not apply to other years, such as "deaths_2019_all_ages"; instead, the deaths data across years is organized according to the week or month number in that year — see the "time" and "time_unit" columns below.
 - `p_proj_all_ages`: P-scores using projected baseline for all ages; see note below for the definition of the P-score, how we calculate it, and changes implemented on 20 September 2021.
 - `p_proj_0_14`: P-scores using projected baseline for ages 0–14
 - `p_proj_15_64`: P-scores using projected baseline for ages 15–64
@@ -64,7 +64,7 @@ As of 28 September 2021, the data columns are:
 
 ## How P-scores are defined and calculated
 
-As of 20 September 2021, we calculate P-scores using the reported deaths data from HMD and WMD and the projected deaths for 2020 from WMD, as an estimate of expected deaths. The P-score is the percentage difference between the reported number of weekly or monthly deaths in 2020–2021 and the projected number of deaths for the same period based on previous years.
+As of 20 September 2021, we calculate P-scores using the reported deaths data from HMD and WMD and the projected deaths for 2020 from WMD, as an estimate of expected deaths. The P-score is the percentage difference between the reported number of weekly or monthly deaths in 2020–2022 and the projected number of deaths for the same period based on previous years.
 
 Before 20 September 2021, we calculated P-scores using a different estimate of expected deaths: the five-year average from 2015–2019. We made this change because using the five-year average has an important limitation — it does not account for year-to-year trends in mortality and thus can misestimate excess mortality. The WMD projection we now use, on the other hand, does not suffer from this limitation because it accounts for these year-to-year trends.
 
@@ -79,6 +79,6 @@ For more details see our page on [Excess mortality during the Coronavirus pandem
 
 **The date associated with a death might refer to when the death _occurred_ or to when it was _registered_.** This varies by country. Death counts by date of registration can vary significantly irrespectively of any actual variation in deaths, such as from registration delays or the closure of registration offices on weekends and holidays. It can also happen that deaths are registered, but the date of death is unknown — those deaths are not included in the weekly or monthly data here.
 
-**The dates of any particular reporting week might differ slightly between countries.** This is because countries that report weekly data define the start and end days of the week differently. Most follow international standard [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date), which defines the week as from Monday to Sunday, but not all countries follow this standard. We use the ISO 8601 week end dates from 2020-2021.
+**The dates of any particular reporting week might differ slightly between countries.** This is because countries that report weekly data define the start and end days of the week differently. Most follow international standard [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date), which defines the week as from Monday to Sunday, but not all countries follow this standard. We use the ISO 8601 week end dates from 2020-2022.
 
 **Deaths reported weekly might not be directly comparable to deaths reported monthly.** For instance, because excess mortality calculated from monthly data tends to be lower than the excess calculated from weekly data.
