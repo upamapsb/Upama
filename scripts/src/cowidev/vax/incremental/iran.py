@@ -1,10 +1,11 @@
 import re
 
-from bs4 import BeautifulSoup, element
+from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
 import pandas as pd
 
+from cowidev.utils.web import get_driver
 from cowidev.utils.clean import clean_count, clean_date
-from cowidev.utils.web.scraping import get_soup
 from cowidev.vax.utils.incremental import increment, enrich_data
 
 
@@ -26,66 +27,71 @@ class Iran:
 
     def read(self) -> pd.Series:
         data = []
+        driver = get_driver()
+
         for cnt in range(1, self._num_max_pages + 1):
             url = f"{self._base_url}/{self._url_subdirectory}:{cnt}"
-            soup = get_soup(url)
-            data, proceed = self.parse_data(soup)
+            driver.get(url)
+            data, proceed = self.parse_data(driver)
             if not proceed:
                 break
+        
+        driver.quit()
 
         return pd.Series(data)
 
-    def parse_data(self, soup: BeautifulSoup) -> tuple:
+    def parse_data(self, driver: WebDriver) -> tuple:
 
-        news_set = soup.find_all("div", class_="es-post-dis")
+        news_list = driver.find_elements_by_class_name("es-post-dis")
 
         indices_to_be_deleted = [
-            i for i, div in enumerate(news_set) if re.search(self.regex["exclude_summary"], str(div))
+            i for i, news in enumerate(news_list) if re.search(self.regex["exclude_summary"], news.text)
         ]
-        accuired_indices = [i for i, div in enumerate(news_set) if re.search(self.regex["summary"], str(div))]
+        accuired_indices = [i for i, news in enumerate(news_list) if re.search(self.regex["summary"], news.text)]
         url_idx = [index for index in accuired_indices if index not in indices_to_be_deleted]
 
         if url_idx is None:
             return None, True
 
-        elem = self.get_link_and_date(news_set[url_idx[0]])
-        anouncement_soup = get_soup(elem["link"])
-        tag = self.get_element(anouncement_soup)
+        elem = self.get_link_and_date(news_list[url_idx[0]])
+
+        driver.quit()
+        driver = get_driver()
+
+        driver.get(elem["link"])
+        text = driver.find_element_by_class_name("news-content").text
 
         record = {
             "source_url": elem["link"],
             "date": elem["date"],
-            **self.parse_data_news_page(tag),
+            **self.parse_data_news_page(text),
         }
         return record, False
 
-    def get_element(self, soup: BeautifulSoup) -> element.Tag:
-        return soup.find("div", class_="news-content")
-
-    def get_link_and_date(self, tag: element.Tag) -> dict:
-        link = self.parse_link(tag)
-        date = tag.findChild("li").text
+    def get_link_and_date(self, elem: WebElement) -> dict:
+        link = self.parse_link(elem)
+        date = elem.find_element_by_tag_name("li").text
         if not link:
             return None
         link_date = {"link": link, "date": self.parse_date(date)}
         return link_date
 
-    def parse_date(self, elem: element.Tag) -> str:
-        date_list = re.search(r"(\d+\/\d+\/\d+)", elem).group().split("/")
+    def parse_date(self, date: str) -> str:
+        date_list = re.search(r"(\d+\/\d+\/\d+)", date).group().split("/")
         return clean_date(self.date_converter(date_list), "%Y-%m-%d")
 
-    def parse_link(self, elem: element.Tag):
-        href = elem.a.get("href")
-        return f"{self._base_url}{href}"
+    def parse_link(self, elem: WebElement):
+        href = elem.find_element_by_tag_name("a").get_attribute("href")
+        return href
 
-    def parse_data_news_page(self, tag: element.Tag) -> dict:
-        people_vaccinated = self.numeric_word_converter(re.search(self.regex["people_vaccinated"], tag.text).group(1))
+    def parse_data_news_page(self, text: str) -> dict:
+        people_vaccinated = self.numeric_word_converter(re.search(self.regex["people_vaccinated"], text).group(1))
         people_fully_vaccinated = self.numeric_word_converter(
-            re.search(self.regex["people_fully_vaccinated"], tag.text).group(1)
+            re.search(self.regex["people_fully_vaccinated"], text).group(1)
         )
-        total_boosters = self.numeric_word_converter(re.search(self.regex["total_boosters"], tag.text).group(1))
+        total_boosters = self.numeric_word_converter(re.search(self.regex["total_boosters"], text).group(1))
         total_vaccinations = self.numeric_word_converter(
-            re.search(self.regex["total_vaccinations"], tag.text).group(1)
+            re.search(self.regex["total_vaccinations"], text).group(1)
         )
         return {
             "people_vaccinated": clean_count(people_vaccinated),
@@ -250,7 +256,7 @@ class Iran:
         return enrich_data(
             ds,
             "vaccine",
-            "COVIran Barekat, Covaxin, Oxford/AstraZeneca, Sinopharm/Beijing, Soberana02,Sputnik V",
+            "COVIran Barekat, Covaxin, Oxford/AstraZeneca, Sinopharm/Beijing, Soberana02, Sputnik V",
         )
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
