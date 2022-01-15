@@ -27,7 +27,7 @@ class Iran:
     def read(self) -> pd.Series:
         data = []
 
-        # driver = get_driver(headless=True)
+        # driver = get_driver()
 
         with get_driver() as driver:
             for cnt in range(1, self._num_max_pages + 1):
@@ -51,7 +51,7 @@ class Iran:
         # Extract link and date from link
         link, date = self._get_link_and_date_from_element(element)
         # driver.quit()
-        # driver = get_driver(headless=False)
+        # driver = get_driver()
         driver.get(link)
         text = driver.find_element_by_class_name("news-content").text
         record = {
