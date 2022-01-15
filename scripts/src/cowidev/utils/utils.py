@@ -12,6 +12,11 @@ import pandas as pd
 from cowidev.utils.web.download import download_file_from_url
 
 
+def series_monotonic(ds):
+    diff = ds.ffill().shift(-1) - ds.ffill()
+    return ds[(diff >= 0) | (diff.isna())]
+
+
 def get_project_dir(err: bool = False):
     load_dotenv()
     project_dir = os.environ.get("OWID_COVID_PROJECT_DIR")
