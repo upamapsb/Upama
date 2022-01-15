@@ -60,8 +60,8 @@ def _get_scripts_dir(project_dir: str):
         "OUTPUT_VAX_MANUFACT": os.path.join(_SCRIPTS_OUTPUT_VAX_DIR, "by_manufacturer"),
         "OUTPUT_VAX_MAIN": os.path.join(_SCRIPTS_OUTPUT_VAX_DIR, "main_data"),
         "OUTPUT_VAX_META": os.path.join(_SCRIPTS_OUTPUT_VAX_DIR, "metadata"),
-        "OUTPUT_VAX_META_AGE": os.path.join(_SCRIPTS_OUTPUT_VAX_DIR, "metadata", "locations_age.csv"),
-        "OUTPUT_VAX_META_MANUFACT": os.path.join(_SCRIPTS_OUTPUT_VAX_DIR, "metadata", "locations_manufacturer.csv"),
+        "OUTPUT_VAX_META_AGE": os.path.join(_SCRIPTS_OUTPUT_VAX_DIR, "metadata", "locations-age.csv"),
+        "OUTPUT_VAX_META_MANUFACT": os.path.join(_SCRIPTS_OUTPUT_VAX_DIR, "metadata", "locations-manufacturer.csv"),
         "OUTPUT_VAX_PROPOSALS": os.path.join(_SCRIPTS_OUTPUT_VAX_DIR, "proposals"),
         "OUTPUT_VAX_LOG": os.path.join(_SCRIPTS_OUTPUT_VAX_DIR, "log"),
         "OUTPUT_TEST": _SCRIPTS_OUTPUT_TEST_DIR,
@@ -102,8 +102,8 @@ def _get_data_dir(project_dir: str):
         **_data_dirs,
         "TIMESTAMP": os.path.join(_data_dirs["INTERNAL"], "timestamp"),
         "VAX_COUNTRY": os.path.join(_data_dirs["VACCINATIONS"], "country_data"),
-        "VAX_META_MANUFACT": os.path.join(_data_dirs["VACCINATIONS"], "locations_manufacturer.csv"),
-        "VAX_META_AGE": os.path.join(_data_dirs["VACCINATIONS"], "locations_age.csv"),
+        "VAX_META_MANUFACT": os.path.join(_data_dirs["VACCINATIONS"], "locations-manufacturer.csv"),
+        "VAX_META_AGE": os.path.join(_data_dirs["VACCINATIONS"], "locations-age.csv"),
         "VAX_META": os.path.join(_data_dirs["VACCINATIONS"], "locations.csv"),
     }
 

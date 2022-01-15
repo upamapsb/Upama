@@ -147,11 +147,13 @@ def get_driver(headless: bool = True, download_folder: str = None, options=None,
     else:
         driver = webdriver.Chrome(options=options)
     if download_folder:
-        set_download_settings(driver, download_folder)
+        set_download_settings(driver, download_folder, firefox)
     return driver
 
 
-def set_download_settings(driver, folder_name: str = None):
+def set_download_settings(driver, folder_name: str = None, firefox: bool = False):
+    if firefox:
+        raise NotImplementedError("Download capabilities only supported for Chromedriver!")
     if folder_name is None:
         folder_name = "/tmp"
     driver.command_executor._commands["send_command"] = (
