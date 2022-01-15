@@ -22,11 +22,11 @@ class Paths:
 
     @property
     def pub_vax_metadata_man(self):
-        return os.path.join(self.pub_vax, "locations_manufacturer.csv")
+        return os.path.join(self.pub_vax, "locations-manufacturer.csv")
 
     @property
     def pub_vax_metadata_age(self):
-        return os.path.join(self.pub_vax, "locations_age.csv")
+        return os.path.join(self.pub_vax, "locations-age.csv")
 
     @property
     def in_us_states(self):
@@ -66,11 +66,11 @@ class Paths:
 
     @property
     def tmp_vax_metadata_age(self):
-        return os.path.join(self.tmp_vax_metadata, "locations_age.csv")
+        return os.path.join(self.tmp_vax_metadata, "locations-age.csv")
 
     @property
     def tmp_vax_metadata_man(self):
-        return os.path.join(self.tmp_vax_metadata, "locations_manufacturer.csv")
+        return os.path.join(self.tmp_vax_metadata, "locations-manufacturer.csv")
 
     def tmp_vax_out(self, location):
         return os.path.join(self.tmp_vax_out_dir, "main_data", f"{location}.csv")
