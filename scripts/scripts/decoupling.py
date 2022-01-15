@@ -11,8 +11,11 @@ from utils.db_imports import import_dataset
 DATASET_NAME = "COVID-19 - Decoupling of metrics"
 GRAPHER_PATH = os.path.join(CURRENT_DIR, "../grapher/")
 ZERO_DAY = "2020-01-01"
+
 SOURCE_SPAIN = "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv"
+
 SOURCE_ISRAEL = "https://github.com/dancarmoz/israel_moh_covid_dashboard_data/raw/master/hospitalized_and_infected.csv"
+
 SOURCE_GERMANY_INF = "https://media.githubusercontent.com/media/robert-koch-institut/SARS-CoV-2_Infektionen_in_Deutschland/master/Aktuell_Deutschland_SarsCov2_Infektionen.csv"
 SOURCE_GERMANY_HOSP = "https://raw.githubusercontent.com/robert-koch-institut/COVID-19-Hospitalisierungen_in_Deutschland/master/Aktuell_Deutschland_COVID-19-Hospitalisierungen.csv"
 SOURCE_GERMANY_ICU = "https://diviexchange.blob.core.windows.net/%24web/zeitreihe-deutschland.csv"
