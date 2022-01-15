@@ -40,18 +40,10 @@ class Iran:
         news_set = soup.find_all("div", class_="es-post-dis")
 
         indices_to_be_deleted = [
-            i
-            for i, div in enumerate(news_set)
-            if re.search(self.regex["exclude_summary"], str(div))
+            i for i, div in enumerate(news_set) if re.search(self.regex["exclude_summary"], str(div))
         ]
-        accuired_indices = [
-            i
-            for i, div in enumerate(news_set)
-            if re.search(self.regex["summary"], str(div))
-        ]
-        url_idx = [
-            index for index in accuired_indices if index not in indices_to_be_deleted
-        ]
+        accuired_indices = [i for i, div in enumerate(news_set) if re.search(self.regex["summary"], str(div))]
+        url_idx = [index for index in accuired_indices if index not in indices_to_be_deleted]
 
         if url_idx is None:
             return None, True
@@ -87,15 +79,11 @@ class Iran:
         return f"{self._base_url}{href}"
 
     def parse_data_news_page(self, tag: element.Tag) -> dict:
-        people_vaccinated = self.numeric_word_converter(
-            re.search(self.regex["people_vaccinated"], tag.text).group(1)
-        )
+        people_vaccinated = self.numeric_word_converter(re.search(self.regex["people_vaccinated"], tag.text).group(1))
         people_fully_vaccinated = self.numeric_word_converter(
             re.search(self.regex["people_fully_vaccinated"], tag.text).group(1)
         )
-        total_boosters = self.numeric_word_converter(
-            re.search(self.regex["total_boosters"], tag.text).group(1)
-        )
+        total_boosters = self.numeric_word_converter(re.search(self.regex["total_boosters"], tag.text).group(1))
         total_vaccinations = self.numeric_word_converter(
             re.search(self.regex["total_vaccinations"], tag.text).group(1)
         )
@@ -175,9 +163,7 @@ class Iran:
 
         current = result = 0
 
-        numeric_word = re.sub(
-            r"[\u06F0-\u06F9]", lambda m: digits[m.group()], numeric_word
-        )
+        numeric_word = re.sub(r"[\u06F0-\u06F9]", lambda m: digits[m.group()], numeric_word)
 
         for word in numeric_word.replace("-", " ").split():
 
@@ -213,13 +199,7 @@ class Iran:
         j_day = int(j_date[2])
 
         j_year += 1595
-        days_total = (
-            -355668
-            + (365 * j_year)
-            + ((j_year // 33) * 8)
-            + (((j_year % 33) + 3) // 4)
-            + j_day
-        )
+        days_total = -355668 + (365 * j_year) + ((j_year // 33) * 8) + (((j_year % 33) + 3) // 4) + j_day
 
         if j_month < 7:
             days_total += (j_month - 1) * 31
