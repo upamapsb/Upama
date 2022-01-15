@@ -8,6 +8,8 @@ from cowidev.variants._parser import _parse_args
 
 FILE_DS = "s3://covid-19/internal/variants/covid-variants.csv"
 FILE_SEQ_DS = "s3://covid-19/internal/variants/covid-sequencing.csv"
+# FILE_DS = "covid-variants.csv"
+# FILE_SEQ_DS = "covid-sequencing.csv"
 # FILE_SEQ_DS = os.path.join(get_project_dir(), "public", "data", "variants", "covid-sequencing.csv")
 FILE_GRAPHER = os.path.join(get_project_dir(), "scripts", "grapher", "COVID-19 - Variants.csv")
 FILE_SEQ_GRAPHER = os.path.join(get_project_dir(), "scripts", "grapher", "COVID-19 - Sequencing.csv")
