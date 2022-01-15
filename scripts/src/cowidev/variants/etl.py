@@ -119,7 +119,7 @@ class VariantsETL:
             ["location", "date"], keep="first"
         )
         df = df[["location", "date", "num_sequences_total", "variant"]]
-        df = df.assign(variant=df.variant.replace({"!non_who": "non_who"}))
+        df = df.assign(variant=df.variant.replace({"!non_who": "Others"}))
         df = df.rename(columns={"variant": "variant_dominant"})
         msk = df.num_sequences_total < 30
         df.loc[msk, "variant_dominant"] = "None"
