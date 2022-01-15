@@ -22,7 +22,8 @@ class Bangladesh:
         people_fully_vaccinated = clean_count(
             re.search(r"^[\d,]+", soup.find_all(class_="info-box-number")[3].text).group(0)
         )
-        total_vaccinations = people_vaccinated + people_fully_vaccinated
+        total_boosters = clean_count(re.search(r"^[\d,]+", soup.find_all(class_="info-box-number")[4].text).group(0))
+        total_vaccinations = people_vaccinated + people_fully_vaccinated + total_boosters
 
         date = localdate("Asia/Dhaka")
 
@@ -31,6 +32,7 @@ class Bangladesh:
                 "total_vaccinations": total_vaccinations,
                 "people_vaccinated": people_vaccinated,
                 "people_fully_vaccinated": people_fully_vaccinated,
+                "total_boosters": total_boosters,
                 "date": date,
             }
         )
@@ -54,6 +56,7 @@ class Bangladesh:
             total_vaccinations=data["total_vaccinations"],
             people_vaccinated=data["people_vaccinated"],
             people_fully_vaccinated=data["people_fully_vaccinated"],
+            total_boosters=data["total_boosters"],
             date=data["date"],
             source_url=data["source_url"],
             vaccine=data["vaccine"],
