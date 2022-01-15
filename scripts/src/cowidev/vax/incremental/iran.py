@@ -139,11 +139,6 @@ class Iran:
 def main():
     Iran().export()
 
-
-if __name__ == "__main__":
-    main()
-
-
 def numeric_word_converter(numeric_word: str) -> int:
     numwords = {}
     # 0 - 9 digits
@@ -292,3 +287,6 @@ def date_converter(j_date: list[str]) -> str:
     g_date = str(g_year) + "-" + str(g_month) + "-" + str(g_day)
 
     return g_date
+
+if __name__ == "__main__":
+    main()
