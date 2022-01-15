@@ -45,7 +45,7 @@ class Denmark(CountryVaxBase):
             # Load data
             df = self._load_data(tf)
         if bfill:
-            df_bfill = self._read_single_shots_bfill()#(index=gap_days)
+            df_bfill = self._read_single_shots_bfill(index=gap_days)
             df = df.merge(df_bfill, on="date", how="left")
             df = df.assign(single_shots=df.single_shots_x.fillna(df.single_shots_y))
         return df
