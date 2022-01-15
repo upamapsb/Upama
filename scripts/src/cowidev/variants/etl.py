@@ -105,12 +105,29 @@ class VariantsETL:
         return df
 
     def transform_seq(self, df: pd.DataFrame) -> pd.DataFrame:
-        df = df.pipe(self.pipe_variant_totals).pipe(self.pipe_per_capita).pipe(self.pipe_cumsum)
+        df = (
+            df.pipe(self.pipe_variant_dominant)
+            .pipe(self.pipe_variant_totals)
+            .pipe(self.pipe_per_capita)
+            .pipe(self.pipe_cumsum)
+        )
+        return df
+
+    def pipe_variant_dominant(self, df):
+        df = df.assign(variant=df.variant.replace({"non_who": "!non_who"}))
+        df = df.sort_values(["num_sequences", "variant"], ascending=[False, True]).drop_duplicates(
+            ["location", "date"], keep="first"
+        )
+        df = df[["location", "date", "num_sequences_total", "variant"]]
+        df = df.assign(variant=df.variant.replace({"!non_who": "Others"}))
+        df = df.rename(columns={"variant": "variant_dominant"})
+        msk = df.num_sequences_total < 30
+        df.loc[msk, "variant_dominant"] = "None"
         return df
 
     def pipe_variant_totals(self, df: pd.DataFrame) -> pd.DataFrame:
-        # Create totals
-        total = df[["location", "date", "num_sequences_total"]].drop_duplicates()
+        # total = df.groupby(["location", "date", "num_sequences_total"])
+        total = df[["location", "date", "num_sequences_total", "variant_dominant"]].drop_duplicates()
         total = total.rename(columns={"num_sequences_total": "num_sequences"})
         # Sort
         total = total.sort_values(["location", "date"])

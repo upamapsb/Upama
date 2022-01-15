@@ -2,6 +2,8 @@ from cowidev.utils import paths
 from cowidev.utils.s3 import S3, obj_from_s3
 from cowidev.utils.clean.dates import localdate
 
+from cowidev.utils import paths
+
 
 class CountryVaxBase:
     location: str
@@ -12,6 +14,10 @@ class CountryVaxBase:
         _check_last_update(path, self.location)
         df = obj_from_s3(path)
         return df
+
+    @property
+    def output_path(self):
+        return paths.out_vax(self.location)
 
 
 def _check_last_update(path, country):
