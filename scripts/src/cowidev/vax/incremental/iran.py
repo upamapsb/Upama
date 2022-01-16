@@ -1,4 +1,5 @@
 import re
+import time
 
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
@@ -52,6 +53,7 @@ class Iran:
         driver.quit()
         new_driver = get_driver()
         new_driver.get(link)
+        time.sleep(3)
         text = new_driver.find_element_by_class_name("news-content").text
         record = {
             "source_url": link,
