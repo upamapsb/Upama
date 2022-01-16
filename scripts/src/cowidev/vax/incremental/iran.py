@@ -28,7 +28,6 @@ class Iran:
     def read(self) -> pd.Series:
         data = []
 
-
         for cnt in range(1, self._num_max_pages + 1):
             driver = get_driver()
             url = f"{self._base_url}/{self._url_subdirectory}:{cnt}"
@@ -38,11 +37,9 @@ class Iran:
             if not proceed:
                 break
 
-
         return pd.Series(data)
 
-
-    def _parse_data(self, driver: WebDriver) -> tuple[dict, bool, WebDriver]:
+    def _parse_data(self, driver: WebDriver):
         """Get data from driver current page."""
         # Get relevant element
         element = self._get_relevant_element(driver)
@@ -76,7 +73,7 @@ class Iran:
             return None
         return news_list[url_idx[0]]
 
-    def _get_link_and_date_from_element(self, elem: WebElement) -> tuple[str, str]:
+    def _get_link_and_date_from_element(self, elem: WebElement):
         """Extract link and date from relevant element."""
         link = self._parse_link_from_element(elem)
         if not link:
@@ -139,6 +136,7 @@ class Iran:
 
 def main():
     Iran().export()
+
 
 def numeric_word_converter(numeric_word: str) -> int:
     """Convert persian numeric word to number."""
@@ -231,7 +229,7 @@ def numeric_word_converter(numeric_word: str) -> int:
     return int(result + current)
 
 
-def date_converter(j_date: list[str]) -> str:
+def date_converter(j_date: list) -> str:
     """Convert jalali date to gregorian date
 
     Args:
@@ -291,6 +289,7 @@ def date_converter(j_date: list[str]) -> str:
     g_date = str(g_year) + "-" + str(g_month) + "-" + str(g_day)
 
     return g_date
+
 
 if __name__ == "__main__":
     main()
