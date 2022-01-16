@@ -17,6 +17,7 @@ class Estonia:
 
     def _parse_data(self) -> pd.DataFrame:
         df = pd.read_json(self.source_url)
+
         check_known_columns(
             df,
             [
@@ -29,6 +30,12 @@ class Estonia:
                 "PopulationCoverage",
             ],
         )
+        assert set(df.MeasurementType) == {
+            "Vaccinated",
+            "DosesAdministered",
+            "FullyVaccinated",
+        }, "New MeasurementType found!"
+
         df = (
             df[["StatisticsDate", "MeasurementType", "TotalCount"]]
             .pivot(index="StatisticsDate", columns="MeasurementType", values="TotalCount")
