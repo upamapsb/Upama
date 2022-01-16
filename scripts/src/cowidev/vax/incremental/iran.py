@@ -60,7 +60,7 @@ class Iran:
         }
         return record, False, new_driver
 
-    def _get_relevant_element(self, driver: WebDriver) -> list[WebElement]:
+    def _get_relevant_element(self, driver: WebDriver) -> WebElement:
         """Get relevant element in news feed."""
         news_list = driver.find_elements_by_class_name("es-post-dis")
 
@@ -74,7 +74,7 @@ class Iran:
             return None
         return news_list[url_idx[0]]
 
-    def _get_link_and_date_from_element(self, elem: WebElement) -> dict:
+    def _get_link_and_date_from_element(self, elem: WebElement) -> tuple[str, str]:
         """Extract link and date from relevant element."""
         link = self._parse_link_from_element(elem)
         if not link:
