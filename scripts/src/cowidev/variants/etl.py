@@ -122,7 +122,7 @@ class VariantsETL:
         df = df.assign(variant=df.variant.replace({"!non_who": "Others"}))
         df = df.rename(columns={"variant": "variant_dominant"})
         msk = df.num_sequences_total < 30
-        df.loc[msk, "variant_dominant"] = "None"
+        df.loc[msk, "variant_dominant"] = pd.NA
         return df
 
     def pipe_variant_totals(self, df: pd.DataFrame) -> pd.DataFrame:
