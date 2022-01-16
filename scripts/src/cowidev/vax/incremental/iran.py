@@ -27,41 +27,40 @@ class Iran:
     def read(self) -> pd.Series:
         data = []
 
-        # driver = get_driver()
 
-        with get_driver() as driver:
-            for cnt in range(1, self._num_max_pages + 1):
-                url = f"{self._base_url}/{self._url_subdirectory}:{cnt}"
-                driver.get(url)
-                data, proceed = self._parse_data(driver)
-                if not proceed:
-                    break
-        # driver.quit()
+        for cnt in range(1, self._num_max_pages + 1):
+            driver = get_driver()
+            url = f"{self._base_url}/{self._url_subdirectory}:{cnt}"
+            driver.get(url)
+            data, proceed, new_driver = self._parse_data(driver)
+            new_driver.quit()
+            if not proceed:
+                break
+
 
         return pd.Series(data)
 
-    # def _get_news_links(self, driver: WebDriver):
 
-    def _parse_data(self, driver: WebDriver) -> tuple:
+    def _parse_data(self, driver: WebDriver) -> tuple[dict, bool, WebDriver]:
         """Get data from driver current page."""
         # Get relevant element
         element = self._get_relevant_element(driver)
         if not element:
-            return None, True
+            return None, True, driver
         # Extract link and date from link
         link, date = self._get_link_and_date_from_element(element)
-        # driver.quit()
-        # driver = get_driver()
-        driver.get(link)
-        text = driver.find_element_by_class_name("news-content").text
+        driver.quit()
+        new_driver = get_driver()
+        new_driver.get(link)
+        text = new_driver.find_element_by_class_name("news-content").text
         record = {
             "source_url": link,
             "date": date,
             **self._parse_metrics(text),
         }
-        return record, False
+        return record, False, new_driver
 
-    def _get_relevant_element(self, driver: WebDriver):
+    def _get_relevant_element(self, driver: WebDriver) -> list[WebElement]:
         """Get relevant element in news feed."""
         news_list = driver.find_elements_by_class_name("es-post-dis")
 
@@ -89,7 +88,7 @@ class Iran:
         date_list = re.search(r"(\d+\/\d+\/\d+)", date).group().split("/")
         return clean_date(date_converter(date_list), "%Y-%m-%d")
 
-    def _parse_link_from_element(self, elem: WebElement):
+    def _parse_link_from_element(self, elem: WebElement) -> str:
         """Get link from relevant element."""
         href = elem.find_element_by_tag_name("a").get_attribute("href")
         return href
@@ -140,6 +139,7 @@ def main():
     Iran().export()
 
 def numeric_word_converter(numeric_word: str) -> int:
+    """Convert persian numeric word to number."""
     numwords = {}
     # 0 - 9 digits
     digits = {
@@ -216,11 +216,11 @@ def numeric_word_converter(numeric_word: str) -> int:
 
         elif word.isnumeric():
             scale = 1
-            increment = int(word)
+            incre = int(word)
         else:
-            scale, increment = numwords[word]
+            scale, incre = numwords[word]
 
-        current = current * scale + increment
+        current = current * scale + incre
 
         if scale > 100:
             result += current
@@ -242,6 +242,8 @@ def date_converter(j_date: list[str]) -> str:
     j_year = int(j_date[0])
     j_month = int(j_date[1])
     j_day = int(j_date[2])
+
+    days = 0
 
     j_year += 1595
     days_total = -355668 + (365 * j_year) + ((j_year // 33) * 8) + (((j_year % 33) + 3) // 4) + j_day
