@@ -3,8 +3,10 @@ import math
 import pandas as pd
 import tabula
 
+from bs4 import BeautifulSoup
+
 from cowidev.utils.clean import clean_count, clean_date
-from cowidev.utils.web.scraping import get_soup
+from cowidev.utils.web.scraping import get_soup, get_response
 from cowidev.vax.utils.incremental import enrich_data, increment
 
 
@@ -36,8 +38,11 @@ class Taiwan:
                 break
         url_pdf = f"{self.source_url}{a['href']}"
         for i in range(10):
-            # print(url_pdf)
-            soup = get_soup(url_pdf)
+            response = get_response(url_pdf)
+            if response.headers['Content-Type'] == 'application/pdf':
+                return url_pdf
+            content = response.content
+            soup = BeautifulSoup(content, "lxml", from_encoding=None)
             a = soup.find(class_="viewer-button")
             if a is not None:
                 break
@@ -57,8 +62,8 @@ class Taiwan:
             and cols[0] == "廠牌"
             and cols[1] == "劑次"
             and cols[2].endswith("接種人次")
-            and re.match(r"(\d+\/\d+ *\- *)?\d+(\/\d+)? *接種人次", cols[2])
-            and re.match(r"累計至 *\d+\/\d+ *接種人次", cols[3])
+            and re.match(r"(\d+/\d+\/\d+ *\- *)?(\d+/(\d+\/)?)?\d+? *接種人次", cols[2])
+            and re.match(r"累計至 *\d+/\d+\/\d+ *接種人次", cols[3])
         ):
             raise ValueError(f"There are some unknown columns: {cols}")
 
