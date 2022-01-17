@@ -50,11 +50,13 @@ class Indonesia(CountryVaxBase):
         return pd.concat([df, df_legacy]).sort_values("date")
 
     def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.assign(
+        df = df.assign(
             people_vaccinated=df["dose_1"],
-            # total_vaccinations=df["dose_1"] + df["dose_2"],  # booster data missing
-            # people_fully_vaccinated=df["dose_2"],  # single shot data missing
+            total_vaccinations=df["dose_1"] + df["dose_2"],  # partial estimate (booster data missing)
+            people_fully_vaccinated=df["dose_2"],  # single shot data missing
         )
+        df.loc[df.date >= "2021-09-11", "people_fully_vaccinated"] = pd.NA  # single shot data missing from 2021-09-11
+        return df
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
         return (
