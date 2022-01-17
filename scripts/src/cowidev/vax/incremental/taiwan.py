@@ -11,15 +11,14 @@ from cowidev.vax.utils.incremental import enrich_data, increment
 
 
 class Taiwan:
-    def __init__(self):
-        self.source_url = "https://www.cdc.gov.tw"
-        self.location = "Taiwan"
-        self.vaccines_mapping = {
-            "AstraZeneca": "Oxford/AstraZeneca",
-            "高端": "Medigen",
-            "Moderna": "Moderna",
-            "BioNTech": "Pfizer/BioNTech",
-        }
+    source_url = "https://www.cdc.gov.tw"
+    location = "Taiwan"
+    vaccines_mapping = {
+        "AstraZeneca": "Oxford/AstraZeneca",
+        "高端": "Medigen",
+        "Moderna": "Moderna",
+        "BioNTech": "Pfizer/BioNTech",
+    }
 
     @property
     def source_data_url(self):
@@ -39,7 +38,7 @@ class Taiwan:
         url_pdf = f"{self.source_url}{a['href']}"
         for i in range(10):
             response = get_response(url_pdf)
-            if response.headers['Content-Type'] == 'application/pdf':
+            if response.headers["Content-Type"] == "application/pdf":
                 return url_pdf
             content = response.content
             soup = BeautifulSoup(content, "lxml", from_encoding=None)
@@ -72,9 +71,9 @@ class Taiwan:
 
         # The last few columns may be left-shifted and require this small surgery.
         # If math.isnan() raise exception that means the table is changed.
-        for i in range(17,20):
-            if math.isnan( df.iloc[i][3] ):
-                df.iloc[i][[3,2,1]] = df.iloc[i][[2,1,0]]
+        for i in range(17, 20):
+            if math.isnan(df.iloc[i][3]):
+                df.iloc[i][[3, 2, 1]] = df.iloc[i][[2, 1, 0]]
                 df.iloc[i][0] = float("nan")
 
         df["劑次"] = df["劑次"].str.replace("\s+", "", regex=True)
@@ -95,6 +94,7 @@ class Taiwan:
                 "total_boosters": stats["total_boosters"],
                 "total_vaccinations": stats["total_vaccinations"],
                 "people_vaccinated": stats["people_vaccinated"],
+                "people_fully_vaccinated": stats["people_fully_vaccinated"],
                 "date": self._parse_date(soup),
                 "vaccine": self._parse_vaccines(df),
             }
@@ -108,8 +108,9 @@ class Taiwan:
         num_booster2 = clean_count(df.loc["總計", "追加劑"]["total"])
 
         return {
-            "total_vaccinations": num_dose1 + num_dose2,
+            "total_vaccinations": num_dose1 + num_dose2 + num_booster1 + num_booster2,
             "people_vaccinated": num_dose1,
+            "people_fully_vaccinated": num_dose2,
             "total_boosters": num_booster1 + num_booster2,
         }
 
@@ -127,15 +128,6 @@ class Taiwan:
         date_str = clean_date(f"2022{date_str}", fmt="%Y%m%d")
         return date_str
 
-    def pipe_metrics(self, ds: pd.Series) -> pd.Series:
-        if "people_vaccinated" in ds:
-            return enrich_data(
-                ds,
-                "people_fully_vaccinated",
-                ds.total_vaccinations - ds.people_vaccinated,
-            )
-        return ds
-
     def pipe_location(self, ds: pd.Series) -> pd.Series:
         return enrich_data(ds, "location", self.location)
 
@@ -143,33 +135,24 @@ class Taiwan:
         return enrich_data(ds, "source_url", self.source_data_url)
 
     def pipeline(self, ds: pd.Series) -> pd.Series:
-        return ds.pipe(self.pipe_metrics).pipe(self.pipe_location).pipe(self.pipe_source)
+        return ds.pipe(self.pipe_location).pipe(self.pipe_source)
 
-    def to_csv(self):
+    def export(self):
         data = self.read().pipe(self.pipeline)
-        if "people_vaccinated" in data:
-            increment(
-                location=data["location"],
-                total_vaccinations=data["total_vaccinations"],
-                people_vaccinated=data["people_vaccinated"],
-                people_fully_vaccinated=data["people_fully_vaccinated"],
-                date=data["date"],
-                source_url=data["source_url"],
-                vaccine=data["vaccine"],
-                total_boosters=data["total_boosters"],
-            )
-        else:
-            increment(
-                location=data["location"],
-                total_vaccinations=data["total_vaccinations"],
-                date=data["date"],
-                source_url=data["source_url"],
-                vaccine=data["vaccine"],
-            )
+        increment(
+            location=data["location"],
+            total_vaccinations=data["total_vaccinations"],
+            people_vaccinated=data["people_vaccinated"],
+            people_fully_vaccinated=data["people_fully_vaccinated"],
+            date=data["date"],
+            source_url=data["source_url"],
+            vaccine=data["vaccine"],
+            total_boosters=data["total_boosters"],
+        )
 
 
 def main():
-    Taiwan().to_csv()
+    Taiwan().export()
 
 
 if __name__ == "__main__":
