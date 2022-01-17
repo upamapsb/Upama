@@ -26,7 +26,7 @@ class SouthKorea(CountryTestBase):
         return df[["Date", "Daily change in cumulative total"]].loc[df["Date"] < "2020-12-18"]
 
     def _read_new(self):
-        ## data <= 2020-12-18; 'Number of suspicious report testing' (의심신고 검사자 수) + 'Number of testing at temporary screening stations' (임시선별검사소 검사건수)
+        ## data >= 2020-12-18; 'Number of suspicious report testing' (의심신고 검사자 수) + 'Number of testing at temporary screening stations' (임시선별검사소 검사건수)
         df = pd.read_csv(
             "https://docs.google.com/spreadsheets/d/10c9jNi8VnV0YYCfV_7AZrzBY5l18dOFHEJMIJsP4THI/export?format=csv&gid=512078862",
             usecols=["Date", "의심신고 검사자 수", "임시선별검사소 검사건수"],
