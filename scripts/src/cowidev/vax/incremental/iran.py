@@ -38,7 +38,7 @@ class Iran:
 
         return pd.Series(data)
 
-    def _parse_data(self, soup: BeautifulSoup) -> tuple[dict, bool]:
+    def _parse_data(self, soup: BeautifulSoup) -> tuple:
         """Get data from the source page."""
         # Get relevant element
         elem = self._get_relevant_element(soup)
@@ -79,7 +79,7 @@ class Iran:
         )
         return text
 
-    def _get_link_and_date_from_element(self, elem: element.Tag) -> tuple[str, str]:
+    def _get_link_and_date_from_element(self, elem: element.Tag) -> tuple:
         """Extract link and date from relevant element."""
         link = self._parse_link_from_element(elem)
         if not link:
