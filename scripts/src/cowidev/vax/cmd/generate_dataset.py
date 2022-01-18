@@ -303,6 +303,7 @@ class DatasetGenerator:
         df.loc[:, "total_boosters"] = df.total_boosters.replace({0: pd.NA})
         df.loc[df.total_boosters.isnull(), "total_boosters_per_hundred"] = pd.NA
         df["people_unvaccinated"] = df.population - df.people_vaccinated
+        df.loc[df.people_unvaccinated < 0, "people_unvaccinated"] = 0
         return df.drop(columns=["population"])
 
     def pipe_vax_checks(self, df: pd.DataFrame) -> pd.DataFrame:
