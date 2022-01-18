@@ -17,23 +17,25 @@ from cowidev.utils import paths
 class Thailand:
     location: str = "Thailand"
     source_url: str = "https://ddc.moph.go.th/dcd/pagecontent.php?page=643&dept=dcd"
-    base_url_template: str = "https://ddc.moph.go.th/vaccine-covid19/diaryReportMonth/{}/9/2021"
+    base_url_template: str = "https://ddc.moph.go.th/vaccine-covid19/diaryReportMonth/{}/9/{}"
     regex_date: str = r"\s?ข้อมูล ณ วันที่ (\d{1,2}) (.*) (\d{4})"
     _year_difference_conversion = 543
     _current_month = localdate("Asia/Bangkok", date_format="%m")
+    _current_year = localdate("Asia/Bangkok", date_format="%Y")
 
     @property
     def regex_vax(self):
         regex_aux = r"\((?:รา|รำ)ย\)"
+        regex_aux_extra = {3: "(?: ขึ้นไป)?"}
         regex_vax = (
-            r" ".join([f"เข็มที่ {i} {regex_aux}" for i in range(1, 4)])
+            r" ".join([f"เข็มที่ {i}{regex_aux_extra.get(i, '')} {regex_aux}" for i in range(1, 4)])
             + r" รวม \(โดส\)\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)"
         )
         return regex_vax
 
     def read(self, last_update: str) -> pd.DataFrame:
         # Get Newest Month Report Page
-        url_month = self.base_url_template.format(self._current_month)
+        url_month = self.base_url_template.format(self._current_month, self._current_year)
         soup_month = get_soup(url_month)
         # Get links
         df = self._parse_data(soup_month, last_update)
@@ -43,11 +45,11 @@ class Thailand:
         links = self._get_month_links(soup)
         records = []
         for link in links:
-            # print(link["date"])
+            print(link["date"])
             if link["date"] <= last_update:
                 break
             records.append(self._parse_metrics(link))
-            break
+            # break
         return pd.DataFrame(records)
 
     def _get_month_links(self, soup):
@@ -162,6 +164,8 @@ class Thailand:
             df = df.pipe(self.pipeline)
             df = merge_with_current_data(df, output_file)
             df.to_csv(output_file, index=False)
+        else:
+            print(1)
 
 
 def main():
