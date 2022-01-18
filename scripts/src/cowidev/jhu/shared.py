@@ -293,7 +293,7 @@ def inject_rolling_avg(df):
                 center=spec["center"],
             )
             .mean()
-            .round(decimals=5)
+            .round(decimals=3)
             .reset_index(level=0, drop=True)
         )
     return df
@@ -402,6 +402,7 @@ def _inject_growth(df, prefix, periods):
         df[["location", cases_colname, deaths_colname]]
         .groupby("location")[[cases_colname, deaths_colname]]
         .pct_change(periods=periods, fill_method=None)
+        .round(1)
         .replace([np.inf, -np.inf], pd.NA)
         * 100
     )
@@ -486,11 +487,6 @@ GRAPHER_COL_NAMES = {
     "5m_pop_and_21_days_since_100_cases_and_testing": (
         "Has population ≥ 5M AND had ≥100 cases ≥21 days ago AND has testing data"
     ),
-    # Doubling days time-series
-    "doubling_days_total_cases_3_day_period": "Doubling days of total confirmed cases (3 day period)",
-    "doubling_days_total_cases_7_day_period": "Doubling days of total confirmed cases (7 day period)",
-    "doubling_days_total_deaths_3_day_period": "Doubling days of total confirmed deaths (3 day period)",
-    "doubling_days_total_deaths_7_day_period": "Doubling days of total confirmed deaths (7 day period)",
     # Weekly aggregates
     "weekly_cases": "Weekly cases",
     "weekly_deaths": "Weekly deaths",
