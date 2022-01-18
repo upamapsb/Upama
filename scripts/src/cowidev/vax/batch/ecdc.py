@@ -270,9 +270,10 @@ class ECDC:
         """Build age groups."""
         # df = df[~df.age_group.isin(['LTCF', 'HCW', 'AgeUNK', 'ALL'])]
         df_ = df[df.age_group.isin(AGE_GROUPS_RELEVANT)].copy()
+        df_ = df_.assign(age_group_modified=df_.age_group.replace({"Age<18": "Age0_17"}))
         regex = r"(?:1_)?Age(\d{1,2})?(?:\+|<)?_?(\d{1,2})?"
-        df_[["age_group_min", "age_group_max"]] = df_.age_group.str.extract(regex)
-        df_ = df_.assign(age_group_min=df_.age_group_min.fillna(0))
+        df_[["age_group_min", "age_group_max"]] = df_.age_group_modified.str.extract(regex)
+        # df_ = df_.assign(age_group_min=df_.age_group_min.fillna(0))
         # df.loc[df.age_group == "1_Age60+", ["age_group_min", "age_group_max"]] = [60, pd.NA]
         # df.loc[df.age_group == "1_Age<60", ["age_group_min", "age_group_max"]] = [0, 60]
         return df_
