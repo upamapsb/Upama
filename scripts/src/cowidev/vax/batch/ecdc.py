@@ -10,7 +10,7 @@ from cowidev.vax.utils.files import export_metadata_manufacturer, export_metadat
 from cowidev.vax.utils.orgs import ECDC_VACCINES
 
 
-age_groups_known = {
+AGE_GROUPS_KNOWN = {
     "ALL",
     "Age0_4",
     "Age15_17",
@@ -31,11 +31,7 @@ age_groups_known = {
 }
 
 
-age_groups_relevant = {
-    "Age0_4",
-    "Age5_9",
-    "Age10_14",
-    "Age15_17",
+AGE_GROUPS_MUST_HAVE = {
     "Age18_24",
     "Age25_49",
     "Age50_59",
@@ -45,11 +41,28 @@ age_groups_relevant = {
 }
 
 
-locations_age_exclude = [
+AGE_GROUP_UNDERAGE_LEVELS = {
+    "lvl0": "Age<18",
+    "lvl1": {
+        "Age0_4",
+        "Age5_9",
+        "Age10_14",
+        "Age15_17",
+    },
+}
+
+
+AGE_GROUPS_UNDERAGE = {AGE_GROUP_UNDERAGE_LEVELS["lvl0"]} | AGE_GROUP_UNDERAGE_LEVELS["lvl1"]
+
+
+AGE_GROUPS_RELEVANT = AGE_GROUPS_UNDERAGE | AGE_GROUPS_MUST_HAVE
+
+
+LOCATIONS_AGE_EXCLUDED = [
     "Switzerland",
 ]
 
-locations_manufacturer_exclude = [
+LOCATIONS_MANUFACTURER_EXCLUDED = [
     "Czechia",
     "France",
     "Germany",
@@ -61,10 +74,10 @@ locations_manufacturer_exclude = [
 ]
 
 
-vaccines_one_dose = ["JANSS"]
+VACCINES_ONE_DOSE = ["JANSS"]
 
 
-columns = {
+COLUMNS = {
     "Denominator",
     "FirstDose",
     "FirstDoseRefused",
@@ -107,7 +120,7 @@ class ECDC:
         vaccines_wrong = set(df.Vaccine).difference(self.vaccine_mapping)
         if vaccines_wrong:
             raise ValueError(f"Unknown vaccines found. Check {vaccines_wrong}")
-        check_known_columns(df, columns)
+        check_known_columns(df, COLUMNS)
         return df
 
     def pipe_base(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -121,7 +134,7 @@ class ECDC:
             location=df.ReportingCountry.replace(self.country_mapping),
         )
         # Update people_fully_vaccinated
-        mask = df.Vaccine.isin(vaccines_one_dose)
+        mask = df.Vaccine.isin(VACCINES_ONE_DOSE)
         df.loc[mask, "people_fully_vaccinated"] = df.loc[mask, "people_fully_vaccinated"] + df.loc[mask, "FirstDose"]
         return df.loc[df.Region.isin(self.country_mapping.keys())]
 
@@ -183,7 +196,7 @@ class ECDC:
         threshold_unk_ratio = 0.05
         mask = df.groupby("location").apply(_get_perc_unk) < threshold_unk_ratio
         locations_valid = mask[mask].index.tolist()
-        locations_valid = [loc for loc in locations_valid if loc not in locations_manufacturer_exclude]
+        locations_valid = [loc for loc in locations_valid if loc not in LOCATIONS_MANUFACTURER_EXCLUDED]
         df = df[df.location.isin(locations_valid)]
         return df
 
@@ -203,29 +216,40 @@ class ECDC:
 
     def pipe_age_checks(self, df: pd.DataFrame) -> pd.DataFrame:
         # Check all age groups are valid names
-        ages_groups_wrong = set(df.age_group).difference(age_groups_known)
+        ages_groups_wrong = set(df.age_group).difference(AGE_GROUPS_KNOWN)
         if ages_groups_wrong:
             raise ValueError(f"Unknown age groups found. Check {ages_groups_wrong}")
         return df
 
     def pipe_age_filter_locations(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Filter locations and keep only valid ones."""
+        """Filter locations and keep only valid ones.
+
+        Validity is defined as a country having all age groups defined by `AGE_GROUPS_MUST_HAVE`.
+        """
         locations = df.location.unique()
         locations_valid = []
         for location in locations:
             df_c = df.loc[df.location == location]
-            if not age_groups_relevant.difference(df_c.age_group.unique()):
+            if not AGE_GROUPS_MUST_HAVE.difference(df_c.age_group.unique()):
                 locations_valid.append(location)
-        locations_valid = [loc for loc in locations_valid if loc not in locations_age_exclude]
+        locations_valid = [loc for loc in locations_valid if loc not in LOCATIONS_AGE_EXCLUDED]
         df = df[df.location.isin(locations_valid)]
         return df
 
     def pipe_age_filter_entries(self, df: pd.DataFrame) -> pd.DataFrame:
-        """More granular filter. Keep entries where data is deemed reliable."""
+        """More granular filter. Keep entries where data is deemed reliable.
+
+        1. Checks field ALL is equal to sum of all other ages (within 5% error). If not filters rows out.
+        2. If percentage of unknown doses is above 5% of total doses, filters row out.
+        """
         # Find valid dates + location
         x = df.pivot(index=["date", "location"], columns="age_group", values="total_vaccinations").reset_index()
-        x = x.dropna(subset=age_groups_relevant, how="any")
-        x = x.assign(debug=x[age_groups_relevant].sum(axis=1))
+        x = x.dropna(subset=AGE_GROUPS_MUST_HAVE, how="any")
+        # Create debug variable (= sum of all ages)
+        x = x.assign(
+            debug_u18=x[AGE_GROUP_UNDERAGE_LEVELS["lvl0"]].fillna(x[AGE_GROUP_UNDERAGE_LEVELS["lvl1"]].sum(axis=1))
+        )
+        x = x.assign(debug=x[AGE_GROUPS_MUST_HAVE].sum(axis=1) + x.debug_u18)
         x = x.assign(
             debug_diff=x.ALL - x.debug,
             debug_diff_perc=(x.ALL - x.debug) / x.ALL,
@@ -245,15 +269,16 @@ class ECDC:
     def pipe_age_groups(self, df: pd.DataFrame) -> pd.DataFrame:
         """Build age groups."""
         # df = df[~df.age_group.isin(['LTCF', 'HCW', 'AgeUNK', 'ALL'])]
-        df_ = df[df.age_group.isin(age_groups_relevant)].copy()
-        regex = r"(?:1_)?Age(\d{1,2})\+?(?:_(\d{1,2}))?"
+        df_ = df[df.age_group.isin(AGE_GROUPS_RELEVANT)].copy()
+        regex = r"(?:1_)?Age(\d{1,2})?(?:\+|<)?_?(\d{1,2})?"
         df_[["age_group_min", "age_group_max"]] = df_.age_group.str.extract(regex)
+        df_ = df_.assign(age_group_min=df_.age_group_min.fillna(0))
         # df.loc[df.age_group == "1_Age60+", ["age_group_min", "age_group_max"]] = [60, pd.NA]
         # df.loc[df.age_group == "1_Age<60", ["age_group_min", "age_group_max"]] = [0, 60]
         return df_
 
     def pipe_age_relative_metrics(self, df: pd.DataFrame, df_og: pd.DataFrame) -> pd.DataFrame:
-        df_den = df_og.loc[df_og.TargetGroup.isin(age_groups_relevant)].dropna(subset=["Denominator"])
+        df_den = df_og.loc[df_og.TargetGroup.isin(AGE_GROUPS_RELEVANT)].dropna(subset=["Denominator"])
         if df_den.Denominator.isnull().any():
             raise ValueError(f"Denomintor found to be null: {df_den[df_den.Denominator.isnull()]}")
         res = df_den.groupby(["date", "location", "TargetGroup"]).Denominator.nunique()
@@ -285,37 +310,33 @@ class ECDC:
             .pipe(self.pipe_age_filter_entries)
             .pipe(self.pipe_age_groups)
             .pipe(self.pipe_age_relative_metrics, df)
-            .drop(columns=[group_field_renamed])[
-                [
-                    "location",
-                    "date",
-                    "age_group_min",
-                    "age_group_max",
-                    "people_vaccinated_per_hundred",
-                    "people_fully_vaccinated_per_hundred",
-                    "people_with_booster_per_hundred",
-                ]
-            ]
+            .drop(columns=[group_field_renamed])
             .sort_values(["location", "date", "age_group_min"])
         )
 
-    def _export_country_data(self, df: pd.DataFrame, location: str, output_path: str, columns: list):
-        df_c = df[df.location == location]
-        df_c.to_csv(
-            output_path,
-            index=False,
-            columns=columns,
-        )
+    def _filter_age_targetgroup(self, df_c: pd.DataFrame):
+        # Filter age groups
+        date_0 = df_c.loc[df_c.TargetGroup.isin({AGE_GROUP_UNDERAGE_LEVELS["lvl0"]}), "date"].unique()
+        date_1 = df_c.loc[df_c.TargetGroup.isin(AGE_GROUP_UNDERAGE_LEVELS["lvl1"]), "date"].unique()
+        if (len(date_0) == len(date_1)) | (len(date_0) == 0):
+            age_group_selection = AGE_GROUPS_MUST_HAVE | AGE_GROUP_UNDERAGE_LEVELS["lvl1"]
+        elif len(date_1) == 0:
+            age_group_selection = AGE_GROUPS_MUST_HAVE | {AGE_GROUP_UNDERAGE_LEVELS["lvl0"]}
+        else:
+            raise ValueError(
+                f"Can't choose between under age groups. Restriction might be too strict, consider relaxing it!"
+            )
+        df_c = df_c[df_c.TargetGroup.isin(age_group_selection)]
+        return df_c
 
     def export_age(self, df: pd.DataFrame):
         df_age = df.pipe(self.pipeline_age)
         # Export
         locations = df_age.location.unique()
         for location in locations:
-            self._export_country_data(
-                df=df_age,
-                location=location,
-                output_path=paths.out_vax(location, age=True),
+            df_c = df_age[df_age.location == location].pipe(self._filter_age_targetgroup)
+            df_c.to_csv(
+                paths.out_vax(location, age=True),
                 columns=[
                     "location",
                     "date",
@@ -325,6 +346,7 @@ class ECDC:
                     "people_fully_vaccinated_per_hundred",
                     "people_with_booster_per_hundred",
                 ],
+                index=False,
             )
         export_metadata_age(
             df=df,
@@ -337,11 +359,11 @@ class ECDC:
         # Export
         locations = df_manufacturer.location.unique()
         for location in locations:
-            self._export_country_data(
-                df=df_manufacturer,
-                location=location,
-                output_path=paths.out_vax(location, manufacturer=True),
+            df_c = df_manufacturer[df_manufacturer.location == location]
+            df_c.to_csv(
+                paths.out_vax(location, manufacturer=True),
                 columns=["location", "date", "vaccine", "total_vaccinations"],
+                index=False,
             )
         export_metadata_manufacturer(
             df=df_manufacturer,
