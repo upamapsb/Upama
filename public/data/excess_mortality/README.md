@@ -10,7 +10,7 @@ WMD sources some of its data from HMD, but we use the data from HMD directly. We
 
 See here for a [full list of source information (i.e., HMD or WMD) country by country](https://ourworldindata.org/excess-mortality-covid#source-information-country-by-country).
 
-We source our baseline of projected deaths in 2020 from WMD.
+We source our baseline of projected deaths for 2020–2022 from WMD.
 
 We calculate the number of weekly deaths for the United Kingdom by summing the weekly deaths from England & Wales, Scotland, and Northern Ireland.
 
@@ -24,7 +24,7 @@ For a more detailed description of _The Economist's_ estimates, including metada
 
 Stored in [`excess_mortality.csv`](https://github.com/owid/covid-19-data/blob/master/public/data/excess_mortality/excess_mortality.csv).
 
-As of 28 September 2021, the data columns are:
+As of 18 January 2022, the data columns are:
 
 - `location`: name of the country or region
 - `date`: date on which a reporting week or month ended in 2020–2022 only (week dates according to [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date)). These dates do not apply to other years, such as "deaths_2019_all_ages"; instead, the deaths data across years is organized according to the week or month number in that year — see the "time" and "time_unit" columns below.
@@ -42,7 +42,7 @@ As of 28 September 2021, the data columns are:
 - `p_avg_85p`: P-scores using 5-year average baseline for ages 85 and above
 - `deaths_2021_all_ages`: reported number of weekly or monthly deaths from all causes for all ages in 2021
 - `deaths_2020_all_ages`: reported number of weekly or monthly deaths from all causes for all ages in 2020
-- `projected_deaths_2020_all_ages`: projected number of weekly or monthly deaths from all causes for all ages for 2020
+- `projected_deaths_2020_2022_all_ages`: projected number of weekly or monthly deaths from all causes for all ages for 2020–2022
 - `average_deaths_2015_2019_all_ages`: average number of weekly or monthly deaths from all causes for all ages over the years 2015–2019
 - `deaths_2019_all_ages`: reported number of weekly or monthly deaths from all causes for all ages in 2019
 - `deaths_2018_all_ages`: reported number of weekly or monthly deaths from all causes for all ages in 2018
@@ -64,7 +64,9 @@ As of 28 September 2021, the data columns are:
 
 ## How P-scores are defined and calculated
 
-As of 20 September 2021, we calculate P-scores using the reported deaths data from HMD and WMD and the projected deaths for 2020 from WMD, as an estimate of expected deaths. The P-score is the percentage difference between the reported number of weekly or monthly deaths in 2020–2022 and the projected number of deaths for the same period based on previous years.
+As of 20 September 2021, we calculate P-scores using the reported deaths data from HMD and WMD and the projected deaths from WMD, as an estimate of expected deaths. The P-score is the percentage difference between the reported number of weekly or monthly deaths in 2020–2022 and the projected number of deaths for the same period based on previous years.
+
+As of 18 January 2022, we use the separate projected deaths baselines for 2020, 2021, and 2022 published by WMD. Previously we used—and WMD only published—a projection for 2020.
 
 Before 20 September 2021, we calculated P-scores using a different estimate of expected deaths: the five-year average from 2015–2019. We made this change because using the five-year average has an important limitation — it does not account for year-to-year trends in mortality and thus can misestimate excess mortality. The WMD projection we now use, on the other hand, does not suffer from this limitation because it accounts for these year-to-year trends.
 
