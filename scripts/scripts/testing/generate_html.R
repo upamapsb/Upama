@@ -14,13 +14,13 @@ HTML_CODE <- str_replace_all(HTML_CODE, "\\{date_7d\\}", date_7d)
 country_lookup <- fread("../../input/iso/iso3166_1_alpha_3_codes.csv")
 
 html_data <- data.table(public_latest)
+html_data <- html_data[!Entity %in% c("Europe")]
 
 html_data[, Country := Entity %>% str_replace(" - .*", "")]
 
 setorder(html_data, Country, `General source label`)
 
 countries <- unique(html_data$Country)
-stopifnot(length(countries) == length(copy_paste_annotation))
 
 html_add <- function(new_code) {
     HTML_CODE <<- paste0(HTML_CODE, new_code, "\n")
@@ -89,25 +89,4 @@ for (c in countries) {
 
 }
 
-if (nrow(attempts) > 0) {
-    html_add("<h3>Other countries</h3>")
-
-    html_add('<p>Below is the list of countries for which we have attempted to collect data but could not find official sources.</p>')
-
-    html_add('<ul>')
-    for (i in seq_len(nrow(attempts))) {
-        row <- attempts[i]
-
-        html_add('<li>')
-        html_add(sprintf(
-            '<strong>%s</strong> (last checked on %s): %s',
-            row$Entity,
-            format.Date(row$`Date last tried to add`, "%d %B %Y"),
-            activate_links(row$`Notes for OWID website`)
-        ))
-        html_add('</li>')
-    }
-    html_add('</ul>')
-}
-
-writeLines(HTML_CODE, sprintf("%s/html_for_post.html", CONFIG$internal_shared_folder))
+writeLines(HTML_CODE, "source_table.html")

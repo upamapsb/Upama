@@ -1,4 +1,4 @@
-urls <- read_html("http://irangov.ir/cat/550") %>%
+urls <- read_html("https://irangov.ir/ministry-of-health-and-medical-education") %>%
     html_nodes(".list-content-body a") %>%
     html_attr("href") %>%
     paste0("http://irangov.ir", .)
@@ -16,7 +16,7 @@ for (url in urls) {
     count <- page %>%
         html_node(".content_detail_body") %>%
         html_text() %>%
-        str_extract("[\\d,]+ COVID-19 tests have been taken across the country") %>%
+        str_extract("[\\d,]+\\sCOVID-19 tests have been taken across the country") %>%
         str_extract("^[\\d,]+") %>%
         str_replace_all("[^\\d]", "") %>%
         as.integer()

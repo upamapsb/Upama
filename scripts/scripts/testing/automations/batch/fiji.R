@@ -1,7 +1,7 @@
 url <- "http://www.health.gov.fj/covid-19-updates/"
 
 df <- read_html(url) %>%
-    html_node(".entry-content table") %>%
+    html_node("#tablepress-2") %>%
     html_table() %>%
     data.table()
 
@@ -15,10 +15,10 @@ df <- df[!is.na(Date)]
 setorder(df, "Cumulative total", "Date")
 df <- df[, .SD[1], `Cumulative total`]
 df <- df[, .SD[1], Date]
+df <- make_monotonic(df)
 
 df[, Country := "Fiji"]
 df[, Units := "tests performed"]
-df[, `Testing type` := "PCR only"]
 df[, `Source URL` := url]
 df[, `Source label` := "Fiji Ministry of Health & Medical Services"]
 df[, Notes := NA_character_]

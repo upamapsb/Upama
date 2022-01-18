@@ -7,7 +7,6 @@ library(lubridate)
 library(readr)
 library(retry)
 library(rjson)
-library(slackr)
 library(stringr)
 library(tidyr)
 library(zoo)
@@ -31,7 +30,7 @@ update_time <- floor_date(now(tzone = "Europe/London"), unit = "hours") %>%
 # Offset date for grapher dataset
 origin_date <- ymd("2020-01-21")
 
-population <- fread("../../input/un/population_2020.csv")
+population <- fread("../../input/un/population_latest.csv")
 population <- population[, .(Country = entity, Population = population)]
 world_population <- population[Country == "World", Population]
 
@@ -45,7 +44,6 @@ retry(
     interval = 20
 )
 stopifnot("Detailed description" %in% names(metadata))
-fwrite(metadata, sprintf("%s/backups/METADATA.csv", CONFIG$internal_shared_folder))
 sheet_names <- sort(metadata$Sheet)
 
 # Cut-off periods
@@ -79,6 +77,10 @@ parse_country <- function(sheet_name) {
         )
     }
 
+    if ("Testing type" %in% names(collated)) {
+        stop(sprintf("The `Testing type` column is deprecated. Remove it from the %s data.", sheet_name))
+    }
+    
     stopifnot(length(table(collated$Units)) == 1)
     stopifnot(collated$Units[1] %in% c("people tested", "samples tested", "tests performed", "units unclear"))
 
@@ -88,8 +90,6 @@ parse_country <- function(sheet_name) {
                matches("^Cumulative total$"),
                matches("^Daily change in cumulative total$"),
                matches("^Positive rate$"))
-
-    fwrite(collated, sprintf("%s/backups/%s.csv", CONFIG$internal_shared_folder, sheet_name))
 
     collated <- collated %>%
         inner_join(population, by = "Country") %>%
@@ -120,6 +120,16 @@ parse_country <- function(sheet_name) {
             mutate(`Daily change in cumulative total` = if_else(is.na(`Daily change in cumulative total`), 0,
                                                                 `Daily change in cumulative total`)) %>%
             mutate(`Cumulative total` = cumsum(`Daily change in cumulative total`))
+    }
+    
+    # Check if cumulative total is monotonically increasing
+    mononotic_check <- collated %>%
+        arrange(Date) %>%
+        mutate(increase = `Cumulative total` - lag(`Cumulative total`)) %>%
+        filter(increase < 0)
+    if (nrow(mononotic_check) > 0) {
+        cat(as.character(mononotic_check$Date), sep = "\n")
+        stop("The series doesn't increase monotonically. Check the above dates.")
     }
 
     # Calculate rates per capita
@@ -169,7 +179,7 @@ parse_country <- function(sheet_name) {
 
         # Tests per case = inverse of positive rate
         collated[, `Short-term tests per case` := ifelse(`Short-term positive rate` > 0, round(1 / `Short-term positive rate`, 1), NA_integer_)]
-        collated[, `Short-term positive rate` := round(`Short-term positive rate`, 3)]
+        collated[, `Short-term positive rate` := round(`Short-term positive rate`, 4)]
 
         # Cumulative versions based on JHU data
         collated[, `Cumulative positive rate` := round(total_cases / `Cumulative total`, 3)]
@@ -220,6 +230,22 @@ date_7d <- format.Date(today() - 7, "%e %B %Y") %>% str_squish()
 
 # Change URLs and Notes based on audit
 source("replace_audited_metadata.R")
+
+# Add series for Europe
+europe_list <- fread("../../input/owid/continents.csv")[V4 == "Europe", Entity]
+europe <- collated[
+    Country %in% europe_list & Date < today() - 5,
+    .(`7-day smoothed daily change` = sum(`7-day smoothed daily change`, na.rm = TRUE)),
+    Date
+]
+europe[, Units := "units and tests vary"]
+europe[, Sheet := "Europe"]
+europe[, Entity := "Europe"]
+europe[, Country := "Europe"]
+europe[, `Source URL` := "https://github.com/owid/covid-19-data/tree/master/public/data/testing"]
+europe[, `Source label` := "Our World in Data"]
+setorder(europe, Date)
+collated <- rbindlist(list(collated, europe), use.names = TRUE, fill = TRUE)
 
 # Add ISO codes
 add_iso_codes <- function(df) {
@@ -285,15 +311,15 @@ for (i in 1:nrow(secondary_series)) {
 
 copy_paste_annotation <- unique(grapher[!is.na(annotation), .(Country, annotation)])
 copy_paste_annotation <- paste(copy_paste_annotation$Country, copy_paste_annotation$annotation, sep = ": ")
-writeLines(copy_paste_annotation, sprintf("%s/copy_paste_annotation.txt", CONFIG$internal_shared_folder))
+writeLines(copy_paste_annotation, "grapher_annotations.txt")
 
 # Write grapher file
-fwrite(grapher, sprintf("../../grapher/COVID testing time series data.csv", CONFIG$internal_shared_folder))
+fwrite(grapher, "../../grapher/COVID testing time series data.csv")
 
 # Make public version
 public <- copy(collated)
 public[, c("Country", "Units") := NULL]
-public_latest <- merge(public, metadata)
+public_latest <- merge(public, metadata, all.x = TRUE)
 public_latest[, c("Sheet", "Ready for review", "Collate") := NULL]
 setorder(public_latest, Entity, -Date)
 public_latest <- public_latest[, .SD[1], Entity]
@@ -314,9 +340,9 @@ public_latest <- public_latest[, c(
 )]
 
 fwrite(public_latest, "../../../public/data/testing/covid-testing-latest-data-source-details.csv")
-rio::export(public_latest, "../../../public/data/testing/covid-testing-latest-data-source-details.xlsx")
+rio::export(public_latest, "../../../public/data/testing/covid-testing-latest-data-source-details.xlsx", overwrite=TRUE)
 fwrite(public, "../../../public/data/testing/covid-testing-all-observations.csv")
-rio::export(public, "../../../public/data/testing/covid-testing-all-observations.xlsx")
+rio::export(public, "../../../public/data/testing/covid-testing-all-observations.xlsx", overwrite=TRUE)
 
 # Make sanity check graph
 sanity_plot <- ggplot(data = public[!is.na(`Cumulative total`)],
@@ -325,17 +351,11 @@ sanity_plot <- ggplot(data = public[!is.na(`Cumulative total`)],
     scale_y_log10()
 print(sanity_plot)
 
-old_updates <- head(setorder(public[, .(LastUpdate = max(Date)), Entity], LastUpdate), 10)
-old_updates <- paste0(old_updates$Entity, ": ", old_updates$LastUpdate, collapse = "\n")
+# Timestamp
+tm <- as.POSIXlt(Sys.time(), "UTC")
+tm <- strftime(tm, "%Y-%m-%dT%H:%M:%S")
+writeLines(tm, "../../../public/data/internal/timestamp/owid-covid-data-last-updated-timestamp-test.txt")
 
-log <- sprintf(
-    "%s series from %s countries were included in the output\nLeast up-to-date time series:\n%s",
-    nrow(public_latest),
-    length(countries),
-    old_updates
-)
-message("-----")
-message(log)
 message("-----")
 message(update_time)
 if (any(public_latest$`Short-term positive rate` > 0.9, na.rm = TRUE)) warning("POSITIVE RATE ABOVE >90%")

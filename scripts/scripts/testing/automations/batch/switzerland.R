@@ -1,18 +1,17 @@
-url <- read_html("https://www.covid19.admin.ch/fr/epidemiologic/test") %>%
-    html_nodes(".footer__nav .footer__nav__link") %>%
-    html_attr("href") %>%
-    str_subset("csv.zip") %>%
-    paste0("https://www.covid19.admin.ch", .)
+context <- rjson::fromJSON(file = "https://www.covid19.admin.ch/api/data/context")
+url <- context$sources$individual$csv$daily$testPcrAntigen
 
-download.file(url, "tmp/switzerland.zip", quiet = TRUE)
-unzip("tmp/switzerland.zip", exdir = "tmp", files = "data/COVID19Test_geoRegion_PCR_Antigen.csv")
+df <- fread(
+    url,
+    showProgress = FALSE,
+    select = c("datum", "entries", "entries_pos", "nachweismethode", "geoRegion")
+)
+df <- df[geoRegion == "CH"]
 
-df <- fread("tmp/data/COVID19Test_geoRegion_PCR_Antigen.csv",
-            select = c("datum", "entries", "entries_pos", "nachweismethode", "geoRegion"))
-df <- df[nachweismethode == "PCR"]
-df <- df[geoRegion == "CHFL"]
-
-stopifnot(length(unique(df$datum)) == nrow(df))
+df <- df[, .(
+    entries = sum(entries, na.rm = TRUE),
+    entries_pos = sum(entries_pos, na.rm = TRUE)
+), datum]
 
 setorder(df, datum)
 df[, pr := round(frollsum(entries_pos, 7) / frollsum(entries, 7), 3)]
@@ -21,11 +20,10 @@ setnames(df, c("datum", "entries", "pr"), c("Date", "Daily change in cumulative 
 
 df[, Country := "Switzerland"]
 df[, Units := "tests performed"]
-df[, `Source URL` := url]
+df[, `Source URL` := "https://opendata.swiss/en/dataset/covid-19-schweiz"]
 df[, `Source label` := "Federal Office of Public Health"]
 df[, Notes := NA_character_]
 
-fwrite(df, "automated_sheets/Switzerland.csv")
+df <- df[`Daily change in cumulative total` > 0]
 
-file.remove("tmp/data/COVID19Test_geoRegion_PCR_Antigen.csv")
-file.remove("tmp/switzerland.zip")
+fwrite(df, "automated_sheets/Switzerland.csv")

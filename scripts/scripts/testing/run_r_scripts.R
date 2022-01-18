@@ -14,18 +14,17 @@ suppressPackageStartupMessages({
 })
 rm(list = ls())
 
-SKIP <- c()
+SKIP <- c("south_sudan")
 
 args <- commandArgs(trailingOnly=TRUE)
 execution_mode <- args[1]
 
 if (length(SKIP) > 0) warning("Skipping the following countries: ", paste0(SKIP, collapse = ", "))
 
-setwd("~/Git/covid-19-data/scripts/scripts/testing")
-CONFIG <- fromJSON(file = "testing_dataset_config.json")
+CONFIG <- rjson::fromJSON(file = "testing_dataset_config.json")
 `_` <- Sys.setlocale("LC_TIME", "en_US")
 
-add_snapshot <- function(count, sheet_name, country, units, date = today(),
+add_snapshot <- function(count, sheet_name, country, units, date = today() - 1,
                          source_url, source_label, testing_type = NA_character_,
                          notes = NA_character_, daily_change = NA_integer_) {
 
@@ -35,7 +34,6 @@ add_snapshot <- function(count, sheet_name, country, units, date = today(),
     stopifnot(!is.na(date))
     stopifnot(is.integer(count))
     stopifnot(!is.na(count))
-    stopifnot(testing_type %in% c("PCR only", "unclear", "includes non-PCR"))
     stopifnot(units %in% c("people tested", "samples tested", "tests performed", "units unclear", "tests performed (CDC)"))
     stopifnot(length(count) == 1)
     stopifnot(count >= max(prev$`Cumulative total`, na.rm = TRUE))
@@ -51,7 +49,6 @@ add_snapshot <- function(count, sheet_name, country, units, date = today(),
         `Cumulative total` = count,
         `Source URL` = source_url,
         `Source label` = source_label,
-        `Testing type` = testing_type,
         Notes = notes
     )
 
@@ -60,10 +57,23 @@ add_snapshot <- function(count, sheet_name, country, units, date = today(),
     }
 
     df <- rbindlist(list(prev, new), use.names = TRUE)
-    setorder(df, -Date, -`Cumulative total`)
+    setorder(df, Date)
     df <- df[, .SD[1], Date]
 
     fwrite(df, sprintf("automated_sheets/%s.csv", sheet_name))
+}
+
+make_monotonic <- function(df) {
+    # Forces time series to become monotonic.
+    # The algorithm assumes that the most recent values are the correct ones,
+    # and therefore removes previous higher values.
+    setDT(df)
+    setorder(df, Date)
+    while (any(df$`Cumulative total` - shift(df$`Cumulative total`) < 0, na.rm = TRUE)) {
+        diff <- shift(df$`Cumulative total`, -1) - df$`Cumulative total`
+        df <- df[diff >= 0 | is.na(diff)]
+    }
+    return(df)
 }
 
 scripts_path <- ifelse(execution_mode == "quick", "automations/incremental", "automations")
@@ -71,7 +81,7 @@ scripts <- list.files(scripts_path, pattern = "\\.R$", full.names = TRUE, includ
 if (length(SKIP) > 0) scripts <- scripts[!str_detect(scripts, paste(SKIP, collapse = "|"))]
 
 for (s in scripts) {
-    rm(list = setdiff(ls(), c("scripts", "add_snapshot", "s", "CONFIG")))
+    rm(list = setdiff(ls(), c("scripts", "add_snapshot", "s", "CONFIG", "make_monotonic")))
     message(sprintf("%s - %s", Sys.time(), s))
     try(source(s))
 }

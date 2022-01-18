@@ -1,56 +1,44 @@
-import json
-import requests
-import datetime
+import os
+
 import pandas as pd
 
-
-SOURCE_URL = "https://services7.arcgis.com/1Cyg6S9yGgIqdFPO/ArcGIS/rest/services/cases_today/FeatureServer/0/query"
-
-
-def kenya_get_tests_snapshot():
-    url = SOURCE_URL
-    params = {
-        'f': 'json',
-        'where': '1=1',
-        'returnGeometry': False,
-        'spatialRel': 'esriSpatialRelIntersects',
-        'outFields': '*',
-        'resultOffset': 0,
-        'resultRecordCount': 1,
-        'resultType': 'standard',
-        'cacheHint': True
-    }
-    res = requests.get(url, params=params)
-    json_data = json.loads(res.text)
-    assert len(json_data['features']) == 1, "only expected a single result."
-    timestamp = json_data['features'][0]['attributes']['Date']
-    date = datetime.datetime.utcfromtimestamp(timestamp/1000).strftime('%Y-%m-%d')
-    tests_cumul = int(json_data['features'][0]['attributes']['total_test_samples'])
-    tests_today = int(json_data['features'][0]['attributes']['daily_test_samples'])
-    return date, tests_cumul, tests_today
+from cowidev.utils.utils import get_project_dir
+from cowidev.utils.web import get_soup
+from cowidev.utils.clean import clean_count
+from cowidev.utils.clean import extract_clean_date
 
 
 def main():
-    date, tests_cumul, tests_today = kenya_get_tests_snapshot()
+    path = os.path.join(get_project_dir(), "scripts", "scripts", "testing", "automated_sheets", "Kenya.csv")
+    data = pd.read_csv(path).sort_values(by="Date", ascending=False)
 
-    existing = pd.read_csv("automated_sheets/Kenya.csv")
+    source_url = "http://covidkenya.org/"
 
-    if date > existing["Date"].max() and tests_cumul > existing["Cumulative total"].max():
+    soup = get_soup(source_url)
 
-        new = pd.DataFrame({
-            "Country": "Kenya",
-            "Date": [date],
-            "Cumulative total": tests_cumul,
-            "Source URL": SOURCE_URL,
-            "Source label": "Kenya Ministry of Health",
-            "Testing type": "PCR only",
-            "Units": "samples tested",
-            "Notes": pd.NA
-        })
+    element = soup.find("div", class_="elementor-element-b36fad5").find(class_="elementor-text-editor")
+    cumulative_total = clean_count(element.text)
 
-        df = pd.concat([new, existing]).sort_values("Date", ascending=False)
-        df.to_csv("automated_sheets/Kenya.csv", index=False)
+    date_raw = soup.select(".elementor-element-75168b2 p")[0].text
+    date = extract_clean_date(
+        date_raw, regex=r"\[Updated on ([A-Za-z]+ \d+) \[\d\d:\d\d\]", date_format="%B %d", replace_year=2021
+    )
+
+    if cumulative_total > data["Cumulative total"].max():
+        new = pd.DataFrame(
+            {
+                "Cumulative total": cumulative_total,
+                "Date": [date],
+                "Country": "Kenya",
+                "Units": "samples tested",
+                "Source URL": source_url,
+                "Source label": "Kenya Ministry of Health",
+            }
+        )
+
+        df = pd.concat([new, data], sort=False)
+        df.to_csv(path, index=False)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

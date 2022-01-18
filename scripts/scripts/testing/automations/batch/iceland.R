@@ -1,4 +1,4 @@
-url <- "https://e.infogram.com/deaf4fd6-0ce9-4b82-97ae-11e34a045060"
+url <- "https://e.infogram.com/6a1497cc-b1c8-4547-9528-1b79a1898283"
 page <- read_html(url)
 
 script <- page %>%
@@ -6,7 +6,7 @@ script <- page %>%
     html_text()
 script <- script[which(str_detect(script, "window\\.infographicData"))]
 
-header_string <- '"Diagnostic test","Border screening 1 and 2","Quarantine and random screening","deCODE Genetics screening"'
+header_string <- '"Diagnostic test","Border screening 1 and 2","Quarantine- and random screening","deCODE Genetics screening"'
 
 graph <- script %>%
     str_replace_all("null", "0") %>%
@@ -26,7 +26,7 @@ dates <- sapply(data, "[", 1) %>%
 df <- data.table(Date = dates, stringsAsFactors = FALSE)
 
 categories <- header_string %>%
-    str_extract_all("[A-Za-z1-2 ]+") %>%
+    str_extract_all("[A-Za-z1-2- ]+") %>%
     unlist
 
 for (i in seq_along(categories)) {
@@ -34,20 +34,19 @@ for (i in seq_along(categories)) {
 }
 
 setDT(df)
-df[, `Daily change in cumulative total` :=  `Diagnostic test` + `deCODE Genetics screening` + `Quarantine and random screening`]
+df[, `Daily change in cumulative total` :=  `Diagnostic test` + `deCODE Genetics screening` + `Quarantine- and random screening`]
 
 df[, Country := "Iceland"]
 df[, Units := "tests performed"]
 df[, `Source URL` := "https://www.covid.is/data"]
 df[, `Source label` := "Government of Iceland"]
 df[, Notes := NA_character_]
-df[, `Testing type` := "PCR only"]
-df[, c("Diagnostic test", "deCODE Genetics screening", "Border screening 1 and 2", "Quarantine and random screening") := NULL]
+df[, c("Diagnostic test", "deCODE Genetics screening", "Border screening 1 and 2", "Quarantine- and random screening") := NULL]
 
 old <- fread("input/Iceland_old.csv")
 old[, Date := ymd(Date)]
 
 full <- rbindlist(list(old, df), use.names = TRUE, fill = FALSE)
-setorder(full, -Date)
+setorder(full, Date)
 
 fwrite(full, "automated_sheets/Iceland.csv")

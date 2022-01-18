@@ -6,9 +6,9 @@ if [ $1 != quick ] && [ $1 != update ]; then
     exit
 fi
 
-cd ~/Git/covid-19-data
+cd ~/git/covid-19-data
 git pull
 
-cd ~/Git/covid-19-data/scripts/scripts/testing
+cd ~/git/covid-19-data/scripts/scripts/testing
 python3 run_python_scripts.py $1
-Rscript run_r_scripts.R $1
+/usr/local/bin/Rscript run_r_scripts.R $1

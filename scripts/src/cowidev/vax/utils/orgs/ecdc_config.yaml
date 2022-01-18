@@ -1,0 +1,13 @@
+vaccines:
+  - owid_name: "Moderna"
+    org_name: "MOD"
+  - owid_name: "Pfizer/BioNTech"
+    org_name: "COM"
+  - owid_name: "Oxford/AstraZeneca"
+    org_name: "AZ"
+  - owid_name: "Johnson&Johnson"
+    org_name: "JANSS"
+  - owid_name: "Sputnik V"
+    org_name: "SPU"
+  - owid_name: "Sinopharm/Beijing"
+    org_name: "BECNBG"

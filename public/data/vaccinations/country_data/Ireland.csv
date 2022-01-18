@@ -1,35 +1,383 @@
-location,date,vaccine,source_url,total_vaccinations,people_vaccinated,people_fully_vaccinated
-Ireland,2020-12-31,Pfizer/BioNTech,https://twitter.com/RobOHanrahan/status/1344932276128411648,1800,,
-Ireland,2021-01-04,Pfizer/BioNTech,https://www.thejournal.ie/covid-19-vaccine-rollout-in-nursing-homes-gets-under-way-this-week-5315501-Jan2021/,4000,,
-Ireland,2021-01-07,Pfizer/BioNTech,https://twitter.com/newschambers/status/1347187910961999873,15314,,
-Ireland,2021-01-10,Pfizer/BioNTech,https://twitter.com/DonnellyStephen/status/1349442669622263811,40000,,
-Ireland,2021-01-13,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/,77303,,
-Ireland,2021-01-17,Pfizer/BioNTech,https://twitter.com/DonnellyStephen/status/1351461941097754625,94000,,
-Ireland,2021-01-20,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/,121900,,
-Ireland,2021-01-24,Pfizer/BioNTech,https://twitter.com/DonnellyStephen/status/1353738605974462465,143000,,
-Ireland,2021-01-27,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/,161500,147700,13800
-Ireland,2021-01-31,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/,199800,150500,49300
-Ireland,2021-02-05,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,230766,151212,79554
-Ireland,2021-02-07,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,240487,153654,86833
-Ireland,2021-02-08,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,243353,154900,88453
-Ireland,2021-02-09,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,248284,158904,89380
-Ireland,2021-02-10,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,256681,166863,89818
-Ireland,2021-02-11,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,261073,171239,89834
-Ireland,2021-02-12,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,265237,175238,89999
-Ireland,2021-02-13,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,268551,176926,91625
-Ireland,2021-02-14,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,271942,180192,91750
-Ireland,2021-02-15,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,280581,182193,98388
-Ireland,2021-02-16,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,293752,187893,105859
-Ireland,2021-02-17,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,310900,197609,113291
-Ireland,2021-02-18,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,326475,205955,120520
-Ireland,2021-02-19,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,340704,214384,126320
-Ireland,2021-02-20,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,350322,219899,130423
-Ireland,2021-02-21,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,353971,222073,131898
-Ireland,2021-02-22,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,359616,226291,133325
-Ireland,2021-02-23,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,373280,238841,134439
-Ireland,2021-02-24,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,391355,254948,136407
-Ireland,2021-02-25,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,409529,271594,137935
-Ireland,2021-02-26,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,426070,285780,140290
-Ireland,2021-02-27,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,435895,294550,141345
-Ireland,2021-02-28,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,439782,297899,141883
-Ireland,2021-03-01,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/,446474,303550,142924
+location,date,total_vaccinations,people_vaccinated,people_fully_vaccinated,total_boosters,vaccine,source_url
+Ireland,2020-12-28,169,149,26,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2020-12-29,241,220,27,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2020-12-30,1291,1270,27,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2020-12-31,2315,2293,28,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-01,3116,3094,28,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-02,4127,4105,28,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-03,4146,4122,30,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-04,5326,5300,32,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-05,8834,8804,36,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-06,15594,15559,41,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-07,27307,27268,45,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-08,39970,39926,50,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-09,48038,47991,53,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-10,52797,52749,55,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-11,61122,61070,59,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-12,69978,69920,65,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-13,79838,79776,69,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-14,87887,87823,71,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-15,95541,95475,73,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-16,100751,100682,76,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-17,101856,101783,80,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-18,110534,110457,84,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-19,118903,118811,99,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-20,128288,127239,1056,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-21,138194,136189,2012,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-22,145893,142926,2974,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-23,150505,147082,3430,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-24,152072,148253,3826,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-25,154688,149587,5108,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-26,159169,150573,8603,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-27,168004,152714,15297,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-28,180494,153667,26834,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-29,193557,155207,38357,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-30,201958,155815,46150,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-01-31,206243,156020,50230,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-01,215557,157003,58561,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-02,221459,157809,63657,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-03,229682,159173,70516,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-04,241603,160563,81047,0,Pfizer/BioNTech,https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-05,253566,163922,89651,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-06,258304,164798,93513,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-07,259905,165104,94809,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-08,261903,166232,95679,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-09,266639,170440,96208,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-10,276006,179232,96783,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-11,282579,185372,97216,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-12,287450,189728,97731,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-13,290544,190914,99639,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-14,293237,193588,99658,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-15,303034,195517,107526,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-16,316784,201120,115673,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-17,334943,210821,124131,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-18,351704,219256,132457,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-19,367638,228618,139029,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-20,377062,234478,142594,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-21,379171,235572,143613,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-22,384193,239492,144716,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-23,398575,252820,145770,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-24,417555,269713,147859,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-25,437318,287736,149600,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-26,456120,303788,152350,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-27,465763,312734,153048,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-02-28,468231,315156,153095,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-01,474555,320702,153873,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-02,488285,332841,155464,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-03,502594,345659,156956,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-04,522951,364340,158634,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-05,543715,382724,161019,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-06,554238,393123,161144,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-07,555738,394616,161152,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-08,563827,401225,162634,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-09,580665,414979,165720,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-10,598291,428638,169690,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-11,618769,447035,171772,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-12,637348,464290,173098,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-13,645749,472528,173261,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-14,646107,472873,173275,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-15,649663,475452,174252,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-16,662332,484325,178048,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-17,669570,489166,180451,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-18,685881,500812,185118,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-19,702251,511082,191219,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-20,710509,516244,194317,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-21,714130,519823,194360,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-22,723841,527152,196742,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-23,743692,539641,204106,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-24,766970,553172,213853,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-25,797944,573952,224049,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-26,827019,593574,233503,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-27,843993,605238,238813,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-29,881061,630119,251004,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-30,907216,645833,261446,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-03-31,938402,665432,273037,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-01,972143,685489,286725,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-02,984230,692967,291334,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-03,987363,695940,291494,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-04,991321,699314,292081,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-05,1011333,711204,300208,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-06,1040008,729451,310639,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-07,1070619,749535,321174,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-08,1100360,770158,330301,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-09,1115581,781244,334444,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-10,1118715,784046,334777,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-11,1129160,791747,337527,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-12,1149122,803165,346071,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-13,1175929,823425,352620,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-14,1213699,850454,363362,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-15,1251372,878344,373146,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-16,1271649,894110,377658,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-17,1273113,895130,378102,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-18,1281985,901801,380303,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-19,1304220,916783,387556,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-20,1340612,943378,397354,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-21,1384278,974916,409482,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-22,1430106,1008419,421807,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-23,1460643,1032002,428761,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-24,1470603,1041698,429026,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-25,1489092,1057192,432022,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-26,1522653,1083008,439771,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-27,1557126,1108947,448309,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-28,1599994,1140549,459576,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-29,1649465,1176550,473048,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-04-30,1672563,1193009,479695,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-01,1685798,1205369,480576,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-02,1700843,1219531,481467,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-03,1734081,1246045,488193,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-04,1779458,1278063,501618,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-05,1831025,1315323,516046,0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-06,1886560,1355855,531136,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-07,1919021,1381334,538124,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-08,1939494,1400923,539009,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-09,1972890,1429761,543732,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-10,2021568,1463696,558620,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-11,2073708,1494982,579622,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-12,2135108,1530969,605172,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-13,2201287,1569252,633293,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-14,2242373,1597959,645677,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-15,2266570,1621028,646809,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-16,2305826,1656398,650804,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-17,2357237,1695403,663322,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-18,2411810,1732460,681033,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-19,2470435,1771490,700743,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-20,2534165,1812070,738807,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-21,2574308,1842018,762500,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-22,2598113,1860338,778184,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-23,2637051,1891139,794755,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-24,2686804,1924474,814383,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-25,2734936,1947273,842749,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-26,2788221,1964647,879202,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-27,2848332,1993016,912470,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-28,2880496,2017840,920317,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-29,2906446,2042166,922137,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-30,2939487,2067950,932811,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-05-31,2981823,2098878,947841,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-01,3025057,2121306,972620,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-02,3074106,2139760,1005173,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-03,3126319,2168726,1028546,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-04,3158502,2189505,1039961,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-05,3182141,2209309,1043813,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-06,3206229,2228935,1048288,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-07,3250707,2255195,1066527,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-08,3303448,2287940,1086675,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-09,3358537,2315664,1114280,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-10,3417574,2341922,1147069,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-11,3449308,2354041,1166768,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-12,3476661,2363294,1185681,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-13,3523697,2379162,1216864,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-14,3579752,2393845,1258421,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-15,3641386,2407286,1306810,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-16,3705768,2429166,1349816,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-17,3768044,2441537,1400252,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-18,3807267,2448100,1433322,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-19,3841885,2456658,1459547,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-20,3889906,2472493,1492277,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-21,3948949,2488146,1536357,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-22,4008888,2508882,1576422,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-23,4072834,2528726,1621532,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-24,4138616,2544520,1672318,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-25,4178347,2553855,1703183,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-26,4217348,2562509,1733570,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-27,4266348,2587043,1758511,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-28,4325867,2615752,1790088,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-29,4385405,2638641,1827279,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-06-30,4448818,2653927,1876001,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-01,4510114,2668157,1923850,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-02,4550017,2677782,1954599,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-03,4584237,2684321,1982486,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-04,4638091,2704972,2020999,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-05,4703853,2722610,2074577,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-06,4771858,2747101,2123106,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-07,4840794,2770648,2174452,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-08,4905516,2790489,2225838,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-09,4941983,2803286,2253839,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-10,4975244,2820550,2271972,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-11,5029778,2843557,2309548,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-12,5094493,2871954,2354320,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-13,5159879,2901888,2399073,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-14,5221470,2934874,2437213,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-15,5281143,2967410,2473480,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-16,5316395,2983442,2497342,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-17,5350731,3002119,2514913,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-18,5399827,3033029,2539304,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-19,5455794,3071100,2564861,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-20,5512345,3108077,2591276,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-21,5568270,3148332,2613841,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-22,5621336,3180835,2639969,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-23,5653492,3198401,2656797,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-24,5682668,3214066,2671331,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-25,5727690,3241145,2692653,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-26,5780215,3270107,2719845,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-27,5831759,3296641,2748087,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-28,5881430,3318716,2778612,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-29,5927975,3342610,2803349,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-30,5954780,3357142,2816512,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-07-31,5975313,3368498,2826044,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-01,6006343,3383795,2842178,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-02,6049846,3402100,2868462,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-03,6090413,3425642,2887044,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-04,6135024,3440447,2918258,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-05,6172527,3453438,2943698,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-06,6187625,3460272,2952527,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-07,6208159,3468976,2964502,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-08,6236985,3475018,2987873,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-09,6272654,3484948,3014305,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-10,6311175,3492500,3045912,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-11,6356753,3500013,3084829,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-12,6396443,3511681,3113699,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-13,6420461,3530004,3119663,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-14,6441100,3547004,3123342,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-15,6474521,3557483,3146646,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-16,6514507,3570795,3173836,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-17,6555876,3586597,3200050,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-18,6593232,3598435,3226097,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-19,6630739,3613872,3248838,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-20,6650632,3625913,3256921,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-21,6670952,3634056,3269254,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-22,6697241,3645147,3284728,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-23,6730026,3655180,3307856,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-24,6759013,3664842,3327487,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-25,6787173,3673733,3347118,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-26,6816335,3683825,3366615,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-27,6834172,3693856,3374567,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-28,6852125,3702665,3383735,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-29,6868220,3707769,3394805,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-30,6885099,3711925,3407665,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-08-31,6902589,3717004,3420251,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-01,6920067,3722216,3432760,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-02,6940875,3727103,3448840,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-03,6956128,3731835,3459491,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-04,6973269,3737133,3471335,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-05,6985051,3739322,3480997,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-06,6998100,3742462,3491047,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-07,7015562,3745219,3505933,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-08,7033495,3748437,3520783,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-09,7050830,3751903,3534761,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-10,7064677,3754498,3546070,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-11,7079550,3756522,3558920,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-12,7088840,3758150,3566630,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-13,7101147,3759752,3577415,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-14,7116868,3763134,3589886,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-15,7129396,3765128,3600530,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-16,7146559,3767758,3615152,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-17,7160055,3770073,3626375,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-18,7170384,3771938,3634850,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-19,7176926,3772918,3640444,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-20,7185062,3774450,3647137,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-21,7195124,3776431,3655313,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-22,7205595,3778197,3664104,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-23,7214900,3780176,3671509,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-24,7223900,3782626,3678109,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-25,7232520,3784163,3685192,0,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-26,7237754,3785373,3688959,302,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-27,7244863,3786899,3694113,822,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-28,7250796,3788609,3697733,1498,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-29,7257759,3789955,3701710,3215,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-09-30,7267489,3791828,3706865,5957,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-01,7274518,3793572,3710941,7205,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-02,7279925,3794784,3713942,8408,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-03,7286253,3795133,3715136,13210,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-04,7298768,3796154,3717965,21943,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-05,7314670,3797163,3720504,34331,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-06,7330465,3798410,3723189,46236,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-07,7346547,3799433,3725941,58588,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-08,7356139,3800181,3728284,65108,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-09,7362864,3801709,3732176,66413,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-10,7370941,3802050,3733259,73078,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-11,7383701,3802631,3734845,83691,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-12,7398621,3803668,3736837,95591,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-13,7414988,3804371,3738367,109732,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-14,7428953,3805328,3740374,120739,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-15,7440781,3806717,3742977,128586,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-16,7447059,3808427,3745854,130279,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-17,7453915,3809098,3747029,135292,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-18,7467006,3810436,3748771,145313,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-19,7481421,3812682,3751026,155227,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-20,7496230,3814444,3752803,166505,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-21,7507633,3815939,3754682,174535,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-22,7512736,3817946,3756344,175969,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-23,7518220,3819889,3758515,177339,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-24,7520766,3821103,3759324,177862,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-25,7527671,3822346,3760495,182358,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-26,7537910,3823903,3761882,189657,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-27,7549135,3826048,3763528,197093,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-28,7559161,3828182,3764844,203669,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-29,7564744,3830184,3766265,205829,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-10-30,7568651,3831811,3767575,206799,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-01,7572022,3832067,3767818,209671,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-02,7582518,3833163,3768883,218015,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-03,7595445,3835704,3770676,226613,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-04,7610307,3837255,3771897,238703,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-05,7627088,3838888,3772915,252834,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-06,7641569,3840713,3774238,264172,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-07,7654310,3841443,3775003,275418,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-08,7669989,3841955,3775493,290096,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-09,7695575,3843334,3776488,313309,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-10,7725326,3844958,3777786,340138,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-11,7757599,3846361,3778839,369956,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-12,7785660,3847523,3779925,395774,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-13,7808160,3848933,3781258,415531,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-14,7820717,3850581,3783057,424641,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-15,7837288,3851832,3783603,439415,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-16,7867594,3853158,3784629,467373,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-17,7903163,3854673,3785685,500371,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-18,7945100,3856350,3788117,538204,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-19,7978952,3857531,3789576,569416,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-20,8004569,3859081,3792490,590579,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-21,8022320,3860868,3795239,603794,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-22,8039954,3861587,3795705,620245,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-23,8076673,3863762,3797245,653253,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-24,8116615,3865390,3800326,688486,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-25,8159238,3866400,3801437,728988,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-26,8197108,3867707,3802506,764494,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-27,8224277,3868946,3804038,788897,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-28,8244414,3870917,3806286,804815,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-29,8267392,3871465,3807249,826283,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-11-30,8309401,3873410,3808847,864755,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-01,8350633,3874541,3810170,903534,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-02,8393197,3876353,3811532,942925,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-03,8431046,3877405,3812668,978589,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-04,8457091,3878606,3814341,1001760,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-05,8475364,3879960,3816105,1016915,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-06,8499476,3880904,3817358,1038830,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-07,8529594,3881393,3818054,1067764,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-08,8568620,3882210,3819489,1104538,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-09,8616216,3883010,3820632,1150191,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-10,8659210,3883894,3822166,1190768,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-11,8689677,3884533,3822988,1219774,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-12,8717938,3885223,3824176,1246157,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-13,8751079,3885937,3825202,1277558,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-14,8805937,3886561,3826339,1330656,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-15,8864631,3887354,3827502,1387395,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-16,8931352,3888411,3828929,1451639,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-17,8999539,3889604,3831282,1516281,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-18,9046705,3890865,3832417,1561051,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-19,9102438,3891419,3833280,1615368,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-20,9194071,3891960,3833801,1705939,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-21,9323339,3893409,3835498,1832063,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-22,9454377,3894650,3836946,1960414,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-23,9553807,3895588,3838196,2057656,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-24,9564951,3895686,3838315,2068583,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-26,9565216,3895691,3838320,2068838,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-27,9578963,3896073,3838896,2081627,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-28,9603285,3896519,3839615,2104784,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-29,9656623,3897582,3840820,2155854,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-30,9717775,3898621,3841928,2214861,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2021-12-31,9738694,3899333,3843563,2233433,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2022-01-01,9747774,3899398,3843655,2242357,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2022-01-02,9762424,3899665,3844266,2256129,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2022-01-03,9783403,3903284,3844962,2272793,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2022-01-04,9816566,3904453,3845658,2304091,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2022-01-05,9859512,3906578,3846444,2344126,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2022-01-06,9903749,3909014,3847982,2384389,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2022-01-07,9939595,3913803,3848635,2414793,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2022-01-08,9964525,3923574,3849313,2429274,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2022-01-09,9982276,3930669,3849963,2439280,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2022-01-10,10003439,3937285,3850369,2453421,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2022-01-11,10032112,3942005,3851594,2476150,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2022-01-12,10064508,3949491,3852337,2500318,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2022-01-13,10095789,3956701,3852985,2523741,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2022-01-14,10126992,3967312,3853620,2543698,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2022-01-15,10146686,3975594,3854191,2554539,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/
+Ireland,2022-01-16,10161048,3982545,3855376,2560766,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech",https://covid19ireland-geohive.hub.arcgis.com/

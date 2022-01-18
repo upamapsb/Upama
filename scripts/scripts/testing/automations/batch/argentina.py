@@ -1,60 +1,47 @@
-import datetime
 import pandas as pd
-import numpy as np
+
+from cowidev.testing import CountryTestBase
 
 
-def get_tests():
-    df = pd.read_csv(
-        "https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19Determinaciones.csv",
-        usecols=["fecha", "total"]
-    )
+class Argentina(CountryTestBase):
+    location: str = "Argentina"
+    units: str = "tests performed"
+    source_label: str = "Government of Argentina"
+    source_url: str = "https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19Determinaciones.zip"
+    source_url_ref: str = "https://datos.gob.ar/dataset/salud-covid-19-determinaciones-registradas-republica-argentina/archivo/salud_0de942d4-d106-4c74-b6b2-3654b0c53a3a"
+    rename_columns: dict = {"fecha": "Date", "total": "Daily change in cumulative total", "positivos": "positive"}
 
-    # Occasional errors where some lab inserts data before 2020
-    df["fecha"] = df.fecha.str.replace(r"^20[01][0-9]", "2020", regex=True)
-    
-    df = df.groupby("fecha", as_index=False).sum()
+    def read(self) -> pd.DataFrame:
+        df = pd.read_csv(
+            "https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19Determinaciones.zip",
+            usecols=["fecha", "total", "positivos"],
+        )
+        return df
 
-    df.columns = ["Date", "Daily change in cumulative total"]
+    def pipe_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
+        # Occasional errors where some lab inserts data before 2020
+        df = df[df.Date >= "2020"]
+        # Groupby
+        df = df.groupby("Date", as_index=False).sum()
+        # PR
+        df["Positive rate"] = (
+            df.positive.rolling(7).sum().div(df["Daily change in cumulative total"].rolling(7).sum()).round(3)
+        )
+        # Clean
+        df = df[df["Daily change in cumulative total"] > 0].drop(columns=["positive"])
+        return df
 
-    df["Country"] = "Argentina"
-    df["Units"] = "tests performed"
-    df["Testing type"] = "PCR only"
-    df["Notes"] = np.nan
-    df["Source URL"] = "https://datos.gob.ar/dataset/salud-covid-19-determinaciones-registradas-republica-argentina/archivo/salud_0de942d4-d106-4c74-b6b2-3654b0c53a3a"
-    df["Source label"] = "Government of Argentina"
+    def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
+        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metrics).pipe(self.pipe_metadata)
 
-    df.to_csv("automated_sheets/Argentina - tests performed.csv", index=False)
-
-
-def get_people():
-    df = pd.read_csv(
-        "https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19Casos.csv",
-        usecols=["fecha_diagnostico", "clasificacion_resumen"]
-    )
-    df = df[-df.fecha_diagnostico.isnull()]
-
-    # Occasional errors where some lab inserts data before 2020
-    df["fecha_diagnostico"] = df.fecha_diagnostico.str.replace(r"^20[01][0-9]", "2020", regex=True)
-    
-    df = (
-        df
-        .groupby("fecha_diagnostico")
-        .size()
-        .to_frame("Daily change in cumulative total")
-        .reset_index()
-        .rename(columns={"fecha_diagnostico": "Date"})
-    )
-
-    df["Country"] = "Argentina"
-    df["Units"] = "people tested"
-    df["Testing type"] = "PCR only"
-    df["Notes"] = np.nan
-    df["Source URL"] = "https://datos.gob.ar/dataset/salud-covid-19-casos-registrados-republica-argentina/archivo/salud_fd657d02-a33a-498b-a91b-2ef1a68b8d16"
-    df["Source label"] = "Government of Argentina"
-
-    df.to_csv("automated_sheets/Argentina - people tested.csv", index=False)
+    def export(self):
+        df = self.read().pipe(self.pipeline)
+        self.export_datafile(df)
 
 
-if __name__ == '__main__':
-    get_tests()
-    get_people()
+def main():
+    Argentina().export()
+
+
+if __name__ == "__main__":
+    main()

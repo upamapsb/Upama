@@ -8,7 +8,54 @@ __pycache__/
 tmp/
 ~$*.xls*
 *.log
-scripts/scripts/testing/input/*
+.Rhistory
+.RData
+
+# Local Netlify folder
+.netlify
+
+# temporal folder for rapid tests/debuggings
+scripts/tmp
+Icon[
+]
+*.egg-info
+*.preliminary.csv
+*.tmp.csv
+
+# Vaccinations
+scripts/scripts/vaccinations/*.ipynb
+scripts/scripts/vaccinations/notebooks
+scripts/scripts/vaccinations/vax_update.sh
+scripts/scripts/vaccinations/antall-personer-vaksiner.csv
+
+# Testing
+testing_data_config.json
 testing_dataset_config.json
-Icon[]
-scripts/scripts/vaccinations/vax_dataset_config.json
+
+# Dev
+.tox
+reports
+vax_dataset_config.json
+scripts/vax_dataset_config.json
+
+# Lucas tmp
+scripts/scripts/testing/notebooks
+scripts/scripts/testing/automated_sheets_new
+scripts/scripts/*.ipynb
+scripts/notebooks/Untitled*.ipynb
+scripts/notebooks/readme.ipynb
+scripts/subnational_cases_deaths.zip
+scripts/*.ipynb
+scripts/notebooks/
+scripts/scripts/testing/automations/incremental/Untitled.ipynb
+Untitled.ipynb
+
+# Misc (Cam)
+misc/
+scripts/build
+.Rproj.user
+covid-19-data.Rproj
+gitsize.sh
+
+# local files
+public/data/variants/

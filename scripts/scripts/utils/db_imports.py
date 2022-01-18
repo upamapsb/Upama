@@ -1,4 +1,9 @@
+"""Update gapher database.
+
+Update vaccination by age data.
+"""
 #!/usr/bin/env python
+
 
 import sys
 import os
@@ -41,6 +46,7 @@ tz_utc = tz_db = timezone.utc
 tz_local = datetime.now(tz_utc).astimezone().tzinfo
 
 def import_dataset(dataset_name, namespace, csv_path, default_variable_display, source_name, slack_notifications=True):
+    print(dataset_name.upper())
     with connection as c:
         db = DBUtils(c)
 
@@ -63,7 +69,8 @@ def import_dataset(dataset_name, namespace, csv_path, default_variable_display, 
 
         if file_modified_time <= db_dataset_modified_time:
             print(f"Dataset is up to date: {dataset_name}")
-            sys.exit(0)
+            return None
+            # sys.exit(0)
 
         print("Updating database...")
 
