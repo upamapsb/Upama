@@ -24,14 +24,17 @@ SOURCE_GERMANY_ICU = "https://diviexchange.blob.core.windows.net/%24web/zeitreih
 def adjust_x_and_y(
     df: pd.DataFrame,
     start_date: str,
-    case_peak_date: str,
-    hosp_peak_date: str,
-    icu_peak_date: str,
-    death_peak_date: str,
+    end_date: str,
     hosp_variable: str,
     icu_variable: str,
 ) -> pd.DataFrame:
     df = df[df.date >= start_date].copy()
+
+    df_period = df[(df.date >= start_date) & (df.date <= end_date)].copy()
+    case_peak_date = df_period.sort_values("confirmed_cases").date.values[-1]
+    hosp_peak_date = df_period.sort_values(hosp_variable).date.values[-1]
+    icu_peak_date = df_period.sort_values(icu_variable).date.values[-1]
+    death_peak_date = df_period.sort_values("confirmed_deaths").date.values[-1]
 
     case_peak = df.loc[df.date == case_peak_date, "confirmed_cases"].values[0]
     hosp_peak = df.loc[df.date == hosp_peak_date, hosp_variable].values[0]
@@ -102,10 +105,7 @@ def process_deu() -> pd.DataFrame:
     df = adjust_x_and_y(
         df,
         start_date="2020-10-01",
-        case_peak_date="2020-12-18",
-        hosp_peak_date="2020-12-24",
-        icu_peak_date="2021-01-03",
-        death_peak_date="2020-12-23",
+        end_date="2021-02-15",
         hosp_variable="hospital_flow",
         icu_variable="icu_stock",
     )
@@ -140,10 +140,7 @@ def process_esp() -> pd.DataFrame:
     df = adjust_x_and_y(
         df,
         start_date="2020-12-15",
-        case_peak_date="2021-01-21",
-        hosp_peak_date="2021-01-25",
-        icu_peak_date="2021-01-25",
-        death_peak_date="2021-01-30",
+        end_date="2021-03-01",
         hosp_variable="hospital_flow",
         icu_variable="icu_flow",
     )
@@ -178,10 +175,7 @@ def process_isr() -> pd.DataFrame:
     df = adjust_x_and_y(
         df,
         start_date="2020-11-15",
-        case_peak_date="2021-01-15",
-        hosp_peak_date="2021-01-17",
-        icu_peak_date="2021-01-19",
-        death_peak_date="2021-01-28",
+        end_date="2021-04-01",
         hosp_variable="hospital_stock",
         icu_variable="icu_flow",
     )
