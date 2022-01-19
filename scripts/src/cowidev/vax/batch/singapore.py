@@ -57,8 +57,10 @@ class Singapore:
     def _merge_primary_and_boosters(self, df_primary, df_boosters):
         if not df_boosters.vacc_date.str.match(r"\d{4}-\d{2}-\d{2}").all():
             df_boosters["vacc_date"] = clean_date_series(df_boosters.vacc_date, "%d-%b-%y")
+            df_boosters = df_boosters.drop_duplicates(subset=["vacc_date"], keep=False)
         if not df_primary.vacc_date.str.match(r"\d{4}-\d{2}-\d{2}").all():
             df_primary["vacc_date"] = clean_date_series(df_primary.vacc_date, "%d-%b-%y")
+            df_primary = df_primary.drop_duplicates(subset=["vacc_date"], keep=False)
         df = pd.merge(df_primary, df_boosters, on="vacc_date", how="outer", validate="one_to_one")
         return df
 
@@ -85,7 +87,7 @@ class Singapore:
         )
 
     def pipeline(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metrics).pipe(self.pipe_metadata).pipe(make_monotonic)
+        return df.pipe(self.pipe_rename_columns).pipe(self.pipe_metrics).pipe(self.pipe_metadata)
 
     def export(self):
         df = self.read()
