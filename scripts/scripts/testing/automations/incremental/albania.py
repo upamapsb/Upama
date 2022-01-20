@@ -72,11 +72,7 @@ class Albania:
     def _get_text_from_url(self, url: str) -> str:
         """Extract text from the url."""
         soup = get_soup(url, verify=False)
-        text = (
-            soup.find("div", class_="pageDescription")
-            .get_text(strip=True)
-            .replace(",", "")
-        )
+        text = soup.find("div", class_="pageDescription").get_text(strip=True).replace(",", "")
         return text
 
     def _get_link_and_date_from_element(self, elem: element.Tag) -> tuple:
@@ -115,7 +111,6 @@ class Albania:
             source_label=self.source_label,
             daily_change=data["daily_change"],
         )
-       
 
 
 def main():
