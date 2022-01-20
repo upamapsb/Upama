@@ -58,10 +58,28 @@ class Indonesia(CountryVaxBase):
         df.loc[df.date >= "2021-09-11", "people_fully_vaccinated"] = pd.NA  # single shot data missing from 2021-09-11
         return df
 
+    def pipe_add_latest_who(self, df: pd.DataFrame) -> pd.DataFrame:
+        who = pd.read_csv(
+            "https://covid19.who.int/who-data/vaccination-data.csv",
+            usecols=["COUNTRY", "DATA_SOURCE", "DATE_UPDATED", "PERSONS_FULLY_VACCINATED"],
+        )
+
+        who = who[(who.COUNTRY == self.location) & (who.DATA_SOURCE == "REPORTING")]
+        if len(who) == 0:
+            return df
+
+        last_who_report_date = who.DATE_UPDATED.values[0]
+        df.loc[df.date == last_who_report_date, "total_vaccinations"] = pd.NA
+        df.loc[df.date == last_who_report_date, "people_vaccinated"] = pd.NA
+        df.loc[df.date == last_who_report_date, "people_fully_vaccinated"] = who.PERSONS_FULLY_VACCINATED.values[0]
+        df.loc[df.date == last_who_report_date, "source_url"] = "https://covid19.who.int/"
+        return df
+
     def pipeline(self, ds: pd.Series) -> pd.Series:
         return (
             ds.pipe(self.pipe_metadata)
             .pipe(self.pipe_metrics)
+            .pipe(self.pipe_add_latest_who)
             .pipe(self.pipe_merge_legacy)
             .pipe(self.pipe_vaccine)[
                 [
