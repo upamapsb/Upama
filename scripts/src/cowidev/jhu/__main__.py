@@ -210,6 +210,10 @@ def hide_recent_zeros(df: pd.DataFrame) -> pd.DataFrame:
 
 def discard_rows(df):
 
+    # Temporary fix for missing data in France
+    df.loc[(df.location == "France") & (df.date >= pd.to_datetime("2022-01-19")), "new_cases"] = np.nan
+    df.loc[(df.location == "France") & (df.date >= pd.to_datetime("2022-01-17")), "new_deaths"] = np.nan
+
     # Custom data corrections
     for ldc in LARGE_DATA_CORRECTIONS:
         df.loc[(df.location == ldc[0]) & (df.date.astype(str) == ldc[1]), f"new_{ldc[2]}"] = np.nan
