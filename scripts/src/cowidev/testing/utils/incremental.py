@@ -50,7 +50,11 @@ def increment(
     df_current = df_current[df_current.Date != date]
     df = pd.concat([df_current, df])
     df = df.sort_values("Date")
-    df = df.drop_duplicates(subset=["Cumulative total"], keep="first")
+
+    if count is not None:
+        df = df.drop_duplicates(subset=["Cumulative total"], keep="first")
+    if daily_change is not None:
+        df = df.drop_duplicates(subset=["Daily change in cumulative total"], keep="first")
     # Export
     df.to_csv(output_path, index=False)
 
