@@ -1,4 +1,5 @@
 import os
+import requests
 import sys
 
 import pandas as pd
@@ -12,13 +13,16 @@ DATASET_NAME = "COVID-19 - Decoupling of metrics"
 GRAPHER_PATH = os.path.join(CURRENT_DIR, "../grapher/")
 ZERO_DAY = "2020-01-01"
 
-SOURCE_SPAIN = "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv"
+SOURCE_USA_C_D = "https://covid.cdc.gov/covid-data-tracker/COVIDData/getAjaxData?id=us_trend_by_USA"
+SOURCE_USA_HOSP_ICU = "https://healthdata.gov/api/views/g62h-syeh/rows.csv?accessType=DOWNLOAD"
 
-SOURCE_ISRAEL = "https://github.com/dancarmoz/israel_moh_covid_dashboard_data/raw/master/hospitalized_and_infected.csv"
+SOURCE_ESP = "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv"
 
-SOURCE_GERMANY_INF = "https://media.githubusercontent.com/media/robert-koch-institut/SARS-CoV-2_Infektionen_in_Deutschland/master/Aktuell_Deutschland_SarsCov2_Infektionen.csv"
-SOURCE_GERMANY_HOSP = "https://raw.githubusercontent.com/robert-koch-institut/COVID-19-Hospitalisierungen_in_Deutschland/master/Aktuell_Deutschland_COVID-19-Hospitalisierungen.csv"
-SOURCE_GERMANY_ICU = "https://diviexchange.blob.core.windows.net/%24web/zeitreihe-deutschland.csv"
+SOURCE_ISR = "https://github.com/dancarmoz/israel_moh_covid_dashboard_data/raw/master/hospitalized_and_infected.csv"
+
+SOURCE_DEU_C_D = "https://media.githubusercontent.com/media/robert-koch-institut/SARS-CoV-2_Infektionen_in_Deutschland/master/Aktuell_Deutschland_SarsCov2_Infektionen.csv"
+SOURCE_DEU_HOSP = "https://raw.githubusercontent.com/robert-koch-institut/COVID-19-Hospitalisierungen_in_Deutschland/master/Aktuell_Deutschland_COVID-19-Hospitalisierungen.csv"
+SOURCE_DEU_ICU = "https://diviexchange.blob.core.windows.net/%24web/zeitreihe-deutschland.csv"
 
 
 def adjust_x_and_y(
@@ -57,10 +61,66 @@ def adjust_x_and_y(
     return df
 
 
+def process_usa() -> pd.DataFrame:
+
+    c_d = requests.get(SOURCE_USA_C_D).json()["us_trend_by_Geography"]
+    c_d = pd.DataFrame.from_records(
+        c_d,
+        columns=[
+            "seven_day_avg_new_cases",
+            "seven_day_avg_new_deaths",
+            "date",
+        ],
+    ).rename(
+        columns={
+            "seven_day_avg_new_cases": "confirmed_cases",
+            "seven_day_avg_new_deaths": "confirmed_deaths",
+        }
+    )
+    c_d["date"] = pd.to_datetime(c_d.date, dayfirst=False).dt.date.astype(str)
+
+    hosp_icu = pd.read_csv(
+        SOURCE_USA_HOSP_ICU,
+        usecols=[
+            "date",
+            "staffed_icu_adult_patients_confirmed_covid",
+            "previous_day_admission_adult_covid_confirmed",
+            "previous_day_admission_pediatric_covid_confirmed",
+        ],
+    ).rename(columns={"staffed_icu_adult_patients_confirmed_covid": "icu_stock"})
+    hosp_icu["date"] = pd.to_datetime(hosp_icu.date, format="%Y/%m/%d").dt.date.astype(str)
+    hosp_icu = hosp_icu.dropna(subset=["date"]).sort_values("date")
+    hosp_icu["hospital_flow"] = hosp_icu.previous_day_admission_adult_covid_confirmed.fillna(0).add(
+        hosp_icu.previous_day_admission_pediatric_covid_confirmed.fillna(0)
+    )
+    hosp_icu = (
+        hosp_icu.groupby("date", as_index=False)
+        .sum()
+        .drop(
+            columns=[
+                "previous_day_admission_adult_covid_confirmed",
+                "previous_day_admission_pediatric_covid_confirmed",
+            ]
+        )
+    )
+    hosp_icu["hospital_flow"] = hosp_icu.hospital_flow.rolling(7).sum()
+
+    df = pd.merge(c_d, hosp_icu).sort_values("date").head(-3).assign(Country="United States")
+    df = adjust_x_and_y(
+        df,
+        start_date="2020-10-01",
+        end_date="2021-03-01",
+        hosp_variable="hospital_flow",
+        icu_variable="icu_stock",
+    )
+
+    return df
+
+
 def process_deu() -> pd.DataFrame:
 
     cases_deaths = (
-        pd.read_csv(SOURCE_GERMANY_INF, usecols=["Refdatum", "AnzahlFall", "AnzahlTodesfall"])
+        pd.read_csv(SOURCE_DEU_C_D, usecols=["Refdatum", "AnzahlFall", "AnzahlTodesfall"])
         .rename(
             columns={
                 "Refdatum": "date",
@@ -77,7 +137,7 @@ def process_deu() -> pd.DataFrame:
     )
 
     hosp_flow = pd.read_csv(
-        SOURCE_GERMANY_HOSP, usecols=["Datum", "Bundesland", "Altersgruppe", "7T_Hospitalisierung_Faelle"]
+        SOURCE_DEU_HOSP, usecols=["Datum", "Bundesland", "Altersgruppe", "7T_Hospitalisierung_Faelle"]
     )
     hosp_flow = (
         hosp_flow[(hosp_flow.Bundesland == "Bundesgebiet") & (hosp_flow.Altersgruppe == "00+")]
@@ -88,7 +148,7 @@ def process_deu() -> pd.DataFrame:
     )
 
     icu_stock = (
-        pd.read_csv(SOURCE_GERMANY_ICU, usecols=["Datum", "Aktuelle_COVID_Faelle_ITS"])
+        pd.read_csv(SOURCE_DEU_ICU, usecols=["Datum", "Aktuelle_COVID_Faelle_ITS"])
         .rename(columns={"Datum": "date", "Aktuelle_COVID_Faelle_ITS": "icu_stock"})
         .groupby("date", as_index=False)
         .sum()
@@ -116,7 +176,7 @@ def process_deu() -> pd.DataFrame:
 def process_esp() -> pd.DataFrame:
 
     df = (
-        pd.read_csv(SOURCE_SPAIN, usecols=["fecha", "num_casos", "num_hosp", "num_uci", "num_def"])
+        pd.read_csv(SOURCE_ESP, usecols=["fecha", "num_casos", "num_hosp", "num_uci", "num_def"])
         .rename(
             columns={
                 "fecha": "date",
@@ -152,7 +212,7 @@ def process_isr() -> pd.DataFrame:
 
     df = (
         pd.read_csv(
-            SOURCE_ISRAEL, usecols=["Date", "New infected", "New serious", "New deaths", "Easy", "Medium", "Hard"]
+            SOURCE_ISR, usecols=["Date", "New infected", "New serious", "New deaths", "Easy", "Medium", "Hard"]
         )
         .rename(
             columns={
@@ -184,10 +244,11 @@ def process_isr() -> pd.DataFrame:
 
 
 def main():
+    usa = process_usa()
     germany = process_deu()
     spain = process_esp()
     israel = process_isr()
-    df = pd.concat([spain, israel, germany], ignore_index=True).rename(columns={"date": "Year"})
+    df = pd.concat([usa, spain, israel, germany], ignore_index=True).rename(columns={"date": "Year"})
     df["Year"] = (pd.to_datetime(df.Year) - pd.to_datetime(ZERO_DAY)).dt.days
     df = df[
         [
