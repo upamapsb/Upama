@@ -210,6 +210,10 @@ def hide_recent_zeros(df: pd.DataFrame) -> pd.DataFrame:
 
 def discard_rows(df):
 
+    # Temporary fix for missing data in France
+    df.loc[(df.location == "France") & (df.date >= pd.to_datetime("2022-01-19")), "new_cases"] = np.nan
+    df.loc[(df.location == "France") & (df.date >= pd.to_datetime("2022-01-17")), "new_deaths"] = np.nan
+
     # Custom data corrections
     for ldc in LARGE_DATA_CORRECTIONS:
         df.loc[(df.location == ldc[0]) & (df.date.astype(str) == ldc[1]), f"new_{ldc[2]}"] = np.nan
@@ -217,23 +221,6 @@ def discard_rows(df):
     # If the last known value is above 1000 cases or 100 deaths but the latest reported value is 0
     # then set that value to NA in case it's a temporary reporting error. (Up to 7 days in the past)
     df = df.sort_values(["location", "date"]).groupby("location").apply(hide_recent_zeros)
-
-    # Temporary fix for missing data in France
-    france = (
-        pd.read_csv(
-            "https://www.data.gouv.fr/fr/datasets/r/f335f9ea-86e3-4ffa-9684-93c009d5e617",
-            usecols=["date", "conf_j1", "conf"],
-        )
-        .rename(columns={"conf_j1": "new_cases"})
-        .sort_values("date")
-    )
-    france.loc[france.new_cases.isnull(), "new_cases"] = france.conf - france.conf.shift()
-    france["total_cases"] = france.new_cases.cumsum()
-    france["date"] = pd.to_datetime(france.date).dt.date
-    france = pd.merge(
-        france, df[df.location == "France"][["date", "total_deaths", "new_deaths"]], how="outer", validate="one_to_one"
-    ).assign(location="France")
-    df = pd.concat([df[df.location != "France"], france])
 
     return df
 
